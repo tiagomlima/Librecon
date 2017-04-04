@@ -1,7 +1,7 @@
 <?php
 
 
-//apenas para teste de sobreposição dinovo
+//teste de sobreposição
 
 
 class Cursos extends CI_Controller {
