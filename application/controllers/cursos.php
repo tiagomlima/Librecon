@@ -1,5 +1,9 @@
 <?php
 
+
+//teste de sobreposição
+
+
 class Cursos extends CI_Controller {
     
    
@@ -217,4 +221,4 @@ class Cursos extends CI_Controller {
 }
 
 //pocas ideias
-//our]tro
+//teste
