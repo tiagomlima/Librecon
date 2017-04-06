@@ -53,10 +53,10 @@ class Librecon_model extends CI_Model {
 
     function pesquisar($termo){
          $data = array();
-         // buscando clientes
-         $this->db->like('nomeCliente',$termo);
+         // buscando leitores
+         $this->db->like('nomeLeitor',$termo);
          $this->db->limit(5);
-         $data['clientes'] = $this->db->get('clientes')->result();
+         $data['leitoress'] = $this->db->get('leitoress')->result();
 
          // buscando os
          $this->db->like('idOs',$termo);
@@ -117,9 +117,9 @@ class Librecon_model extends CI_Model {
 	}
 
     function getOsAbertas(){
-        $this->db->select('os.*, clientes.nomeCliente');
+        $this->db->select('os.*, leitores.nomeLeitor');
         $this->db->from('os');
-        $this->db->join('clientes', 'clientes.idClientes = os.clientes_id');
+        $this->db->join('leitores', 'leitores.idLeitores = os.leitores_id');
         $this->db->where('os.status','Aberto');
         $this->db->limit(10);
         return $this->db->get()->result();

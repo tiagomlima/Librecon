@@ -4,32 +4,32 @@ class Conecte_model extends CI_Model {
 
     
     
-	public function getLastOs($cliente){
+	public function getLastOs($leitor){
 		
-		$this->db->where('clientes_id',$cliente);
+		$this->db->where('leitor_id',$leitor);
 		$this->db->limit(5);
 
 		return $this->db->get('os')->result();
 	}	
 
-	public function getLastCompras($cliente){
+	public function getLastCompras($leitor){
 		
 		$this->db->select('vendas.*,usuarios.nome');
 		$this->db->from('vendas');
 		$this->db->join('usuarios', 'usuarios.idUsuarios = vendas.usuarios_id');
-		$this->db->where('clientes_id',$cliente);
+		$this->db->where('leitores_id',$leitor);
 		$this->db->limit(5);
 
 		return $this->db->get()->result();
 	}
 
 
-	public function getCompras($table,$fields,$where='',$perpage=0,$start=0,$one=false,$array='array',$cliente){
+	public function getCompras($table,$fields,$where='',$perpage=0,$start=0,$one=false,$array='array',$leitor){
         
         $this->db->select($fields);
         $this->db->from($table);
         $this->db->join('usuarios', 'vendas.usuarios_id = usuarios.idUsuarios', 'left');
-        $this->db->where('clientes_id', $cliente);
+        $this->db->where('leitores_id', $leitor);
         $this->db->limit($perpage,$start);
         if($where){
             $this->db->where($where);
@@ -42,12 +42,12 @@ class Conecte_model extends CI_Model {
     }
 
 
-    public function getOs($table,$fields,$where='',$perpage=0,$start=0,$one=false,$array='array',$cliente){
+    public function getOs($table,$fields,$where='',$perpage=0,$start=0,$one=false,$array='array',$leitor){
         
         $this->db->select($fields);
         $this->db->from($table);
         $this->db->join('usuarios', 'os.usuarios_id = usuarios.idUsuarios', 'left');
-        $this->db->where('clientes_id', $cliente);
+        $this->db->where('leitores_id', $leitor);
         $this->db->limit($perpage,$start);
         if($where){
             $this->db->where($where);
@@ -59,16 +59,16 @@ class Conecte_model extends CI_Model {
         return $result;
     }
 
-    public function count($table,$cliente){
-    	$this->db->where('clientes_id', $cliente);
+    public function count($table,$leitor){
+    	$this->db->where('leitores_id', $leitor);
 		return $this->db->count_all($table);
 	}
 
     public function getDados(){
         
-        $this->db->where('idclientes',$this->session->userdata('id'));
+        $this->db->where('idleitores',$this->session->userdata('id'));
         $this->db->limit(1);
-        return $this->db->get('clientes')->row();
+        return $this->db->get('leitores')->row();
     }
 
 

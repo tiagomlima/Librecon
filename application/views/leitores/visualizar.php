@@ -1,11 +1,11 @@
 <div class="widget-box">
     <div class="widget-title">
         <ul class="nav nav-tabs">
-            <li class="active"><a data-toggle="tab" href="#tab1">Dados do Cliente</a></li>
+            <li class="active"><a data-toggle="tab" href="#tab1">Dados do Leitor</a></li>
             <li><a data-toggle="tab" href="#tab2">Ordens de Serviço</a></li>
             <div class="buttons">
-                    <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'eCliente')){
-                        echo '<a title="Icon Title" class="btn btn-mini btn-info" href="'.base_url().'index.php/clientes/editar/'.$result->idClientes.'"><i class="icon-pencil icon-white"></i> Editar</a>'; 
+                    <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'eLeitor')){
+                        echo '<a title="Icon Title" class="btn btn-mini btn-info" href="'.base_url().'index.php/leitores/editar/'.$result->idLeitores.'"><i class="icon-pencil icon-white"></i> Editar</a>'; 
                     } ?>
                     
             </div>
@@ -29,11 +29,23 @@
                                             <tbody>
                                                 <tr>
                                                     <td style="text-align: right; width: 30%"><strong>Nome</strong></td>
-                                                    <td><?php echo $result->nomeCliente ?></td>
+                                                    <td><?php echo $result->nomeLeitor ?></td>
                                                 </tr>
                                                 <tr>
-                                                    <td style="text-align: right"><strong>Documento</strong></td>
-                                                    <td><?php echo $result->documento ?></td>
+                                                    <td style="text-align: right"><strong>CPF</strong></td>
+                                                    <td><?php echo $result->cpf ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="text-align: right"><strong>Sexo</strong></td>
+                                                    <td><?php echo $result->sexo ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="text-align: right"><strong>Data de Nascimento</strong></td>
+                                                   <td><?php echo date('d/m/Y',  strtotime($result->datanasc)) ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="text-align: right"><strong>Status</strong></td>
+                                                    <td><?php echo $result->status ?></td>
                                                 </tr>
                                                 <tr>
                                                     <td style="text-align: right"><strong>Data de Cadastro</strong></td>

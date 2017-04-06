@@ -1,5 +1,5 @@
 <?php
-class Clientes_model extends CI_Model {
+class Leitores_model extends CI_Model {
 
     
     
@@ -12,7 +12,7 @@ class Clientes_model extends CI_Model {
         
         $this->db->select($fields);
         $this->db->from($table);
-        $this->db->order_by('idClientes','desc');
+        $this->db->order_by('idLeitores','desc');
         $this->db->limit($perpage,$start);
         if($where){
             $this->db->where($where);
@@ -25,9 +25,9 @@ class Clientes_model extends CI_Model {
     }
 
     function getById($id){
-        $this->db->where('idClientes',$id);
+        $this->db->where('idLeitores',$id);
         $this->db->limit(1);
-        return $this->db->get('clientes')->row();
+        return $this->db->get('leitores')->row();
     }
     
     function add($table,$data){
@@ -67,8 +67,8 @@ class Clientes_model extends CI_Model {
         return $this->db->count_all($table);
     }
     
-    public function getOsByCliente($id){
-        $this->db->where('clientes_id',$id);
+    public function getOsByLeitor($id){
+        $this->db->where('leitores_id',$id);
         $this->db->order_by('idOs','desc');
         $this->db->limit(10);
         return $this->db->get('os')->result();

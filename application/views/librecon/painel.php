@@ -10,8 +10,8 @@
   <div class="container-fluid">
     <div class="quick-actions_homepage">
       <ul class="quick-actions">
-        <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vCliente')){ ?>
-            <li class="bg_lb"> <a href="<?php echo base_url()?>index.php/clientes"> <i class="icon-group"></i> Leitores</a> </li>
+        <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vLeitor')){ ?>
+            <li class="bg_lb"> <a href="<?php echo base_url()?>index.php/leitores"> <i class="icon-group"></i> Leitores</a> </li>
         <?php } ?>
         <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vProduto')){ ?>
             <li class="bg_lg"> <a href="<?php echo base_url()?>index.php/produtos"> <i class="icon-book"></i> Acervo</a> </li>
@@ -97,7 +97,7 @@
                             <th>#</th>
                             <th>Data Inicial</th>
                             <th>Data Final</th>
-                            <th>Cliente</th>
+                            <th>Leitor</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -109,7 +109,7 @@
                                 echo '<td>'.$o->idOs.'</td>';
                                 echo '<td>'.date('d/m/Y' ,strtotime($o->dataInicial)).'</td>';
                                 echo '<td>'.date('d/m/Y' ,strtotime($o->dataFinal)).'</td>';
-                                echo '<td>'.$o->nomeCliente.'</td>';
+                                echo '<td>'.$o->nomeLeitor.'</td>';
                                 echo '<td>';
                                 if($this->permission->checkPermission($this->session->userdata('permissao'),'vOs')){
                                     echo '<a href="'.base_url().'index.php/os/visualizar/'.$o->idOs.'" class="btn"> <i class="icon-eye-open" ></i> </a> '; 
@@ -217,7 +217,7 @@
                 <div class="row-fluid">           
                     <div class="span12">
                         <ul class="site-stats">
-                            <li class="bg_lh"><i class="icon-group"></i> <strong><?php echo $this->db->count_all('clientes');?></strong> <small>Clientes</small></li>
+                            <li class="bg_lh"><i class="icon-group"></i> <strong><?php echo $this->db->count_all('leitores');?></strong> <small>Leitores</small></li>
                             <li class="bg_lh"><i class="icon-barcode"></i> <strong><?php echo $this->db->count_all('produtos');?></strong> <small>Produtos </small></li>
                             <li class="bg_lh"><i class="icon-tags"></i> <strong><?php echo $this->db->count_all('os');?></strong> <small>Ordens de Serviço</small></li>
                             <li class="bg_lh"><i class="icon-wrench"></i> <strong><?php echo $this->db->count_all('servicos');?></strong> <small>Serviços</small></li>

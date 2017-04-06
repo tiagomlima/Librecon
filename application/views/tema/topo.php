@@ -55,8 +55,8 @@
      <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'cCurso')){ ?>
         <li class="<?php if(isset($menuCursos)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/cursos"><i class="icon icon-group"></i> <span>Cursos</span></a></li>
     <?php } ?>
-    <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vCliente')){ ?>
-        <li class="<?php if(isset($menuClientes)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/clientes"><i class="icon icon-group"></i> <span>Clientes</span></a></li>
+    <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vLeitor')){ ?>
+        <li class="<?php if(isset($menuLeitores)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/leitores"><i class="icon icon-group"></i> <span>Leitores</span></a></li>
     <?php } ?>
     
     <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vProduto')){ ?>
@@ -88,14 +88,14 @@
         </li>
     <?php } ?>
 
-    <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'rCliente') || $this->permission->checkPermission($this->session->userdata('permissao'),'rProduto') || $this->permission->checkPermission($this->session->userdata('permissao'),'rServico') || $this->permission->checkPermission($this->session->userdata('permissao'),'rOs') || $this->permission->checkPermission($this->session->userdlata('permissao'),'rFinanceiro') || $this->permission->checkPermission($this->session->userdata('permissao'),'rVenda')){ ?>
+    <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'rLeitor') || $this->permission->checkPermission($this->session->userdata('permissao'),'rProduto') || $this->permission->checkPermission($this->session->userdata('permissao'),'rServico') || $this->permission->checkPermission($this->session->userdata('permissao'),'rOs') || $this->permission->checkPermission($this->session->userdlata('permissao'),'rFinanceiro') || $this->permission->checkPermission($this->session->userdata('permissao'),'rVenda')){ ?>
         
         <li class="submenu <?php if(isset($menuRelatorios)){echo 'active open';};?>" >
           <a href="#"><i class="icon icon-list-alt"></i> <span>Relatórios</span> <span class="label"><i class="icon-chevron-down"></i></span></a>
           <ul>
 
-            <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'rCliente')){ ?>
-                <li><a href="<?php echo base_url()?>index.php/relatorios/clientes">Clientes</a></li>
+            <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'rLeitor')){ ?>
+                <li><a href="<?php echo base_url()?>index.php/relatorios/leitores">Leitores</a></li>
             <?php } ?>
             <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'rProduto')){ ?>
                 <li><a href="<?php echo base_url()?>index.php/relatorios/produtos">Produtos</a></li>

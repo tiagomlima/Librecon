@@ -10,9 +10,9 @@ class Os_model extends CI_Model {
     
     function get($table,$fields,$where='',$perpage=0,$start=0,$one=false,$array='array'){
         
-        $this->db->select($fields.',clientes.nomeCliente');
+        $this->db->select($fields.',leitores.nomeLeitor');
         $this->db->from($table);
-        $this->db->join('clientes','clientes.idClientes = os.clientes_id');
+        $this->db->join('leitores','leitores.idLeitores = os.leitores_id');
         $this->db->limit($perpage,$start);
         $this->db->order_by('idOs','desc');
         if($where){
@@ -26,9 +26,9 @@ class Os_model extends CI_Model {
     }
 
     function getById($id){
-        $this->db->select('os.*, clientes.*, usuarios.telefone, usuarios.email,usuarios.nome');
+        $this->db->select('os.*, leitores.*, usuarios.telefone, usuarios.email,usuarios.nome');
         $this->db->from('os');
-        $this->db->join('clientes','clientes.idClientes = os.clientes_id');
+        $this->db->join('leitores','leitores.idLeitores = os.leitores_id');
         $this->db->join('usuarios','usuarios.idUsuarios = os.usuarios_id');
         $this->db->where('os.idOs',$id);
         $this->db->limit(1);
@@ -107,15 +107,15 @@ class Os_model extends CI_Model {
         }
     }
 
-    public function autoCompleteCliente($q){
+    public function autoCompleteLeitor($q){
 
         $this->db->select('*');
         $this->db->limit(5);
-        $this->db->like('nomeCliente', $q);
-        $query = $this->db->get('clientes');
+        $this->db->like('nomeLeitor', $q);
+        $query = $this->db->get('leitores');
         if($query->num_rows > 0){
             foreach ($query->result_array() as $row){
-                $row_set[] = array('label'=>$row['nomeCliente'].' | Telefone: '.$row['telefone'],'id'=>$row['idClientes']);
+                $row_set[] = array('label'=>$row['nomeLeitor'].' | Telefone: '.$row['telefone'],'id'=>$row['idLeitores']);
             }
             echo json_encode($row_set);
         }

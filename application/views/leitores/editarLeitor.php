@@ -5,26 +5,59 @@
                 <span class="icon">
                     <i class="icon-user"></i>
                 </span>
-                <h5>Editar Cliente</h5>
+                <h5>Editar Leitor</h5>
             </div>
             <div class="widget-content nopadding">
                 <?php if ($custom_error != '') {
                     echo '<div class="alert alert-danger">' . $custom_error . '</div>';
                 } ?>
-                <form action="<?php echo current_url(); ?>" id="formCliente" method="post" class="form-horizontal" >
+                <form action="<?php echo current_url(); ?>" id="formLeitor" method="post" class="form-horizontal" >
                     <div class="control-group">
-                        <?php echo form_hidden('idClientes',$result->idClientes) ?>
-                        <label for="nomeCliente" class="control-label">Nome<span class="required">*</span></label>
+                        <?php echo form_hidden('idLeitores',$result->idLeitores) ?>
+                        <label for="nomeLeitor" class="control-label">Nome<span class="required">*</span></label>
                         <div class="controls">
-                            <input id="nomeCliente" type="text" name="nomeCliente" value="<?php echo $result->nomeCliente; ?>"  />
+                            <input id="nomeLeitor" type="text" name="nomeLeitor" value="<?php echo $result->nomeLeitor; ?>"  />
                         </div>
                     </div>
                     <div class="control-group">
-                        <label for="documento" class="control-label">CPF/CNPJ<span class="required">*</span></label>
+                        <label for="cpf" class="control-label">CPF<span class="required">*</span></label>
                         <div class="controls">
-                            <input id="documento" type="text" name="documento" value="<?php echo $result->documento; ?>"  />
+                            <input id="cpf" type="text" name="cpf" value="<?php echo $result->cpf; ?>"  />
                         </div>
                     </div>
+                    
+                    <div class="control-group">
+                        <label for="datanasc" class="control-label">Data de Nascimento</label>
+                        <div class="controls">
+                            <input id="datanasc" type="date" name="datanasc" value="<?php echo $result->datanasc; ?>"  />
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label  class="control-label">Sexo<span class="required">*</span></label>
+                        <div class="controls">
+                            <select name="sexo" id="sexo">
+                                <option value="Masculino">Masculino</option>
+                                <option value="Feminino">Feminino</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+   					<div class="control-group">
+                        <label for="matricula" class="control-label">Matricula R.A</label>
+                        <div class="controls">
+                            <input id="matricula" type="text" name="matricula" value="<?php echo $result->matricula; ?>"  />
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="senha" class="control-label">Senha</label>
+                        <div class="controls">
+                            <input id="senha" type="password" name="senha" value=""  placeholder="Não preencha se não quiser alterar."  />
+                            <i class="icon-exclamation-sign tip-top" title="Se não quiser alterar a senha, não preencha esse campo."></i>
+                        </div>
+                    </div>
+   					
                     <div class="control-group">
                         <label for="telefone" class="control-label">Telefone<span class="required">*</span></label>
                         <div class="controls">
@@ -88,13 +121,21 @@
                         </div>
                     </div>
 
-
+					<div class="control-group">
+                        <label  class="control-label">Status<span class="required">*</span></label>
+                        <div class="controls">
+                            <select name="status" id="status">
+                                <option value="Ativo">Ativo</option>
+                                <option value="Inativo">Inativo</option>
+                            </select>
+                        </div>
+                    </div>
 
                     <div class="form-actions">
                         <div class="span12">
                             <div class="span6 offset3">
                                 <button type="submit" class="btn btn-primary"><i class="icon-ok icon-white"></i> Alterar</button>
-                                <a href="<?php echo base_url() ?>index.php/clientes" id="" class="btn"><i class="icon-arrow-left"></i> Voltar</a>
+                                <a href="<?php echo base_url() ?>index.php/leitores" id="" class="btn"><i class="icon-arrow-left"></i> Voltar</a>
                             </div>
                         </div>
                     </div>
@@ -109,10 +150,10 @@
 <script src="<?php echo base_url()?>js/jquery.validate.js"></script>
 <script type="text/javascript">
       $(document).ready(function(){
-           $('#formCliente').validate({
+           $('#formLeitor').validate({
             rules :{
-                  nomeCliente:{ required: true},
-                  documento:{ required: true},
+                  nomeLeitor:{ required: true},
+                  cpf:{ required: true},
                   telefone:{ required: true},
                   email:{ required: true},
                   rua:{ required: true},
@@ -121,10 +162,13 @@
                   cidade:{ required: true},
                   estado:{ required: true},
                   cep:{ required: true}
+                  sexo:{ required: true}
+                  status:{ required: true}
+                  matricula:{ required: true}
             },
             messages:{
-                  nomeCliente :{ required: 'Campo Requerido.'},
-                  documento :{ required: 'Campo Requerido.'},
+                  nomeLeitor :{ required: 'Campo Requerido.'},
+                  cpf :{ required: 'Campo Requerido.'},
                   telefone:{ required: 'Campo Requerido.'},
                   email:{ required: 'Campo Requerido.'},
                   rua:{ required: 'Campo Requerido.'},
@@ -133,6 +177,9 @@
                   cidade:{ required: 'Campo Requerido.'},
                   estado:{ required: 'Campo Requerido.'},
                   cep:{ required: 'Campo Requerido.'}
+                  sexo:{ required: 'Campo Requerido.'},
+                  status:{ required: 'Campo Requerido.'}
+                  matricula:{ required: 'Campo Requerido.'}
 
             },
 

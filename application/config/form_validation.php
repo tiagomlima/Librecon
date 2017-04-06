@@ -1,18 +1,38 @@
 <?php
-$config = array('clientes' => array(array(
-                                	'field'=>'nomeCliente',
+$config = array('leitores' => array(array(
+                                	'field'=>'nomeLeitor',
                                 	'label'=>'Nome',
                                 	'rules'=>'required|trim|xss_clean'
                                 ),
 								array(
-                                	'field'=>'documento',
-                                	'label'=>'CPF/CNPJ',
-                                	'rules'=>'required|trim|xss_clean'
+                                	'field'=>'cpf',
+                                	'label'=>'CPF',
+                                	'rules'=>'required|trim|xss_clean|is_unique[leitores.cpf]'
                                 ),
 								array(
                                 	'field'=>'telefone',
                                 	'label'=>'Telefone',
                                 	'rules'=>'required|trim|xss_clean'
+                                ),
+                                array(
+                                    'field'=>'senha',
+                                    'label'=>'Senha',
+                                    'rules'=>'required|trim|xss_clean|min_length[12]'
+                                ),
+								array(
+                                	'field'=>'matricula',
+                                	'label'=>'Matricula',
+                                	'rules'=>'required|trim|xss_clean|is_unique[leitores.matricula]'
+                                ),
+                                array(
+                                    'field'=>'status',
+                                    'label'=>'Status',
+                                    'rules'=>'required|trim|xss_clean'
+                                ),
+                                array(
+                                    'field'=>'sexo',
+                                    'label'=>'Sexo',
+                                    'rules'=>'required|trim|xss_clean'
                                 ),
 								array(
                                 	'field'=>'email',
@@ -128,7 +148,7 @@ $config = array('clientes' => array(array(
                                 array(
                                     'field'=>'senha',
                                     'label'=>'Senha',
-                                    'rules'=>'required|trim|xss_clean'
+                                    'rules'=>'required|trim|xss_clean|min_length[12]'
                                 ),
                                 array(
                                     'field'=>'telefone',
@@ -177,8 +197,8 @@ $config = array('clientes' => array(array(
                                     'rules'=>'trim|xss_clean'
                                 ),
                                 array(
-                                    'field'=>'clientes_id',
-                                    'label'=>'clientes',
+                                    'field'=>'leitores_id',
+                                    'label'=>'leitores',
                                     'rules'=>'trim|xss_clean|required'
                                 ),
                                 array(
@@ -222,8 +242,8 @@ $config = array('clientes' => array(array(
                                 ),
                         
                                 array(
-                                    'field'=>'cliente',
-                                    'label'=>'Cliente',
+                                    'field'=>'leitor',
+                                    'label'=>'Leitor',
                                     'rules'=>'required|trim|xss_clean'
                                 ),
                                 array(
@@ -265,8 +285,8 @@ $config = array('clientes' => array(array(
                                     'rules' => 'required|trim|xss_clean'
                                 ),
                                 array(
-                                    'field'=>'clientes_id',
-                                    'label'=>'clientes',
+                                    'field'=>'leitores_id',
+                                    'label'=>'leitores',
                                     'rules'=>'trim|xss_clean|required'
                                 ),
                                 array(

@@ -4,7 +4,7 @@
             <li class="active"><a data-toggle="tab" href="#tab1">Meus Dados</a></li>
             
             <div class="buttons">
-                    <a title="Icon Title" class="btn btn-mini btn-info" href="<?php echo base_url()?>index.php/conecte/editarDados/<?php echo $result->idClientes?>"><i class="icon-pencil icon-white"></i> Editar</a>
+                    <a title="Icon Title" class="btn btn-mini btn-info" href="<?php echo base_url()?>index.php/conecte/editarDados/<?php echo $result->idLeitores?>"><i class="icon-pencil icon-white"></i> Editar</a>
                 </div>
         </ul>
     </div>
@@ -26,11 +26,11 @@
                                             <tbody>
                                                 <tr>
                                                     <td style="text-align: right; width: 30%"><strong>Nome</strong></td>
-                                                    <td><?php echo $result->nomeCliente ?></td>
+                                                    <td><?php echo $result->nomeLeitor ?></td>
                                                 </tr>
                                                 <tr>
-                                                    <td style="text-align: right"><strong>Documento</strong></td>
-                                                    <td><?php echo $result->documento ?></td>
+                                                    <td style="text-align: right"><strong>CPF</strong></td>
+                                                    <td><?php echo $result->cpf ?></td>
                                                 </tr>
                                                 <tr>
                                                     <td style="text-align: right"><strong>Data de Cadastro</strong></td>

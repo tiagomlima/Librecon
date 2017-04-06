@@ -69,7 +69,7 @@ class Librecon extends CI_Controller {
         $this->data['produtos'] = $data['results']['produtos'];
         $this->data['servicos'] = $data['results']['servicos'];
         $this->data['os'] = $data['results']['os'];
-        $this->data['clientes'] = $data['results']['clientes'];
+        $this->data['leitores'] = $data['results']['leitores'];
         $this->data['view'] = 'librecon/pesquisa';
         $this->load->view('tema/topo',  $this->data);
       

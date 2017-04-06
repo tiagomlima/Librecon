@@ -37,28 +37,28 @@
 
                                     <td>
                                         <label>
-                                            <input name="vCliente" class="marcar" type="checkbox" checked="checked" value="1" />
-                                            <span class="lbl"> Visualizar Cliente</span>
+                                            <input name="vLeitor" class="marcar" type="checkbox" checked="checked" value="1" />
+                                            <span class="lbl"> Visualizar Leitor</span>
                                         </label>
                                     </td>
 
                                     <td>
                                         <label>
-                                            <input name="aCliente" class="marcar" type="checkbox" value="1" />
-                                            <span class="lbl"> Adicionar Cliente</span>
+                                            <input name="aLeitor" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Adicionar Leitor</span>
                                         </label>
                                     </td>
 
                                     <td>
                                         <label>
-                                            <input name="eCliente" class="marcar" type="checkbox" value="1" />
-                                            <span class="lbl"> Editar Cliente</span>
+                                            <input name="eLeitor" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Editar Leitor</span>
                                         </label>
                                     </td>
                                     <td>
                                         <label>
-                                            <input name="dCliente" class="marcar" type="checkbox" value="1" />
-                                            <span class="lbl"> Excluir Cliente</span>
+                                            <input name="dLeitor" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Excluir Leitor</span>
                                         </label>
                                     </td>
                                  
@@ -305,8 +305,8 @@
 
                                     <td>
                                         <label>
-                                            <input name="rCliente" class="marcar" type="checkbox" value="1" />
-                                            <span class="lbl"> Relatório Cliente</span>
+                                            <input name="rLeitor" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Relatório Leitor</span>
                                         </label>
                                     </td>
 

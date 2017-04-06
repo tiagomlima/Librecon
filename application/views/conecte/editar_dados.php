@@ -9,12 +9,12 @@
             </div>
             <div class="widget-content nopadding">
               
-                <form action="<?php echo current_url(); ?>" id="formCliente" method="post" class="form-horizontal" >
+                <form action="<?php echo current_url(); ?>" id="formLeitor" method="post" class="form-horizontal" >
                     <div class="control-group">
-                        <input type="hidden" name="idClientes" id="idClientes" value="<?php echo $result->idClientes; ?>" />   
-                        <label for="nomeCliente" class="control-label">Nome<span class="required">*</span></label>
+                        <input type="hidden" name="idLeitores" id="idLeitores" value="<?php echo $result->idLeitores; ?>" />   
+                        <label for="nomeLeitor" class="control-label">Nome<span class="required">*</span></label>
                         <div class="controls">
-                            <input id="nomeCliente" type="text" name="nomeCliente" value="<?php echo $result->nomeCliente; ?>"  />
+                            <input id="nomeLeitor" type="text" name="nomeLeitor" value="<?php echo $result->nomeLeitor; ?>"  />
                         </div>
                     </div>
                     <div class="control-group">
@@ -107,10 +107,10 @@
 <script src="<?php echo base_url()?>js/jquery.validate.js"></script>
 <script type="text/javascript">
       $(document).ready(function(){
-           $('#formCliente').validate({
+           $('#formLeitor').validate({
             rules :{
-                  nomeCliente:{ required: true},
-                  documento:{ required: true},
+                  nomeLeitor:{ required: true},
+                  cpf:{ required: true},
                   telefone:{ required: true},
                   email:{ required: true},
                   rua:{ required: true},
@@ -119,10 +119,12 @@
                   cidade:{ required: true},
                   estado:{ required: true},
                   cep:{ required: true}
+                  status:{ required: true}
+                  sexo:{ required: true}
             },
             messages:{
-                  nomeCliente :{ required: 'Campo Requerido.'},
-                  documento :{ required: 'Campo Requerido.'},
+                  nomeLeitor :{ required: 'Campo Requerido.'},
+                  cpf :{ required: 'Campo Requerido.'},
                   telefone:{ required: 'Campo Requerido.'},
                   email:{ required: 'Campo Requerido.'},
                   rua:{ required: 'Campo Requerido.'},
@@ -131,6 +133,8 @@
                   cidade:{ required: 'Campo Requerido.'},
                   estado:{ required: 'Campo Requerido.'},
                   cep:{ required: 'Campo Requerido.'}
+                  sexo:{ required: 'Campo Requerido.'}
+                  satus:{ required: 'Campo Requerido.'}
 
             },
 

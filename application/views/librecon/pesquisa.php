@@ -65,14 +65,14 @@
     </div>
 
 
-    <!--Clientes-->
+    <!--Leitores-->
     <div class="span6">
         <div class="widget-box" style="min-height: 200px">
             <div class="widget-title">
                 <span class="icon">
                     <i class="icon-user"></i>
                 </span>
-                <h5>Clientes</h5>
+                <h5>Leitores</h5>
 
             </div>
 
@@ -90,21 +90,21 @@
                     </thead>
                     <tbody>
                         <?php
-                        if($clientes == null){
-                            echo '<tr><td colspan="4">Nenhum cliente foi encontrado.</td></tr>';
+                        if($leitores == null){
+                            echo '<tr><td colspan="4">Nenhum leitor foi encontrado.</td></tr>';
                         }
-                        foreach ($clientes as $r) {
+                        foreach ($leitores as $r) {
                             echo '<tr>';
-                            echo '<td>' . $r->idClientes . '</td>';
-                            echo '<td>' . $r->nomeCliente . '</td>';
-                            echo '<td>' . $r->documento . '</td>';
+                            echo '<td>' . $r->idLeitores . '</td>';
+                            echo '<td>' . $r->nomeLeitor . '</td>';
+                            echo '<td>' . $r->matricula . '</td>';
                             echo '<td>';
 
-                            if($this->permission->checkPermission($this->session->userdata('permissao'),'vCliente')){
-                                echo '<a style="margin-right: 1%" href="' . base_url() . 'index.php/clientes/visualizar/' . $r->idClientes . '" class="btn tip-top" title="Ver mais detalhes"><i class="icon-eye-open"></i></a>'; 
+                            if($this->permission->checkPermission($this->session->userdata('permissao'),'vLeitor')){
+                                echo '<a style="margin-right: 1%" href="' . base_url() . 'index.php/leitores/visualizar/' . $r->idLeitores . '" class="btn tip-top" title="Ver mais detalhes"><i class="icon-eye-open"></i></a>'; 
                             } 
-                            if($this->permission->checkPermission($this->session->userdata('permissao'),'eCliente')){
-                                echo '<a href="' . base_url() . 'index.php/clientes/editar/' . $r->idClientes . '" class="btn btn-info tip-top" title="Editar Cliente"><i class="icon-pencil icon-white"></i></a>'; 
+                            if($this->permission->checkPermission($this->session->userdata('permissao'),'eLeitor')){
+                                echo '<a href="' . base_url() . 'index.php/leitores/editar/' . $r->idLeitores . '" class="btn btn-info tip-top" title="Editar Leitor"><i class="icon-pencil icon-white"></i></a>'; 
                             } 
                             
                             

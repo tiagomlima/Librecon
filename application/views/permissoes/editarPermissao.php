@@ -50,28 +50,28 @@
 
                                     <td>
                                         <label>
-                                            <input <?php if(isset($permissoes['vCliente'])){ if($permissoes['vCliente'] == '1'){echo 'checked';}}?> name="vCliente" class="marcar" type="checkbox" value="1" />
-                                            <span class="lbl"> Visualizar Cliente</span>
+                                            <input <?php if(isset($permissoes['vLeitor'])){ if($permissoes['vLeitor'] == '1'){echo 'checked';}}?> name="vLeitor" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Visualizar Leitor</span>
                                         </label>
                                     </td>
 
                                     <td>
                                         <label>
-                                            <input <?php if(isset($permissoes['aCliente'])){ if($permissoes['aCliente'] == '1'){echo 'checked';}}?> name="aCliente" class="marcar" type="checkbox" value="1" />
-                                            <span class="lbl"> Adicionar Cliente</span>
+                                            <input <?php if(isset($permissoes['aLeitor'])){ if($permissoes['aLeitor'] == '1'){echo 'checked';}}?> name="aLeitor" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Adicionar Leitor</span>
                                         </label>
                                     </td>
 
                                     <td>
                                         <label>
-                                            <input <?php if(isset($permissoes['eCliente'])){ if($permissoes['eCliente'] == '1'){echo 'checked';}}?> name="eCliente" class="marcar" type="checkbox" value="1" />
-                                            <span class="lbl"> Editar Cliente</span>
+                                            <input <?php if(isset($permissoes['eLeitor'])){ if($permissoes['eLeitor'] == '1'){echo 'checked';}}?> name="eLeitor" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Editar Leitor</span>
                                         </label>
                                     </td>
                                     <td>
                                         <label>
-                                            <input <?php if(isset($permissoes['dCliente'])){ if($permissoes['dCliente'] == '1'){echo 'checked';}}?> name="dCliente" class="marcar" type="checkbox" value="1" />
-                                            <span class="lbl"> Excluir Cliente</span>
+                                            <input <?php if(isset($permissoes['dLeitor'])){ if($permissoes['dLeitor'] == '1'){echo 'checked';}}?> name="dLeitor" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Excluir Leitor</span>
                                         </label>
                                     </td>
                                  
@@ -283,8 +283,8 @@
 
                                     <td>
                                         <label>
-                                            <input <?php if(isset($permissoes['rCliente'])){ if($permissoes['rCliente'] == '1'){echo 'checked';}}?> name="rCliente" class="marcar" type="checkbox" value="1" />
-                                            <span class="lbl"> Relatório Cliente</span>
+                                            <input <?php if(isset($permissoes['rLeitor'])){ if($permissoes['rLeitor'] == '1'){echo 'checked';}}?> name="rLeitor" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Relatório Leitor</span>
                                         </label>
                                     </td>
 

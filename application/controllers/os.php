@@ -94,7 +94,7 @@ class Os extends CI_Controller {
 
             $data = array(
                 'dataInicial' => $dataInicial,
-                'clientes_id' => $this->input->post('clientes_id'),//set_value('idCliente'),
+                'leitores_id' => $this->input->post('leitores_id'),//set_value('idLeitor'),
                 'usuarios_id' => $this->input->post('usuarios_id'),//set_value('idUsuario'),
                 'dataFinal' => $dataFinal,
                 'garantia' => set_value('garantia'),
@@ -130,7 +130,7 @@ class Os extends CI_Controller {
         } else {
             $data = array(
                 'dataInicial' => set_value('dataInicial'),
-                'clientes_id' => $this->input->post('clientes_id'),//set_value('idCliente'),
+                'leitores_id' => $this->input->post('leitores_id'),//set_value('idLeitor'),
                 'usuarios_id' => $this->input->post('usuarios_id'),//set_value('idUsuario'),
                 'dataFinal' => set_value('dataFinal'),
                 'garantia' => set_value('garantia'),
@@ -198,7 +198,7 @@ class Os extends CI_Controller {
                 'observacoes' => $this->input->post('observacoes'),
                 'laudoTecnico' => $this->input->post('laudoTecnico'),
                 'usuarios_id' => $this->input->post('usuarios_id'),
-                'clientes_id' => $this->input->post('clientes_id')
+                'leitores_id' => $this->input->post('leitores_id')
             );
 
             if ($this->os_model->edit('os', $data, 'idOs', $this->input->post('idOs')) == TRUE) {
@@ -284,11 +284,11 @@ class Os extends CI_Controller {
 
     }
 
-    public function autoCompleteCliente(){
+    public function autoCompleteLeitor(){
 
         if (isset($_GET['term'])){
             $q = strtolower($_GET['term']);
-            $this->os_model->autoCompleteCliente($q);
+            $this->os_model->autoCompleteLeitor($q);
         }
 
     }
@@ -557,11 +557,11 @@ class Os extends CI_Controller {
             $data = array(
                 'descricao' => set_value('descricao'),
                 'valor' => $this->input->post('valor'),
-                'clientes_id' => $this->input->post('clientes_id'),
+                'leitores_id' => $this->input->post('leitores_id'),
                 'data_vencimento' => $vencimento,
                 'data_pagamento' => $recebimento,
                 'baixado' => $this->input->post('recebido'),
-                'cliente_fornecedor' => set_value('cliente'),
+                'leitor_fornecedor' => set_value('leitor'),
                 'forma_pgto' => $this->input->post('formaPgto'),
                 'tipo' => $this->input->post('tipo')
             );

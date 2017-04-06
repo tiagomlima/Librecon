@@ -91,7 +91,7 @@ class Vendas extends CI_Controller {
 
             $data = array(
                 'dataVenda' => $dataVenda,
-                'clientes_id' => $this->input->post('clientes_id'),
+                'leitores_id' => $this->input->post('leitores_id'),
                 'usuarios_id' => $this->input->post('usuarios_id'),
                 'faturado' => 0
             );
@@ -146,7 +146,7 @@ class Vendas extends CI_Controller {
             $data = array(
                 'dataVenda' => $dataVenda,
                 'usuarios_id' => $this->input->post('usuarios_id'),
-                'clientes_id' => $this->input->post('clientes_id')
+                'leitores_id' => $this->input->post('leitores_id')
             );
 
             if ($this->vendas_model->edit('vendas', $data, 'idVendas', $this->input->post('idVendas')) == TRUE) {
@@ -221,11 +221,11 @@ class Vendas extends CI_Controller {
 
     }
 
-    public function autoCompleteCliente(){
+    public function autoCompleteLeitor(){
 
         if (isset($_GET['term'])){
             $q = strtolower($_GET['term']);
-            $this->vendas_model->autoCompleteCliente($q);
+            $this->vendas_model->autoCompleteLeitor($q);
         }
 
     }
@@ -346,11 +346,11 @@ class Vendas extends CI_Controller {
             $data = array(
                 'descricao' => set_value('descricao'),
                 'valor' => $this->input->post('valor'),
-                'clientes_id' => $this->input->post('clientes_id'),
+                'leitores_id' => $this->input->post('leitores_id'),
                 'data_vencimento' => $vencimento,
                 'data_pagamento' => $recebimento,
                 'baixado' => $this->input->post('recebido'),
-                'cliente_fornecedor' => set_value('cliente'),
+                'leitor_fornecedor' => set_value('leitor'),
                 'forma_pgto' => $this->input->post('formaPgto'),
                 'tipo' => $this->input->post('tipo')
             );

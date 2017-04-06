@@ -41,8 +41,8 @@
                                     <td style="width: 50%; padding-left: 0">
                                         <ul>
                                             <li>
-                                                <span><h5>Cliente</h5>
-                                                <span><?php echo $result->nomeCliente?></span><br/>
+                                                <span><h5>Leitor</h5>
+                                                <span><?php echo $result->nomeLeitor?></span><br/>
                                                 <span><?php echo $result->rua?>, <?php echo $result->numero?>, <?php echo $result->bairro?></span><br/>
                                                 <span><?php echo $result->cidade?> - <?php echo $result->estado?></span>
                                             </li>
