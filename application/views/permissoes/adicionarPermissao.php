@@ -102,6 +102,198 @@
 
                                     <td>
                                         <label>
+                                            <input name="vAcervo" class="marcar" type="checkbox" checked="checked" value="1" />
+                                            <span class="lbl"> Visualizar Acervo</span>
+                                        </label>
+                                    </td>
+                                   <td>
+                                        <label>
+                                            <input name="aAcervo" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Adicionar Acervo</span>
+                                        </label>
+                                    </td>
+
+                                    <td>
+                                        <label>
+                                            <input name="eAcervo" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Editar Acervo</span>
+                                        </label>
+                                    </td>
+
+                                    <td>
+                                        <label>
+                                            <input name="dAcervo" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Excluir Acervo</span>
+                                        </label>
+                                    </td>
+
+                                </tr>
+                                <tr><td colspan="4"></td></tr>
+                                
+                                <tr>
+
+                                    <td>
+                                        <label>
+                                            <input name="vAutor" class="marcar" type="checkbox" checked="checked" value="1" />
+                                            <span class="lbl"> Visualizar Autor</span>
+                                        </label>
+                                    </td>
+                                   <td>
+                                        <label>
+                                            <input name="aAutor" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Adicionar Autor</span>
+                                        </label>
+                                    </td>
+
+                                    <td>
+                                        <label>
+                                            <input name="eAutor" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Editar Autor</span>
+                                        </label>
+                                    </td>
+
+                                    <td>
+                                        <label>
+                                            <input name="dAutor" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Excluir Autor</span>
+                                        </label>
+                                    </td>
+
+                                </tr>
+                                <tr><td colspan="4"></td></tr>
+                                
+                                <tr>
+
+                                    <td>
+                                        <label>
+                                            <input name="vEditora" class="marcar" type="checkbox" checked="checked" value="1" />
+                                            <span class="lbl"> Visualizar Editora</span>
+                                        </label>
+                                    </td>
+                                   <td>
+                                        <label>
+                                            <input name="aEditora" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Adicionar Editora</span>
+                                        </label>
+                                    </td>
+
+                                    <td>
+                                        <label>
+                                            <input name="eEditora" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Editar Editora</span>
+                                        </label>
+                                    </td>
+
+                                    <td>
+                                        <label>
+                                            <input name="dEditora" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Excluir Editora</span>
+                                        </label>
+                                    </td>
+
+                                </tr>
+                                <tr><td colspan="4"></td></tr>
+                                
+                                <tr>
+
+                                    <td>
+                                        <label>
+                                            <input name="vTipoItem" class="marcar" type="checkbox" checked="checked" value="1" />
+                                            <span class="lbl"> Visualizar TipoItem</span>
+                                        </label>
+                                    </td>
+                                   <td>
+                                        <label>
+                                            <input name="aTipoItem" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Adicionar TipoItem</span>
+                                        </label>
+                                    </td>
+
+                                    <td>
+                                        <label>
+                                            <input name="eTipoItem" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Editar TipoItem</span>
+                                        </label>
+                                    </td>
+
+                                    <td>
+                                        <label>
+                                            <input name="dTipoItem" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Excluir TipoItem</span>
+                                        </label>
+                                    </td>
+
+                                </tr>
+                                <tr><td colspan="4"></td></tr>
+                                
+                                <tr>
+
+                                    <td>
+                                        <label>
+                                            <input name="vSecao" class="marcar" type="checkbox" checked="checked" value="1" />
+                                            <span class="lbl"> Visualizar Seção</span>
+                                        </label>
+                                    </td>
+                                   <td>
+                                        <label>
+                                            <input name="aSecao" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Adicionar Seção</span>
+                                        </label>
+                                    </td>
+
+                                    <td>
+                                        <label>
+                                            <input name="eSecao" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Editar Seção</span>
+                                        </label>
+                                    </td>
+
+                                    <td>
+                                        <label>
+                                            <input name="dSecao" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Excluir Seção</span>
+                                        </label>
+                                    </td>
+
+                                </tr>
+                                <tr><td colspan="4"></td></tr>
+                                
+                                <tr>
+
+                                    <td>
+                                        <label>
+                                            <input name="vColecao" class="marcar" type="checkbox" checked="checked" value="1" />
+                                            <span class="lbl"> Visualizar Coleção</span>
+                                        </label>
+                                    </td>
+                                   <td>
+                                        <label>
+                                            <input name="aColecao" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Adicionar Coleção</span>
+                                        </label>
+                                    </td>
+
+                                    <td>
+                                        <label>
+                                            <input name="eColecao" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Editar Coleção</span>
+                                        </label>
+                                    </td>
+
+                                    <td>
+                                        <label>
+                                            <input name="dColecao" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Excluir Coleção</span>
+                                        </label>
+                                    </td>
+
+                                </tr>
+                                <tr><td colspan="4"></td></tr>
+                                
+                                <tr>
+
+                                    <td>
+                                        <label>
                                             <input name="vServico" class="marcar" type="checkbox" checked="checked" value="1" />
                                             <span class="lbl"> Visualizar Serviço</span>
                                         </label>

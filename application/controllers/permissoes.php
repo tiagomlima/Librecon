@@ -92,6 +92,36 @@ class Permissoes extends CI_Controller {
                   'eProduto' => $this->input->post('eProduto'),
                   'dProduto' => $this->input->post('dProduto'),
                   'vProduto' => $this->input->post('vProduto'),
+                  
+				  'aAcervo' => $this->input->post('aAcervo'),
+                  'eAcervo' => $this->input->post('eAcervo'),
+                  'dAcervo' => $this->input->post('dAcervo'),
+                  'vAcervo' => $this->input->post('vAcervo'),
+                  
+				  'aAutor' => $this->input->post('aAutor'),
+                  'eAutor' => $this->input->post('eAutor'),
+                  'dAutor' => $this->input->post('dAutor'),
+                  'vAutor' => $this->input->post('vAutor'),
+                  
+				  'aEditora' => $this->input->post('aEditora'),
+                  'eEditora' => $this->input->post('eEditora'),
+                  'dEditora' => $this->input->post('dEditora'),
+                  'vEditora' => $this->input->post('vEditora'),
+                  
+				  'aTipoItem' => $this->input->post('aTipoItem'),
+                  'eTipoItem' => $this->input->post('eTipoItem'),
+                  'dTipoItem' => $this->input->post('dTipoItem'),
+                  'vTipoItem' => $this->input->post('vTipoItem'),
+                  
+				  'aSecao' => $this->input->post('aSecao'),
+                  'eSecao' => $this->input->post('eSecao'),
+                  'dSecao' => $this->input->post('dSecao'),
+                  'vSecao' => $this->input->post('vSecao'),
+                  
+				  'aColecao' => $this->input->post('aColecao'),
+                  'eColecao' => $this->input->post('eColecao'),
+                  'dColecao' => $this->input->post('dColecao'),
+                  'vColecao' => $this->input->post('vColecao'),
 
                   'aServico' => $this->input->post('aServico'),
                   'eServico' => $this->input->post('eServico'),
@@ -184,6 +214,36 @@ class Permissoes extends CI_Controller {
                   'eProduto' => $this->input->post('eProduto'),
                   'dProduto' => $this->input->post('dProduto'),
                   'vProduto' => $this->input->post('vProduto'),
+                  
+				  'aAcervo' => $this->input->post('aAcervo'),
+                  'eAcervo' => $this->input->post('eAcervo'),
+                  'dAcervo' => $this->input->post('dAcervo'),
+                  'vAcervo' => $this->input->post('vAcervo'),
+                  
+				  'aAutor' => $this->input->post('aAutor'),
+                  'eAutor' => $this->input->post('eAutor'),
+                  'dAutor' => $this->input->post('dAutor'),
+                  'vAutor' => $this->input->post('vAutor'),
+                  
+				  'aEditora' => $this->input->post('aEditora'),
+                  'eEditora' => $this->input->post('eEditora'),
+                  'dEditora' => $this->input->post('dEditora'),
+                  'vEditora' => $this->input->post('vEditora'),
+                  
+				  'aTipoItem' => $this->input->post('aTipoItem'),
+                  'eTipoItem' => $this->input->post('eTipoItem'),
+                  'dTipoItem' => $this->input->post('dTipoItem'),
+                  'vTipoItem' => $this->input->post('vTipoItem'),
+                  
+				  'aSecao' => $this->input->post('aSecao'),
+                  'eSecao' => $this->input->post('eSecao'),
+                  'dSecao' => $this->input->post('dSecao'),
+                  'vSecao' => $this->input->post('vSecao'),
+                  
+				  'aColecao' => $this->input->post('aColecao'),
+                  'eColecao' => $this->input->post('eColecao'),
+                  'dColecao' => $this->input->post('dColecao'),
+                  'vColecao' => $this->input->post('vColecao'),
 
                   'aServico' => $this->input->post('aServico'),
                   'eServico' => $this->input->post('eServico'),
