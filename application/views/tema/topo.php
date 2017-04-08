@@ -69,29 +69,7 @@
         <li class="<?php if(isset($menuTipoItem)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/tipoItem"><i class="icon icon-barcode"></i> <span>Tipo de Item</span></a></li>
     <?php } ?>
     
-   
-    
-    
-
-            <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vAcervo')){ ?>
-                <li><a href="<?php echo base_url()?>index.php/acervo">Acervo</a></li>
-            <?php } ?>
-            <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vAutor')){ ?>
-                <li><a href="<?php echo base_url()?>index.php/autor">Autor</a></li>
-            <?php } ?>
-            <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vEditora')){ ?>
-                <li><a href="<?php echo base_url()?>index.php/editora">Editora</a></li>
-            <?php } ?>
-            <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vTipoItem')){ ?>
-                 <li><a href="<?php echo base_url()?>index.php/tipoItem">Tipo de Item</a></li>
-            <?php } ?>
-            <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vSecao')){ ?>
-                <li><a href="<?php echo base_url()?>index.php/secao">Seção</a></li>
-            <?php } ?>
-            <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vColecao')){ ?>
-                <li><a href="<?php echo base_url()?>index.php/colecao">Coleção</a></li>
-            <?php } ?>
-            
+     
           
     <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vServico')){ ?>
         <li class="<?php if(isset($menuServicos)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/servicos"><i class="icon icon-wrench"></i> <span>Serviços</span></a></li>
