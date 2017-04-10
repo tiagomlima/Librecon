@@ -63,6 +63,10 @@
         <li class="<?php if(isset($menuProdutos)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/produtos"><i class="icon icon-barcode"></i> <span>Produtos</span></a></li>
     <?php } ?>
     
+    <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vTeste')){ ?>
+        <li class="<?php if(isset($menuTeste)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/teste"><i class="icon icon-barcode"></i> <span>Teste</span></a></li>
+    <?php } ?>
+    
     <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vServico')){ ?>
         <li class="<?php if(isset($menuServicos)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/servicos"><i class="icon icon-wrench"></i> <span>Serviços</span></a></li>
     <?php } ?>

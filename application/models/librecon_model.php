@@ -56,7 +56,7 @@ class Librecon_model extends CI_Model {
          // buscando leitores
          $this->db->like('nomeLeitor',$termo);
          $this->db->limit(5);
-         $data['leitoress'] = $this->db->get('leitoress')->result();
+         $data['leitoress'] = $this->db->get('leitores')->result();
 
          // buscando os
          $this->db->like('idOs',$termo);

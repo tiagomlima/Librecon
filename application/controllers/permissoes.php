@@ -102,6 +102,11 @@ class Permissoes extends CI_Controller {
                   'eOs' => $this->input->post('eOs'),
                   'dOs' => $this->input->post('dOs'),
                   'vOs' => $this->input->post('vOs'),
+                  
+				  'aTeste' => $this->input->post('aTeste'),
+                  'eTeste' => $this->input->post('eTeste'),
+                  'dTeste' => $this->input->post('dTeste'),
+                  'vTeste' => $this->input->post('vTeste'),
 
                   'aVenda' => $this->input->post('aVenda'),
                   'eVenda' => $this->input->post('eVenda'),
@@ -194,6 +199,12 @@ class Permissoes extends CI_Controller {
                   'eOs' => $this->input->post('eOs'),
                   'dOs' => $this->input->post('dOs'),
                   'vOs' => $this->input->post('vOs'),
+                  
+				  'aTeste' => $this->input->post('aTeste'),
+                  'eTeste' => $this->input->post('eTeste'),
+                  'dTeste' => $this->input->post('dTeste'),
+                  'vTeste' => $this->input->post('vTeste'),
+				  
 
                   'aVenda' => $this->input->post('aVenda'),
                   'eVenda' => $this->input->post('eVenda'),

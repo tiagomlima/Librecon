@@ -162,6 +162,40 @@
                                     </td>
                                  
                                 </tr>
+                                
+                                  <tr><td colspan="4"></td></tr>
+                                <tr>
+
+                                    <td>
+                                        <label>
+                                            <input name="vTeste" class="marcar" type="checkbox" checked="checked" value="1" />
+                                            <span class="lbl"> Visualizar Teste</span>
+                                        </label>
+                                    </td>
+
+                                    <td>
+                                        <label>
+                                            <input name="aTeste" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Adicionar Teste</span>
+                                        </label>
+                                    </td>
+
+                                    <td>
+                                        <label>
+                                            <input name="eTeste" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Editar Teste</span>
+                                        </label>
+                                    </td>
+
+                                    <td>
+                                        <label>
+                                            <input name="dTeste" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Excluir Teste</span>
+                                        </label>
+                                    </td>
+                                 
+                                </tr>
+                                
                                 <tr><td colspan="4"></td></tr>
                                 
                                 <tr>

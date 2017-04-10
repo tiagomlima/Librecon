@@ -175,6 +175,40 @@
                                     </td>
                                  
                                 </tr>
+                                
+                                <tr><td colspan="4"></td></tr>
+                                <tr>
+
+                                    <td>
+                                        <label>
+                                            <input <?php if(isset($permissoes['vTeste'])){ if($permissoes['vTeste'] == '1'){echo 'checked';}}?> name="vTeste" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Visualizar Teste</span>
+                                        </label>
+                                    </td>
+
+                                    <td>
+                                        <label>
+                                            <input <?php if(isset($permissoes['aTeste'])){ if($permissoes['aTeste'] == '1'){echo 'checked';}}?> name="aTeste" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Adicionar Teste</span>
+                                        </label>
+                                    </td>
+
+                                    <td>
+                                        <label>
+                                            <input <?php if(isset($permissoes['eTeste'])){ if($permissoes['eTeste'] == '1'){echo 'checked';}}?> name="eTeste" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Editar Teste</span>
+                                        </label>
+                                    </td>
+
+                                    <td>
+                                        <label>
+                                            <input <?php if(isset($permissoes['dTeste'])){ if($permissoes['dTeste'] == '1'){echo 'checked';}}?> name="dTeste" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Excluir Teste</span>
+                                        </label>
+                                    </td>
+                                 
+                                </tr>
+                                
                                 <tr><td colspan="4"></td></tr>
                                 
                                 <tr>
@@ -297,8 +331,8 @@
 
                                     <td>
                                         <label>
-                                            <input <?php if(isset($permissoes['rOs'])){ if($permissoes['rOs'] == '1'){echo 'checked';}}?> name="rOs" class="marcar" type="checkbox" value="1" />
-                                            <span class="lbl"> Relatório OS</span>
+                                            <input <?php if(isset($permissoes['rTeste'])){ if($permissoes['rTeste'] == '1'){echo 'checked';}}?> name="rTeste" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Relatório Teste</span>
                                         </label>
                                     </td>
 
