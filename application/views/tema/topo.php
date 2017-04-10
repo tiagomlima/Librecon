@@ -55,6 +55,8 @@
      <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'cCurso')){ ?>
         <li class="<?php if(isset($menuCursos)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/cursos"><i class="icon icon-group"></i> <span>Cursos</span></a></li>
     <?php } ?>
+    
+    
     <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vLeitor')){ ?>
         <li class="<?php if(isset($menuLeitores)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/leitores"><i class="icon icon-group"></i> <span>Leitores</span></a></li>
     <?php } ?>
@@ -63,10 +65,12 @@
         <li class="<?php if(isset($menuProdutos)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/produtos"><i class="icon icon-barcode"></i> <span>Produtos</span></a></li>
     <?php } ?>
     
-    <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vTeste')){ ?>
-        <li class="<?php if(isset($menuTeste)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/teste"><i class="icon icon-barcode"></i> <span>Teste</span></a></li>
+    
+    <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vTipoItem')){ ?>
+        <li class="<?php if(isset($menuTipoItem)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/tipoItem"><i class="icon icon-barcode"></i> <span>Tipo de Item</span></a></li>
     <?php } ?>
     
+     
     <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vServico')){ ?>
         <li class="<?php if(isset($menuServicos)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/servicos"><i class="icon icon-wrench"></i> <span>Serviços</span></a></li>
     <?php } ?>
