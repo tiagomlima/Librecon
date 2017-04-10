@@ -69,6 +69,12 @@ class Usuarios extends CI_Controller {
         $this->load->library('form_validation');    
 		$this->data['custom_error'] = '';
 		
+		//confere se a confirmação de senha bate com a senha digitada
+		$senha = $this->input->post('senha'); 
+		$senhaConfirm = $this->input->post('senhaConfirm');
+        if($senha == $senhaConfirm){
+        // se sim, prossegue com a inserção dos dados
+		
         if ($this->form_validation->run('usuarios') == false)
         {
              $this->data['custom_error'] = (validation_errors() ? '<div class="alert alert-danger">'.validation_errors().'</div>' : false);
@@ -107,7 +113,13 @@ class Usuarios extends CI_Controller {
         $this->data['permissoes'] = $this->permissoes_model->getActive('permissoes','permissoes.idPermissao,permissoes.nome');   
 		$this->data['view'] = 'usuarios/adicionarUsuario';
         $this->load->view('tema/topo',$this->data);
-   
+   		
+		//se não, apresenta um erro
+		}else{
+			$this->session->set_flashdata('error','A senha digitada não confere com a confirmação');
+			redirect(base_url() . 'index.php/usuarios/adicionar/');
+		}
+    
        
     }	
     
@@ -195,9 +207,56 @@ class Usuarios extends CI_Controller {
     }
 	
     public function excluir(){
+    	
+			$id =  $this->input->post('id');
+            if ($id == null){
 
-            $ID =  $this->uri->segment(3);
-            $this->usuarios_model->delete('usuarios','idUsuarios',$ID);             
+                $this->session->set_flashdata('error','Erro ao tentar excluir Usuário.');            
+                redirect(base_url().'index.php/usuarios/gerenciar/');
+            }
+			
+			// excluindo OSs vinculadas ao Usuario
+            $this->db->where('usuarios_id', $id);
+            $os = $this->db->get('os')->result();
+
+            if($os != null){
+
+                foreach ($os as $o) {
+                    $this->db->where('os_id', $o->idOs);
+                    $this->db->delete('servicos_os');
+
+                    $this->db->where('os_id', $o->idOs);
+                    $this->db->delete('produtos_os');
+
+
+                    $this->db->where('idOs', $o->idOs);
+                    $this->db->delete('os');
+                }
+            }
+			
+			// excluindo Vendas vinculadas ao usuario
+            $this->db->where('usuarios_id', $id);
+            $vendas = $this->db->get('vendas')->result();
+
+            if($vendas != null){
+
+                foreach ($vendas as $v) {
+                    $this->db->where('vendas_id', $v->idVendas);
+                    $this->db->delete('itens_de_vendas');
+
+
+                    $this->db->where('idVendas', $v->idVendas);
+                    $this->db->delete('vendas');
+                }
+            }
+
+            //$ID =  $this->uri->segment(3);
+           // $this->usuarios_model->delete('usuarios','idUsuarios',$ID);             
+            //redirect(base_url().'index.php/usuarios/gerenciar/');
+            
+            $this->usuarios_model->delete('usuarios','idUsuarios',$id); 
+
+            $this->session->set_flashdata('success','Usuário excluido com sucesso!');            
             redirect(base_url().'index.php/usuarios/gerenciar/');
     }
 }

@@ -41,6 +41,13 @@
                             <input id="senha" type="password" name="senha" value="<?php echo set_value('senha'); ?>"  />
                         </div>
                     </div>
+                    
+                    <div class="control-group">
+                        <label for="senha" class="control-label">Confirme a Senha<span class="required">*</span></label>
+                        <div class="controls">
+                            <input id="senhaConfirm" type="password" name="senhaConfirm" value="<?php echo set_value('senhaConfirm'); ?>"  />
+                        </div>
+                    </div>
 
                     <div class="control-group">
                         <label for="telefone" class="control-label">Telefone<span class="required">*</span></label>
@@ -104,6 +111,7 @@
                   cpf:{ required: true},
                   telefone:{ required: true},
                   email:{ required: true},
+                  senhaConfirm:{ required: true},
                   senha:{ required: true},
             },
             messages: {
@@ -111,6 +119,7 @@
                   cpf:{ required: 'Campo Requerido.'},
                   telefone:{ required: 'Campo Requerido.'},
                   email:{ required: 'Campo Requerido.'},
+                  senhaConfirm:{ required: 'Campo Requerido.'},
                   senha:{ required: 'Campo Requerido.'},
                   
 
