@@ -319,17 +319,17 @@ class Permissoes extends CI_Controller {
         if ($id == null){
 
             $this->session->set_flashdata('error','Erro ao tentar excluir serviço.');            
-            redirect(base_url().'index.php/servicos/gerenciar/');
+            redirect(base_url().'index.php/permissoes/gerenciar/');
         }
 
-        $this->db->where('servicos_id', $id);
-        $this->db->delete('servicos_os');
+        $this->db->where('permissoes_id', $id);
+        $this->db->delete('usuarios');
 
-        $this->servicos_model->delete('servicos','idServicos',$id);             
+        $this->permissoes_model->delete('permissoes','idPermissao',$id);             
         
 
-        $this->session->set_flashdata('success','Serviço excluido com sucesso!');            
-        redirect(base_url().'index.php/servicos/gerenciar/');
+        $this->session->set_flashdata('success','Permissão excluido com sucesso!');            
+        redirect(base_url().'index.php/permissoes/gerenciar/');
     }
 }
 
