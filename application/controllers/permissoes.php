@@ -78,10 +78,20 @@ class Permissoes extends CI_Controller {
             $situacao = 1;
 
             $permissoes = array(
-            	  'cCurso' => $this->input->post('cCurso'),
             	  'aCurso' => $this->input->post('aCurso'),
             	  'eCurso' => $this->input->post('eCurso'),
             	  'dCurso' => $this->input->post('dCurso'),
+            	  'vCurso' => $this->input->post('vCurso'),
+            	  
+				  'aDisciplina' => $this->input->post('aDisciplina'),
+            	  'eDisciplina' => $this->input->post('eDisciplina'),
+            	  'dDisciplina' => $this->input->post('dDisciplina'),
+            	  'vDisciplina' => $this->input->post('vDisciplina'),
+            	  
+				  'aGrupo' => $this->input->post('aGrupo'),
+            	  'eGrupo' => $this->input->post('eGrupo'),
+            	  'dGrupo' => $this->input->post('dGrupo'),
+            	  'vGrupo' => $this->input->post('vGrupo'),
 
                   'aLeitor' => $this->input->post('aLeitor'),
                   'eLeitor' => $this->input->post('eLeitor'),
@@ -200,10 +210,20 @@ class Permissoes extends CI_Controller {
             $situacao = $this->input->post('situacao');
             $permissoes = array(
             	  
-				  'cCurso' => $this->input->post('cCurso'),
-            	  'aCurso' => $this->input->post('aCurso'),
+				  'aCurso' => $this->input->post('eCurso'),
             	  'eCurso' => $this->input->post('eCurso'),
             	  'dCurso' => $this->input->post('dCurso'),
+            	  'vCurso' => $this->input->post('vCurso'),
+            	  
+				  'aDisciplina' => $this->input->post('aDisciplina'),
+            	  'eDisciplina' => $this->input->post('eDisciplina'),
+            	  'dDisciplina' => $this->input->post('dDisciplina'),
+            	  'vDisciplina' => $this->input->post('vDisciplina'),
+            	  
+				  'aGrupo' => $this->input->post('aGrupo'),
+            	  'eGrupo' => $this->input->post('eGrupo'),
+            	  'dGrupo' => $this->input->post('dGrupo'),
+            	  'vGrupo' => $this->input->post('vGrupo'),
 
                   'aLeitor' => $this->input->post('aLeitor'),
                   'eLeitor' => $this->input->post('eLeitor'),

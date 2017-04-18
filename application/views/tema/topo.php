@@ -52,13 +52,24 @@
     <li class="<?php if(isset($menuPainel)){echo 'active';};?>"><a href="<?php echo base_url()?>"><i class="icon icon-home"></i> <span>Dashboard</span></a></li>
     
     
-     <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'cCurso')){ ?>
-        <li class="<?php if(isset($menuCursos)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/cursos"><i class="icon icon-group"></i> <span>Cursos</span></a></li>
-    <?php } ?>
-    
-    
-    <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vLeitor')){ ?>
-        <li class="<?php if(isset($menuLeitores)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/leitores"><i class="icon icon-group"></i> <span>Leitores</span></a></li>
+    <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vLeitor') || $this->permission->checkPermission($this->session->userdata('permissao'), 'vCurso') || $this->permission->checkPermission($this->session->userdata('permissao'), 'vDisciplina') || $this->permission->checkPermission($this->session->userdata('permissao'), 'vGrupo')){ ?>
+        <li class="submenu <?php if(isset($menuLeitores)){echo 'active open';};?>">
+          <a href="#"><i class="icon icon-group"></i> <span>Leitores</span> <span class="label"><i class="icon-chevron-down"></i></span></a>
+          <ul>
+            <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vLeitor')){ ?>
+                <li><a href="<?php echo base_url()?>index.php/leitores">Leitores</a></li>
+            <?php } ?>
+            <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vCurso')){ ?>
+                <li><a href="<?php echo base_url()?>index.php/cursos">Cursos</a></li>
+            <?php } ?>
+            <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vDisciplina')){ ?>
+                <li><a href="<?php echo base_url()?>index.php/disciplinas">Disciplinas</a></li>
+            <?php } ?>
+            <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vGrupo')){ ?>
+                <li><a href="<?php echo base_url()?>index.php/grupos">Grupos</a></li>
+            <?php } ?>
+          </ul>
+        </li>
     <?php } ?>
     
     <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vProduto')){ ?>

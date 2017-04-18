@@ -15,6 +15,7 @@ class Librecon extends CI_Controller {
         if((!$this->session->userdata('session_id')) || (!$this->session->userdata('logado'))){
             redirect('librecon/login');
         }
+		
 
         $this->data['ordens'] = $this->librecon_model->getOsAbertas();
         $this->data['produtos'] = $this->librecon_model->getProdutosMinimo();
@@ -25,6 +26,7 @@ class Librecon extends CI_Controller {
         $this->load->view('tema/topo',  $this->data);
       
     }
+
 
     public function minhaConta() {
         if((!$this->session->userdata('session_id')) || (!$this->session->userdata('logado'))){
@@ -114,8 +116,10 @@ class Librecon extends CI_Controller {
             $this->db->where('email',$email);
             $this->db->where('senha',$senha);
             $this->db->where('situacao',1);
-            $this->db->limit(1);
+			$this->db->limit(1);
+			
             $usuario = $this->db->get('usuarios')->row();
+			
             if(count($usuario) > 0){
                 $dados = array('nome' => $usuario->nome, 'id' => $usuario->idUsuarios,'permissao' => $usuario->permissoes_id , 'logado' => TRUE);
                 $this->session->set_userdata($dados);
@@ -125,10 +129,10 @@ class Librecon extends CI_Controller {
                     echo json_encode($json);
                 }
                 else{
+                	
                     redirect(base_url().'librecon');
                 }
-
-                
+				
             }
             else{
                 

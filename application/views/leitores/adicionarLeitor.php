@@ -119,20 +119,42 @@
                             <input id="estado" type="text" name="estado" value="<?php echo set_value('estado'); ?>"  />
                         </div>
                     </div>
-
+               
                     <div class="control-group" class="control-label">
                         <label for="cep" class="control-label">CEP<span class="required">*</span></label>
                         <div class="controls">
                             <input id="cep" type="text" name="cep" value="<?php echo set_value('cep'); ?>"  />
                         </div>
                     </div>
+                    
+                    <div class="control-group">
+                        <label  class="control-label">Curso<span class="required">*</span></label>
+                        <div class="controls">
+                            <select name="curso_id" id="curso_id">
+                                  <?php foreach ($cursos as $c) {
+                                      echo '<option value="'.$c->idCursos.'">'.$c->nomeCurso.'</option>';
+                                  } ?>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label  class="control-label">Grupo<span class="required">*</span></label>
+                        <div class="controls">
+                            <select name="grupo_id" id="grupo_id">
+                                  <?php foreach ($grupos as $g) {
+                                      echo '<option value="'.$g->idGrupo.'">'.$g->nomeGrupo.'</option>';
+                                  } ?>
+                            </select>
+                        </div>
+                    </div>
 
 					<div class="control-group">
-                        <label  class="control-label">Status<span class="required">*</span></label>
+                        <label  class="control-label">Situação<span class="required">*</span></label>
                         <div class="controls">
-                            <select name="status" id="status">
-                                <option value="Ativo">Ativo</option>
-                                <option value="Inativo">Inativo</option>
+                            <select name="situacao" id="situacao">
+                                <option value="1">Ativo</option>
+                                <option value="0">Inativo</option>
                             </select>
                         </div>
                     </div>
@@ -172,12 +194,12 @@
                   bairro:{ required: true},
                   cidade:{ required: true},
                   estado:{ required: true},
-                  cep:{ required: true}
-                  matricula:{ required: true}
-                  cpf:{ required: true}
-                  status:{ required: true}
-                  sexo:{ required: true}
-                  senha:{ required: true}
+                  cep:{ required: true},
+                  matricula:{ required: true},
+                  cpf:{ required: true},
+                  situacao:{ required: true},
+                  sexo:{ required: true},
+                  senha:{ required: true},
                   senhaConfirm:{ required: true}
             },
             messages:{
@@ -189,12 +211,12 @@
                   bairro:{ required: 'Campo Requerido.'},
                   cidade:{ required: 'Campo Requerido.'},
                   estado:{ required: 'Campo Requerido.'},
-                  cep:{ required: 'Campo Requerido.'}
-                  matricula:{ required: 'Campo Requerido.'}
-                  cpf:{ required: 'Campo Requerido.'}
-                  status:{ required: 'Campo Requerido.'}
-                  sexo:{ required: 'Campo Requerido.'}
-                  senha:{ required: 'Campo Requerido.'}
+                  cep:{ required: 'Campo Requerido.'},
+                  matricula:{ required: 'Campo Requerido.'},
+                  cpf:{ required: 'Campo Requerido.'},
+                  situacao:{ required: 'Campo Requerido.'},
+                  sexo:{ required: 'Campo Requerido.'},
+                  senha:{ required: 'Campo Requerido.'},
                   senhaConfirm:{ required: 'Campo Requerido.'}
 
             },

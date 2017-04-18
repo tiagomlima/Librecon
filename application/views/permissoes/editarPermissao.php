@@ -109,6 +109,106 @@
                                     </td>
                                  
                                 </tr>
+                                
+                                <tr><td colspan="4"></td></tr>
+                                <tr>
+
+                                    <td>
+                                        <label>
+                                            <input <?php if(isset($permissoes['vDisciplina'])){ if($permissoes['vDisciplina'] == '1'){echo 'checked';}}?> name="vDisciplina" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Visualizar Disciplina</span>
+                                        </label>
+                                    </td>
+
+                                    <td>
+                                        <label>
+                                            <input <?php if(isset($permissoes['aDisciplina'])){ if($permissoes['aDisciplina'] == '1'){echo 'checked';}}?> name="aDisciplina" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Adicionar Disciplina</span>
+                                        </label>
+                                    </td>
+
+                                    <td>
+                                        <label>
+                                            <input <?php if(isset($permissoes['eDisciplina'])){ if($permissoes['eDisciplina'] == '1'){echo 'checked';}}?> name="eDisciplina" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Editar Disciplina</span>
+                                        </label>
+                                    </td>
+
+                                    <td>
+                                        <label>
+                                            <input <?php if(isset($permissoes['dDisciplina'])){ if($permissoes['dDisciplina'] == '1'){echo 'checked';}}?> name="dDisciplina" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Excluir Disciplina</span>
+                                        </label>
+                                    </td>
+                                 
+                                </tr>
+                                
+                                <tr><td colspan="4"></td></tr>
+                                <tr>
+
+                                    <td>
+                                        <label>
+                                            <input <?php if(isset($permissoes['vGrupo'])){ if($permissoes['vGrupo'] == '1'){echo 'checked';}}?> name="vGrupo" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Visualizar Grupo</span>
+                                        </label>
+                                    </td>
+
+                                    <td>
+                                        <label>
+                                            <input <?php if(isset($permissoes['aGrupo'])){ if($permissoes['aGrupo'] == '1'){echo 'checked';}}?> name="aGrupo" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Adicionar Grupo</span>
+                                        </label>
+                                    </td>
+
+                                    <td>
+                                        <label>
+                                            <input <?php if(isset($permissoes['eGrupo'])){ if($permissoes['eGrupo'] == '1'){echo 'checked';}}?> name="eGrupo" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Editar Grupo</span>
+                                        </label>
+                                    </td>
+
+                                    <td>
+                                        <label>
+                                            <input <?php if(isset($permissoes['dGrupo'])){ if($permissoes['dGrupo'] == '1'){echo 'checked';}}?> name="dGrupo" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Excluir Grupo</span>
+                                        </label>
+                                    </td>
+                                 
+                                </tr>
+                                
+                                <tr><td colspan="4"></td></tr>
+                                <tr>
+
+                                    <td>
+                                        <label>
+                                            <input <?php if(isset($permissoes['vCurso'])){ if($permissoes['vCurso'] == '1'){echo 'checked';}}?> name="vCurso" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Visualizar Curso</span>
+                                        </label>
+                                    </td>
+
+                                    <td>
+                                        <label>
+                                            <input <?php if(isset($permissoes['aCurso'])){ if($permissoes['aCurso'] == '1'){echo 'checked';}}?> name="aCurso" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Adicionar Curso</span>
+                                        </label>
+                                    </td>
+
+                                    <td>
+                                        <label>
+                                            <input <?php if(isset($permissoes['eCurso'])){ if($permissoes['eCurso'] == '1'){echo 'checked';}}?> name="eCurso" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Editar Curso</span>
+                                        </label>
+                                    </td>
+
+                                    <td>
+                                        <label>
+                                            <input <?php if(isset($permissoes['dCurso'])){ if($permissoes['dCurso'] == '1'){echo 'checked';}}?> name="dCurso" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Excluir Curso</span>
+                                        </label>
+                                    </td>
+                                 
+                                </tr>
+                                
                                 <tr><td colspan="4"></td></tr>
                                 
                                 <tr>

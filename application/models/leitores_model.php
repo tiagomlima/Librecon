@@ -6,7 +6,32 @@ class Leitores_model extends CI_Model {
     function __construct() {
         parent::__construct();
     }
-
+	
+	function getCurso($perpage=0,$start=0,$one=false){
+        
+        $this->db->from('leitores');
+        $this->db->select('leitores.*, cursos.nomeCurso as curso');
+        $this->db->limit($perpage,$start);
+        $this->db->join('cursos', 'leitores.curso_id = cursos.idCursos', 'left');
+  
+        $query = $this->db->get();
+        
+        $result =  !$one  ? $query->result() : $query->row();
+        return $result;
+    }
+	
+	function getGrupo($perpage=0,$start=0,$one=false){
+        
+        $this->db->from('leitores');
+        $this->db->select('leitores.*, grupos.nomeGrupo as grupo');
+        $this->db->limit($perpage,$start);
+        $this->db->join('grupos', 'leitores.grupo_id = grupos.idGrupo', 'left');
+  
+        $query = $this->db->get();
+        
+        $result =  !$one  ? $query->result() : $query->row();
+        return $result;
+    }
     
     function get($table,$fields,$where='',$perpage=0,$start=0,$one=false,$array='array'){
         
@@ -28,6 +53,35 @@ class Leitores_model extends CI_Model {
         $this->db->where('idLeitores',$id);
         $this->db->limit(1);
         return $this->db->get('leitores')->row();
+    }
+	
+	function getCursoById($id){
+		$this->db->select('leitores.curso_id, cursos.nomeCurso as curso');
+		$this->db->where('idLeitores',$id);
+        $this->db->limit(1);
+        $this->db->join('cursos', 'leitores.curso_id = cursos.idCursos', 'left');
+		return $this->db->get('leitores')->row();
+	}
+	
+	function getGrupoById($id){
+		$this->db->select('leitores.grupo_id, grupos.nomeGrupo as grupo');
+		$this->db->where('idLeitores',$id);
+		$this->db->limit(1);
+		$this->db->join('grupos', 'leitores.grupo_id = grupos.idGrupo', 'left');
+		return $this->db->get('leitores')->row();
+	}
+	
+	function pesquisar($termo){
+         $data = array();
+
+         // buscando produtos
+         $this->db->like('descricao',$termo);
+         $this->db->limit(5);
+         $data['produtos'] = $this->db->get('produtos')->result();
+
+         return $data;
+
+
     }
     
     function add($table,$data){

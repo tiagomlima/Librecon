@@ -5,18 +5,30 @@
                 <span class="icon">
                     <i class="icon-user"></i>
                 </span>
-                <h5>Editar Curso</h5>
+                <h5>Editar Disciplina</h5>
             </div>
             <div class="widget-content nopadding">
                 <?php if ($custom_error != '') {
                     echo '<div class="alert alert-danger">' . $custom_error . '</div>';
                 } ?>
-                <form action="<?php echo current_url(); ?>" id="formCurso" method="post" class="form-horizontal" >
+                <form action="<?php echo current_url(); ?>" id="formDisciplina" method="post" class="form-horizontal" >
                     <div class="control-group">
-                        <?php echo form_hidden('idCursos',$result->idCursos) ?>
-                        <label for="nomeCurso" class="control-label">Nome do curso<span class="required">*</span></label>
+                        <?php echo form_hidden('idDisciplina',$result->idDisciplina) ?>
+                        <label for="nome" class="control-label">Nome<span class="required">*</span></label>
                         <div class="controls">
-                            <input id="nomeCurso" type="text" name="nomeCurso" value="<?php echo $result->nomeCurso; ?>"  />
+                            <input id="nomeDisciplina" type="text" name="nomeDisciplina" value="<?php echo $result->nomeDisciplina; ?>"  />
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label  class="control-label">Curso<span class="required">*</span></label>
+                        <div class="controls">
+                            <select name="curso_id" id="curso_id">
+                                  <?php foreach ($cursos as $c) {
+                                     if($c->idCursos == $result->curso_id){ $selected = 'selected';}else{$selected = '';}
+                                      echo '<option value="'.$c->idCursos.'"'.$selected.'>'.$c->nomeCurso.'</option>';
+                                  } ?>
+                            </select>
                         </div>
                     </div>
 
@@ -24,7 +36,7 @@
                         <div class="span12">
                             <div class="span6 offset3">
                                 <button type="submit" class="btn btn-primary"><i class="icon-ok icon-white"></i> Alterar</button>
-                                <a href="<?php echo base_url() ?>index.php/cursos" id="" class="btn"><i class="icon-arrow-left"></i> Voltar</a>
+                                <a href="<?php echo base_url() ?>index.php/disciplinas" id="" class="btn"><i class="icon-arrow-left"></i> Voltar</a>
                             </div>
                         </div>
                     </div>
@@ -43,16 +55,20 @@
 <script type="text/javascript">
       $(document).ready(function(){
 
-           $('#formCurso').validate({
+           $('#formDisciplina').validate({
             rules : {
-                  nomeCurso:{ required: true},            
+                  nomeDisciplina:{ required: true},
+                  
+                  curso_id:{ required: true},
                   
                   
             },
             messages: {
-                  nomeCurso :{ required: 'Campo Requerido.'},
+                  nome :{ required: 'Campo Requerido.'},
                   
-                    
+                  curso_id:{ required: 'Campo Requerido.'},
+                  
+                  
 
             },
 

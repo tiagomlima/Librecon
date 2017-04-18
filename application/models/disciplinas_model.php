@@ -1,5 +1,6 @@
 <?php
-class Cursos_model extends CI_Model {
+class Disciplinas_model extends CI_Model {
+
 
     
     
@@ -8,26 +9,29 @@ class Cursos_model extends CI_Model {
     }
 
     
-    function get($table,$fields,$where='',$perpage=0,$start=0,$one=false,$array='array'){
+
+    function get($perpage=0,$start=0,$one=false){
         
-        $this->db->select($fields);
-        $this->db->from($table);
-        $this->db->order_by('idCursos','desc');
+        $this->db->from('disciplinas');
+        $this->db->select('disciplinas.*, cursos.nomeCurso as curso');
         $this->db->limit($perpage,$start);
-        if($where){
-            $this->db->where($where);
-        }
-        
+        $this->db->join('cursos', 'disciplinas.curso_id = cursos.idCursos', 'left');
+  
         $query = $this->db->get();
         
         $result =  !$one  ? $query->result() : $query->row();
         return $result;
     }
 
+    /* function getAllTipos(){
+        $this->db->where('situacao',1);
+        return $this->db->get('tiposUsuario')->result();
+    }*/
+
     function getById($id){
-        $this->db->where('idCursos',$id);
+        $this->db->where('idDisciplina',$id);
         $this->db->limit(1);
-        return $this->db->get('cursos')->row();
+        return $this->db->get('disciplinas')->row();
     }
     
     function add($table,$data){
@@ -61,26 +65,9 @@ class Cursos_model extends CI_Model {
 		}
 		
 		return FALSE;        
-    }
+    }   
 	
-	function getActive($table,$fields){
-        
-        $this->db->select($fields);
-        $this->db->from($table);
-        //$this->db->where('situacao',1);
-        $query = $this->db->get();
-        return $query->result();;
-    }
-
-    function count($table) {
-        return $this->db->count_all($table);
-    }
-    
-    public function getOsByCurso($id){
-        $this->db->where('cursos_id',$id);
-        $this->db->order_by('idOs','desc');
-        $this->db->limit(10);
-        return $this->db->get('os')->result();
-    }
-
+	function count($table){
+		return $this->db->count_all($table);
+	}
 }

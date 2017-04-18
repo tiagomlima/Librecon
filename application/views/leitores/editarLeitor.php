@@ -120,17 +120,42 @@
                             <input id="cep" type="text" name="cep" value="<?php echo $result->cep; ?>"  />
                         </div>
                     </div>
-
-					<div class="control-group">
-                        <label  class="control-label">Status<span class="required">*</span></label>
+                    
+                    <div class="control-group">
+                        <label  class="control-label">Curso<span class="required">*</span></label>
                         <div class="controls">
-                            <select name="status" id="status">
-                                <option value="Ativo">Ativo</option>
-                                <option value="Inativo">Inativo</option>
+                            <select name="curso_id" id="curso_id">
+                                  <?php foreach ($cursos as $c) {
+                                     if($c->idCursos == $result->curso_id){ $selected = 'selected';}else{$selected = '';}
+                                      echo '<option value="'.$c->idCursos.'"'.$selected.'>'.$c->nomeCurso.'</option>';
+                                  } ?>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label  class="control-label">Grupo<span class="required">*</span></label>
+                        <div class="controls">
+                            <select name="grupo_id" id="grupo_id">
+                                  <?php foreach ($grupos as $g) {
+                                     if($g->idGrupo == $result->grupo_id){ $selected = 'selected';}else{$selected = '';}
+                                      echo '<option value="'.$g->idGrupo.'"'.$selected.'>'.$g->nomeGrupo.'</option>';
+                                  } ?>
                             </select>
                         </div>
                     </div>
 
+					<div class="control-group">
+                        <label  class="control-label">Situação*</label>
+                        <div class="controls">
+                            <select name="situacao" id="situacao">
+                                <?php if($result->situacao == 1){$ativo = 'selected'; $inativo = '';} else{$ativo = ''; $inativo = 'selected';} ?>
+                                <option value="1" <?php echo $ativo; ?>>Ativo</option>
+                                <option value="0" <?php echo $inativo; ?>>Inativo</option>
+                            </select>
+                        </div>
+                    </div>			
+					
                     <div class="form-actions">
                         <div class="span12">
                             <div class="span6 offset3">
@@ -161,9 +186,9 @@
                   bairro:{ required: true},
                   cidade:{ required: true},
                   estado:{ required: true},
-                  cep:{ required: true}
-                  sexo:{ required: true}
-                  status:{ required: true}
+                  cep:{ required: true},
+                  sexo:{ required: true},
+                  situacao:{ required: true},
                   matricula:{ required: true}
             },
             messages:{
@@ -176,9 +201,9 @@
                   bairro:{ required: 'Campo Requerido.'},
                   cidade:{ required: 'Campo Requerido.'},
                   estado:{ required: 'Campo Requerido.'},
-                  cep:{ required: 'Campo Requerido.'}
+                  cep:{ required: 'Campo Requerido.'},
                   sexo:{ required: 'Campo Requerido.'},
-                  status:{ required: 'Campo Requerido.'}
+                  situacao:{ required: 'Campo Requerido.'},
                   matricula:{ required: 'Campo Requerido.'}
 
             },

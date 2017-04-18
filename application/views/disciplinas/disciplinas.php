@@ -1,4 +1,4 @@
-<a href="<?php echo base_url()?>index.php/cursos/adicionar" class="btn btn-success"><i class="icon-plus icon-white"></i> Adicionar Curso</a>
+<a href="<?php echo base_url()?>index.php/disciplinas/adicionar" class="btn btn-success"><i class="icon-plus icon-white"></i> Adicionar Disciplina</a>
 <?php
 if(!$results){?>
         <div class="widget-box">
@@ -6,7 +6,7 @@ if(!$results){?>
         <span class="icon">
             <i class="icon-user"></i>
         </span>
-        <h5>Cursos</h5>
+        <h5>Disciplinas</h5>
 
      </div>
 
@@ -17,13 +17,14 @@ if(!$results){?>
     <thead>
         <tr style="backgroud-color: #2D335B">
             <th>#</th>
-            <th>Nome do Curso</th>
+            <th>Nome</th>
+            <th>Curso</th>
             <th></th>
         </tr>
     </thead>
     <tbody>    
         <tr>
-            <td colspan="5">Nenhum Curso Cadastrado</td>
+            <td colspan="5">Nenhuma Disciplina Cadastrada</td>
         </tr>
     </tbody>
 </table>
@@ -38,7 +39,7 @@ if(!$results){?>
         <span class="icon">
             <i class="icon-user"></i>
          </span>
-        <h5>Cursos</h5>
+        <h5>Disciplinas</h5>
 
      </div>
 
@@ -49,7 +50,8 @@ if(!$results){?>
     <thead>
         <tr style="backgroud-color: #2D335B">
             <th>#</th>
-            <th>Nome do Curso</th>
+            <th>Nome</th>
+            <th>Curso</th>
             <th></th>
         </tr>
     </thead>
@@ -57,16 +59,13 @@ if(!$results){?>
         <?php foreach ($results as $r) {
            
             echo '<tr>';
-            echo '<td>'.$r->idCursos.'</td>';
-            echo '<td>'.$r->nomeCurso.'</td>';
-            echo '<td>';
-                      if($this->permission->checkPermission($this->session->userdata('permissao'),'eCurso')){
-                		echo '<a href="'.base_url().'index.php/cursos/editar/'.$r->idCursos.'" style="margin-right: 1%" class="btn btn-info tip-top" title="Editar Curso"><i class="icon-pencil icon-white"></i></a>'; 
-           		 	  }
-            		  if($this->permission->checkPermission($this->session->userdata('permissao'),'dCurso')){
-                		echo '<a href="#modal-excluir" role="button" data-toggle="modal" cursos="'.$r->idCursos.'" style="margin-right: 1%" class="btn btn-danger tip-top" title="Excluir Curso"><i class="icon-remove icon-white"></i></a>'; 
-            		  }
-                  '</td>';
+            echo '<td>'.$r->idDisciplina.'</td>';
+            echo '<td>'.$r->nomeDisciplina.'</td>';
+            echo '<td>'.$r->curso.'</td>';
+            echo '<td>
+                      <a href="'.base_url().'index.php/disciplinas/editar/'.$r->idDisciplina.'" class="btn btn-info tip-top" title="Editar Disciplina"><i class="icon-pencil icon-white"></i></a>
+                      <a href="#modal-excluir" role="button" data-toggle="modal" Disciplina="'.$r->idDisciplina.'" style="margin-right: 1%" class="btn btn-danger tip-top" title="Excluir Disciplina"><i class="icon-remove icon-white"></i></a>
+                  </td>';
             echo '</tr>';
         }?>
         <tr>
@@ -82,14 +81,14 @@ if(!$results){?>
 
 <!-- Modal -->
 <div id="modal-excluir" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <form action="<?php echo base_url() ?>index.php/cursos/excluir" method="post" >
+  <form action="<?php echo base_url() ?>index.php/disciplinas/excluir" method="post" >
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h5 id="myModalLabel">Excluir Curso</h5>
+    <h5 id="myModalLabel">Excluir Disciplina</h5>
   </div>
   <div class="modal-body">
-    <input type="hidden" id="idCursos" name="id" value="" />
-    <h5 style="text-align: center">Deseja realmente excluir este cliente e os dados associados a ele?</h5>
+    <input type="hidden" id="idDisciplina" name="id" value="" />
+    <h5 style="text-align: center">Deseja realmente excluir este disciplina e os dados associados a ele?</h5>
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
@@ -101,14 +100,16 @@ if(!$results){?>
 
 
 
+
+
 <script type="text/javascript">
 $(document).ready(function(){
 
 
    $(document).on('click', 'a', function(event) {
         
-        var cursos = $(this).attr('cursos');
-        $('#idCursos').val(cursos);
+        var disciplina = $(this).attr('disciplina');
+        $('#idDisciplina').val(disciplina);
 
     });
 
