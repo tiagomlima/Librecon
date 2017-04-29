@@ -3,7 +3,7 @@
 
 
 
-class TipoItem extends CI_Controller {
+class Secao extends CI_Controller {
     
    
     
@@ -13,8 +13,8 @@ class TipoItem extends CI_Controller {
             redirect('librecon/login');
             }
             $this->load->helper(array('codegen_helper'));
-            $this->load->model('tipoItem_model','',TRUE);
-            $this->data['menuTipoItem'] = 'tipoItem';
+            $this->load->model('secao_model','',TRUE);
+            $this->data['menuSecao'] = 'secao';
 	}	
 	
 	function index(){
@@ -23,7 +23,7 @@ class TipoItem extends CI_Controller {
 
 	function gerenciar(){
 
-        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'vTipoItem')){
+        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'vSecao')){
            $this->session->set_flashdata('error','Você não tem permissão para visualizar Tipo de Item.');
            redirect(base_url());
         }
@@ -31,8 +31,8 @@ class TipoItem extends CI_Controller {
         $this->load->library('pagination');
         
    
-        $config['base_url'] = base_url().'index.php/tipoItem/gerenciar/';
-        $config['total_rows'] = $this->tipoItem_model->count('tipo_de_item');
+        $config['base_url'] = base_url().'index.php/secao/gerenciar/';
+        $config['total_rows'] = $this->secao_model->count('secao');
         $config['per_page'] = 10;
         $config['next_link'] = 'Próxima';
         $config['prev_link'] = 'Anterior';
@@ -55,9 +55,9 @@ class TipoItem extends CI_Controller {
         
         $this->pagination->initialize($config); 	
         
-	    $this->data['results'] = $this->tipoItem_model->get('tipo_de_item','idTipoItem,nomeTipo,dataCadastro','',$config['per_page'],$this->uri->segment(3));
+	    $this->data['results'] = $this->secao_model->get('secao','idSecao,secao,dataCadastro','',$config['per_page'],$this->uri->segment(3));
        	
-       	$this->data['view'] = 'tipoItem/tipoItem';
+       	$this->data['view'] = 'secao/secao';
        	$this->load->view('tema/topo',$this->data);
 	  
        
@@ -65,30 +65,30 @@ class TipoItem extends CI_Controller {
     }
 	
     function adicionar() {
-        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'aTipoItem')){
-           $this->session->set_flashdata('error','Você não tem permissão para adicionar tipoItem.');
+        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'aSecao')){
+           $this->session->set_flashdata('error','Você não tem permissão para adicionar secao.');
            redirect(base_url());
         }
 
         $this->load->library('form_validation');
         $this->data['custom_error'] = '';
 
-        if ($this->form_validation->run('tipoItem') == false) {
+        if ($this->form_validation->run('secao') == false) {
             $this->data['custom_error'] = (validation_errors() ? '<div class="form_error">' . validation_errors() . '</div>' : false);
         } else {
             $data = array(
-                'nomeTipo' => set_value('nomeTipoItem'),
+                'secao' => set_value('secao'),
                 'dataCadastro' => date('Y-m-d')
             );
 
-            if ($this->tipoItem_model->add('tipo_de_item', $data) == TRUE) {
-                $this->session->set_flashdata('success','TipoItem adicionado com sucesso!');
-                redirect(base_url() . 'index.php/tipoItem/adicionar/');
+            if ($this->secao_model->add('secao', $data) == TRUE) {
+                $this->session->set_flashdata('success','Secao adicionado com sucesso!');
+                redirect(base_url() . 'index.php/secao/adicionar/');
             } else {
                 $this->data['custom_error'] = '<div class="form_error"><p>Ocorreu um erro.</p></div>';
             }
         }
-        $this->data['view'] = 'tipoItem/adicionarTipoItem';
+        $this->data['view'] = 'secao/adicionarSecao';
         $this->load->view('tema/topo', $this->data);
 
     }
@@ -101,33 +101,33 @@ class TipoItem extends CI_Controller {
         }
 
 
-        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'eTipoItem')){
-           $this->session->set_flashdata('error','Você não tem permissão para editar tipoItem.');
+        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'eSecao')){
+           $this->session->set_flashdata('error','Você não tem permissão para editar secao.');
            redirect(base_url());
         }
 
         $this->load->library('form_validation');
         $this->data['custom_error'] = '';
 
-        if ($this->form_validation->run('tipoItem') == false) {
+        if ($this->form_validation->run('secao') == false) {
             $this->data['custom_error'] = (validation_errors() ? '<div class="form_error">' . validation_errors() . '</div>' : false);
         } else {
             $data = array(
-                'nomeTipo' => $this->input->post('nomeTipoItem'),
+                'secao' => $this->input->post('secao'),
                 
             );
 
-            if ($this->tipoItem_model->edit('tipo_de_item', $data, 'idTipoItem', $this->input->post('idTipoItem')) == TRUE) {
-                $this->session->set_flashdata('success','TipoItem editado com sucesso!');
-                redirect(base_url() . 'index.php/tipoItem/editar/'.$this->input->post('idTipoItem'));
+            if ($this->secao_model->edit('secao', $data, 'idSecao', $this->input->post('idSecao')) == TRUE) {
+                $this->session->set_flashdata('success','Secao editado com sucesso!');
+                redirect(base_url() . 'index.php/secao/editar/'.$this->input->post('idSecao'));
             } else {
                 $this->data['custom_error'] = '<div class="form_error"><p>Ocorreu um erro</p></div>';
             }
         }
 
 
-        $this->data['result'] = $this->tipoItem_model->getById($this->uri->segment(3));
-        $this->data['view'] = 'tipoItem/editarTipoItem';
+        $this->data['result'] = $this->secao_model->getById($this->uri->segment(3));
+        $this->data['view'] = 'secao/editarSecao';
         $this->load->view('tema/topo', $this->data);
 
     }
@@ -139,15 +139,15 @@ class TipoItem extends CI_Controller {
             redirect('librecon');
         }
 
-        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'cTipoItem')){
-           $this->session->set_flashdata('error','Você não tem permissão para visualizar tipoItem.');
+        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'cSecao')){
+           $this->session->set_flashdata('error','Você não tem permissão para visualizar secao.');
            redirect(base_url());
         }
 
         $this->data['custom_error'] = '';
-        $this->data['result'] = $this->tipoItem_model->getById($this->uri->segment(3));
-        $this->data['results'] = $this->tipoItem_model->getOsByTipoItem($this->uri->segment(3));
-        $this->data['view'] = 'tipoItem/visualizar';
+        $this->data['result'] = $this->secao_model->getById($this->uri->segment(3));
+        $this->data['results'] = $this->secao_model->getOsBySecao($this->uri->segment(3));
+        $this->data['view'] = 'secao/visualizar';
         $this->load->view('tema/topo', $this->data);
 
         
@@ -156,8 +156,8 @@ class TipoItem extends CI_Controller {
     public function excluir(){
 
             
-            if(!$this->permission->checkPermission($this->session->userdata('permissao'),'dTipoItem')){
-               $this->session->set_flashdata('error','Você não tem permissão para excluir tipoItem.');
+            if(!$this->permission->checkPermission($this->session->userdata('permissao'),'dSecao')){
+               $this->session->set_flashdata('error','Você não tem permissão para excluir secao.');
                redirect(base_url());
             }
 
@@ -165,13 +165,13 @@ class TipoItem extends CI_Controller {
             $id =  $this->input->post('id');
             if ($id == null){
 
-                $this->session->set_flashdata('error','Erro ao tentar excluir tipoItem.');            
-                redirect(base_url().'index.php/tipoItem/gerenciar/');
+                $this->session->set_flashdata('error','Erro ao tentar excluir secao.');            
+                redirect(base_url().'index.php/secao/gerenciar/');
             }
 
             /*//$id = 2;
-            // excluindo OSs vinculadas ao tipoItem
-            $this->db->where('tipoItem_id', $id);
+            // excluindo OSs vinculadas ao secao
+            $this->db->where('secao_id', $id);
             $os = $this->db->get('os')->result();
 
             if($os != null){
@@ -189,8 +189,8 @@ class TipoItem extends CI_Controller {
                 }
             }
 
-            // excluindo Vendas vinculadas ao tipoItem
-            $this->db->where('tipoItem_id', $id);
+            // excluindo Vendas vinculadas ao secao
+            $this->db->where('secao_id', $id);
             $vendas = $this->db->get('vendas')->result();
 
             if($vendas != null){
@@ -205,16 +205,16 @@ class TipoItem extends CI_Controller {
                 }
             }
 
-            //excluindo receitas vinculadas ao tipoItem
-            $this->db->where('tipoItem_id', $id);
+            //excluindo receitas vinculadas ao secao
+            $this->db->where('secao_id', $id);
             $this->db->delete('lancamentos');*/
 
 
 
-            $this->tipoItem_model->delete('tipo_de_item','idTipoItem',$id); 
+            $this->secao_model->delete('secao','idSecao',$id); 
 
-            $this->session->set_flashdata('success','TipoItem excluido com sucesso!');            
-            redirect(base_url().'index.php/tipoItem/gerenciar/');
+            $this->session->set_flashdata('success','Secao excluido com sucesso!');            
+            redirect(base_url().'index.php/secao/gerenciar/');
     }
 }
 

@@ -81,6 +81,36 @@ $config = array('leitores' => array(array(
                                     'rules'=>'trim|xss_clean'
                                 ))
                 ,
+                'tipoItem' => array(array(
+                                    'field'=>'nomeTipoItem',
+                                    'label'=>'Nome do Tipo',
+                                    'rules'=>'required|trim|xss_clean'
+                                ))
+                ,
+                'secao' => array(array(
+                                    'field'=>'secao',
+                                    'label'=>'Secao',
+                                    'rules'=>'required|trim|xss_clean'
+                                ))
+                ,
+                'colecao' => array(array(
+                                    'field'=>'colecao',
+                                    'label'=>'Colecao',
+                                    'rules'=>'required|trim|xss_clean'
+                                ))
+                ,
+                'editora' => array(array(
+                                    'field'=>'editora',
+                                    'label'=>'Editora',
+                                    'rules'=>'required|trim|xss_clean'
+                                ))
+                ,
+                'autor' => array(array(
+                                    'field'=>'autor',
+                                    'label'=>'Autor',
+                                    'rules'=>'required|trim|xss_clean'
+                                ))
+                ,
                 'servicos' => array(array(
                                     'field'=>'nome',
                                     'label'=>'Nome',

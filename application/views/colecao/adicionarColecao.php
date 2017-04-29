@@ -5,17 +5,17 @@
                 <span class="icon">
                     <i class="icon-user"></i>
                 </span>
-                <h5>Cadastro do Tipo de Item</h5>
+                <h5>Cadastro de Coleção</h5>
             </div>
             <div class="widget-content nopadding">
                 <?php if ($custom_error != '') {
                     echo '<div class="alert alert-danger">'.$custom_error.'</div>';
                 } ?>
-                <form action="<?php echo current_url(); ?>" id="formTipoItem" method="post" class="form-horizontal" >
+                <form action="<?php echo current_url(); ?>" id="formColecao" method="post" class="form-horizontal" >
                     <div class="control-group">
-                        <label for="nomeTipoItem" class="control-label">Nome do Tipo<span class="required">*</span></label>
+                        <label for="colecao" class="control-label">Coleção<span class="required">*</span></label>
                         <div class="controls">
-                            <input id="nomeTipoItem" type="text" name="nomeTipoItem" value="<?php echo set_value('nomeTipo'); ?>"  />
+                            <input id="colecao" type="text" name="colecao" value="<?php echo set_value('colecao'); ?>"  />
                         </div>
                     </div>
 
@@ -24,7 +24,7 @@
                         <div class="span12">
                             <div class="span6 offset3">
                                 <button type="submit" class="btn btn-success"><i class="icon-plus icon-white"></i> Adicionar</button>
-                                <a href="<?php echo base_url() ?>index.php/tipoItem" id="" class="btn"><i class="icon-arrow-left"></i> Voltar</a>
+                                <a href="<?php echo base_url() ?>index.php/colecao" id="" class="btn"><i class="icon-arrow-left"></i> Voltar</a>
                             </div>
                         </div>
                     </div>
@@ -41,14 +41,14 @@
 <script type="text/javascript">
       $(document).ready(function(){
 
-           $('#formTipoItem').validate({
+           $('#formColecao').validate({
             rules : {
-                  nomeTipoItem:{ required: true},
+                  colecao:{ required: true},
                   
                   
             },
             messages: {
-                  nomeTipoItem :{ required: 'Campo Requerido.'},
+                  colecao :{ required: 'Campo Requerido.'},
                   
                   
                   

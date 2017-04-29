@@ -3,7 +3,7 @@
 
 
 
-class TipoItem extends CI_Controller {
+class Editora extends CI_Controller {
     
    
     
@@ -13,8 +13,8 @@ class TipoItem extends CI_Controller {
             redirect('librecon/login');
             }
             $this->load->helper(array('codegen_helper'));
-            $this->load->model('tipoItem_model','',TRUE);
-            $this->data['menuTipoItem'] = 'tipoItem';
+            $this->load->model('editora_model','',TRUE);
+            $this->data['menuEditora'] = 'editora';
 	}	
 	
 	function index(){
@@ -23,7 +23,7 @@ class TipoItem extends CI_Controller {
 
 	function gerenciar(){
 
-        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'vTipoItem')){
+        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'vEditora')){
            $this->session->set_flashdata('error','Você não tem permissão para visualizar Tipo de Item.');
            redirect(base_url());
         }
@@ -31,8 +31,8 @@ class TipoItem extends CI_Controller {
         $this->load->library('pagination');
         
    
-        $config['base_url'] = base_url().'index.php/tipoItem/gerenciar/';
-        $config['total_rows'] = $this->tipoItem_model->count('tipo_de_item');
+        $config['base_url'] = base_url().'index.php/editora/gerenciar/';
+        $config['total_rows'] = $this->editora_model->count('editora');
         $config['per_page'] = 10;
         $config['next_link'] = 'Próxima';
         $config['prev_link'] = 'Anterior';
@@ -55,9 +55,9 @@ class TipoItem extends CI_Controller {
         
         $this->pagination->initialize($config); 	
         
-	    $this->data['results'] = $this->tipoItem_model->get('tipo_de_item','idTipoItem,nomeTipo,dataCadastro','',$config['per_page'],$this->uri->segment(3));
+	    $this->data['results'] = $this->editora_model->get('editora','idEditora,editora,dataCadastro,email_editora,site','',$config['per_page'],$this->uri->segment(3));
        	
-       	$this->data['view'] = 'tipoItem/tipoItem';
+       	$this->data['view'] = 'editora/editora';
        	$this->load->view('tema/topo',$this->data);
 	  
        
@@ -65,30 +65,33 @@ class TipoItem extends CI_Controller {
     }
 	
     function adicionar() {
-        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'aTipoItem')){
-           $this->session->set_flashdata('error','Você não tem permissão para adicionar tipoItem.');
+        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'aEditora')){
+           $this->session->set_flashdata('error','Você não tem permissão para adicionar editora.');
            redirect(base_url());
         }
 
         $this->load->library('form_validation');
         $this->data['custom_error'] = '';
 
-        if ($this->form_validation->run('tipoItem') == false) {
+        if ($this->form_validation->run('editora') == false) {
             $this->data['custom_error'] = (validation_errors() ? '<div class="form_error">' . validation_errors() . '</div>' : false);
         } else {
             $data = array(
-                'nomeTipo' => set_value('nomeTipoItem'),
+            
+                'editora' => set_value('editora'),
+                'email_editora' => set_value('email_editora'),
+                'site' => set_value('site'),
                 'dataCadastro' => date('Y-m-d')
             );
 
-            if ($this->tipoItem_model->add('tipo_de_item', $data) == TRUE) {
-                $this->session->set_flashdata('success','TipoItem adicionado com sucesso!');
-                redirect(base_url() . 'index.php/tipoItem/adicionar/');
+            if ($this->editora_model->add('editora', $data) == TRUE) {
+                $this->session->set_flashdata('success','Editora adicionado com sucesso!');
+                redirect(base_url() . 'index.php/editora/adicionar/');
             } else {
                 $this->data['custom_error'] = '<div class="form_error"><p>Ocorreu um erro.</p></div>';
             }
         }
-        $this->data['view'] = 'tipoItem/adicionarTipoItem';
+        $this->data['view'] = 'editora/adicionarEditora';
         $this->load->view('tema/topo', $this->data);
 
     }
@@ -101,33 +104,35 @@ class TipoItem extends CI_Controller {
         }
 
 
-        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'eTipoItem')){
-           $this->session->set_flashdata('error','Você não tem permissão para editar tipoItem.');
+        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'eEditora')){
+           $this->session->set_flashdata('error','Você não tem permissão para editar editora.');
            redirect(base_url());
         }
 
         $this->load->library('form_validation');
         $this->data['custom_error'] = '';
 
-        if ($this->form_validation->run('tipoItem') == false) {
+        if ($this->form_validation->run('editora') == false) {
             $this->data['custom_error'] = (validation_errors() ? '<div class="form_error">' . validation_errors() . '</div>' : false);
         } else {
             $data = array(
-                'nomeTipo' => $this->input->post('nomeTipoItem'),
+                'editora' => $this->input->post('editora'),
+                'email_editora' => $this->input->post('email_editora'),
+                'site' => $this->input->post('site'),
                 
             );
 
-            if ($this->tipoItem_model->edit('tipo_de_item', $data, 'idTipoItem', $this->input->post('idTipoItem')) == TRUE) {
-                $this->session->set_flashdata('success','TipoItem editado com sucesso!');
-                redirect(base_url() . 'index.php/tipoItem/editar/'.$this->input->post('idTipoItem'));
+            if ($this->editora_model->edit('editora', $data, 'idEditora', $this->input->post('idEditora')) == TRUE) {
+                $this->session->set_flashdata('success','Editora editado com sucesso!');
+                redirect(base_url() . 'index.php/editora/editar/'.$this->input->post('idEditora'));
             } else {
                 $this->data['custom_error'] = '<div class="form_error"><p>Ocorreu um erro</p></div>';
             }
         }
 
 
-        $this->data['result'] = $this->tipoItem_model->getById($this->uri->segment(3));
-        $this->data['view'] = 'tipoItem/editarTipoItem';
+        $this->data['result'] = $this->editora_model->getById($this->uri->segment(3));
+        $this->data['view'] = 'editora/editarEditora';
         $this->load->view('tema/topo', $this->data);
 
     }
@@ -139,15 +144,15 @@ class TipoItem extends CI_Controller {
             redirect('librecon');
         }
 
-        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'cTipoItem')){
-           $this->session->set_flashdata('error','Você não tem permissão para visualizar tipoItem.');
+        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'cEditora')){
+           $this->session->set_flashdata('error','Você não tem permissão para visualizar editora.');
            redirect(base_url());
         }
 
         $this->data['custom_error'] = '';
-        $this->data['result'] = $this->tipoItem_model->getById($this->uri->segment(3));
-        $this->data['results'] = $this->tipoItem_model->getOsByTipoItem($this->uri->segment(3));
-        $this->data['view'] = 'tipoItem/visualizar';
+        $this->data['result'] = $this->editora_model->getById($this->uri->segment(3));
+        $this->data['results'] = $this->editora_model->getOsByEditora($this->uri->segment(3));
+        $this->data['view'] = 'editora/visualizar';
         $this->load->view('tema/topo', $this->data);
 
         
@@ -156,8 +161,8 @@ class TipoItem extends CI_Controller {
     public function excluir(){
 
             
-            if(!$this->permission->checkPermission($this->session->userdata('permissao'),'dTipoItem')){
-               $this->session->set_flashdata('error','Você não tem permissão para excluir tipoItem.');
+            if(!$this->permission->checkPermission($this->session->userdata('permissao'),'dEditora')){
+               $this->session->set_flashdata('error','Você não tem permissão para excluir editora.');
                redirect(base_url());
             }
 
@@ -165,13 +170,13 @@ class TipoItem extends CI_Controller {
             $id =  $this->input->post('id');
             if ($id == null){
 
-                $this->session->set_flashdata('error','Erro ao tentar excluir tipoItem.');            
-                redirect(base_url().'index.php/tipoItem/gerenciar/');
+                $this->session->set_flashdata('error','Erro ao tentar excluir editora.');            
+                redirect(base_url().'index.php/editora/gerenciar/');
             }
 
             /*//$id = 2;
-            // excluindo OSs vinculadas ao tipoItem
-            $this->db->where('tipoItem_id', $id);
+            // excluindo OSs vinculadas ao editora
+            $this->db->where('editora_id', $id);
             $os = $this->db->get('os')->result();
 
             if($os != null){
@@ -189,8 +194,8 @@ class TipoItem extends CI_Controller {
                 }
             }
 
-            // excluindo Vendas vinculadas ao tipoItem
-            $this->db->where('tipoItem_id', $id);
+            // excluindo Vendas vinculadas ao editora
+            $this->db->where('editora_id', $id);
             $vendas = $this->db->get('vendas')->result();
 
             if($vendas != null){
@@ -205,16 +210,16 @@ class TipoItem extends CI_Controller {
                 }
             }
 
-            //excluindo receitas vinculadas ao tipoItem
-            $this->db->where('tipoItem_id', $id);
+            //excluindo receitas vinculadas ao editora
+            $this->db->where('editora_id', $id);
             $this->db->delete('lancamentos');*/
 
 
 
-            $this->tipoItem_model->delete('tipo_de_item','idTipoItem',$id); 
+            $this->editora_model->delete('editora','idEditora',$id); 
 
-            $this->session->set_flashdata('success','TipoItem excluido com sucesso!');            
-            redirect(base_url().'index.php/tipoItem/gerenciar/');
+            $this->session->set_flashdata('success','Editora excluido com sucesso!');            
+            redirect(base_url().'index.php/editora/gerenciar/');
     }
 }
 

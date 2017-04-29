@@ -5,26 +5,35 @@
                 <span class="icon">
                     <i class="icon-user"></i>
                 </span>
-                <h5>Cadastro do Tipo de Item</h5>
+                <h5>Editar Autor</h5>
             </div>
             <div class="widget-content nopadding">
                 <?php if ($custom_error != '') {
-                    echo '<div class="alert alert-danger">'.$custom_error.'</div>';
+                    echo '<div class="alert alert-danger">' . $custom_error . '</div>';
                 } ?>
-                <form action="<?php echo current_url(); ?>" id="formTipoItem" method="post" class="form-horizontal" >
+                <form action="<?php echo current_url(); ?>" id="formAutor" method="post" class="form-horizontal" >
                     <div class="control-group">
-                        <label for="nomeTipoItem" class="control-label">Nome do Tipo<span class="required">*</span></label>
+                        <?php echo form_hidden('idAutor',$result->idAutor) ?>
+                        <label for="autor" class="control-label">Autor<span class="required">*</span></label>
                         <div class="controls">
-                            <input id="nomeTipoItem" type="text" name="nomeTipoItem" value="<?php echo set_value('nomeTipo'); ?>"  />
+                            <input id="autor" type="text" name="autor" value="<?php echo $result->autor; ?>"  />
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="descricao" class="control-label">Descrição</label>
+                        <div class="controls">
+                            <textarea id="descricao" type="text" name="descricao" value="<?php echo $result->descricao; ?>"  ></textarea>
                         </div>
                     </div>
 
- 
+                    
+
                     <div class="form-actions">
                         <div class="span12">
                             <div class="span6 offset3">
-                                <button type="submit" class="btn btn-success"><i class="icon-plus icon-white"></i> Adicionar</button>
-                                <a href="<?php echo base_url() ?>index.php/tipoItem" id="" class="btn"><i class="icon-arrow-left"></i> Voltar</a>
+                                <button type="submit" class="btn btn-primary"><i class="icon-ok icon-white"></i> Alterar</button>
+                                <a href="<?php echo base_url() ?>index.php/autor" id="" class="btn"><i class="icon-arrow-left"></i> Voltar</a>
                             </div>
                         </div>
                     </div>
@@ -37,18 +46,23 @@
 </div>
 
 
+
+
 <script  src="<?php echo base_url()?>js/jquery.validate.js"></script>
 <script type="text/javascript">
       $(document).ready(function(){
 
-           $('#formTipoItem').validate({
+           $('#formAutor').validate({
             rules : {
-                  nomeTipoItem:{ required: true},
+                  autor:{ required: true},
+                  
+                  
                   
                   
             },
             messages: {
-                  nomeTipoItem :{ required: 'Campo Requerido.'},
+                  autor :{ required: 'Campo Requerido.'},
+                  
                   
                   
                   
@@ -68,7 +82,5 @@
 
       });
 </script>
-
-
 
 

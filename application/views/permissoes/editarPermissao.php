@@ -176,7 +176,39 @@
                                     </td>
                                  
                                 </tr>
+                                 <tr><td colspan="4"></td></tr>
                                 
+                                <tr>
+
+                                    <td>
+                                        <label>
+                                            <input <?php if(isset($permissoes['vAcervo'])){ if($permissoes['vAcervo'] == '1'){echo 'checked';}}?> name="vAcervo" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Visualizar Acervo <span>
+                                        </label>
+                                    </td>
+
+                                    <td>
+                                        <label>
+                                            <input <?php if(isset($permissoes['aAcervo'])){ if($permissoes['aAcervo'] == '1'){echo 'checked';}}?> name="aAcervo" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Adicionar Acervo</span>
+                                        </label>
+                                    </td>
+
+                                    <td>
+                                        <label>
+                                            <input <?php if(isset($permissoes['eAcervo'])){ if($permissoes['eAcervo'] == '1'){echo 'checked';}}?> name="eAcervo" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Editar Acervo</span>
+                                        </label>
+                                    </td>
+
+                                    <td>
+                                        <label>
+                                            <input <?php if(isset($permissoes['dAcervo'])){ if($permissoes['dAcervo'] == '1'){echo 'checked';}}?> name="dAcervo" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Excluir Acervo</span>
+                                        </label>
+                                    </td>
+                                 
+                                </tr>
                                 
                                 <tr><td colspan="4"></td></tr>
                                 <tr>

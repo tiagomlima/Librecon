@@ -1,4 +1,4 @@
-<a href="<?php echo base_url()?>index.php/tipoItem/adicionar" class="btn btn-success"><i class="icon-plus icon-white"></i> Adicionar Tipo de Item</a>
+<a href="<?php echo base_url()?>index.php/secao/adicionar" class="btn btn-success"><i class="icon-plus icon-white"></i> Adicionar Seção</a>
 <?php
 if(!$results){?>
         <div class="widget-box">
@@ -6,7 +6,7 @@ if(!$results){?>
         <span class="icon">
             <i class="icon-user"></i>
         </span>
-        <h5>Tipo de Item</h5>
+        <h5>Seção</h5>
 
      </div>
 
@@ -17,13 +17,13 @@ if(!$results){?>
     <thead>
         <tr style="backgroud-color: #2D335B">
             <th>#</th>
-            <th>Nome do Item</th>
+            <th>Nome da Seção</th>
             <th></th>
         </tr>
     </thead>
     <tbody>    
         <tr>
-            <td colspan="5">Nenhum Item Cadastrado</td>
+            <td colspan="5">Nenhuma Seção Cadastrada</td>
         </tr>
     </tbody>
 </table>
@@ -38,7 +38,7 @@ if(!$results){?>
         <span class="icon">
             <i class="icon-user"></i>
          </span>
-        <h5>Tipo de Item</h5>
+        <h5>Seção</h5>
 
      </div>
 
@@ -49,7 +49,7 @@ if(!$results){?>
     <thead>
         <tr style="backgroud-color: #2D335B">
             <th>#</th>
-            <th>Nome do Item</th>
+            <th>Nome da Seção</th>
             <th></th>
         </tr>
     </thead>
@@ -57,14 +57,14 @@ if(!$results){?>
         <?php foreach ($results as $r) {
            
             echo '<tr>';
-            echo '<td>'.$r->idTipoItem.'</td>';
-            echo '<td>'.$r->nomeTipo.'</td>';
+            echo '<td>'.$r->idSecao.'</td>';
+            echo '<td>'.$r->secao.'</td>';
             echo '<td>';
-                      if($this->permission->checkPermission($this->session->userdata('permissao'),'eTipoItem')){
-                		echo '<a href="'.base_url().'index.php/tipoItem/editar/'.$r->idTipoItem.'" style="margin-right: 1%" class="btn btn-info tip-top" title="Editar Tipo de Item"><i class="icon-pencil icon-white"></i></a>'; 
+                      if($this->permission->checkPermission($this->session->userdata('permissao'),'eSecao')){
+                		echo '<a href="'.base_url().'index.php/secao/editar/'.$r->idSecao.'" style="margin-right: 1%" class="btn btn-info tip-top" title="Editar Tipo de Item"><i class="icon-pencil icon-white"></i></a>'; 
            		 	  }
-            		  if($this->permission->checkPermission($this->session->userdata('permissao'),'dTipoItem')){
-                		echo '<a href="#modal-excluir" role="button" data-toggle="modal" cursos="'.$r->idTipoItem.'" style="margin-right: 1%" class="btn btn-danger tip-top" title="Excluir Tipo de Item"><i class="icon-remove icon-white"></i></a>'; 
+            		  if($this->permission->checkPermission($this->session->userdata('permissao'),'dSecao')){
+                		echo '<a href="#modal-excluir" role="button" data-toggle="modal" secao="'.$r->idSecao.'" style="margin-right: 1%" class="btn btn-danger tip-top" title="Excluir Secao"><i class="icon-remove icon-white"></i></a>'; 
             		  }
                   '</td>';
             echo '</tr>';
@@ -82,14 +82,14 @@ if(!$results){?>
 
 <!-- Modal -->
 <div id="modal-excluir" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <form action="<?php echo base_url() ?>index.php/tipoItem/excluir" method="post" >
+  <form action="<?php echo base_url() ?>index.php/secao/excluir" method="post" >
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h5 id="myModalLabel">Excluir Curso</h5>
+    <h5 id="myModalLabel">Excluir Seção</h5>
   </div>
   <div class="modal-body">
-    <input type="hidden" id="idCursos" name="id" value="" />
-    <h5 style="text-align: center">Deseja realmente excluir este cliente e os dados associados a ele?</h5>
+    <input type="hidden" id="idSecao" name="id" value="" />
+    <h5 style="text-align: center">Deseja realmente excluir esta seção e os dados associados a ela?</h5>
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
@@ -107,8 +107,8 @@ $(document).ready(function(){
 
    $(document).on('click', 'a', function(event) {
         
-        var cursos = $(this).attr('cursos');
-        $('#idCursos').val(cursos);
+        var secao = $(this).attr('secao');
+        $('#idSecao').val(secao);
 
     });
 

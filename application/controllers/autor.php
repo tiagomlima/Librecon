@@ -3,7 +3,7 @@
 
 
 
-class TipoItem extends CI_Controller {
+class Autor extends CI_Controller {
     
    
     
@@ -13,8 +13,8 @@ class TipoItem extends CI_Controller {
             redirect('librecon/login');
             }
             $this->load->helper(array('codegen_helper'));
-            $this->load->model('tipoItem_model','',TRUE);
-            $this->data['menuTipoItem'] = 'tipoItem';
+            $this->load->model('autor_model','',TRUE);
+            $this->data['menuAutor'] = 'autor';
 	}	
 	
 	function index(){
@@ -23,7 +23,7 @@ class TipoItem extends CI_Controller {
 
 	function gerenciar(){
 
-        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'vTipoItem')){
+        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'vAutor')){
            $this->session->set_flashdata('error','Você não tem permissão para visualizar Tipo de Item.');
            redirect(base_url());
         }
@@ -31,8 +31,8 @@ class TipoItem extends CI_Controller {
         $this->load->library('pagination');
         
    
-        $config['base_url'] = base_url().'index.php/tipoItem/gerenciar/';
-        $config['total_rows'] = $this->tipoItem_model->count('tipo_de_item');
+        $config['base_url'] = base_url().'index.php/autor/gerenciar/';
+        $config['total_rows'] = $this->autor_model->count('autor');
         $config['per_page'] = 10;
         $config['next_link'] = 'Próxima';
         $config['prev_link'] = 'Anterior';
@@ -55,9 +55,9 @@ class TipoItem extends CI_Controller {
         
         $this->pagination->initialize($config); 	
         
-	    $this->data['results'] = $this->tipoItem_model->get('tipo_de_item','idTipoItem,nomeTipo,dataCadastro','',$config['per_page'],$this->uri->segment(3));
+	    $this->data['results'] = $this->autor_model->get('autor','idAutor,autor,dataCadastro,descricao','',$config['per_page'],$this->uri->segment(3));
        	
-       	$this->data['view'] = 'tipoItem/tipoItem';
+       	$this->data['view'] = 'autor/autor';
        	$this->load->view('tema/topo',$this->data);
 	  
        
@@ -65,30 +65,32 @@ class TipoItem extends CI_Controller {
     }
 	
     function adicionar() {
-        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'aTipoItem')){
-           $this->session->set_flashdata('error','Você não tem permissão para adicionar tipoItem.');
+        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'aAutor')){
+           $this->session->set_flashdata('error','Você não tem permissão para adicionar autor.');
            redirect(base_url());
         }
 
         $this->load->library('form_validation');
         $this->data['custom_error'] = '';
 
-        if ($this->form_validation->run('tipoItem') == false) {
+        if ($this->form_validation->run('autor') == false) {
             $this->data['custom_error'] = (validation_errors() ? '<div class="form_error">' . validation_errors() . '</div>' : false);
         } else {
             $data = array(
-                'nomeTipo' => set_value('nomeTipoItem'),
+            
+                'autor' => set_value('autor'),
+                'descricao' =>  $this->input->post('descricao'),
                 'dataCadastro' => date('Y-m-d')
             );
 
-            if ($this->tipoItem_model->add('tipo_de_item', $data) == TRUE) {
-                $this->session->set_flashdata('success','TipoItem adicionado com sucesso!');
-                redirect(base_url() . 'index.php/tipoItem/adicionar/');
+            if ($this->autor_model->add('autor', $data) == TRUE) {
+                $this->session->set_flashdata('success','Autor adicionado com sucesso!');
+                redirect(base_url() . 'index.php/autor/adicionar/');
             } else {
                 $this->data['custom_error'] = '<div class="form_error"><p>Ocorreu um erro.</p></div>';
             }
         }
-        $this->data['view'] = 'tipoItem/adicionarTipoItem';
+        $this->data['view'] = 'autor/adicionarAutor';
         $this->load->view('tema/topo', $this->data);
 
     }
@@ -101,33 +103,35 @@ class TipoItem extends CI_Controller {
         }
 
 
-        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'eTipoItem')){
-           $this->session->set_flashdata('error','Você não tem permissão para editar tipoItem.');
+        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'eAutor')){
+           $this->session->set_flashdata('error','Você não tem permissão para editar autor.');
            redirect(base_url());
         }
 
         $this->load->library('form_validation');
         $this->data['custom_error'] = '';
 
-        if ($this->form_validation->run('tipoItem') == false) {
+        if ($this->form_validation->run('autor') == false) {
             $this->data['custom_error'] = (validation_errors() ? '<div class="form_error">' . validation_errors() . '</div>' : false);
         } else {
             $data = array(
-                'nomeTipo' => $this->input->post('nomeTipoItem'),
+                'autor' => $this->input->post('autor'),
+                'descricao' => $this->input->post('descricao'),
+                
                 
             );
 
-            if ($this->tipoItem_model->edit('tipo_de_item', $data, 'idTipoItem', $this->input->post('idTipoItem')) == TRUE) {
-                $this->session->set_flashdata('success','TipoItem editado com sucesso!');
-                redirect(base_url() . 'index.php/tipoItem/editar/'.$this->input->post('idTipoItem'));
+            if ($this->autor_model->edit('autor', $data, 'idAutor', $this->input->post('idAutor')) == TRUE) {
+                $this->session->set_flashdata('success','Autor editado com sucesso!');
+                redirect(base_url() . 'index.php/autor/editar/'.$this->input->post('idAutor'));
             } else {
                 $this->data['custom_error'] = '<div class="form_error"><p>Ocorreu um erro</p></div>';
             }
         }
 
 
-        $this->data['result'] = $this->tipoItem_model->getById($this->uri->segment(3));
-        $this->data['view'] = 'tipoItem/editarTipoItem';
+        $this->data['result'] = $this->autor_model->getById($this->uri->segment(3));
+        $this->data['view'] = 'autor/editarAutor';
         $this->load->view('tema/topo', $this->data);
 
     }
@@ -139,15 +143,15 @@ class TipoItem extends CI_Controller {
             redirect('librecon');
         }
 
-        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'cTipoItem')){
-           $this->session->set_flashdata('error','Você não tem permissão para visualizar tipoItem.');
+        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'cAutor')){
+           $this->session->set_flashdata('error','Você não tem permissão para visualizar autor.');
            redirect(base_url());
         }
 
         $this->data['custom_error'] = '';
-        $this->data['result'] = $this->tipoItem_model->getById($this->uri->segment(3));
-        $this->data['results'] = $this->tipoItem_model->getOsByTipoItem($this->uri->segment(3));
-        $this->data['view'] = 'tipoItem/visualizar';
+        $this->data['result'] = $this->autor_model->getById($this->uri->segment(3));
+        $this->data['results'] = $this->autor_model->getOsByAutor($this->uri->segment(3));
+        $this->data['view'] = 'autor/visualizar';
         $this->load->view('tema/topo', $this->data);
 
         
@@ -156,8 +160,8 @@ class TipoItem extends CI_Controller {
     public function excluir(){
 
             
-            if(!$this->permission->checkPermission($this->session->userdata('permissao'),'dTipoItem')){
-               $this->session->set_flashdata('error','Você não tem permissão para excluir tipoItem.');
+            if(!$this->permission->checkPermission($this->session->userdata('permissao'),'dAutor')){
+               $this->session->set_flashdata('error','Você não tem permissão para excluir autor.');
                redirect(base_url());
             }
 
@@ -165,13 +169,13 @@ class TipoItem extends CI_Controller {
             $id =  $this->input->post('id');
             if ($id == null){
 
-                $this->session->set_flashdata('error','Erro ao tentar excluir tipoItem.');            
-                redirect(base_url().'index.php/tipoItem/gerenciar/');
+                $this->session->set_flashdata('error','Erro ao tentar excluir autor.');            
+                redirect(base_url().'index.php/autor/gerenciar/');
             }
 
             /*//$id = 2;
-            // excluindo OSs vinculadas ao tipoItem
-            $this->db->where('tipoItem_id', $id);
+            // excluindo OSs vinculadas ao autor
+            $this->db->where('autor_id', $id);
             $os = $this->db->get('os')->result();
 
             if($os != null){
@@ -189,8 +193,8 @@ class TipoItem extends CI_Controller {
                 }
             }
 
-            // excluindo Vendas vinculadas ao tipoItem
-            $this->db->where('tipoItem_id', $id);
+            // excluindo Vendas vinculadas ao autor
+            $this->db->where('autor_id', $id);
             $vendas = $this->db->get('vendas')->result();
 
             if($vendas != null){
@@ -205,16 +209,16 @@ class TipoItem extends CI_Controller {
                 }
             }
 
-            //excluindo receitas vinculadas ao tipoItem
-            $this->db->where('tipoItem_id', $id);
+            //excluindo receitas vinculadas ao autor
+            $this->db->where('autor_id', $id);
             $this->db->delete('lancamentos');*/
 
 
 
-            $this->tipoItem_model->delete('tipo_de_item','idTipoItem',$id); 
+            $this->autor_model->delete('autor','idAutor',$id); 
 
-            $this->session->set_flashdata('success','TipoItem excluido com sucesso!');            
-            redirect(base_url().'index.php/tipoItem/gerenciar/');
+            $this->session->set_flashdata('success','Autor excluido com sucesso!');            
+            redirect(base_url().'index.php/autor/gerenciar/');
     }
 }
 

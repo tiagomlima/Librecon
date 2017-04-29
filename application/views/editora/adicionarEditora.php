@@ -5,17 +5,29 @@
                 <span class="icon">
                     <i class="icon-user"></i>
                 </span>
-                <h5>Cadastro do Tipo de Item</h5>
+                <h5>Cadastro de Editora</h5>
             </div>
             <div class="widget-content nopadding">
                 <?php if ($custom_error != '') {
                     echo '<div class="alert alert-danger">'.$custom_error.'</div>';
                 } ?>
-                <form action="<?php echo current_url(); ?>" id="formTipoItem" method="post" class="form-horizontal" >
+                <form action="<?php echo current_url(); ?>" id="formEditora" method="post" class="form-horizontal" >
                     <div class="control-group">
-                        <label for="nomeTipoItem" class="control-label">Nome do Tipo<span class="required">*</span></label>
+                        <label for="editora" class="control-label">Editora<span class="required">*</span></label>
                         <div class="controls">
-                            <input id="nomeTipoItem" type="text" name="nomeTipoItem" value="<?php echo set_value('nomeTipo'); ?>"  />
+                            <input id="editora" type="text" name="editora" value="<?php echo set_value('editora'); ?>"  />
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="email_editora" class="control-label">Email</label>
+                        <div class="controls">
+                            <input id="email_editora" type="email" name="email_editora" value="<?php echo set_value('email_editora'); ?>"  />
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="site" class="control-label">Site</label>
+                        <div class="controls">
+                            <input id="site" type="text" name="site" value="<?php echo set_value('site'); ?>"  />
                         </div>
                     </div>
 
@@ -24,7 +36,7 @@
                         <div class="span12">
                             <div class="span6 offset3">
                                 <button type="submit" class="btn btn-success"><i class="icon-plus icon-white"></i> Adicionar</button>
-                                <a href="<?php echo base_url() ?>index.php/tipoItem" id="" class="btn"><i class="icon-arrow-left"></i> Voltar</a>
+                                <a href="<?php echo base_url() ?>index.php/editora" id="" class="btn"><i class="icon-arrow-left"></i> Voltar</a>
                             </div>
                         </div>
                     </div>
@@ -41,14 +53,14 @@
 <script type="text/javascript">
       $(document).ready(function(){
 
-           $('#formTipoItem').validate({
+           $('#formEditora').validate({
             rules : {
-                  nomeTipoItem:{ required: true},
+                  editora:{ required: true},
                   
                   
             },
             messages: {
-                  nomeTipoItem :{ required: 'Campo Requerido.'},
+                  editora :{ required: 'Campo Requerido.'},
                   
                   
                   

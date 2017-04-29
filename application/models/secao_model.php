@@ -1,5 +1,5 @@
 <?php
-class TipoItem_model extends CI_Model {
+class Secao_model extends CI_Model {
 
     
     
@@ -12,7 +12,7 @@ class TipoItem_model extends CI_Model {
         
         $this->db->select($fields);
         $this->db->from($table);
-        $this->db->order_by('idTipoItem','desc');
+        $this->db->order_by('idSecao','desc');
         $this->db->limit($perpage,$start);
         if($where){
             $this->db->where($where);
@@ -25,9 +25,9 @@ class TipoItem_model extends CI_Model {
     }
 
     function getById($id){
-        $this->db->where('idTipoItem',$id);
+        $this->db->where('idSecao',$id);
         $this->db->limit(1);
-        return $this->db->get('tipo_de_item')->row();
+        return $this->db->get('secao')->row();
     }
     
     function add($table,$data){
@@ -67,8 +67,8 @@ class TipoItem_model extends CI_Model {
         return $this->db->count_all($table);
     }
     
-    public function getOsByTipoItem($id){
-        $this->db->where('tipoItem_id',$id);
+    public function getOsBySecao($id){
+        $this->db->where('secao_id',$id);
         $this->db->order_by('idOs','desc');
         $this->db->limit(10);
         return $this->db->get('os')->result();

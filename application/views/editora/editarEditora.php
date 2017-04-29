@@ -5,18 +5,30 @@
                 <span class="icon">
                     <i class="icon-user"></i>
                 </span>
-                <h5>Editar Tipo de Item</h5>
+                <h5>Editar Editora</h5>
             </div>
             <div class="widget-content nopadding">
                 <?php if ($custom_error != '') {
                     echo '<div class="alert alert-danger">' . $custom_error . '</div>';
                 } ?>
-                <form action="<?php echo current_url(); ?>" id="formTipoItem" method="post" class="form-horizontal" >
+                <form action="<?php echo current_url(); ?>" id="formEditora" method="post" class="form-horizontal" >
                     <div class="control-group">
-                        <?php echo form_hidden('idTipoItem',$result->idTipoItem) ?>
-                        <label for="nomeTipoItem" class="control-label">Nome do Tipo<span class="required">*</span></label>
+                        <?php echo form_hidden('idEditora',$result->idEditora) ?>
+                        <label for="editora" class="control-label">Editora<span class="required">*</span></label>
                         <div class="controls">
-                            <input id="nomeTipoItem" type="text" name="nomeTipoItem" value="<?php echo $result->nomeTipo; ?>"  />
+                            <input id="editora" type="text" name="editora" value="<?php echo $result->editora; ?>"  />
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="email_editora" class="control-label">Email</label>
+                        <div class="controls">
+                            <input id="email_editora" type="text" name="email_editora" value="<?php echo $result->email_editora; ?>"  />
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="site" class="control-label">Site</label>
+                        <div class="controls">
+                            <input id="site" type="text" name="site" value="<?php echo $result->site; ?>"  />
                         </div>
                     </div>
 
@@ -26,7 +38,7 @@
                         <div class="span12">
                             <div class="span6 offset3">
                                 <button type="submit" class="btn btn-primary"><i class="icon-ok icon-white"></i> Alterar</button>
-                                <a href="<?php echo base_url() ?>index.php/tipoItem" id="" class="btn"><i class="icon-arrow-left"></i> Voltar</a>
+                                <a href="<?php echo base_url() ?>index.php/editora" id="" class="btn"><i class="icon-arrow-left"></i> Voltar</a>
                             </div>
                         </div>
                     </div>
@@ -45,16 +57,16 @@
 <script type="text/javascript">
       $(document).ready(function(){
 
-           $('#formCurso').validate({
+           $('#formEditora').validate({
             rules : {
-                  nomeCurso:{ required: true},
+                  editora:{ required: true},
                   
                   
                   
                   
             },
             messages: {
-                  nomeCurso :{ required: 'Campo Requerido.'},
+                  editora :{ required: 'Campo Requerido.'},
                   
                   
                   
