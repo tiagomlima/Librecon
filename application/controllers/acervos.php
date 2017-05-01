@@ -1,6 +1,6 @@
 <?php
 
-class Produtos extends CI_Controller {
+class Acervos extends CI_Controller {
     
     
     
@@ -11,8 +11,8 @@ class Produtos extends CI_Controller {
         }
 
         $this->load->helper(array('form', 'codegen_helper'));
-        $this->load->model('produtos_model', '', TRUE);
-        $this->data['menuProdutos'] = 'Produtos';
+        $this->load->model('acervos_model', '', TRUE);
+        $this->data['menuAcervos'] = 'Acervos';
     }
 
     function index(){
@@ -21,8 +21,8 @@ class Produtos extends CI_Controller {
 
     function gerenciar(){
         
-        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'vProduto')){
-           $this->session->set_flashdata('error','Você não tem permissão para visualizar produtos.');
+        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'vAcervo')){
+           $this->session->set_flashdata('error','Você não tem permissão para visualizar acervos.');
            redirect(base_url());
         }
 
@@ -30,8 +30,8 @@ class Produtos extends CI_Controller {
         $this->load->library('pagination');
         
         
-        $config['base_url'] = base_url().'index.php/produtos/gerenciar/';
-        $config['total_rows'] = $this->produtos_model->count('produtos');
+        $config['base_url'] = base_url().'index.php/acervos/gerenciar/';
+        $config['total_rows'] = $this->acervos_model->count('acervos');
         $config['per_page'] = 10;
         $config['next_link'] = 'Próxima';
         $config['prev_link'] = 'Anterior';
@@ -54,9 +54,9 @@ class Produtos extends CI_Controller {
         
         $this->pagination->initialize($config); 	
 
-	    $this->data['results'] = $this->produtos_model->get('produtos','idProdutos,descricao,unidade,precoCompra,precoVenda,estoque,estoqueMinimo','',$config['per_page'],$this->uri->segment(3));
+	    $this->data['results'] = $this->acervos_model->get('acervos','idAcervos,descricao,unidade,precoCompra,precoVenda,estoque,estoqueMinimo','',$config['per_page'],$this->uri->segment(3));
        
-	    $this->data['view'] = 'produtos/produtos';
+	    $this->data['view'] = 'acervos/acervos';
        	$this->load->view('tema/topo',$this->data);
        
 		
@@ -64,15 +64,15 @@ class Produtos extends CI_Controller {
 	
     function adicionar() {
 
-        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'aProduto')){
-           $this->session->set_flashdata('error','Você não tem permissão para adicionar produtos.');
+        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'aAcervo')){
+           $this->session->set_flashdata('error','Você não tem permissão para adicionar acervos.');
            redirect(base_url());
         }
 
         $this->load->library('form_validation');
         $this->data['custom_error'] = '';
 
-        if ($this->form_validation->run('produtos') == false) {
+        if ($this->form_validation->run('acervos') == false) {
             $this->data['custom_error'] = (validation_errors() ? '<div class="form_error">' . validation_errors() . '</div>' : false);
         } else {
             $precoCompra = $this->input->post('precoCompra');
@@ -88,14 +88,14 @@ class Produtos extends CI_Controller {
                 'estoqueMinimo' => set_value('estoqueMinimo')
             );
 
-            if ($this->produtos_model->add('produtos', $data) == TRUE) {
-                $this->session->set_flashdata('success','Produto adicionado com sucesso!');
-                redirect(base_url() . 'index.php/produtos/adicionar/');
+            if ($this->acervos_model->add('acervos', $data) == TRUE) {
+                $this->session->set_flashdata('success','Acervo adicionado com sucesso!');
+                redirect(base_url() . 'index.php/acervos/adicionar/');
             } else {
                 $this->data['custom_error'] = '<div class="form_error"><p>An Error Occured.</p></div>';
             }
         }
-        $this->data['view'] = 'produtos/adicionarProduto';
+        $this->data['view'] = 'acervos/adicionarAcervo';
         $this->load->view('tema/topo', $this->data);
      
     }
@@ -107,14 +107,14 @@ class Produtos extends CI_Controller {
             redirect('librecon');
         }
 
-        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'eProduto')){
-           $this->session->set_flashdata('error','Você não tem permissão para editar produtos.');
+        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'eAcervo')){
+           $this->session->set_flashdata('error','Você não tem permissão para editar acervos.');
            redirect(base_url());
         }
         $this->load->library('form_validation');
         $this->data['custom_error'] = '';
 
-        if ($this->form_validation->run('produtos') == false) {
+        if ($this->form_validation->run('acervos') == false) {
             $this->data['custom_error'] = (validation_errors() ? '<div class="form_error">' . validation_errors() . '</div>' : false);
         } else {
             $precoCompra = $this->input->post('precoCompra');
@@ -130,17 +130,17 @@ class Produtos extends CI_Controller {
                 'estoqueMinimo' => $this->input->post('estoqueMinimo')
             );
 
-            if ($this->produtos_model->edit('produtos', $data, 'idProdutos', $this->input->post('idProdutos')) == TRUE) {
-                $this->session->set_flashdata('success','Produto editado com sucesso!');
-                redirect(base_url() . 'index.php/produtos/editar/'.$this->input->post('idProdutos'));
+            if ($this->acervos_model->edit('acervos', $data, 'idAcervos', $this->input->post('idAcervos')) == TRUE) {
+                $this->session->set_flashdata('success','Acervo editado com sucesso!');
+                redirect(base_url() . 'index.php/acervos/editar/'.$this->input->post('idAcervos'));
             } else {
                 $this->data['custom_error'] = '<div class="form_error"><p>An Error Occured</p></div>';
             }
         }
 
-        $this->data['result'] = $this->produtos_model->getById($this->uri->segment(3));
+        $this->data['result'] = $this->acervos_model->getById($this->uri->segment(3));
 
-        $this->data['view'] = 'produtos/editarProduto';
+        $this->data['view'] = 'acervos/editarAcervo';
         $this->load->view('tema/topo', $this->data);
      
     }
@@ -153,27 +153,27 @@ class Produtos extends CI_Controller {
             redirect('librecon');
         }
         
-        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'vProduto')){
-           $this->session->set_flashdata('error','Você não tem permissão para visualizar produtos.');
+        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'vAcervo')){
+           $this->session->set_flashdata('error','Você não tem permissão para visualizar acervos.');
            redirect(base_url());
         }
 
-        $this->data['result'] = $this->produtos_model->getById($this->uri->segment(3));
+        $this->data['result'] = $this->acervos_model->getById($this->uri->segment(3));
 
         if($this->data['result'] == null){
-            $this->session->set_flashdata('error','Produto não encontrado.');
-            redirect(base_url() . 'index.php/produtos/editar/'.$this->input->post('idProdutos'));
+            $this->session->set_flashdata('error','Acervo não encontrado.');
+            redirect(base_url() . 'index.php/acervos/editar/'.$this->input->post('idAcervos'));
         }
 
-        $this->data['view'] = 'produtos/visualizarProduto';
+        $this->data['view'] = 'acervos/visualizarAcervo';
         $this->load->view('tema/topo', $this->data);
      
     }
 	
     function excluir(){
 
-        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'dProduto')){
-           $this->session->set_flashdata('error','Você não tem permissão para excluir produtos.');
+        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'dAcervo')){
+           $this->session->set_flashdata('error','Você não tem permissão para excluir acervos.');
            redirect(base_url());
         }
 
@@ -181,22 +181,22 @@ class Produtos extends CI_Controller {
         $id =  $this->input->post('id');
         if ($id == null){
 
-            $this->session->set_flashdata('error','Erro ao tentar excluir produto.');            
-            redirect(base_url().'index.php/produtos/gerenciar/');
+            $this->session->set_flashdata('error','Erro ao tentar excluir acervo.');            
+            redirect(base_url().'index.php/acervos/gerenciar/');
         }
 
-        $this->db->where('produtos_id', $id);
-        $this->db->delete('produtos_os');
+        $this->db->where('acervos_id', $id);
+        $this->db->delete('acervos_os');
 
 
-        $this->db->where('produtos_id', $id);
+        $this->db->where('acervos_id', $id);
         $this->db->delete('itens_de_vendas');
         
-        $this->produtos_model->delete('produtos','idProdutos',$id);             
+        $this->acervos_model->delete('acervos','idAcervos',$id);             
         
 
-        $this->session->set_flashdata('success','Produto excluido com sucesso!');            
-        redirect(base_url().'index.php/produtos/gerenciar/');
+        $this->session->set_flashdata('success','Acervo excluido com sucesso!');            
+        redirect(base_url().'index.php/acervos/gerenciar/');
     }
 }
 

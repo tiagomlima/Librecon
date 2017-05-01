@@ -97,7 +97,7 @@ class Vendas extends CI_Controller {
             );
 
             if (is_numeric($id = $this->vendas_model->add('vendas', $data, true)) ) {
-                $this->session->set_flashdata('success','Venda iniciada com sucesso, adicione os produtos.');
+                $this->session->set_flashdata('success','Venda iniciada com sucesso, adicione os acervos.');
                 redirect('vendas/editar/'.$id);
 
             } else {
@@ -158,7 +158,7 @@ class Vendas extends CI_Controller {
         }
 
         $this->data['result'] = $this->vendas_model->getById($this->uri->segment(3));
-        $this->data['produtos'] = $this->vendas_model->getProdutos($this->uri->segment(3));
+        $this->data['acervos'] = $this->vendas_model->getAcervos($this->uri->segment(3));
         $this->data['view'] = 'vendas/editarVenda';
         $this->load->view('tema/topo', $this->data);
    
@@ -179,7 +179,7 @@ class Vendas extends CI_Controller {
         $this->data['custom_error'] = '';
         $this->load->model('librecon_model');
         $this->data['result'] = $this->vendas_model->getById($this->uri->segment(3));
-        $this->data['produtos'] = $this->vendas_model->getProdutos($this->uri->segment(3));
+        $this->data['acervos'] = $this->vendas_model->getAcervos($this->uri->segment(3));
         $this->data['emitente'] = $this->librecon_model->getEmitente();
         
         $this->data['view'] = 'vendas/visualizarVenda';
@@ -212,11 +212,11 @@ class Vendas extends CI_Controller {
 
     }
 
-    public function autoCompleteProduto(){
+    public function autoCompleteAcervo(){
         
         if (isset($_GET['term'])){
             $q = strtolower($_GET['term']);
-            $this->vendas_model->autoCompleteProduto($q);
+            $this->vendas_model->autoCompleteAcervo($q);
         }
 
     }
@@ -241,7 +241,7 @@ class Vendas extends CI_Controller {
 
 
 
-    public function adicionarProduto(){
+    public function adicionarAcervo(){
 
         if(!$this->permission->checkPermission($this->session->userdata('permissao'),'eVenda')){
           $this->session->set_flashdata('error','Você não tem permissão para editar vendas.');
@@ -250,8 +250,8 @@ class Vendas extends CI_Controller {
 
         $this->load->library('form_validation');
         $this->form_validation->set_rules('quantidade', 'Quantidade', 'trim|required|xss_clean');
-        $this->form_validation->set_rules('idProduto', 'Produto', 'trim|required|xss_clean');
-        $this->form_validation->set_rules('idVendasProduto', 'Vendas', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('idAcervo', 'Acervo', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('idVendasAcervo', 'Vendas', 'trim|required|xss_clean');
         
         if($this->form_validation->run() == false){
            echo json_encode(array('result'=> false)); 
@@ -261,17 +261,17 @@ class Vendas extends CI_Controller {
             $preco = $this->input->post('preco');
             $quantidade = $this->input->post('quantidade');
             $subtotal = $preco * $quantidade;
-            $produto = $this->input->post('idProduto');
+            $acervo = $this->input->post('idAcervo');
             $data = array(
                 'quantidade'=> $quantidade,
                 'subTotal'=> $subtotal,
-                'produtos_id'=> $produto,
-                'vendas_id'=> $this->input->post('idVendasProduto'),
+                'acervos_id'=> $acervo,
+                'vendas_id'=> $this->input->post('idVendasAcervo'),
             );
 
             if($this->vendas_model->add('itens_de_vendas', $data) == true){
-                $sql = "UPDATE produtos set estoque = estoque - ? WHERE idProdutos = ?";
-                $this->db->query($sql, array($quantidade, $produto));
+                $sql = "UPDATE acervos set estoque = estoque - ? WHERE idAcervos = ?";
+                $this->db->query($sql, array($quantidade, $acervo));
                 
                 echo json_encode(array('result'=> true));
             }else{
@@ -283,23 +283,23 @@ class Vendas extends CI_Controller {
       
     }
 
-    function excluirProduto(){
+    function excluirAcervo(){
 
             if(!$this->permission->checkPermission($this->session->userdata('permissao'),'eVenda')){
               $this->session->set_flashdata('error','Você não tem permissão para editar Vendas');
               redirect(base_url());
             }
 
-            $ID = $this->input->post('idProduto');
+            $ID = $this->input->post('idAcervo');
             if($this->vendas_model->delete('itens_de_vendas','idItens',$ID) == true){
                 
                 $quantidade = $this->input->post('quantidade');
-                $produto = $this->input->post('produto');
+                $acervo = $this->input->post('acervo');
 
 
-                $sql = "UPDATE produtos set estoque = estoque + ? WHERE idProdutos = ?";
+                $sql = "UPDATE acervos set estoque = estoque + ? WHERE idAcervos = ?";
 
-                $this->db->query($sql, array($quantidade, $produto));
+                $this->db->query($sql, array($quantidade, $acervo));
                 
                 echo json_encode(array('result'=> true));
             }

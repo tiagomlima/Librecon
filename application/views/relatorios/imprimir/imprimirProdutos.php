@@ -21,7 +21,7 @@
 
                   <div class="widget-box">
                       <div class="widget-title">
-                          <h4 style="text-align: center">Produtos</h4>
+                          <h4 style="text-align: center">Acervos</h4>
                       </div>
                       <div class="widget-content nopadding">
 
@@ -37,7 +37,7 @@
                       </thead>
                       <tbody>
                           <?php
-                          foreach ($produtos as $p) {
+                          foreach ($acervos as $p) {
                               echo '<tr>';
                               echo '<td>' . $p->descricao. '</td>';
                               echo '<td>' . $p->unidade . '</td>';

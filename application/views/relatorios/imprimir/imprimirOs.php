@@ -42,7 +42,7 @@
                               echo '<td>' . $c->nomeCliente . '</td>';
                               echo '<td>' . $c->status . '</td>';
                               echo '<td>' . date('d/m/Y',  strtotime($c->dataInicial)) . '</td>';
-                              echo '<td>' . $c->descricaoProduto. '</td>';
+                              echo '<td>' . $c->descricaoAcervo. '</td>';
                               echo '</tr>';
                           }
                           ?>

@@ -61,8 +61,8 @@
         <li class="<?php if(isset($menuLeitores)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/leitores"><i class="icon icon-group"></i> <span>Leitores</span></a></li>
     <?php } ?>
     
-    <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vProduto')){ ?>
-        <li class="<?php if(isset($menuProdutos)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/produtos"><i class="icon icon-barcode"></i> <span>Produtos</span></a></li>
+    <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vAcervo')){ ?>
+        <li class="<?php if(isset($menuAcervos)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/acervos"><i class="icon icon-barcode"></i> <span>Acervos</span></a></li>
     <?php } ?>
     
     <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vAcervo') || $this->permission->checkPermission($this->session->userdata('permissao'),'vAutor') || $this->permission->checkPermission($this->session->userdata('permissao'),'vEditora') || $this->permission->checkPermission($this->session->userdata('permissao'),'vTipoItem') || $this->permission->checkPermission($this->session->userdlata('permissao'),'vSecao') || $this->permission->checkPermission($this->session->userdata('permissao'),'vColecao')){ ?>
@@ -126,7 +126,7 @@
         </li>
     <?php } ?>
 
-    <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'rLeitor') || $this->permission->checkPermission($this->session->userdata('permissao'),'rProduto') || $this->permission->checkPermission($this->session->userdata('permissao'),'rServico') || $this->permission->checkPermission($this->session->userdata('permissao'),'rOs') || $this->permission->checkPermission($this->session->userdlata('permissao'),'rFinanceiro') || $this->permission->checkPermission($this->session->userdata('permissao'),'rVenda')){ ?>
+    <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'rLeitor') || $this->permission->checkPermission($this->session->userdata('permissao'),'rAcervo') || $this->permission->checkPermission($this->session->userdata('permissao'),'rServico') || $this->permission->checkPermission($this->session->userdata('permissao'),'rOs') || $this->permission->checkPermission($this->session->userdlata('permissao'),'rFinanceiro') || $this->permission->checkPermission($this->session->userdata('permissao'),'rVenda')){ ?>
         
         <li class="submenu <?php if(isset($menuRelatorios)){echo 'active open';};?>" >
           <a href="#"><i class="icon icon-list-alt"></i> <span>Relatórios</span> <span class="label"><i class="icon-chevron-down"></i></span></a>
@@ -135,8 +135,8 @@
             <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'rLeitor')){ ?>
                 <li><a href="<?php echo base_url()?>index.php/relatorios/leitores">Leitores</a></li>
             <?php } ?>
-            <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'rProduto')){ ?>
-                <li><a href="<?php echo base_url()?>index.php/relatorios/produtos">Produtos</a></li>
+            <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'rAcervo')){ ?>
+                <li><a href="<?php echo base_url()?>index.php/relatorios/acervos">Acervos</a></li>
             <?php } ?>
             <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'rServico')){ ?>
                 <li><a href="<?php echo base_url()?>index.php/relatorios/servicos">Serviços</a></li>

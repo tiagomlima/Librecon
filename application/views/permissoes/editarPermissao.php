@@ -82,29 +82,29 @@
 
                                     <td>
                                         <label>
-                                            <input <?php if(isset($permissoes['vProduto'])){ if($permissoes['vProduto'] == '1'){echo 'checked';}}?> name="vProduto" class="marcar" type="checkbox" value="1" />
-                                            <span class="lbl"> Visualizar Produto</span>
+                                            <input <?php if(isset($permissoes['vAcervo'])){ if($permissoes['vAcervo'] == '1'){echo 'checked';}}?> name="vAcervo" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Visualizar Acervo</span>
                                         </label>
                                     </td>
 
                                     <td>
                                         <label>
-                                            <input <?php if(isset($permissoes['aProduto'])){ if($permissoes['aProduto'] == '1'){echo 'checked';}}?> name="aProduto" class="marcar" type="checkbox" value="1" />
-                                            <span class="lbl"> Adicionar Produto</span>
+                                            <input <?php if(isset($permissoes['aAcervo'])){ if($permissoes['aAcervo'] == '1'){echo 'checked';}}?> name="aAcervo" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Adicionar Acervo</span>
                                         </label>
                                     </td>
 
                                     <td>
                                         <label>
-                                            <input <?php if(isset($permissoes['eProduto'])){ if($permissoes['eProduto'] == '1'){echo 'checked';}}?> name="eProduto" class="marcar" type="checkbox" value="1" />
-                                            <span class="lbl"> Editar Produto</span>
+                                            <input <?php if(isset($permissoes['eAcervo'])){ if($permissoes['eAcervo'] == '1'){echo 'checked';}}?> name="eAcervo" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Editar Acervo</span>
                                         </label>
                                     </td>
 
                                     <td>
                                         <label>
-                                            <input <?php if(isset($permissoes['dProduto'])){ if($permissoes['dProduto'] == '1'){echo 'checked';}}?> name="dProduto" class="marcar" type="checkbox" value="1" />
-                                            <span class="lbl"> Excluir Produto</span>
+                                            <input <?php if(isset($permissoes['dAcervo'])){ if($permissoes['dAcervo'] == '1'){echo 'checked';}}?> name="dAcervo" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Excluir Acervo</span>
                                         </label>
                                     </td>
                                  
@@ -373,8 +373,8 @@
 
                                     <td>
                                         <label>
-                                            <input <?php if(isset($permissoes['rProduto'])){ if($permissoes['rProduto'] == '1'){echo 'checked';}}?> name="rProduto" class="marcar" type="checkbox" value="1" />
-                                            <span class="lbl"> Relatório Produto</span>
+                                            <input <?php if(isset($permissoes['rAcervo'])){ if($permissoes['rAcervo'] == '1'){echo 'checked';}}?> name="rAcervo" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Relatório Acervo</span>
                                         </label>
                                     </td>
                                  

@@ -1,4 +1,4 @@
-<?php $totalProdutos = 0;?>
+<?php $totalAcervos = 0;?>
 <div class="row-fluid" style="margin-top: 0">
     <div class="span12">
         <div class="widget-box">
@@ -67,12 +67,12 @@
                     <div style="margin-top: 0; padding-top: 0">
 
 
-                        <?php if($produtos != null){?>
+                        <?php if($acervos != null){?>
                    
-                        <table class="table table-bordered table-condensed" id="tblProdutos" style="margin-top: 0; padding-top: 0">
+                        <table class="table table-bordered table-condensed" id="tblAcervos" style="margin-top: 0; padding-top: 0">
                                     <thead>
                                         <tr>
-                                            <th style="font-size: 15px">Produto</th>
+                                            <th style="font-size: 15px">Acervo</th>
                                             <th style="font-size: 15px">Quantidade</th>
                                             <th style="font-size: 15px">Sub-total</th>
                                         </tr>
@@ -80,9 +80,9 @@
                                     <tbody>
                                         <?php
                                         
-                                        foreach ($produtos as $p) {
+                                        foreach ($acervos as $p) {
 
-                                            $totalProdutos = $totalProdutos + $p->subTotal;
+                                            $totalAcervos = $totalAcervos + $p->subTotal;
                                             echo '<tr>';
                                             echo '<td>'.$p->descricao.'</td>';
                                             echo '<td>'.$p->quantidade.'</td>';
@@ -93,7 +93,7 @@
 
                                         <tr>
                                             <td colspan="2" style="text-align: right"><strong>Total:</strong></td>
-                                            <td><strong>R$ <?php echo number_format($totalProdutos,2,',','.');?></strong></td>
+                                            <td><strong>R$ <?php echo number_format($totalAcervos,2,',','.');?></strong></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -102,7 +102,7 @@
                 
                         <hr />
                     
-                        <h4 style="text-align: right">Valor Total: R$ <?php echo number_format($totalProdutos,2,',','.');?></h4>
+                        <h4 style="text-align: right">Valor Total: R$ <?php echo number_format($totalAcervos,2,',','.');?></h4>
 
                     </div>
             

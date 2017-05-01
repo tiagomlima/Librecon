@@ -10,14 +10,14 @@
         </form>
     </div>
     <div class="span12" style="margin-left: 0; margin-top: 0">
-    <!--Produtoss-->
+    <!--Acervoss-->
     <div class="span6" style="margin-left: 0; margin-top: 0">
         <div class="widget-box" style="min-height: 200px">
             <div class="widget-title">
                 <span class="icon">
                     <i class="icon-barcode"></i>
                 </span>
-                <h5>Produtos</h5>
+                <h5>Acervos</h5>
 
             </div>
 
@@ -35,21 +35,21 @@
                     </thead>
                     <tbody>
                         <?php
-                        if($produtos == null){
-                            echo '<tr><td colspan="4">Nenhum produto foi encontrado.</td></tr>';
+                        if($acervos == null){
+                            echo '<tr><td colspan="4">Nenhum acervo foi encontrado.</td></tr>';
                         }
-                        foreach ($produtos as $r) {
+                        foreach ($acervos as $r) {
                             echo '<tr>';
-                            echo '<td>' . $r->idProdutos . '</td>';
+                            echo '<td>' . $r->idAcervos . '</td>';
                             echo '<td>' . $r->descricao . '</td>';
                             echo '<td>' . $r->precoVenda . '</td>';
 
                             echo '<td>';
-                            if($this->permission->checkPermission($this->session->userdata('permissao'),'vProduto')){
-                                echo '<a style="margin-right: 1%" href="' . base_url() . 'index.php/produtos/visualizar/' . $r->idProdutos . '" class="btn tip-top" title="Ver mais detalhes"><i class="icon-eye-open"></i></a>'; 
+                            if($this->permission->checkPermission($this->session->userdata('permissao'),'vAcervo')){
+                                echo '<a style="margin-right: 1%" href="' . base_url() . 'index.php/acervos/visualizar/' . $r->idAcervos . '" class="btn tip-top" title="Ver mais detalhes"><i class="icon-eye-open"></i></a>'; 
                             }
-                            if($this->permission->checkPermission($this->session->userdata('permissao'),'eProduto')){
-                                echo '<a href="' . base_url() . 'index.php/produtos/editar/' . $r->idProdutos . '" class="btn btn-info tip-top" title="Editar Produto"><i class="icon-pencil icon-white"></i></a>'; 
+                            if($this->permission->checkPermission($this->session->userdata('permissao'),'eAcervo')){
+                                echo '<a href="' . base_url() . 'index.php/acervos/editar/' . $r->idAcervos . '" class="btn btn-info tip-top" title="Editar Acervo"><i class="icon-pencil icon-white"></i></a>'; 
                             } 
                             
                             echo '</td>';

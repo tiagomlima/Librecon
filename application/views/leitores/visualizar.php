@@ -178,7 +178,7 @@
                     echo '<td>' . $r->idOs . '</td>';
                     echo '<td>' . $dataInicial . '</td>';
                     echo '<td>' . $dataFinal . '</td>';
-                    echo '<td>' . $r->descricaoProduto . '</td>';
+                    echo '<td>' . $r->descricaoAcervo . '</td>';
                     echo '<td>' . $r->defeito . '</td>';
 
                     echo '<td>';

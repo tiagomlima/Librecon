@@ -49,7 +49,7 @@ class Os extends CI_Controller {
         	
         $this->pagination->initialize($config); 	
 
-		$this->data['results'] = $this->os_model->get('os','idOs,dataInicial,dataFinal,garantia,descricaoProduto,defeito,status,observacoes,laudoTecnico','',$config['per_page'],$this->uri->segment(3));
+		$this->data['results'] = $this->os_model->get('os','idOs,dataInicial,dataFinal,garantia,descricaoAcervo,defeito,status,observacoes,laudoTecnico','',$config['per_page'],$this->uri->segment(3));
        
 	    $this->data['view'] = 'os/os';
        	$this->load->view('tema/topo',$this->data);
@@ -98,7 +98,7 @@ class Os extends CI_Controller {
                 'usuarios_id' => $this->input->post('usuarios_id'),//set_value('idUsuario'),
                 'dataFinal' => $dataFinal,
                 'garantia' => set_value('garantia'),
-                'descricaoProduto' => set_value('descricaoProduto'),
+                'descricaoAcervo' => set_value('descricaoAcervo'),
                 'defeito' => set_value('defeito'),
                 'status' => set_value('status'),
                 'observacoes' => set_value('observacoes'),
@@ -107,7 +107,7 @@ class Os extends CI_Controller {
             );
 
             if ( is_numeric($id = $this->os_model->add('os', $data, true)) ) {
-                $this->session->set_flashdata('success','OS adicionada com sucesso, você pode adicionar produtos ou serviços a essa OS nas abas de "Produtos" e "Serviços"!');
+                $this->session->set_flashdata('success','OS adicionada com sucesso, você pode adicionar acervos ou serviços a essa OS nas abas de "Acervos" e "Serviços"!');
                 redirect('os/editar/'.$id);
 
             } else {
@@ -134,7 +134,7 @@ class Os extends CI_Controller {
                 'usuarios_id' => $this->input->post('usuarios_id'),//set_value('idUsuario'),
                 'dataFinal' => set_value('dataFinal'),
                 'garantia' => set_value('garantia'),
-                'descricaoProduto' => set_value('descricaoProduto'),
+                'descricaoAcervo' => set_value('descricaoAcervo'),
                 'defeito' => set_value('defeito'),
                 'status' => set_value('status'),
                 'observacoes' => set_value('observacoes'),
@@ -192,7 +192,7 @@ class Os extends CI_Controller {
                 'dataInicial' => $dataInicial,
                 'dataFinal' => $dataFinal,
                 'garantia' => $this->input->post('garantia'),
-                'descricaoProduto' => $this->input->post('descricaoProduto'),
+                'descricaoAcervo' => $this->input->post('descricaoAcervo'),
                 'defeito' => $this->input->post('defeito'),
                 'status' => $this->input->post('status'),
                 'observacoes' => $this->input->post('observacoes'),
@@ -210,7 +210,7 @@ class Os extends CI_Controller {
         }
 
         $this->data['result'] = $this->os_model->getById($this->uri->segment(3));
-        $this->data['produtos'] = $this->os_model->getProdutos($this->uri->segment(3));
+        $this->data['acervos'] = $this->os_model->getAcervos($this->uri->segment(3));
         $this->data['servicos'] = $this->os_model->getServicos($this->uri->segment(3));
         $this->data['anexos'] = $this->os_model->getAnexos($this->uri->segment(3));
         $this->data['view'] = 'os/editarOs';
@@ -233,7 +233,7 @@ class Os extends CI_Controller {
         $this->data['custom_error'] = '';
         $this->load->model('librecon_model');
         $this->data['result'] = $this->os_model->getById($this->uri->segment(3));
-        $this->data['produtos'] = $this->os_model->getProdutos($this->uri->segment(3));
+        $this->data['acervos'] = $this->os_model->getAcervos($this->uri->segment(3));
         $this->data['servicos'] = $this->os_model->getServicos($this->uri->segment(3));
         $this->data['emitente'] = $this->librecon_model->getEmitente();
 
@@ -260,7 +260,7 @@ class Os extends CI_Controller {
         $this->db->delete('servicos_os');
 
         $this->db->where('os_id', $id);
-        $this->db->delete('produtos_os');
+        $this->db->delete('acervos_os');
 
         $this->db->where('os_id', $id);
         $this->db->delete('anexos');
@@ -275,11 +275,11 @@ class Os extends CI_Controller {
         
     }
 
-    public function autoCompleteProduto(){
+    public function autoCompleteAcervo(){
         
         if (isset($_GET['term'])){
             $q = strtolower($_GET['term']);
-            $this->os_model->autoCompleteProduto($q);
+            $this->os_model->autoCompleteAcervo($q);
         }
 
     }
@@ -311,23 +311,23 @@ class Os extends CI_Controller {
 
     }
 
-    public function adicionarProduto(){
+    public function adicionarAcervo(){
 
         
         $preco = $this->input->post('preco');
         $quantidade = $this->input->post('quantidade');
         $subtotal = $preco * $quantidade;
-        $produto = $this->input->post('idProduto');
+        $acervo = $this->input->post('idAcervo');
         $data = array(
             'quantidade'=> $quantidade,
             'subTotal'=> $subtotal,
-            'produtos_id'=> $produto,
-            'os_id'=> $this->input->post('idOsProduto'),
+            'acervos_id'=> $acervo,
+            'os_id'=> $this->input->post('idOsAcervo'),
         );
 
-        if($this->os_model->add('produtos_os', $data) == true){
-            $sql = "UPDATE produtos set estoque = estoque - ? WHERE idProdutos = ?";
-            $this->db->query($sql, array($quantidade, $produto));
+        if($this->os_model->add('acervos_os', $data) == true){
+            $sql = "UPDATE acervos set estoque = estoque - ? WHERE idAcervos = ?";
+            $this->db->query($sql, array($quantidade, $acervo));
             
             echo json_encode(array('result'=> true));
         }else{
@@ -336,18 +336,18 @@ class Os extends CI_Controller {
       
     }
 
-    function excluirProduto(){
+    function excluirAcervo(){
         
-            $ID = $this->input->post('idProduto');
-            if($this->os_model->delete('produtos_os','idProdutos_os',$ID) == true){
+            $ID = $this->input->post('idAcervo');
+            if($this->os_model->delete('acervos_os','idAcervos_os',$ID) == true){
                 
                 $quantidade = $this->input->post('quantidade');
-                $produto = $this->input->post('produto');
+                $acervo = $this->input->post('acervo');
 
 
-                $sql = "UPDATE produtos set estoque = estoque + ? WHERE idProdutos = ?";
+                $sql = "UPDATE acervos set estoque = estoque + ? WHERE idAcervos = ?";
 
-                $this->db->query($sql, array($quantidade, $produto));
+                $this->db->query($sql, array($quantidade, $acervo));
                 
                 echo json_encode(array('result'=> true));
             }

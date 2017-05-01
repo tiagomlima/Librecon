@@ -63,10 +63,10 @@ class Librecon_model extends CI_Model {
          $this->db->limit(5);
          $data['os'] = $this->db->get('os')->result();
 
-         // buscando produtos
+         // buscando acervos
          $this->db->like('descricao',$termo);
          $this->db->limit(5);
-         $data['produtos'] = $this->db->get('produtos')->result();
+         $data['acervos'] = $this->db->get('acervos')->result();
 
          //buscando serviços
          $this->db->like('nome',$termo);
@@ -125,9 +125,9 @@ class Librecon_model extends CI_Model {
         return $this->db->get()->result();
     }
 
-    function getProdutosMinimo(){
+    function getAcervosMinimo(){
 
-        $sql = "SELECT * FROM produtos WHERE estoque <= estoqueMinimo LIMIT 10"; 
+        $sql = "SELECT * FROM acervos WHERE estoque <= estoqueMinimo LIMIT 10"; 
         return $this->db->query($sql)->result();
 
     }

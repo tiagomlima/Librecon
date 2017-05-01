@@ -13,7 +13,7 @@
             <div class="widget-content nopadding">
                 
 
-                <div class="span12" id="divProdutosServicos" style=" margin-left: 0">
+                <div class="span12" id="divAcervosServicos" style=" margin-left: 0">
                     <ul class="nav nav-tabs">
                         <li class="active" id="tabDetalhes"><a href="#tab1" data-toggle="tab">Detalhes da venda</a></li>
                     </ul>

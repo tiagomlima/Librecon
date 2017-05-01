@@ -26,12 +26,12 @@ class Relatorios extends CI_Controller{
        	$this->load->view('tema/topo',$this->data);
     }
 
-    public function produtos(){
-        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'rProduto')){
-           $this->session->set_flashdata('error','Você não tem permissão para gerar relatórios de produtos.');
+    public function acervos(){
+        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'rAcervo')){
+           $this->session->set_flashdata('error','Você não tem permissão para gerar relatórios de acervos.');
            redirect(base_url());
         }
-        $this->data['view'] = 'relatorios/rel_produtos';
+        $this->data['view'] = 'relatorios/rel_acervos';
        	$this->load->view('tema/topo',$this->data);
 
     }
@@ -68,37 +68,37 @@ class Relatorios extends CI_Controller{
         pdf_create($html, 'relatorio_clientes' . date('d/m/y'), TRUE);
     }
 
-    public function produtosRapid(){
-        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'rProduto')){
-           $this->session->set_flashdata('error','Você não tem permissão para gerar relatórios de produtos.');
+    public function acervosRapid(){
+        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'rAcervo')){
+           $this->session->set_flashdata('error','Você não tem permissão para gerar relatórios de acervos.');
            redirect(base_url());
         }
 
-        $data['produtos'] = $this->Relatorios_model->produtosRapid();
+        $data['acervos'] = $this->Relatorios_model->acervosRapid();
 
         $this->load->helper('mpdf');
-        //$this->load->view('relatorios/imprimir/imprimirProdutos', $data);
-        $html = $this->load->view('relatorios/imprimir/imprimirProdutos', $data, true);
-        pdf_create($html, 'relatorio_produtos' . date('d/m/y'), TRUE);
+        //$this->load->view('relatorios/imprimir/imprimirAcervos', $data);
+        $html = $this->load->view('relatorios/imprimir/imprimirAcervos', $data, true);
+        pdf_create($html, 'relatorio_acervos' . date('d/m/y'), TRUE);
     }
 
-    public function produtosRapidMin(){
-        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'rProduto')){
-           $this->session->set_flashdata('error','Você não tem permissão para gerar relatórios de produtos.');
+    public function acervosRapidMin(){
+        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'rAcervo')){
+           $this->session->set_flashdata('error','Você não tem permissão para gerar relatórios de acervos.');
            redirect(base_url());
         }
 
-        $data['produtos'] = $this->Relatorios_model->produtosRapidMin();
+        $data['acervos'] = $this->Relatorios_model->acervosRapidMin();
 
         $this->load->helper('mpdf');
-        $html = $this->load->view('relatorios/imprimir/imprimirProdutos', $data, true);
-        pdf_create($html, 'relatorio_produtos' . date('d/m/y'), TRUE);
+        $html = $this->load->view('relatorios/imprimir/imprimirAcervos', $data, true);
+        pdf_create($html, 'relatorio_acervos' . date('d/m/y'), TRUE);
         
     }
 
-    public function produtosCustom(){
-        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'rProduto')){
-           $this->session->set_flashdata('error','Você não tem permissão para gerar relatórios de produtos.');
+    public function acervosCustom(){
+        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'rAcervo')){
+           $this->session->set_flashdata('error','Você não tem permissão para gerar relatórios de acervos.');
            redirect(base_url());
         }
 
@@ -107,11 +107,11 @@ class Relatorios extends CI_Controller{
         $estoqueInicial = $this->input->get('estoqueInicial');
         $estoqueFinal = $this->input->get('estoqueFinal');
 
-        $data['produtos'] = $this->Relatorios_model->produtosCustom($precoInicial,$precoFinal,$estoqueInicial,$estoqueFinal);
+        $data['acervos'] = $this->Relatorios_model->acervosCustom($precoInicial,$precoFinal,$estoqueInicial,$estoqueFinal);
 
         $this->load->helper('mpdf');
-        $html = $this->load->view('relatorios/imprimir/imprimirProdutos', $data, true);
-        pdf_create($html, 'relatorio_produtos' . date('d/m/y'), TRUE);
+        $html = $this->load->view('relatorios/imprimir/imprimirAcervos', $data, true);
+        pdf_create($html, 'relatorio_acervos' . date('d/m/y'), TRUE);
     }
 
     public function servicos(){

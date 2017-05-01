@@ -77,9 +77,9 @@ class Relatorios_model extends CI_Model {
         return $this->db->get('clientes')->result();
     }
 
-    public function produtosRapid(){
+    public function acervosRapid(){
         $this->db->order_by('descricao','asc');
-        return $this->db->get('produtos')->result();
+        return $this->db->get('acervos')->result();
     }
 
     public function servicosRapid(){
@@ -94,13 +94,13 @@ class Relatorios_model extends CI_Model {
         return $this->db->get()->result();
     }
 
-    public function produtosRapidMin(){
+    public function acervosRapidMin(){
         $this->db->order_by('descricao','asc');
         $this->db->where('estoque < estoqueMinimo');
-        return $this->db->get('produtos')->result();
+        return $this->db->get('acervos')->result();
     }
 
-    public function produtosCustom($precoInicial = null,$precoFinal = null,$estoqueInicial = null,$estoqueFinal = null){
+    public function acervosCustom($precoInicial = null,$precoFinal = null,$estoqueInicial = null,$estoqueFinal = null){
         $wherePreco = "";
         $whereEstoque = "";
         if($precoInicial != null){
@@ -109,7 +109,7 @@ class Relatorios_model extends CI_Model {
         if($estoqueInicial != null){
             $whereEstoque = "AND estoque BETWEEN ".$this->db->escape($estoqueInicial)." AND ".$this->db->escape($estoqueFinal);
         }
-        $query = "SELECT * FROM produtos WHERE estoque >= 0 $wherePreco $whereEstoque";
+        $query = "SELECT * FROM acervos WHERE estoque >= 0 $wherePreco $whereEstoque";
         return $this->db->query($query)->result();
     }
 

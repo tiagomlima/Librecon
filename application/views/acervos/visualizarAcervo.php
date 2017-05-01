@@ -3,7 +3,7 @@
         <div class="accordion-heading">
             <div class="widget-title">
                 <a data-parent="#collapse-group" href="#collapseGOne" data-toggle="collapse">
-                    <span class="icon"><i class="icon-list"></i></span><h5>Dados do Produto</h5>
+                    <span class="icon"><i class="icon-list"></i></span><h5>Dados do Acervo</h5>
                 </a>
             </div>
         </div>

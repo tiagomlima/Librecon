@@ -5,64 +5,63 @@
                 <span class="icon">
                     <i class="icon-align-justify"></i>
                 </span>
-                <h5>Editar Produto</h5>
+                <h5>Cadastro de Acervo</h5>
             </div>
             <div class="widget-content nopadding">
                 <?php echo $custom_error; ?>
-                <form action="<?php echo current_url(); ?>" id="formProduto" method="post" class="form-horizontal" >
+                <form action="<?php echo current_url(); ?>" id="formAcervo" method="post" class="form-horizontal" >
                      <div class="control-group">
-                        <?php echo form_hidden('idProdutos',$result->idProdutos) ?>
                         <label for="descricao" class="control-label">Descrição<span class="required">*</span></label>
                         <div class="controls">
-                            <input id="descricao" type="text" name="descricao" value="<?php echo $result->descricao; ?>"  />
+                            <input id="descricao" type="text" name="descricao" value="<?php echo set_value('descricao'); ?>"  />
                         </div>
                     </div>
 
                     <div class="control-group">
                         <label for="unidade" class="control-label">Unidade<span class="required">*</span></label>
                         <div class="controls">
-                            <input id="unidade" type="text" name="unidade" value="<?php echo $result->unidade; ?>"  />
+                            <input id="unidade" type="text" name="unidade" value="<?php echo set_value('unidade'); ?>"  />
                         </div>
                     </div>
 
                     <div class="control-group">
                         <label for="precoCompra" class="control-label">Preço de Compra<span class="required">*</span></label>
                         <div class="controls">
-                            <input id="precoCompra" class="money" type="text" name="precoCompra" value="<?php echo $result->precoCompra; ?>"  />
+                            <input id="precoCompra" class="money" type="text" name="precoCompra" value="<?php echo set_value('precoCompra'); ?>"  />
                         </div>
                     </div>
 
                     <div class="control-group">
                         <label for="precoVenda" class="control-label">Preço de Venda<span class="required">*</span></label>
                         <div class="controls">
-                            <input id="precoVenda" class="money" type="text" name="precoVenda" value="<?php echo $result->precoVenda; ?>"  />
+                            <input id="precoVenda" class="money" type="text" name="precoVenda" value="<?php echo set_value('precoVenda'); ?>"  />
                         </div>
                     </div>
 
                     <div class="control-group">
                         <label for="estoque" class="control-label">Estoque<span class="required">*</span></label>
                         <div class="controls">
-                            <input id="estoque" type="text" name="estoque" value="<?php echo $result->estoque; ?>"  />
+                            <input id="estoque" type="text" name="estoque" value="<?php echo set_value('estoque'); ?>"  />
                         </div>
                     </div>
 
                     <div class="control-group">
                         <label for="estoqueMinimo" class="control-label">Estoque Mínimo</label>
                         <div class="controls">
-                            <input id="estoqueMinimo" type="text" name="estoqueMinimo" value="<?php echo $result->estoqueMinimo; ?>"  />
+                            <input id="estoqueMinimo" type="text" name="estoqueMinimo" value="<?php echo set_value('estoqueMinimo'); ?>"  />
                         </div>
                     </div>
 
                     <div class="form-actions">
                         <div class="span12">
                             <div class="span6 offset3">
-                                <button type="submit" class="btn btn-primary"><i class="icon-ok icon-white"></i> Alterar</button>
-                                <a href="<?php echo base_url() ?>index.php/produtos" id="" class="btn"><i class="icon-arrow-left"></i> Voltar</a>
+                                <button type="submit" class="btn btn-success"><i class="icon-plus icon-white"></i> Adicionar</button>
+                                <a href="<?php echo base_url() ?>index.php/acervos" id="" class="btn"><i class="icon-arrow-left"></i> Voltar</a>
                             </div>
                         </div>
                     </div>
 
-
+                    
                 </form>
             </div>
 
@@ -70,14 +69,13 @@
      </div>
 </div>
 
-
 <script src="<?php echo base_url()?>js/jquery.validate.js"></script>
 <script src="<?php echo base_url();?>js/maskmoney.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
         $(".money").maskMoney();
 
-        $('#formProduto').validate({
+        $('#formAcervo').validate({
             rules :{
                   descricao: { required: true},
                   unidade: { required: true},
@@ -105,7 +103,6 @@
            });
     });
 </script>
-
 
 
 

@@ -14,7 +14,7 @@
             <div class="widget-content nopadding">
 
 
-                <div class="span12" id="divProdutosServicos" style=" margin-left: 0">
+                <div class="span12" id="divAcervosServicos" style=" margin-left: 0">
                     <ul class="nav nav-tabs">
                         <li class="active" id="tabDetalhes"><a href="#tab1" data-toggle="tab">Detalhes da Venda</a></li>
 
@@ -67,14 +67,14 @@
                                 
                                 <div class="span12 well" style="padding: 1%; margin-left: 0">
                                         
-                                        <form id="formProdutos" action="<?php echo base_url(); ?>index.php/vendas/adicionarProduto" method="post">
+                                        <form id="formAcervos" action="<?php echo base_url(); ?>index.php/vendas/adicionarAcervo" method="post">
                                             <div class="span8">
-                                                <input type="hidden" name="idProduto" id="idProduto" />
-                                                <input type="hidden" name="idVendasProduto" id="idVendasProduto" value="<?php echo $result->idVendas?>" />
+                                                <input type="hidden" name="idAcervo" id="idAcervo" />
+                                                <input type="hidden" name="idVendasAcervo" id="idVendasAcervo" value="<?php echo $result->idVendas?>" />
                                                 <input type="hidden" name="estoque" id="estoque" value=""/>
                                                 <input type="hidden" name="preco" id="preco" value=""/>
-                                                <label for="">Produto</label>
-                                                <input type="text" class="span12" name="produto" id="produto" placeholder="Digite o nome do produto" />
+                                                <label for="">Acervo</label>
+                                                <input type="text" class="span12" name="acervo" id="acervo" placeholder="Digite o nome do acervo" />
                                             </div>
                                             <div class="span2">
                                                 <label for="">Quantidade</label>
@@ -82,15 +82,15 @@
                                             </div>
                                             <div class="span2">
                                                 <label for="">&nbsp</label>
-                                                <button class="btn btn-success span12" id="btnAdicionarProduto"><i class="icon-white icon-plus"></i> Adicionar</button>
+                                                <button class="btn btn-success span12" id="btnAdicionarAcervo"><i class="icon-white icon-plus"></i> Adicionar</button>
                                             </div>
                                         </form>
                                     </div>
-                                    <div class="span12" id="divProdutos" style="margin-left: 0">
-                                        <table class="table table-bordered" id="tblProdutos">
+                                    <div class="span12" id="divAcervos" style="margin-left: 0">
+                                        <table class="table table-bordered" id="tblAcervos">
                                             <thead>
                                                 <tr>
-                                                    <th>Produto</th>
+                                                    <th>Acervo</th>
                                                     <th>Quantidade</th>
                                                     <th>Ações</th>
                                                     <th>Sub-total</th>
@@ -99,13 +99,13 @@
                                             <tbody>
                                                 <?php
                                                 $total = 0;
-                                                foreach ($produtos as $p) {
+                                                foreach ($acervos as $p) {
                                                     
                                                     $total = $total + $p->subTotal;
                                                     echo '<tr>';
                                                     echo '<td>'.$p->descricao.'</td>';
                                                     echo '<td>'.$p->quantidade.'</td>';
-                                                    echo '<td><a href="" idAcao="'.$p->idItens.'" prodAcao="'.$p->idProdutos.'" quantAcao="'.$p->quantidade.'" title="Excluir Produto" class="btn btn-danger"><i class="icon-remove icon-white"></i></a></td>';
+                                                    echo '<td><a href="" idAcao="'.$p->idItens.'" prodAcao="'.$p->idAcervos.'" quantAcao="'.$p->quantidade.'" title="Excluir Acervo" class="btn btn-danger"><i class="icon-remove icon-white"></i></a></td>';
                                                     echo '<td>R$ '.number_format($p->subTotal,2,',','.').'</td>';
                                                     echo '</tr>';
                                                 }?>
@@ -277,12 +277,12 @@ $(document).ready(function(){
           }
      });
 
-     $("#produto").autocomplete({
-            source: "<?php echo base_url(); ?>index.php/os/autoCompleteProduto",
+     $("#acervo").autocomplete({
+            source: "<?php echo base_url(); ?>index.php/os/autoCompleteAcervo",
             minLength: 2,
             select: function( event, ui ) {
 
-                 $("#idProduto").val(ui.item.id);
+                 $("#idAcervo").val(ui.item.id);
                  $("#estoque").val(ui.item.estoque);
                  $("#preco").val(ui.item.preco);
                  $("#quantidade").focus();
@@ -343,7 +343,7 @@ $(document).ready(function(){
 
 
 
-      $("#formProdutos").validate({
+      $("#formAcervos").validate({
           rules:{
              quantidade: {required:true}
           },
@@ -358,21 +358,21 @@ $(document).ready(function(){
              }
              else{
                  var dados = $( form ).serialize();
-                $("#divProdutos").html("<div class='progress progress-info progress-striped active'><div class='bar' style='width: 100%'></div></div>");
+                $("#divAcervos").html("<div class='progress progress-info progress-striped active'><div class='bar' style='width: 100%'></div></div>");
                 $.ajax({
                   type: "POST",
-                  url: "<?php echo base_url();?>index.php/vendas/adicionarProduto",
+                  url: "<?php echo base_url();?>index.php/vendas/adicionarAcervo",
                   data: dados,
                   dataType: 'json',
                   success: function(data)
                   {
                     if(data.result == true){
-                        $("#divProdutos" ).load("<?php echo current_url();?> #divProdutos" );
+                        $("#divAcervos" ).load("<?php echo current_url();?> #divAcervos" );
                         $("#quantidade").val('');
-                        $("#produto").val('').focus();
+                        $("#acervo").val('').focus();
                     }
                     else{
-                        alert('Ocorreu um erro ao tentar adicionar produto.');
+                        alert('Ocorreu um erro ao tentar adicionar acervo.');
                     }
                   }
                   });
@@ -387,24 +387,24 @@ $(document).ready(function(){
      
 
        $(document).on('click', 'a', function(event) {
-            var idProduto = $(this).attr('idAcao');
+            var idAcervo = $(this).attr('idAcao');
             var quantidade = $(this).attr('quantAcao');
-            var produto = $(this).attr('prodAcao');
-            if((idProduto % 1) == 0){
-                $("#divProdutos").html("<div class='progress progress-info progress-striped active'><div class='bar' style='width: 100%'></div></div>");
+            var acervo = $(this).attr('prodAcao');
+            if((idAcervo % 1) == 0){
+                $("#divAcervos").html("<div class='progress progress-info progress-striped active'><div class='bar' style='width: 100%'></div></div>");
                 $.ajax({
                   type: "POST",
-                  url: "<?php echo base_url();?>index.php/vendas/excluirProduto",
-                  data: "idProduto="+idProduto+"&quantidade="+quantidade+"&produto="+produto,
+                  url: "<?php echo base_url();?>index.php/vendas/excluirAcervo",
+                  data: "idAcervo="+idAcervo+"&quantidade="+quantidade+"&acervo="+acervo,
                   dataType: 'json',
                   success: function(data)
                   {
                     if(data.result == true){
-                        $( "#divProdutos" ).load("<?php echo current_url();?> #divProdutos" );
+                        $( "#divAcervos" ).load("<?php echo current_url();?> #divAcervos" );
                         
                     }
                     else{
-                        alert('Ocorreu um erro ao tentar excluir produto.');
+                        alert('Ocorreu um erro ao tentar excluir acervo.');
                     }
                   }
                   });

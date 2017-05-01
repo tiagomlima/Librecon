@@ -541,7 +541,7 @@ if(!$results){?>
             }
             else{
                 $("#btnCancelExcluir").trigger('click');
-                alert('Ocorreu um erro ao tentar excluir produto.');
+                alert('Ocorreu um erro ao tentar excluir acervo.');
             }
           }
         });

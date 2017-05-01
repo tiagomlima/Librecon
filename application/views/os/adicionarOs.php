@@ -13,7 +13,7 @@
             <div class="widget-content nopadding">
                 
 
-                <div class="span12" id="divProdutosServicos" style=" margin-left: 0">
+                <div class="span12" id="divAcervosServicos" style=" margin-left: 0">
                     <ul class="nav nav-tabs">
                         <li class="active" id="tabDetalhes"><a href="#tab1" data-toggle="tab">Detalhes da OS</a></li>
                     </ul>
@@ -67,8 +67,8 @@
                                     <div class="span12" style="padding: 1%; margin-left: 0">
 
                                         <div class="span6">
-                                            <label for="descricaoProduto">Descrição Produto/Serviço</label>
-                                            <textarea class="span12" name="descricaoProduto" id="descricaoProduto" cols="30" rows="5"></textarea>
+                                            <label for="descricaoAcervo">Descrição Acervo/Serviço</label>
+                                            <textarea class="span12" name="descricaoAcervo" id="descricaoAcervo" cols="30" rows="5"></textarea>
                                         </div>
                                         <div class="span6">
                                             <label for="defeito">Defeito</label>

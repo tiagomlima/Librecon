@@ -13,8 +13,8 @@
         <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vLeitor')){ ?>
             <li class="bg_lb"> <a href="<?php echo base_url()?>index.php/leitores"> <i class="icon-group"></i> Leitores</a> </li>
         <?php } ?>
-        <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vProduto')){ ?>
-            <li class="bg_lg"> <a href="<?php echo base_url()?>index.php/produtos"> <i class="icon-book"></i> Acervo</a> </li>
+        <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vAcervo')){ ?>
+            <li class="bg_lg"> <a href="<?php echo base_url()?>index.php/acervos"> <i class="icon-book"></i> Acervo</a> </li>
         <?php } ?>
         <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vServico')){ ?>
             <li class="bg_ly"> <a href="<?php echo base_url()?>index.php/servicos"> <i class="icon-wrench"></i> Serviços</a> </li>
@@ -44,13 +44,13 @@
     <div class="span12">
         
         <div class="widget-box">
-            <div class="widget-title"><span class="icon"><i class="icon-signal"></i></span><h5>Produtos Com Estoque Mínimo</h5></div>
+            <div class="widget-title"><span class="icon"><i class="icon-signal"></i></span><h5>Acervos Com Estoque Mínimo</h5></div>
             <div class="widget-content">
                 <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Produto</th>
+                            <th>Acervo</th>
                             <th>Preço de Venda</th>
                             <th>Estoque</th>
                             <th>Estoque Mínimo</th>
@@ -59,24 +59,24 @@
                     </thead>
                     <tbody>
                         <?php 
-                        if($produtos != null){
-                            foreach ($produtos as $p) {
+                        if($acervos != null){
+                            foreach ($acervos as $p) {
                                 echo '<tr>';
-                                echo '<td>'.$p->idProdutos.'</td>';
+                                echo '<td>'.$p->idAcervos.'</td>';
                                 echo '<td>'.$p->descricao.'</td>';
                                 echo '<td>R$ '.$p->precoVenda.'</td>';
                                 echo '<td>'.$p->estoque.'</td>';
                                 echo '<td>'.$p->estoqueMinimo.'</td>';
                                 echo '<td>';
-                                if($this->permission->checkPermission($this->session->userdata('permissao'),'eProduto')){
-                                    echo '<a href="'.base_url().'index.php/produtos/editar/'.$p->idProdutos.'" class="btn btn-info"> <i class="icon-pencil" ></i> </a>  '; 
+                                if($this->permission->checkPermission($this->session->userdata('permissao'),'eAcervo')){
+                                    echo '<a href="'.base_url().'index.php/acervos/editar/'.$p->idAcervos.'" class="btn btn-info"> <i class="icon-pencil" ></i> </a>  '; 
                                 }
                                 echo '</td>';
                                 echo '</tr>';
                             }
                         }
                         else{
-                            echo '<tr><td colspan="3">Nenhum produto com estoque baixo.</td></tr>';
+                            echo '<tr><td colspan="3">Nenhum acervo com estoque baixo.</td></tr>';
                         }    
 
                         ?>
@@ -218,7 +218,7 @@
                     <div class="span12">
                         <ul class="site-stats">
                             <li class="bg_lh"><i class="icon-group"></i> <strong><?php echo $this->db->count_all('leitores');?></strong> <small>Leitores</small></li>
-                            <li class="bg_lh"><i class="icon-barcode"></i> <strong><?php echo $this->db->count_all('produtos');?></strong> <small>Produtos </small></li>
+                            <li class="bg_lh"><i class="icon-barcode"></i> <strong><?php echo $this->db->count_all('acervos');?></strong> <small>Acervos </small></li>
                             <li class="bg_lh"><i class="icon-tags"></i> <strong><?php echo $this->db->count_all('os');?></strong> <small>Ordens de Serviço</small></li>
                             <li class="bg_lh"><i class="icon-wrench"></i> <strong><?php echo $this->db->count_all('servicos');?></strong> <small>Serviços</small></li>
                             

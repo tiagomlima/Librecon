@@ -36,10 +36,10 @@ class Vendas_model extends CI_Model {
         return $this->db->get()->row();
     }
 
-    public function getProdutos($id = null){
-        $this->db->select('itens_de_vendas.*, produtos.*');
+    public function getAcervos($id = null){
+        $this->db->select('itens_de_vendas.*, acervos.*');
         $this->db->from('itens_de_vendas');
-        $this->db->join('produtos','produtos.idProdutos = itens_de_vendas.produtos_id');
+        $this->db->join('acervos','acervos.idAcervos = itens_de_vendas.acervos_id');
         $this->db->where('vendas_id',$id);
         return $this->db->get()->result();
     }
@@ -85,15 +85,15 @@ class Vendas_model extends CI_Model {
 	return $this->db->count_all($table);
     }
 
-    public function autoCompleteProduto($q){
+    public function autoCompleteAcervo($q){
 
         $this->db->select('*');
         $this->db->limit(5);
         $this->db->like('descricao', $q);
-        $query = $this->db->get('produtos');
+        $query = $this->db->get('acervos');
         if($query->num_rows > 0){
             foreach ($query->result_array() as $row){
-                $row_set[] = array('label'=>$row['descricao'].' | Preço: R$ '.$row['precoVenda'].' | Estoque: '.$row['estoque'],'estoque'=>$row['estoque'],'id'=>$row['idProdutos'],'preco'=>$row['precoVenda']);
+                $row_set[] = array('label'=>$row['descricao'].' | Preço: R$ '.$row['precoVenda'].' | Estoque: '.$row['estoque'],'estoque'=>$row['estoque'],'id'=>$row['idAcervos'],'preco'=>$row['precoVenda']);
             }
             echo json_encode($row_set);
         }

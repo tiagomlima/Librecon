@@ -69,29 +69,29 @@
 
                                     <td>
                                         <label>
-                                            <input name="vProduto" class="marcar" type="checkbox" checked="checked" value="1" />
-                                            <span class="lbl"> Visualizar Produto</span>
+                                            <input name="vAcervo" class="marcar" type="checkbox" checked="checked" value="1" />
+                                            <span class="lbl"> Visualizar Acervo</span>
                                         </label>
                                     </td>
 
                                     <td>
                                         <label>
-                                            <input name="aProduto" class="marcar" type="checkbox" value="1" />
-                                            <span class="lbl"> Adicionar Produto</span>
+                                            <input name="aAcervo" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Adicionar Acervo</span>
                                         </label>
                                     </td>
 
                                     <td>
                                         <label>
-                                            <input name="eProduto" class="marcar" type="checkbox" value="1" />
-                                            <span class="lbl"> Editar Produto</span>
+                                            <input name="eAcervo" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Editar Acervo</span>
                                         </label>
                                     </td>
 
                                     <td>
                                         <label>
-                                            <input name="dProduto" class="marcar" type="checkbox" value="1" />
-                                            <span class="lbl"> Excluir Produto</span>
+                                            <input name="dAcervo" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Excluir Acervo</span>
                                         </label>
                                     </td>
                                  
@@ -520,8 +520,8 @@
 
                                     <td>
                                         <label>
-                                            <input name="rProduto" class="marcar" type="checkbox" value="1" />
-                                            <span class="lbl"> Relatório Produto</span>
+                                            <input name="rAcervo" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Relatório Acervo</span>
                                         </label>
                                     </td>
                                  

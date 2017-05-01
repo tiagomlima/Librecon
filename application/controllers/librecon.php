@@ -17,7 +17,7 @@ class Librecon extends CI_Controller {
         }
 
         $this->data['ordens'] = $this->librecon_model->getOsAbertas();
-        $this->data['produtos'] = $this->librecon_model->getProdutosMinimo();
+        $this->data['acervos'] = $this->librecon_model->getAcervosMinimo();
         $this->data['os'] = $this->librecon_model->getOsEstatisticas();
         $this->data['estatisticas_financeiro'] = $this->librecon_model->getEstatisticasFinanceiro();
         $this->data['menuPainel'] = 'Painel';
@@ -66,7 +66,7 @@ class Librecon extends CI_Controller {
         $termo = $this->input->get('termo');
 
         $data['results'] = $this->librecon_model->pesquisar($termo);
-        $this->data['produtos'] = $data['results']['produtos'];
+        $this->data['acervoss'] = $data['results']['acervos'];
         $this->data['servicos'] = $data['results']['servicos'];
         $this->data['os'] = $data['results']['os'];
         $this->data['leitores'] = $data['results']['leitores'];

@@ -127,7 +127,7 @@ $config = array('leitores' => array(array(
                                     'rules'=>'required|trim|xss_clean'
                                 ))
                 ,
-                'produtos' => array(array(
+                'acervos' => array(array(
                                     'field'=>'descricao',
                                     'label'=>'',
                                     'rules'=>'required|trim|xss_clean'
@@ -207,8 +207,8 @@ $config = array('leitores' => array(array(
                                     'rules'=>'trim|xss_clean'
                                 ),
                                 array(
-                                    'field'=>'descricaoProduto',
-                                    'label'=>'DescricaoProduto',
+                                    'field'=>'descricaoAcervo',
+                                    'label'=>'DescricaoAcervo',
                                     'rules'=>'trim|xss_clean'
                                 ),
                                 array(

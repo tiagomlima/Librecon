@@ -152,7 +152,7 @@ class Teste extends CI_Controller {
                     $this->db->where('os_id', $o->idOs);
                     $this->db->delete('servicos_os');
                     $this->db->where('os_id', $o->idOs);
-                    $this->db->delete('produtos_os');
+                    $this->db->delete('acervos_os');
                     $this->db->where('idOs', $o->idOs);
                     $this->db->delete('os');
                 }
