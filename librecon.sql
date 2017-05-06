@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 06-Maio-2017 às 19:13
+-- Generation Time: 06-Maio-2017 às 21:08
 -- Versão do servidor: 5.7.11
 -- PHP Version: 5.6.19
 
@@ -28,12 +28,10 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `acervos` (
   `idAcervos` int(11) NOT NULL,
-  `descricao` varchar(80) NOT NULL,
-  `unidade` varchar(10) DEFAULT NULL,
-  `precoCompra` decimal(10,2) DEFAULT NULL,
-  `precoVenda` decimal(10,2) NOT NULL,
-  `estoque` int(11) NOT NULL,
-  `estoqueMinimo` int(11) DEFAULT NULL
+  `titulo` varchar(100) NOT NULL,
+  `tombo` varchar(55) NOT NULL,
+  `quantidade` int(20) NOT NULL,
+  `idioma` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -107,7 +105,7 @@ CREATE TABLE `ci_sessions` (
 --
 
 INSERT INTO `ci_sessions` (`session_id`, `ip_address`, `user_agent`, `last_activity`, `user_data`) VALUES
-('da29d5c833a85289370de592b501382e', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36', 1493666073, 'a:5:{s:9:"user_data";s:0:"";s:4:"nome";s:5:"tiago";s:2:"id";s:1:"4";s:9:"permissao";s:2:"11";s:6:"logado";b:1;}');
+('7772ea2b69adbb62847b869051077fa4', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36', 1494104723, 'a:6:{s:9:"user_data";s:0:"";s:4:"nome";s:5:"tiago";s:2:"id";s:1:"4";s:9:"permissao";s:2:"12";s:6:"logado";b:1;s:17:"flash:old:success";s:28:"Acervo excluido com sucesso!";}');
 
 -- --------------------------------------------------------
 
@@ -139,7 +137,21 @@ CREATE TABLE `cursos` (
 --
 
 INSERT INTO `cursos` (`idCursos`, `nomeCurso`, `disciplina`, `dataCadastro`) VALUES
-(1, 'Gestão', 'ti', '2017-04-11');
+(1, 'Gestão', 'ti', '2017-04-11'),
+(2, 'Tecnologia', '', '2017-05-06');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `disciplinas`
+--
+
+CREATE TABLE `disciplinas` (
+  `idDisciplina` int(11) NOT NULL,
+  `nomeDisciplina` varchar(100) NOT NULL,
+  `curso_id` int(11) NOT NULL,
+  `dataCadastro` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -198,6 +210,25 @@ CREATE TABLE `emitente` (
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `grupos`
+--
+
+CREATE TABLE `grupos` (
+  `idGrupo` int(11) NOT NULL,
+  `nomeGrupo` varchar(80) NOT NULL,
+  `duracao_dias` int(4) NOT NULL,
+  `qtde_max_exemplares` int(3) NOT NULL,
+  `qtde_max_renovacao` int(3) NOT NULL,
+  `qtde_max_reserva` int(3) NOT NULL,
+  `validade_reserva` int(2) NOT NULL,
+  `multa` float NOT NULL,
+  `observacoes` text NOT NULL,
+  `dataCadastro` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `itens_de_vendas`
 --
 
@@ -250,20 +281,23 @@ CREATE TABLE `leitores` (
   `estado` varchar(20) DEFAULT NULL,
   `cep` varchar(20) DEFAULT NULL,
   `sexo` varchar(20) NOT NULL,
+  `situacao` tinyint(1) NOT NULL,
   `status` varchar(20) NOT NULL,
   `observacoes` text,
   `matricula` varchar(100) NOT NULL,
   `datanasc` date DEFAULT NULL,
-  `senha` varchar(25) NOT NULL
+  `senha` varchar(25) NOT NULL,
+  `curso_id` int(11) NOT NULL,
+  `grupo_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `leitores`
 --
 
-INSERT INTO `leitores` (`idLeitores`, `nomeLeitor`, `cpf`, `telefone`, `celular`, `email`, `dataCadastro`, `rua`, `numero`, `bairro`, `cidade`, `estado`, `cep`, `sexo`, `status`, `observacoes`, `matricula`, `datanasc`, `senha`) VALUES
-(6, 'ANDRE LUIS ALVES PEDROSO', '4442554113', '19983604243', '19983604243', 'andre.pedroso34@gmail.com', '2017-04-06', 'Rua Cherubim Graciatto 22', '22', 'Nosso Teto', 'Itapira', 'SP', '13976233', 'Masculino', 'Ativo', '0', '1423007', '1994-11-21', 'bc9800b9d52a24cce72a73dd5'),
-(7, 'Tiago Lima', '436.581.588-2', '19983604243', '19983604243', 'tiago2@admin.com', '2017-04-06', 'Rua Cherubim Graciatto 22', '222', 'nosso teto', 'Itapira', 'SP', '13976233', 'Masculino', 'Ativo', '0', '1423030', '1990-10-10', '12fd5311017d4b8faf7abc6d7');
+INSERT INTO `leitores` (`idLeitores`, `nomeLeitor`, `cpf`, `telefone`, `celular`, `email`, `dataCadastro`, `rua`, `numero`, `bairro`, `cidade`, `estado`, `cep`, `sexo`, `situacao`, `status`, `observacoes`, `matricula`, `datanasc`, `senha`, `curso_id`, `grupo_id`) VALUES
+(6, 'ANDRE LUIS ALVES PEDROSO', '4442554113', '19983604243', '19983604243', 'andre.pedroso34@gmail.com', '2017-04-06', 'Rua Cherubim Graciatto 22', '22', 'Nosso Teto', 'Itapira', 'SP', '13976233', 'Masculino', 0, 'Ativo', '0', '1423007', '1994-11-21', 'bc9800b9d52a24cce72a73dd5', 0, 0),
+(7, 'Tiago Lima', '436.581.588-2', '19983604243', '19983604243', 'tiago2@admin.com', '2017-04-06', 'Rua Cherubim Graciatto 22', '222', 'nosso teto', 'Itapira', 'SP', '13976233', 'Masculino', 0, 'Ativo', '0', '1423030', '1990-10-10', '12fd5311017d4b8faf7abc6d7', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -309,7 +343,8 @@ CREATE TABLE `permissoes` (
 INSERT INTO `permissoes` (`idPermissao`, `nome`, `permissoes`, `situacao`, `data`) VALUES
 (1, 'Administrador', 'a:42:{s:6:"cCurso";b:0;s:6:"aCurso";b:0;s:6:"eCurso";b:0;s:6:"dCurso";b:0;s:7:"aLeitor";s:1:"1";s:7:"eLeitor";s:1:"1";s:7:"dLeitor";s:1:"1";s:7:"vLeitor";s:1:"1";s:8:"aProduto";s:1:"1";s:8:"eProduto";s:1:"1";s:8:"dProduto";s:1:"1";s:8:"vProduto";s:1:"1";s:8:"aServico";s:1:"1";s:8:"eServico";s:1:"1";s:8:"dServico";s:1:"1";s:8:"vServico";s:1:"1";s:3:"aOs";s:1:"1";s:3:"eOs";s:1:"1";s:3:"dOs";s:1:"1";s:3:"vOs";s:1:"1";s:6:"aVenda";s:1:"1";s:6:"eVenda";s:1:"1";s:6:"dVenda";s:1:"1";s:6:"vVenda";s:1:"1";s:8:"aArquivo";s:1:"1";s:8:"eArquivo";s:1:"1";s:8:"dArquivo";s:1:"1";s:8:"vArquivo";s:1:"1";s:11:"aLancamento";s:1:"1";s:11:"eLancamento";s:1:"1";s:11:"dLancamento";s:1:"1";s:11:"vLancamento";s:1:"1";s:8:"cUsuario";s:1:"1";s:9:"cEmitente";s:1:"1";s:10:"cPermissao";s:1:"1";s:7:"cBackup";s:1:"1";s:7:"rLeitor";s:1:"1";s:8:"rProduto";s:1:"1";s:8:"rServico";s:1:"1";s:3:"rOs";s:1:"1";s:6:"rVenda";s:1:"1";s:11:"rFinanceiro";s:1:"1";}', 1, '2014-09-03'),
 (10, 'ADM 2', 'a:70:{s:6:"cCurso";b:0;s:6:"aCurso";b:0;s:6:"eCurso";b:0;s:6:"dCurso";b:0;s:7:"aLeitor";s:1:"1";s:7:"eLeitor";s:1:"1";s:7:"dLeitor";s:1:"1";s:7:"vLeitor";s:1:"1";s:8:"aProduto";s:1:"1";s:8:"eProduto";s:1:"1";s:8:"dProduto";s:1:"1";s:8:"vProduto";s:1:"1";s:7:"aAcervo";s:1:"1";s:7:"eAcervo";s:1:"1";s:7:"dAcervo";s:1:"1";s:7:"vAcervo";s:1:"1";s:6:"aAutor";b:0;s:6:"eAutor";b:0;s:6:"dAutor";b:0;s:6:"vAutor";b:0;s:8:"aEditora";b:0;s:8:"eEditora";b:0;s:8:"dEditora";b:0;s:8:"vEditora";b:0;s:9:"aTipoItem";s:1:"1";s:9:"eTipoItem";s:1:"1";s:9:"dTipoItem";s:1:"1";s:9:"vTipoItem";s:1:"1";s:6:"aSecao";b:0;s:6:"eSecao";b:0;s:6:"dSecao";b:0;s:6:"vSecao";b:0;s:8:"aColecao";b:0;s:8:"eColecao";b:0;s:8:"dColecao";b:0;s:8:"vColecao";b:0;s:8:"aServico";s:1:"1";s:8:"eServico";s:1:"1";s:8:"dServico";s:1:"1";s:8:"vServico";s:1:"1";s:3:"aOs";s:1:"1";s:3:"eOs";s:1:"1";s:3:"dOs";s:1:"1";s:3:"vOs";s:1:"1";s:6:"aTeste";b:0;s:6:"eTeste";b:0;s:6:"dTeste";b:0;s:6:"vTeste";b:0;s:6:"aVenda";s:1:"1";s:6:"eVenda";s:1:"1";s:6:"dVenda";s:1:"1";s:6:"vVenda";s:1:"1";s:8:"aArquivo";s:1:"1";s:8:"eArquivo";s:1:"1";s:8:"dArquivo";s:1:"1";s:8:"vArquivo";s:1:"1";s:11:"aLancamento";s:1:"1";s:11:"eLancamento";s:1:"1";s:11:"dLancamento";s:1:"1";s:11:"vLancamento";s:1:"1";s:8:"cUsuario";s:1:"1";s:9:"cEmitente";s:1:"1";s:10:"cPermissao";s:1:"1";s:7:"cBackup";s:1:"1";s:7:"rLeitor";s:1:"1";s:8:"rProduto";s:1:"1";s:8:"rServico";s:1:"1";s:3:"rOs";b:0;s:6:"rVenda";s:1:"1";s:11:"rFinanceiro";s:1:"1";}', 1, '2017-04-11'),
-(11, 'teste menu', 'a:66:{s:6:"cCurso";s:1:"1";s:6:"aCurso";s:1:"1";s:6:"eCurso";s:1:"1";s:6:"dCurso";s:1:"1";s:7:"aLeitor";s:1:"1";s:7:"eLeitor";s:1:"1";s:7:"dLeitor";s:1:"1";s:7:"vLeitor";s:1:"1";s:8:"aProduto";s:1:"1";s:8:"eProduto";s:1:"1";s:8:"dProduto";s:1:"1";s:8:"vProduto";s:1:"1";s:7:"aAcervo";s:1:"1";s:7:"eAcervo";s:1:"1";s:7:"dAcervo";s:1:"1";s:7:"vAcervo";s:1:"1";s:6:"aAutor";s:1:"1";s:6:"eAutor";s:1:"1";s:6:"dAutor";s:1:"1";s:6:"vAutor";s:1:"1";s:8:"aEditora";s:1:"1";s:8:"eEditora";s:1:"1";s:8:"dEditora";s:1:"1";s:8:"vEditora";s:1:"1";s:9:"aTipoItem";s:1:"1";s:9:"eTipoItem";s:1:"1";s:9:"dTipoItem";s:1:"1";s:9:"vTipoItem";s:1:"1";s:6:"aSecao";s:1:"1";s:6:"eSecao";s:1:"1";s:6:"dSecao";s:1:"1";s:6:"vSecao";s:1:"1";s:8:"aColecao";s:1:"1";s:8:"eColecao";s:1:"1";s:8:"dColecao";s:1:"1";s:8:"vColecao";s:1:"1";s:8:"aServico";s:1:"1";s:8:"eServico";s:1:"1";s:8:"dServico";s:1:"1";s:8:"vServico";s:1:"1";s:3:"aOs";s:1:"1";s:3:"eOs";s:1:"1";s:3:"dOs";s:1:"1";s:3:"vOs";s:1:"1";s:6:"aVenda";s:1:"1";s:6:"eVenda";s:1:"1";s:6:"dVenda";s:1:"1";s:6:"vVenda";s:1:"1";s:8:"aArquivo";s:1:"1";s:8:"eArquivo";s:1:"1";s:8:"dArquivo";s:1:"1";s:8:"vArquivo";s:1:"1";s:11:"aLancamento";s:1:"1";s:11:"eLancamento";s:1:"1";s:11:"dLancamento";s:1:"1";s:11:"vLancamento";s:1:"1";s:8:"cUsuario";s:1:"1";s:9:"cEmitente";s:1:"1";s:10:"cPermissao";s:1:"1";s:7:"cBackup";s:1:"1";s:7:"rLeitor";s:1:"1";s:8:"rProduto";s:1:"1";s:8:"rServico";s:1:"1";s:3:"rOs";s:1:"1";s:6:"rVenda";s:1:"1";s:11:"rFinanceiro";s:1:"1";}', 1, '2017-04-11');
+(11, 'teste menu', 'a:66:{s:6:"cCurso";s:1:"1";s:6:"aCurso";s:1:"1";s:6:"eCurso";s:1:"1";s:6:"dCurso";s:1:"1";s:7:"aLeitor";s:1:"1";s:7:"eLeitor";s:1:"1";s:7:"dLeitor";s:1:"1";s:7:"vLeitor";s:1:"1";s:8:"aProduto";s:1:"1";s:8:"eProduto";s:1:"1";s:8:"dProduto";s:1:"1";s:8:"vProduto";s:1:"1";s:7:"aAcervo";s:1:"1";s:7:"eAcervo";s:1:"1";s:7:"dAcervo";s:1:"1";s:7:"vAcervo";s:1:"1";s:6:"aAutor";s:1:"1";s:6:"eAutor";s:1:"1";s:6:"dAutor";s:1:"1";s:6:"vAutor";s:1:"1";s:8:"aEditora";s:1:"1";s:8:"eEditora";s:1:"1";s:8:"dEditora";s:1:"1";s:8:"vEditora";s:1:"1";s:9:"aTipoItem";s:1:"1";s:9:"eTipoItem";s:1:"1";s:9:"dTipoItem";s:1:"1";s:9:"vTipoItem";s:1:"1";s:6:"aSecao";s:1:"1";s:6:"eSecao";s:1:"1";s:6:"dSecao";s:1:"1";s:6:"vSecao";s:1:"1";s:8:"aColecao";s:1:"1";s:8:"eColecao";s:1:"1";s:8:"dColecao";s:1:"1";s:8:"vColecao";s:1:"1";s:8:"aServico";s:1:"1";s:8:"eServico";s:1:"1";s:8:"dServico";s:1:"1";s:8:"vServico";s:1:"1";s:3:"aOs";s:1:"1";s:3:"eOs";s:1:"1";s:3:"dOs";s:1:"1";s:3:"vOs";s:1:"1";s:6:"aVenda";s:1:"1";s:6:"eVenda";s:1:"1";s:6:"dVenda";s:1:"1";s:6:"vVenda";s:1:"1";s:8:"aArquivo";s:1:"1";s:8:"eArquivo";s:1:"1";s:8:"dArquivo";s:1:"1";s:8:"vArquivo";s:1:"1";s:11:"aLancamento";s:1:"1";s:11:"eLancamento";s:1:"1";s:11:"dLancamento";s:1:"1";s:11:"vLancamento";s:1:"1";s:8:"cUsuario";s:1:"1";s:9:"cEmitente";s:1:"1";s:10:"cPermissao";s:1:"1";s:7:"cBackup";s:1:"1";s:7:"rLeitor";s:1:"1";s:8:"rProduto";s:1:"1";s:8:"rServico";s:1:"1";s:3:"rOs";s:1:"1";s:6:"rVenda";s:1:"1";s:11:"rFinanceiro";s:1:"1";}', 1, '2017-04-11'),
+(12, 'total', 'a:70:{s:6:"aCurso";s:1:"1";s:6:"eCurso";s:1:"1";s:6:"dCurso";s:1:"1";s:6:"vCurso";s:1:"1";s:11:"aDisciplina";s:1:"1";s:11:"eDisciplina";s:1:"1";s:11:"dDisciplina";s:1:"1";s:11:"vDisciplina";s:1:"1";s:6:"aGrupo";s:1:"1";s:6:"eGrupo";s:1:"1";s:6:"dGrupo";s:1:"1";s:6:"vGrupo";s:1:"1";s:7:"aLeitor";s:1:"1";s:7:"eLeitor";s:1:"1";s:7:"dLeitor";s:1:"1";s:7:"vLeitor";s:1:"1";s:7:"aAcervo";s:1:"1";s:7:"eAcervo";s:1:"1";s:7:"dAcervo";s:1:"1";s:7:"vAcervo";s:1:"1";s:6:"aAutor";s:1:"1";s:6:"eAutor";s:1:"1";s:6:"dAutor";s:1:"1";s:6:"vAutor";s:1:"1";s:8:"aEditora";s:1:"1";s:8:"eEditora";s:1:"1";s:8:"dEditora";s:1:"1";s:8:"vEditora";s:1:"1";s:9:"aTipoItem";s:1:"1";s:9:"eTipoItem";s:1:"1";s:9:"dTipoItem";s:1:"1";s:9:"vTipoItem";s:1:"1";s:6:"aSecao";s:1:"1";s:6:"eSecao";s:1:"1";s:6:"dSecao";s:1:"1";s:6:"vSecao";s:1:"1";s:8:"aColecao";s:1:"1";s:8:"eColecao";s:1:"1";s:8:"dColecao";s:1:"1";s:8:"vColecao";s:1:"1";s:8:"aServico";s:1:"1";s:8:"eServico";s:1:"1";s:8:"dServico";s:1:"1";s:8:"vServico";s:1:"1";s:3:"aOs";s:1:"1";s:3:"eOs";s:1:"1";s:3:"dOs";s:1:"1";s:3:"vOs";s:1:"1";s:6:"aVenda";s:1:"1";s:6:"eVenda";s:1:"1";s:6:"dVenda";s:1:"1";s:6:"vVenda";s:1:"1";s:8:"aArquivo";s:1:"1";s:8:"eArquivo";s:1:"1";s:8:"dArquivo";s:1:"1";s:8:"vArquivo";s:1:"1";s:11:"aLancamento";s:1:"1";s:11:"eLancamento";s:1:"1";s:11:"dLancamento";s:1:"1";s:11:"vLancamento";s:1:"1";s:8:"cUsuario";s:1:"1";s:9:"cEmitente";s:1:"1";s:10:"cPermissao";s:1:"1";s:7:"cBackup";s:1:"1";s:7:"rLeitor";s:1:"1";s:7:"rAcervo";s:1:"1";s:8:"rServico";s:1:"1";s:3:"rOs";s:1:"1";s:6:"rVenda";s:1:"1";s:11:"rFinanceiro";s:1:"1";}', 1, '2017-05-06');
 
 -- --------------------------------------------------------
 
@@ -402,8 +437,8 @@ CREATE TABLE `usuarios` (
 
 INSERT INTO `usuarios` (`idUsuarios`, `nome`, `cpf`, `email`, `senha`, `telefone`, `celular`, `situacao`, `dataCadastro`, `nivel`, `permissoes_id`) VALUES
 (1, 'admin', '600.021.520-87', 'admin@admin.com', 'd033e22ae348aeb5660fc2140aec35850c4da997', '0000-0000', '', 1, '2013-11-22', 1, 10),
-(3, 'Andre', '4442554113', 'andre@admin.com', 'bc9800b9d52a24cce72a73dd528afed53f10e5fc', '19983604243', '', 1, '2017-04-03', 0, 1),
-(4, 'tiago', '34317831805', 'tiago@admin.com', '12fd5311017d4b8faf7abc6d7fa13d182f519a13', '38433601', '', 1, '2017-04-11', 0, 11),
+(3, 'Andre', '4442554113', 'andre@admin.com', 'bc9800b9d52a24cce72a73dd528afed53f10e5fc', '19983604243', '', 1, '2017-04-03', 0, 12),
+(4, 'tiago', '34317831805', 'tiago@admin.com', '12fd5311017d4b8faf7abc6d7fa13d182f519a13', '38433601', '', 1, '2017-04-11', 0, 12),
 (5, 'Cliente', '33333333333', 'ciente@admin.com', '1fa07b2977b371b9e5a5f74f9d3502e6daa9c566', '1938433601', '', 1, '2017-04-11', 0, 1),
 (6, 'tiago', '34317831809', 'tiago@admin.com', 'f240bf2fda92f4756f1bec3c73871ef2242040e1', '19 38433605', '', 1, '2017-04-11', 0, 11);
 
@@ -475,6 +510,13 @@ ALTER TABLE `cursos`
   ADD PRIMARY KEY (`idCursos`);
 
 --
+-- Indexes for table `disciplinas`
+--
+ALTER TABLE `disciplinas`
+  ADD PRIMARY KEY (`idDisciplina`),
+  ADD KEY `fk_disciplinas_curso_idx` (`curso_id`);
+
+--
 -- Indexes for table `documentos`
 --
 ALTER TABLE `documentos`
@@ -491,6 +533,12 @@ ALTER TABLE `editora`
 --
 ALTER TABLE `emitente`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `grupos`
+--
+ALTER TABLE `grupos`
+  ADD PRIMARY KEY (`idGrupo`);
 
 --
 -- Indexes for table `itens_de_vendas`
@@ -578,7 +626,7 @@ ALTER TABLE `vendas`
 -- AUTO_INCREMENT for table `acervos`
 --
 ALTER TABLE `acervos`
-  MODIFY `idAcervos` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idAcervos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `acervos_os`
 --
@@ -603,7 +651,7 @@ ALTER TABLE `colecao`
 -- AUTO_INCREMENT for table `cursos`
 --
 ALTER TABLE `cursos`
-  MODIFY `idCursos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idCursos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `documentos`
 --
@@ -643,7 +691,7 @@ ALTER TABLE `os`
 -- AUTO_INCREMENT for table `permissoes`
 --
 ALTER TABLE `permissoes`
-  MODIFY `idPermissao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `idPermissao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `secao`
 --
