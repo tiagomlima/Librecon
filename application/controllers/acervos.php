@@ -54,7 +54,7 @@ class Acervos extends CI_Controller {
         
         $this->pagination->initialize($config); 	
 
-	    $this->data['results'] = $this->acervos_model->get('acervos','idAcervos,descricao,unidade,precoCompra,precoVenda,estoque,estoqueMinimo','',$config['per_page'],$this->uri->segment(3));
+	    $this->data['results'] = $this->acervos_model->get('acervos','idAcervos,titulo,tombo,quantidade,idioma','',$config['per_page'],$this->uri->segment(3));
        
 	    $this->data['view'] = 'acervos/acervos';
        	$this->load->view('tema/topo',$this->data);
@@ -75,17 +75,16 @@ class Acervos extends CI_Controller {
         if ($this->form_validation->run('acervos') == false) {
             $this->data['custom_error'] = (validation_errors() ? '<div class="form_error">' . validation_errors() . '</div>' : false);
         } else {
-            $precoCompra = $this->input->post('precoCompra');
+            /*$precoCompra = $this->input->post('precoCompra');
             $precoCompra = str_replace(",","", $precoCompra);
             $precoVenda = $this->input->post('precoVenda');
-            $precoVenda = str_replace(",", "", $precoVenda);
+            $precoVenda = str_replace(",", "", $precoVenda);*/
             $data = array(
-                'descricao' => set_value('descricao'),
-                'unidade' => set_value('unidade'),
-                'precoCompra' => $precoCompra,
-                'precoVenda' => $precoVenda,
-                'estoque' => set_value('estoque'),
-                'estoqueMinimo' => set_value('estoqueMinimo')
+                'titulo' => set_value('titulo'),
+                'tombo' => set_value('tombo'),
+                'quantidade' => set_value('quantidade'),
+                'idioma' => set_value('idioma'),
+                
             );
 
             if ($this->acervos_model->add('acervos', $data) == TRUE) {
@@ -117,17 +116,16 @@ class Acervos extends CI_Controller {
         if ($this->form_validation->run('acervos') == false) {
             $this->data['custom_error'] = (validation_errors() ? '<div class="form_error">' . validation_errors() . '</div>' : false);
         } else {
-            $precoCompra = $this->input->post('precoCompra');
+            /*$precoCompra = $this->input->post('precoCompra');
             $precoCompra = str_replace(",","", $precoCompra);
             $precoVenda = $this->input->post('precoVenda');
-            $precoVenda = str_replace(",", "", $precoVenda);
+            $precoVenda = str_replace(",", "", $precoVenda);*/
             $data = array(
-                'descricao' => $this->input->post('descricao'),
-                'unidade' => $this->input->post('unidade'),
-                'precoCompra' => $precoCompra,
-                'precoVenda' => $precoVenda,
-                'estoque' => $this->input->post('estoque'),
-                'estoqueMinimo' => $this->input->post('estoqueMinimo')
+                'titulo' => $this->input->post('titulo'),
+                'tombo' => $this->input->post('tombo'),
+                'quantidade' => $this->input->post('quantidade'),
+                'idioma' => $this->input->post('idioma'),
+                
             );
 
             if ($this->acervos_model->edit('acervos', $data, 'idAcervos', $this->input->post('idAcervos')) == TRUE) {

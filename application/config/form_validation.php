@@ -159,34 +159,24 @@ $config = array('leitores' => array(array(
                                 ))
                 ,
                 'acervos' => array(array(
-                                    'field'=>'descricao',
-                                    'label'=>'',
+                                    'field'=>'titulo',
+                                    'label'=>'titulo',
                                     'rules'=>'required|trim|xss_clean'
                                 ),
                                 array(
-                                    'field'=>'unidade',
-                                    'label'=>'Unidade',
+                                    'field'=>'tombo',
+                                    'label'=>'tombo',
                                     'rules'=>'required|trim|xss_clean'
                                 ),
                                 array(
-                                    'field'=>'precoCompra',
-                                    'label'=>'Preo de Compra',
+                                    'field'=>'quantidade',
+                                    'label'=>'quantidade',
                                     'rules'=>'required|trim|xss_clean'
                                 ),
                                 array(
-                                    'field'=>'precoVenda',
-                                    'label'=>'Preo de Venda',
+                                    'field'=>'idioma',
+                                    'label'=>'idioma',
                                     'rules'=>'required|trim|xss_clean'
-                                ),
-                                array(
-                                    'field'=>'estoque',
-                                    'label'=>'Estoque',
-                                    'rules'=>'required|trim|xss_clean'
-                                ),
-                                array(
-                                    'field'=>'estoqueMinimo',
-                                    'label'=>'Estoque Mnimo',
-                                    'rules'=>'trim|xss_clean'
                                 ))
                 ,
                 'usuarios' => array(array(

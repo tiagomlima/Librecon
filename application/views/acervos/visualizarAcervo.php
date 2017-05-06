@@ -12,29 +12,22 @@
                 <table class="table table-bordered">
                     <tbody>
                         <tr>
-                            <td style="text-align: right; width: 30%"><strong>Descrição</strong></td>
-                            <td><?php echo $result->descricao ?></td>
+                            <td style="text-align: right; width: 30%"><strong>Titulo</strong></td>
+                            <td><?php echo $result->titulo ?></td>
                         </tr>
                         <tr>
-                            <td style="text-align: right"><strong>Unidade</strong></td>
-                            <td><?php echo $result->unidade ?></td>
+                            <td style="text-align: right"><strong>Tombo</strong></td>
+                            <td><?php echo $result->tombo ?></td>
                         </tr>
                         <tr>
-                            <td style="text-align: right"><strong>Preço de Compra</strong></td>
-                            <td>R$ <?php echo $result->precoCompra; ?></td>
+                            <td style="text-align: right"><strong>Quantidade</strong></td>
+                            <td> <?php echo $result->quantidade; ?></td>
                         </tr>
                         <tr>
-                            <td style="text-align: right"><strong>Preço de Venda</strong></td>
-                            <td>R$ <?php echo $result->precoVenda; ?></td>
+                            <td style="text-align: right"><strong>Idioma</strong></td>
+                            <td><?php echo $result->idioma; ?></td>
                         </tr>
-                        <tr>
-                            <td style="text-align: right"><strong>Estoque</strong></td>
-                            <td><?php echo $result->estoque; ?></td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: right"><strong>Estoque Mínimo</strong></td>
-                            <td><?php echo $result->estoqueMinimo; ?></td>
-                        </tr>
+                        
                   
                     </tbody>
                 </table>

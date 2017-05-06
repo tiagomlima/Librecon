@@ -12,46 +12,41 @@
                 <form action="<?php echo current_url(); ?>" id="formAcervo" method="post" class="form-horizontal" >
                      <div class="control-group">
                         <?php echo form_hidden('idAcervos',$result->idAcervos) ?>
-                        <label for="descricao" class="control-label">Descrição<span class="required">*</span></label>
+                        <label for="titulo" class="control-label">Titulo<span class="required">*</span></label>
                         <div class="controls">
-                            <input id="descricao" type="text" name="descricao" value="<?php echo $result->descricao; ?>"  />
+                            <input id="titulo" type="text" name="titulo" value="<?php echo $result->titulo; ?>"  />
                         </div>
                     </div>
 
                     <div class="control-group">
-                        <label for="unidade" class="control-label">Unidade<span class="required">*</span></label>
+                        <label for="tombo" class="control-label">Tombo<span class="required">*</span></label>
                         <div class="controls">
-                            <input id="unidade" type="text" name="unidade" value="<?php echo $result->unidade; ?>"  />
+                            <input id="tombo" type="text" name="tombo" value="<?php echo $result->tombo; ?>"  />
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="quantidae" class="control-label">Quantidade<span class="required">*</span></label>
+                        <div class="controls">
+                            <input id="quantidade" type="text" name="quantidade" value="<?php echo $result->quantidade; ?>"  />
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="idioma" class="control-label">Idioma<span class="required">*</span></label>
+                        <div class="controls">
+                            <input id="idioma" type="text" name="idioma" value="<?php echo $result->idioma; ?>"  />
                         </div>
                     </div>
 
-                    <div class="control-group">
+                    <!--<div class="control-group">
                         <label for="precoCompra" class="control-label">Preço de Compra<span class="required">*</span></label>
                         <div class="controls">
                             <input id="precoCompra" class="money" type="text" name="precoCompra" value="<?php echo $result->precoCompra; ?>"  />
                         </div>
-                    </div>
+                    </div>-->
 
-                    <div class="control-group">
-                        <label for="precoVenda" class="control-label">Preço de Venda<span class="required">*</span></label>
-                        <div class="controls">
-                            <input id="precoVenda" class="money" type="text" name="precoVenda" value="<?php echo $result->precoVenda; ?>"  />
-                        </div>
-                    </div>
-
-                    <div class="control-group">
-                        <label for="estoque" class="control-label">Estoque<span class="required">*</span></label>
-                        <div class="controls">
-                            <input id="estoque" type="text" name="estoque" value="<?php echo $result->estoque; ?>"  />
-                        </div>
-                    </div>
-
-                    <div class="control-group">
-                        <label for="estoqueMinimo" class="control-label">Estoque Mínimo</label>
-                        <div class="controls">
-                            <input id="estoqueMinimo" type="text" name="estoqueMinimo" value="<?php echo $result->estoqueMinimo; ?>"  />
-                        </div>
-                    </div>
+                    
 
                     <div class="form-actions">
                         <div class="span12">
@@ -79,18 +74,18 @@
 
         $('#formAcervo').validate({
             rules :{
-                  descricao: { required: true},
-                  unidade: { required: true},
-                  precoCompra: { required: true},
-                  precoVenda: { required: true},
-                  estoque: { required: true}
+                  titulo: { required: true},
+                  tombo: { required: true},
+                  quantidade: { required: true},
+                  idioma: { required: true},
+                  
             },
             messages:{
-                  descricao: { required: 'Campo Requerido.'},
-                  unidade: {required: 'Campo Requerido.'},
-                  precoCompra: { required: 'Campo Requerido.'},
-                  precoVenda: { required: 'Campo Requerido.'},
-                  estoque: { required: 'Campo Requerido.'}
+                  titulo: { required: 'Campo Requerido.'},
+                  tombo: {required: 'Campo Requerido.'},
+                  quantidade: { required: 'Campo Requerido.'},
+                  idioma: { required: 'Campo Requerido.'},
+                  
             },
 
             errorClass: "help-inline",

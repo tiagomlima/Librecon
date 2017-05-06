@@ -21,9 +21,10 @@ if(!$results){?>
     <thead>
         <tr>
             <th>#</th>
-            <th>Nome</th>
-            <th>Estoque</th>
-            <th>Preço</th>
+            <th>Título</th>
+            <th>Tombo</th>
+            <th>Quantidade</th>
+            <th>Idioma</th>
             <th></th>
         </tr>
     </thead>
@@ -55,9 +56,10 @@ if(!$results){?>
     <thead>
         <tr style="backgroud-color: #2D335B">
             <th>#</th>
-            <th>Nome</th>
-            <th>Estoque</th>
-            <th>Preço</th>
+            <th>Título</th>
+            <th>Tombo</th>
+            <th>Quantidade</th>
+            <th>Idioma</th>
             <th></th>
         </tr>
     </thead>
@@ -65,9 +67,11 @@ if(!$results){?>
         <?php foreach ($results as $r) {
             echo '<tr>';
             echo '<td>'.$r->idAcervos.'</td>';
-            echo '<td>'.$r->descricao.'</td>';
-            echo '<td>'.$r->estoque.'</td>';
-            echo '<td>'.number_format($r->precoVenda,2,',','.').'</td>';
+            echo '<td>'.$r->titulo.'</td>';
+            echo '<td>'.$r->tombo.'</td>';
+			echo '<td>'.$r->quantidade.'</td>';
+			echo '<td>'.$r->idioma.'</td>';
+            
             
             echo '<td>';
             if($this->permission->checkPermission($this->session->userdata('permissao'),'vAcervo')){
