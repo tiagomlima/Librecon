@@ -96,6 +96,106 @@
                                     </td>
                                  
                                 </tr>
+                                
+                                <tr><td colspan="4"></td></tr>
+                                <tr>
+
+                                    <td>
+                                        <label>
+                                            <input name="vCurso" class="marcar" type="checkbox" checked="checked" value="1" />
+                                            <span class="lbl"> Visualizar Curso</span>
+                                        </label>
+                                    </td>
+
+                                    <td>
+                                        <label>
+                                            <input name="aCurso" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Adicionar Curso</span>
+                                        </label>
+                                    </td>
+
+                                    <td>
+                                        <label>
+                                            <input name="eCurso" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Editar Curso</span>
+                                        </label>
+                                    </td>
+
+                                    <td>
+                                        <label>
+                                            <input name="dCurso" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Excluir Curso</span>
+                                        </label>
+                                    </td>
+                                 
+                                </tr>
+                                
+                                <tr><td colspan="4"></td></tr>
+                                <tr>
+
+                                    <td>
+                                        <label>
+                                            <input name="vGrupo" class="marcar" type="checkbox" checked="checked" value="1" />
+                                            <span class="lbl"> Visualizar Grupo</span>
+                                        </label>
+                                    </td>
+
+                                    <td>
+                                        <label>
+                                            <input name="aGrupo" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Adicionar Grupo</span>
+                                        </label>
+                                    </td>
+
+                                    <td>
+                                        <label>
+                                            <input name="eGrupo" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Editar Grupo</span>
+                                        </label>
+                                    </td>
+
+                                    <td>
+                                        <label>
+                                            <input name="dGrupo" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Excluir Grupo</span>
+                                        </label>
+                                    </td>
+                                 
+                                </tr>
+                                
+                                <tr><td colspan="4"></td></tr>
+                                <tr>
+
+                                    <td>
+                                        <label>
+                                            <input name="vDisciplina" class="marcar" type="checkbox" checked="checked" value="1" />
+                                            <span class="lbl"> Visualizar Disciplina</span>
+                                        </label>
+                                    </td>
+
+                                    <td>
+                                        <label>
+                                            <input name="aDisciplina" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Adicionar Disciplina</span>
+                                        </label>
+                                    </td>
+
+                                    <td>
+                                        <label>
+                                            <input name="eDisciplina" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Editar Disciplina</span>
+                                        </label>
+                                    </td>
+
+                                    <td>
+                                        <label>
+                                            <input name="dDisciplina" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Excluir Disciplina</span>
+                                        </label>
+                                    </td>
+                                 
+                                </tr>
+                                
                                 <tr><td colspan="4"></td></tr>
                                 
                                 <tr>
@@ -458,40 +558,6 @@
                                  
                                 </tr>
                                 
-                                <tr><td colspan="4"></td></tr>
-                                
-                                <tr>
-
-                                    <td>
-                                        <label>
-                                            <input name="cCurso" class="marcar" type="checkbox" checked="checked" value="1" />
-                                            <span class="lbl"> Visualizar Curso</span>
-                                        </label>
-                                    </td>
-                                   <td>
-                                        <label>
-                                            <input name="aCurso" class="marcar" type="checkbox" value="1" />
-                                            <span class="lbl"> Adicionar Curso</span>
-                                        </label>
-                                    </td>
-
-                                    <td>
-                                        <label>
-                                            <input name="eCurso" class="marcar" type="checkbox" value="1" />
-                                            <span class="lbl"> Editar Curso</span>
-                                        </label>
-                                    </td>
-
-                                    <td>
-                                        <label>
-                                            <input name="dCurso" class="marcar" type="checkbox" value="1" />
-                                            <span class="lbl"> Excluir Curso</span>
-                                        </label>
-                                    </td>
-
-                                    
-                                 
-                                </tr>
 
                                 <tr><td colspan="4"></td></tr>
 

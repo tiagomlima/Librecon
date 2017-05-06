@@ -52,8 +52,10 @@ class Leitores extends CI_Controller {
         
         $this->pagination->initialize($config); 	
         
-	    $this->data['results'] = $this->leitores_model->get('leitores','idLeitores,nomeLeitor,cpf,datanasc,sexo,status,matricula,telefone,celular,email,rua,numero,bairro,cidade,estado,cep','',$config['per_page'],$this->uri->segment(3));
+	    $this->data['results'] = $this->leitores_model->get('leitores','idLeitores,nomeLeitor,cpf,datanasc,sexo,situacao,matricula,telefone,celular,email,rua,numero,bairro,cidade,estado,cep','',$config['per_page'],$this->uri->segment(3));
        	
+		$this->data['curso'] = $this->leitores_model->getCurso($config['per_page'],$this->uri->segment(3));
+		$this->data['grupo'] = $this->leitores_model->getGrupo($config['per_page'],$this->uri->segment(3));
        	$this->data['view'] = 'leitores/leitores';
        	$this->load->view('tema/topo',$this->data);
 	  
@@ -93,7 +95,7 @@ class Leitores extends CI_Controller {
 	                'nomeLeitor' => set_value('nomeLeitor'),
 	                'cpf' => set_value('cpf'),
 	                'telefone' => set_value('telefone'),
-	                'datanasc' => set_value('datanasc'),
+	                'datanasc' => $this->input->post('datanasc'),
 	                'celular' => $this->input->post('celular'),
 	                'matricula' => set_value('matricula'),
 	                'email' => set_value('email'),
@@ -104,9 +106,11 @@ class Leitores extends CI_Controller {
 	                'estado' => set_value('estado'),
 	                'cep' => set_value('cep'),
 	                'sexo' => set_value('sexo'),
-	                'status' => set_value('status'),
+	                'situacao' => set_value('situacao'),
 	                'senha' => $this->encrypt->sha1($this->input->post('senha')),
 	                'observacoes' => set_value('observacoes'),
+	                'curso_id' => $this->input->post('curso_id'),
+	                'grupo_id' => $this->input->post('grupo_id'),
 	                'dataCadastro' => date('Y-m-d')
 	            );
 				
@@ -121,7 +125,10 @@ class Leitores extends CI_Controller {
             }
         }
         
-
+		$this->load->model('cursos_model');
+        $this->data['cursos'] = $this->cursos_model->getActive('cursos','cursos.idCursos,cursos.nomeCurso'); 
+		$this->load->model('grupos_model');
+        $this->data['grupos'] = $this->grupos_model->getActive('grupos','grupos.idGrupo,grupos.nomeGrupo');
         $this->data['view'] = 'leitores/adicionarLeitor';
         $this->load->view('tema/topo', $this->data);
 		
@@ -175,9 +182,11 @@ class Leitores extends CI_Controller {
                 'estado' => $this->input->post('estado'),
                 'matricula' => $this->input->post('matricula'),
                 'sexo' => $this->input->post('sexo'),
-                'status' => $this->input->post('status'),
+                'situacao' => $this->input->post('situacao'),
                 'senha' => $senha,
                 'observacoes' => $this->input->post('observacoes'),
+                'curso_id' => $this->input->post('curso_id'),
+	            'grupo_id' => $this->input->post('grupo_id'),
                 'cep' => $this->input->post('cep')
             );
 			
@@ -198,8 +207,10 @@ class Leitores extends CI_Controller {
                 'estado' => $this->input->post('estado'),
                 'matricula' => $this->input->post('matricula'),
                 'sexo' => $this->input->post('sexo'),
-                'status' => $this->input->post('status'),
+                'situacao' => $this->input->post('situacao'),
                 'observacoes' => $this->input->post('observacoes'),
+                'curso_id' => $this->input->post('curso_id'),
+	            'grupo_id' => $this->input->post('grupo_id'),
                 'cep' => $this->input->post('cep')
             );
 			
@@ -213,7 +224,10 @@ class Leitores extends CI_Controller {
             }
         }
 
-
+		$this->load->model('cursos_model');
+        $this->data['cursos'] = $this->cursos_model->getActive('cursos','cursos.idCursos,cursos.nomeCurso'); 
+		$this->load->model('grupos_model');
+        $this->data['grupos'] = $this->grupos_model->getActive('grupos','grupos.idGrupo,grupos.nomeGrupo');
         $this->data['result'] = $this->leitores_model->getById($this->uri->segment(3));
         $this->data['view'] = 'leitores/editarLeitor';
         $this->load->view('tema/topo', $this->data);
@@ -235,6 +249,8 @@ class Leitores extends CI_Controller {
         $this->data['custom_error'] = '';
         $this->data['result'] = $this->leitores_model->getById($this->uri->segment(3));
         $this->data['results'] = $this->leitores_model->getOsByLeitor($this->uri->segment(3));
+		$this->data['curso'] = $this->leitores_model->getCursoById($this->uri->segment(3));
+		$this->data['grupo'] = $this->leitores_model->getGrupoById($this->uri->segment(3));
         $this->data['view'] = 'leitores/visualizar';
         $this->load->view('tema/topo', $this->data);
 

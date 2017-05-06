@@ -1,4 +1,4 @@
-<a href="<?php echo base_url()?>index.php/cursos/adicionar" class="btn btn-success"><i class="icon-plus icon-white"></i> Adicionar Usuário</a>
+<a href="<?php echo base_url()?>index.php/cursos/adicionar" class="btn btn-success"><i class="icon-plus icon-white"></i> Adicionar Curso</a>
 <?php
 if(!$results){?>
         <div class="widget-box">
@@ -18,7 +18,6 @@ if(!$results){?>
         <tr style="backgroud-color: #2D335B">
             <th>#</th>
             <th>Nome do Curso</th>
-            <th>Disciplina</th>
             <th></th>
         </tr>
     </thead>
@@ -51,7 +50,6 @@ if(!$results){?>
         <tr style="backgroud-color: #2D335B">
             <th>#</th>
             <th>Nome do Curso</th>
-            <th>Disciplina</th>
             <th></th>
         </tr>
     </thead>
@@ -61,7 +59,6 @@ if(!$results){?>
             echo '<tr>';
             echo '<td>'.$r->idCursos.'</td>';
             echo '<td>'.$r->nomeCurso.'</td>';
-            echo '<td>'.$r->disciplina.'</td>';
             echo '<td>';
                       if($this->permission->checkPermission($this->session->userdata('permissao'),'eCurso')){
                 		echo '<a href="'.base_url().'index.php/cursos/editar/'.$r->idCursos.'" style="margin-right: 1%" class="btn btn-info tip-top" title="Editar Curso"><i class="icon-pencil icon-white"></i></a>'; 

@@ -25,8 +25,8 @@ $config = array('leitores' => array(array(
                                 	'rules'=>'required|trim|xss_clean|is_unique[leitores.matricula]'
                                 ),
                                 array(
-                                    'field'=>'status',
-                                    'label'=>'Status',
+                                    'field'=>'situacao',
+                                    'label'=>'Situação',
                                     'rules'=>'required|trim|xss_clean'
                                 ),
                                 array(
@@ -74,12 +74,43 @@ $config = array('leitores' => array(array(
                                     'field'=>'nomeCurso',
                                     'label'=>'Nome do Curso',
                                     'rules'=>'required|trim|xss_clean'
+                                ))
+                ,
+                'grupos' => array(array(
+                                    'field'=>'nomeGrupo',
+                                    'label'=>'Nome do Grpo',
+                                    'rules'=>'required|trim|xss_clean'
+                                ),
+								array(
+                                    'field'=>'duracao_dias',
+                                    'label'=>'Duração',
+                                    'rules'=>'required|trim|xss_clean'
                                 ),
                                 array(
-                                    'field'=>'disciplina',
-                                    'label'=>'Disciplina',
-                                    'rules'=>'trim|xss_clean'
-                                ))
+                                    'field'=>'qtde_max_exemplares',
+                                    'label'=>'Qtde Max de Exemplares',
+                                    'rules'=>'required|trim|xss_clean'
+                                ),
+                                array(
+                                    'field'=>'qtde_max_renovacao',
+                                    'label'=>'Qtde Max de Renovação',
+                                    'rules'=>'required|trim|xss_clean'
+                                ),
+                                array(
+                                    'field'=>'qtde_max_reserva',
+                                    'label'=>'Qtde Max de Reserva',
+                                    'rules'=>'required|trim|xss_clean'
+                                ),
+								array(
+                                    'field'=>'validade_reserva',
+                                    'label'=>'Validade da Reserva',
+                                    'rules'=>'required|trim|xss_clean'
+                                ),
+                                array(
+                                    'field'=>'multa',
+                                    'label'=>'Valor da Multa',
+                                    'rules'=>'required|trim|xss_clean|numeric'
+                                ))								
                 ,
                 'tipoItem' => array(array(
                                     'field'=>'nomeTipoItem',
@@ -190,7 +221,13 @@ $config = array('leitores' => array(array(
                                     'label'=>'Situacao',
                                     'rules'=>'required|trim|xss_clean'
                                 ))
-                ,      
+                ,   
+                'disciplinas' => array(array(
+                                    'field'=>'nomeDisciplina',
+                                    'label'=>'Nome',
+                                    'rules'=>'required|trim|xss_clean'
+                                ))
+                ,    
                 'os' => array(array(
                                     'field'=>'dataInicial',
                                     'label'=>'DataInicial',

@@ -4,7 +4,7 @@
 //teste de sobreposição 3
 //teste final
 
-class Cursos extends CI_Controller {
+class Grupos extends CI_Controller {
     
    
     
@@ -14,8 +14,8 @@ class Cursos extends CI_Controller {
             redirect('librecon/login');
             }
             $this->load->helper(array('codegen_helper'));
-            $this->load->model('cursos_model','',TRUE);
-            $this->data['menuCursos'] = 'cursos';
+            $this->load->model('grupos_model','',TRUE);
+            $this->data['menuGrupos'] = 'grupos';
 	}	
 	
 	function index(){
@@ -24,16 +24,16 @@ class Cursos extends CI_Controller {
 
 	function gerenciar(){
 
-        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'vCurso')){
-           $this->session->set_flashdata('error','Você não tem permissão para visualizar cursos.');
+        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'vGrupo')){
+           $this->session->set_flashdata('error','Você não tem permissão para visualizar grupos.');
            redirect(base_url());
         }
         $this->load->library('table');
         $this->load->library('pagination');
         
    
-        $config['base_url'] = base_url().'index.php/cursos/gerenciar/';
-        $config['total_rows'] = $this->cursos_model->count('cursos');
+        $config['base_url'] = base_url().'index.php/grupos/gerenciar/';
+        $config['total_rows'] = $this->grupos_model->count('grupos');
         $config['per_page'] = 10;
         $config['next_link'] = 'Próxima';
         $config['prev_link'] = 'Anterior';
@@ -56,9 +56,9 @@ class Cursos extends CI_Controller {
         
         $this->pagination->initialize($config); 	
         
-	    $this->data['results'] = $this->cursos_model->get('cursos','idCursos,nomeCurso','',$config['per_page'],$this->uri->segment(3));
+	    $this->data['results'] = $this->grupos_model->get('grupos','idGrupo, nomeGrupo, duracao_dias, qtde_max_exemplares, qtde_max_renovacao, qtde_max_reserva, validade_reserva, multa, observacoes','',$config['per_page'],$this->uri->segment(3));
        	
-       	$this->data['view'] = 'cursos/cursos';
+       	$this->data['view'] = 'grupos/grupos';
        	$this->load->view('tema/topo',$this->data);
 	  
        
@@ -66,30 +66,37 @@ class Cursos extends CI_Controller {
     }
 	
     function adicionar() {
-        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'aCurso')){
-           $this->session->set_flashdata('error','Você não tem permissão para adicionar cursos.');
+        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'aGrupo')){
+           $this->session->set_flashdata('error','Você não tem permissão para adicionar grupos.');
            redirect(base_url());
         }
 
         $this->load->library('form_validation');
         $this->data['custom_error'] = '';
 
-        if ($this->form_validation->run('cursos') == false) {
+        if ($this->form_validation->run('grupos') == false) {
             $this->data['custom_error'] = (validation_errors() ? '<div class="form_error">' . validation_errors() . '</div>' : false);
         } else {
             $data = array(
-                'nomeCurso' => set_value('nomeCurso'),
+                'nomeGrupo' => set_value('nomeGrupo'),
+                'duracao_dias' => set_value('duracao_dias'),
+                'qtde_max_exemplares' => set_value('qtde_max_exemplares'),
+                'qtde_max_renovacao' => set_value('qtde_max_renovacao'),
+                'qtde_max_reserva' => set_value('qtde_max_reserva'),
+                'validade_reserva' => set_value('validade_reserva'),
+                'multa' => set_value('multa'),
+                'observacoes' => $this->input->post('observacoes'),  
                 'dataCadastro' => date('Y-m-d')
             );
 
-            if ($this->cursos_model->add('cursos', $data) == TRUE) {
-                $this->session->set_flashdata('success','Curso adicionado com sucesso!');
-                redirect(base_url() . 'index.php/cursos/adicionar/');
+            if ($this->grupos_model->add('grupos', $data) == TRUE) {
+                $this->session->set_flashdata('success','Grupo adicionado com sucesso!');
+                redirect(base_url() . 'index.php/grupos/adicionar/');
             } else {
                 $this->data['custom_error'] = '<div class="form_error"><p>Ocorreu um erro.</p></div>';
             }
         }
-        $this->data['view'] = 'cursos/adicionarCurso';
+        $this->data['view'] = 'grupos/adicionarGrupo';
         $this->load->view('tema/topo', $this->data);
 
     }
@@ -102,32 +109,39 @@ class Cursos extends CI_Controller {
         }
 
 
-        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'eCurso')){
-           $this->session->set_flashdata('error','Você não tem permissão para editar cursos.');
+        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'eGrupo')){
+           $this->session->set_flashdata('error','Você não tem permissão para editar grupos.');
            redirect(base_url());
         }
 
         $this->load->library('form_validation');
         $this->data['custom_error'] = '';
 
-        if ($this->form_validation->run('cursos') == false) {
+        if ($this->form_validation->run('grupos') == false) {
             $this->data['custom_error'] = (validation_errors() ? '<div class="form_error">' . validation_errors() . '</div>' : false);
         } else {
             $data = array(
-                'nomeCurso' => $this->input->post('nomeCurso') 
+                'nomeGrupo' => $this->input->post('nomeGrupo'),
+                'duracao_dias' => $this->input->post('duracao_dias'), 
+                'qtde_max_exemplares' => $this->input->post('qtde_max_exemplares'), 
+                'qtde_max_renovacao' => $this->input->post('qtde_max_renovacao'), 
+                'qtde_max_reserva' => $this->input->post('qtde_max_reserva'), 
+                'validade_reserva' => $this->input->post('validade_reserva'),
+                'multa' => $this->input->post('multa'), 
+                'observacoes' => $this->input->post('observacoes')   
             );
 
-            if ($this->cursos_model->edit('cursos', $data, 'idCursos', $this->input->post('idCursos')) == TRUE) {
-                $this->session->set_flashdata('success','Curso editado com sucesso!');
-                redirect(base_url() . 'index.php/cursos/editar/'.$this->input->post('idCursos'));
+            if ($this->grupos_model->edit('grupos', $data, 'idGrupo', $this->input->post('idGrupo')) == TRUE) {
+                $this->session->set_flashdata('success','Grupo editado com sucesso!');
+                redirect(base_url() . 'index.php/grupos/editar/'.$this->input->post('idGrupo'));
             } else {
                 $this->data['custom_error'] = '<div class="form_error"><p>Ocorreu um erro</p></div>';
             }
         }
 
 
-        $this->data['result'] = $this->cursos_model->getById($this->uri->segment(3));
-        $this->data['view'] = 'cursos/editarCurso';
+        $this->data['result'] = $this->grupos_model->getById($this->uri->segment(3));
+        $this->data['view'] = 'grupos/editarGrupo';
         $this->load->view('tema/topo', $this->data);
 
     }
@@ -139,15 +153,15 @@ class Cursos extends CI_Controller {
             redirect('librecon');
         }
 
-        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'vCurso')){
-           $this->session->set_flashdata('error','Você não tem permissão para visualizar cursos.');
+        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'vGrupo')){
+           $this->session->set_flashdata('error','Você não tem permissão para visualizar grupos.');
            redirect(base_url());
         }
 
         $this->data['custom_error'] = '';
-        $this->data['result'] = $this->cursos_model->getById($this->uri->segment(3));
-        $this->data['results'] = $this->cursos_model->getOsByCurso($this->uri->segment(3));
-        $this->data['view'] = 'cursos/visualizar';
+        $this->data['result'] = $this->grupos_model->getById($this->uri->segment(3));
+        $this->data['results'] = $this->grupos_model->getOsByGrupo($this->uri->segment(3));
+        $this->data['view'] = 'grupos/visualizar';
         $this->load->view('tema/topo', $this->data);
 
         
@@ -156,8 +170,8 @@ class Cursos extends CI_Controller {
     public function excluir(){
 
             
-            if(!$this->permission->checkPermission($this->session->userdata('permissao'),'dCurso')){
-               $this->session->set_flashdata('error','Você não tem permissão para excluir cursos.');
+            if(!$this->permission->checkPermission($this->session->userdata('permissao'),'dGrupo')){
+               $this->session->set_flashdata('error','Você não tem permissão para excluir grupos.');
                redirect(base_url());
             }
 
@@ -165,8 +179,8 @@ class Cursos extends CI_Controller {
             $id =  $this->input->post('id');
             if ($id == null){
 
-                $this->session->set_flashdata('error','Erro ao tentar excluir curso.');            
-                redirect(base_url().'index.php/cursos/gerenciar/');
+                $this->session->set_flashdata('error','Erro ao tentar excluir Grupo.');            
+                redirect(base_url().'index.php/grupos/gerenciar/');
             }
 
             /*//$id = 2;
@@ -181,9 +195,13 @@ class Cursos extends CI_Controller {
                     $this->db->delete('servicos_os');
 
                     $this->db->where('os_id', $o->idOs);
+<<<<<<< HEAD:application/controllers/teste.php
+                    $this->db->delete('acervos_os');
+=======
                     $this->db->delete('produtos_os');
 
 
+>>>>>>> d1be87fa6ff425ffb2f2a0e5a67cc95d2c088c25:application/controllers/grupos.php
                     $this->db->where('idOs', $o->idOs);
                     $this->db->delete('os');
                 }
@@ -211,10 +229,10 @@ class Cursos extends CI_Controller {
 
 
 
-            $this->cursos_model->delete('cursos','idCursos',$id); 
+            $this->grupos_model->delete('grupos','idGrupo',$id); 
 
-            $this->session->set_flashdata('success','Curso excluido com sucesso!');            
-            redirect(base_url().'index.php/cursos/gerenciar/');
+            $this->session->set_flashdata('success','Grupo excluido com sucesso!');            
+            redirect(base_url().'index.php/grupos/gerenciar/');
     }
 }
 

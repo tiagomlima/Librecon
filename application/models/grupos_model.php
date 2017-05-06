@@ -1,5 +1,5 @@
 <?php
-class Cursos_model extends CI_Model {
+class Grupos_model extends CI_Model {
 
     
     
@@ -12,7 +12,7 @@ class Cursos_model extends CI_Model {
         
         $this->db->select($fields);
         $this->db->from($table);
-        $this->db->order_by('idCursos','desc');
+        $this->db->order_by('idGrupo','desc');
         $this->db->limit($perpage,$start);
         if($where){
             $this->db->where($where);
@@ -25,9 +25,9 @@ class Cursos_model extends CI_Model {
     }
 
     function getById($id){
-        $this->db->where('idCursos',$id);
+        $this->db->where('idGrupo',$id);
         $this->db->limit(1);
-        return $this->db->get('cursos')->row();
+        return $this->db->get('grupos')->row();
     }
     
     function add($table,$data){
@@ -76,11 +76,11 @@ class Cursos_model extends CI_Model {
         return $this->db->count_all($table);
     }
     
-    public function getOsByCurso($id){
+   /* public function getOsByCurso($id){
         $this->db->where('cursos_id',$id);
         $this->db->order_by('idOs','desc');
         $this->db->limit(10);
         return $this->db->get('os')->result();
-    }
+    }*/
 
 }

@@ -39,13 +39,32 @@
                                                     <td style="text-align: right"><strong>Sexo</strong></td>
                                                     <td><?php echo $result->sexo ?></td>
                                                 </tr>
+                                                 <tr>
+                                                    <td style="text-align: right"><strong>Curso</strong></td>
+                                                    <td><?php echo $curso->curso ?></td>
+                                                </tr>
+                                                 <tr>
+                                                    <td style="text-align: right"><strong>Grupo</strong></td>
+                                                    <td><?php echo $grupo->grupo ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="text-align: right"><strong>Matricula R.A</strong></td>
+                                                    <td><?php echo $result->matricula ?></td>
+                                                </tr>
                                                 <tr>
                                                     <td style="text-align: right"><strong>Data de Nascimento</strong></td>
                                                    <td><?php echo date('d/m/Y',  strtotime($result->datanasc)) ?></td>
                                                 </tr>
                                                 <tr>
-                                                    <td style="text-align: right"><strong>Status</strong></td>
-                                                    <td><?php echo $result->status ?></td>
+                                                    <td style="text-align: right"><strong>Situação</strong></td>
+                                                    <td><?php 
+                                                    if($result->situacao == 1){
+                                                    	echo 'Ativo';
+                                                    }else{
+                                                    	echo 'Inativo';
+                                                    }
+                                                    
+													 ?></td>
                                                 </tr>
                                                 <tr>
                                                     <td style="text-align: right"><strong>Data de Cadastro</strong></td>

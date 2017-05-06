@@ -23,6 +23,8 @@ if(!$results){?>
                         <th>E-mail</th>
                         <th>Telefone</th>
                         <th>Matricula</th>
+                        <th>Curso</th>
+                        <th>Grupo</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -59,6 +61,8 @@ if(!$results){?>
             <th>E-mail</th>
             <th>Telefone</th>
             <th>Matricula</th>
+            <th>Curso</th>
+            <th>Grupo</th>
             <th></th>
         </tr>
     </thead>
@@ -70,6 +74,10 @@ if(!$results){?>
             echo '<td>'.$r->email.'</td>';
             echo '<td>'.$r->telefone.'</td>';
 			echo '<td>'.$r->matricula.'</td>';
+			foreach ($curso as $c) {
+			echo '<td>'.$c->curso.'</td>';
+			foreach ($grupo as $g) {
+			echo '<td>'.$g->grupo.'</td>';
             echo '<td>';
             if($this->permission->checkPermission($this->session->userdata('permissao'),'vLeitor')){
                 echo '<a href="'.base_url().'index.php/leitores/visualizar/'.$r->idLeitores.'" style="margin-right: 1%" class="btn tip-top" title="Ver mais detalhes"><i class="icon-eye-open"></i></a>'; 
@@ -84,6 +92,8 @@ if(!$results){?>
               
             echo '</td>';
             echo '</tr>';
+            }
+            }
         }?>
         <tr>
             
