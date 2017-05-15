@@ -125,12 +125,12 @@ class Librecon_model extends CI_Model {
         return $this->db->get()->result();
     }
 
-    function getAcervosMinimo(){
+    /*function getAcervosMinimo(){  -- lembrar de apagar essa função
 
         $sql = "SELECT * FROM acervos WHERE estoque <= estoqueMinimo LIMIT 10"; 
         return $this->db->query($sql)->result();
 
-    }
+    }*/
 
     function getOsEstatisticas(){
         $sql = "SELECT status, COUNT(status) as total FROM os GROUP BY status ORDER BY status";

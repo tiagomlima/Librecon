@@ -51,6 +51,7 @@ class Os_model extends CI_Model {
         $this->db->where('os_id',$id);
         return $this->db->get()->result();
     }
+
     
     function add($table,$data,$returnId = false){
 
@@ -97,11 +98,11 @@ class Os_model extends CI_Model {
 
         $this->db->select('*');
         $this->db->limit(5);
-        $this->db->like('descricao', $q);
+        $this->db->like('titulo', $q);
         $query = $this->db->get('acervos');
         if($query->num_rows > 0){
             foreach ($query->result_array() as $row){
-                $row_set[] = array('label'=>$row['descricao'].' | Preço: R$ '.$row['precoVenda'].' | Estoque: '.$row['estoque'],'estoque'=>$row['estoque'],'id'=>$row['idAcervos'],'preco'=>$row['precoVenda']);
+                $row_set[] = array('label'=>$row['titulo'],'id'=>$row['idAcervos'],'tombo'=>$row['tombo']);
             }
             echo json_encode($row_set);
         }

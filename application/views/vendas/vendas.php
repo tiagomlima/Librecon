@@ -3,7 +3,6 @@
 <?php } ?>
 
 <?php
-
 if(!$results){?>
 	<div class="widget-box">
      <div class="widget-title">
@@ -21,9 +20,9 @@ if(!$results){?>
     <thead>
         <tr style="backgroud-color: #2D335B">
             <th>#</th>
-            <th>Data da Venda</th>
-            <th>Cliente</th>
-            <th>Faturado</th>
+            <th>Data do Empréstimo</th>
+            <th>Data da Devolução</th>
+            <th>Leitor</th>
             <th></th>
         </tr>
     </thead>
@@ -55,21 +54,23 @@ if(!$results){?>
     <thead>
         <tr style="backgroud-color: #2D335B">
             <th>#</th>
-            <th>Data da Venda</th>
-            <th>Cliente</th>
-            <th>Faturado</th>
+            <th>Data do Empréstimo</th>
+            <th>Data da Devolução</th>
+            <th>Leitor</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
         <?php foreach ($results as $r) {
-            $dataVenda = date(('d/m/Y'),strtotime($r->dataVenda));
-            if($r->faturado == 1){$faturado = 'Sim';} else{ $faturado = 'Não';}           
+            $dataEmprestimo = date(('d/m/Y'),strtotime($r->dataEmprestimo));
+			$dataDevolucao = date(('d/m/Y'),strtotime($r->dataDevolucao));
+                     
             echo '<tr>';
             echo '<td>'.$r->idVendas.'</td>';
-            echo '<td>'.$dataVenda.'</td>';
-            echo '<td><a href="'.base_url().'index.php/clientes/visualizar/'.$r->idClientes.'">'.$r->nomeCliente.'</a></td>';
-            echo '<td>'.$faturado.'</td>';
+            echo '<td>'.$dataEmprestimo.'</td>';
+			echo '<td>'.$dataDevolucao.'</td>';
+            echo '<td><a href="'.base_url().'index.php/clientes/visualizar/'.$r->idLeitores.'">'.$r->nomeLeitor.'</a></td>';
+            
             
             echo '<td>';
             if($this->permission->checkPermission($this->session->userdata('permissao'),'vVenda')){
@@ -81,7 +82,6 @@ if(!$results){?>
             if($this->permission->checkPermission($this->session->userdata('permissao'),'dVenda')){
                 echo '<a href="#modal-excluir" role="button" data-toggle="modal" venda="'.$r->idVendas.'" class="btn btn-danger tip-top" title="Excluir Venda"><i class="icon-remove icon-white"></i></a>'; 
             }
-
             echo '</td>';
             echo '</tr>';
         }?>
@@ -121,15 +121,10 @@ if(!$results){?>
 
 <script type="text/javascript">
 $(document).ready(function(){
-
-
    $(document).on('click', 'a', function(event) {
         
         var venda = $(this).attr('venda');
         $('#idVenda').val(venda);
-
     });
-
 });
-
 </script>

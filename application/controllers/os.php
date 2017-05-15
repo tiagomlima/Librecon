@@ -49,7 +49,7 @@ class Os extends CI_Controller {
         	
         $this->pagination->initialize($config); 	
 
-		$this->data['results'] = $this->os_model->get('os','idOs,dataInicial,dataFinal,garantia,descricaoAcervo,defeito,status,observacoes,laudoTecnico','',$config['per_page'],$this->uri->segment(3));
+		$this->data['results'] = $this->os_model->get('os','idOs,dataInicial,dataFinal,garantia,descricaoAcervo,defeito,status,laudoTecnico','',$config['per_page'],$this->uri->segment(3));
        
 	    $this->data['view'] = 'os/os';
        	$this->load->view('tema/topo',$this->data);
@@ -96,14 +96,9 @@ class Os extends CI_Controller {
                 'dataInicial' => $dataInicial,
                 'leitores_id' => $this->input->post('leitores_id'),//set_value('idLeitor'),
                 'usuarios_id' => $this->input->post('usuarios_id'),//set_value('idUsuario'),
+                'acervos_id' => $this->input->post('acervos_id'),
                 'dataFinal' => $dataFinal,
-                'garantia' => set_value('garantia'),
-                'descricaoAcervo' => set_value('descricaoAcervo'),
-                'defeito' => set_value('defeito'),
-                'status' => set_value('status'),
-                'observacoes' => set_value('observacoes'),
-                'laudoTecnico' => set_value('laudoTecnico'),
-                'faturado' => 0
+                'status' => set_value('status')   
             );
 
             if ( is_numeric($id = $this->os_model->add('os', $data, true)) ) {
@@ -115,7 +110,13 @@ class Os extends CI_Controller {
                 $this->data['custom_error'] = '<div class="form_error"><p>An Error Occured.</p></div>';
             }
         }
-         
+        
+		$this->load->model('leitores_model');
+		$this->data['leitores'] = $this->leitores_model->getActive('leitores','leitores.idLeitores,leitores.nomeLeitor'); 
+		$this->load->model('usuarios_model');
+		$this->data['usuarios'] = $this->leitores_model->getActive('usuarios','usuarios.idUsuarios,usuarios.nome'); 
+		$this->load->model('acervos_model');
+		$this->data['acervos'] = $this->acervos_model->getActive('acervos','acervos.idAcervos,acervos.titulo,acervos.tombo'); 
         $this->data['view'] = 'os/adicionarOs';
         $this->load->view('tema/topo', $this->data);
     }
@@ -132,13 +133,9 @@ class Os extends CI_Controller {
                 'dataInicial' => set_value('dataInicial'),
                 'leitores_id' => $this->input->post('leitores_id'),//set_value('idLeitor'),
                 'usuarios_id' => $this->input->post('usuarios_id'),//set_value('idUsuario'),
-                'dataFinal' => set_value('dataFinal'),
-                'garantia' => set_value('garantia'),
-                'descricaoAcervo' => set_value('descricaoAcervo'),
-                'defeito' => set_value('defeito'),
-                'status' => set_value('status'),
-                'observacoes' => set_value('observacoes'),
-                'laudoTecnico' => set_value('laudoTecnico')
+                'acervos_id' => $this->input->post('usuarios_id'),
+                'dataFinal' => set_value('dataFinal'),                             
+                'status' => set_value('status')
             );
 
             if ( is_numeric($id = $this->os_model->add('os', $data, true)) ) {

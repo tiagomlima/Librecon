@@ -54,7 +54,7 @@ class Acervos extends CI_Controller {
         
         $this->pagination->initialize($config); 	
 
-	    $this->data['results'] = $this->acervos_model->get('acervos','idAcervos,titulo,tombo,quantidade,idioma','',$config['per_page'],$this->uri->segment(3));
+	    $this->data['results'] = $this->acervos_model->get('acervos','idAcervos,titulo,tombo,estoque,idioma','',$config['per_page'],$this->uri->segment(3));
        
 	    $this->data['view'] = 'acervos/acervos';
        	$this->load->view('tema/topo',$this->data);
@@ -82,7 +82,7 @@ class Acervos extends CI_Controller {
             $data = array(
                 'titulo' => set_value('titulo'),
                 'tombo' => set_value('tombo'),
-                'quantidade' => set_value('quantidade'),
+                'estoque' => set_value('estoque'),
                 'idioma' => set_value('idioma'),
                 
             );
@@ -123,7 +123,7 @@ class Acervos extends CI_Controller {
             $data = array(
                 'titulo' => $this->input->post('titulo'),
                 'tombo' => $this->input->post('tombo'),
-                'quantidade' => $this->input->post('quantidade'),
+                'estoque' => $this->input->post('estoque'),
                 'idioma' => $this->input->post('idioma'),
                 
             );

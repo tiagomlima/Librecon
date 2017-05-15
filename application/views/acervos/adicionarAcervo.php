@@ -25,9 +25,9 @@
                     </div>
                     
                     <div class="control-group">
-                        <label for="quantidade" class="control-label">Quantidade<span class="required">*</span></label>
+                        <label for="estoque" class="control-label">Quantidade<span class="required">*</span></label>
                         <div class="controls">
-                            <input id="quantidade" type="text" name="quantidade" value="<?php echo set_value('quantidade'); ?>"  />
+                            <input id="estoque" type="text" name="estoque" value="<?php echo set_value('estoque'); ?>"  />
                         </div>
                     </div>
                     
@@ -76,14 +76,14 @@
             rules :{
                   titulo: { required: true},
                   tombo: { required: true},
-                  quantidade: { required: true},
+                  estoque: { required: true},
                   idioma: { required: true}
                   
             },
             messages:{
                   titulo: { required: 'Campo Requerido.'},
                   tombo: {required: 'Campo Requerido.'},
-                  quantidade: { required: 'Campo Requerido.'},
+                  estoque: { required: 'Campo Requerido.'},
                   idioma: { required: 'Campo Requerido.'}
                   
             },

@@ -1,8 +1,6 @@
 <?php
-
 class Vendas extends CI_Controller {
     
-
     
     
     function __construct() {
@@ -20,14 +18,12 @@ class Vendas extends CI_Controller {
 	function index(){
 		$this->gerenciar();
 	}
-
 	function gerenciar(){
         
         if(!$this->permission->checkPermission($this->session->userdata('permissao'),'vVenda')){
            $this->session->set_flashdata('error','Você não tem permissão para visualizar vendas.');
            redirect(base_url());
         }
-
         $this->load->library('pagination');
         
         
@@ -54,7 +50,6 @@ class Vendas extends CI_Controller {
         $config['last_tag_close'] = '</li>';
         	
         $this->pagination->initialize($config); 	
-
 		$this->data['results'] = $this->vendas_model->get('vendas','*','',$config['per_page'],$this->uri->segment(3));
        
 	    $this->data['view'] = 'vendas/vendas';
@@ -64,42 +59,39 @@ class Vendas extends CI_Controller {
     }
 	
     function adicionar(){
-
         if(!$this->permission->checkPermission($this->session->userdata('permissao'),'aVenda')){
           $this->session->set_flashdata('error','Você não tem permissão para adicionar Vendas.');
           redirect(base_url());
         }
-
         $this->load->library('form_validation');
         $this->data['custom_error'] = '';
         
         if ($this->form_validation->run('vendas') == false) {
            $this->data['custom_error'] = (validation_errors() ? true : false);
         } else {
-
-            $dataVenda = $this->input->post('dataVenda');
-
+            $dataEmprestimo = $this->input->post('dataEmprestimo');
+			$dataDevolucao = $this->input->post('dataDevolucao');
             try {
                 
-                $dataVenda = explode('/', $dataVenda);
-                $dataVenda = $dataVenda[2].'-'.$dataVenda[1].'-'.$dataVenda[0];
-
-
+                $dataEmprestimo = explode('/', $dataEmprestimo);
+                $dataEmprestimo = $dataEmprestimo[2].'-'.$dataEmprestimo[1].'-'.$dataEmprestimo[0];
+				
+				$dataDevolucao = explode('/', $dataDevolucao);
+                $dataDevolucao = $dataDevolucao[2].'-'.$dataDevolucao[1].'-'.$dataDevolucao[0];
             } catch (Exception $e) {
-               $dataVenda = date('Y/m/d'); 
+               $dataEmprestimo = date('Y/m/d'); 
+			   $dataDevolucao = date('Y/m/d');
             }
-
             $data = array(
-                'dataVenda' => $dataVenda,
+                'dataEmprestimo' => $dataEmprestimo,
+                'dataDevolucao' => $dataDevolucao,
                 'leitores_id' => $this->input->post('leitores_id'),
-                'usuarios_id' => $this->input->post('usuarios_id'),
-                'faturado' => 0
+                'usuarios_id' => $this->input->post('usuarios_id')
+               
             );
-
             if (is_numeric($id = $this->vendas_model->add('vendas', $data, true)) ) {
                 $this->session->set_flashdata('success','Venda iniciada com sucesso, adicione os acervos.');
                 redirect('vendas/editar/'.$id);
-
             } else {
                 
                 $this->data['custom_error'] = '<div class="form_error"><p>Ocorreu um erro.</p></div>';
@@ -110,45 +102,40 @@ class Vendas extends CI_Controller {
         $this->load->view('tema/topo', $this->data);
     }
     
-
     
     function editar() {
-
         if(!$this->uri->segment(3) || !is_numeric($this->uri->segment(3))){
             $this->session->set_flashdata('error','Item não pode ser encontrado, parâmetro não foi passado corretamente.');
             redirect('librecon');
         }
-
         if(!$this->permission->checkPermission($this->session->userdata('permissao'),'eVenda')){
           $this->session->set_flashdata('error','Você não tem permissão para editar vendas');
           redirect(base_url());
         }
-
         $this->load->library('form_validation');
         $this->data['custom_error'] = '';
-
         if ($this->form_validation->run('vendas') == false) {
             $this->data['custom_error'] = (validation_errors() ? '<div class="form_error">' . validation_errors() . '</div>' : false);
         } else {
-
-            $dataVenda = $this->input->post('dataVenda');
-
+            $dataEmprestimo = $this->input->post('dataEmprestimo');
+			$dataDevolucao = $this->input->post('dataDevolucao');
             try {
                 
-                $dataVenda = explode('/', $dataVenda);
-                $dataVenda = $dataVenda[2].'-'.$dataVenda[1].'-'.$dataVenda[0];
-
-
+                $dataEmprestimo = explode('/', $dataEmprestimo);
+                $dataEmprestimo = $dataEmprestimo[2].'-'.$dataEmprestimo[1].'-'.$dataEmprestimo[0];
+				
+				$dataDevolucao = explode('/', $dataDevolucao);
+                $dataDevolucao = $dataDevolucao[2].'-'.$dataDevolucao[1].'-'.$dataDevolucao[0];
             } catch (Exception $e) {
-               $dataVenda = date('Y/m/d'); 
+               $dataEmprestimo = date('Y/m/d'); 
+			   $dataDevolucao = date('Y/m/d'); 
             }
-
             $data = array(
-                'dataVenda' => $dataVenda,
+                'dataEmprestimo' => $dataEmprestimo,
+                'dataDevolucao' => $dataDevolucao,
                 'usuarios_id' => $this->input->post('usuarios_id'),
                 'leitores_id' => $this->input->post('leitores_id')
             );
-
             if ($this->vendas_model->edit('vendas', $data, 'idVendas', $this->input->post('idVendas')) == TRUE) {
                 $this->session->set_flashdata('success','Venda editada com sucesso!');
                 redirect(base_url() . 'index.php/vendas/editar/'.$this->input->post('idVendas'));
@@ -156,16 +143,14 @@ class Vendas extends CI_Controller {
                 $this->data['custom_error'] = '<div class="form_error"><p>Ocorreu um erro</p></div>';
             }
         }
-
+		
         $this->data['result'] = $this->vendas_model->getById($this->uri->segment(3));
         $this->data['acervos'] = $this->vendas_model->getAcervos($this->uri->segment(3));
         $this->data['view'] = 'vendas/editarVenda';
         $this->load->view('tema/topo', $this->data);
    
     }
-
     public function visualizar(){
-
         if(!$this->uri->segment(3) || !is_numeric($this->uri->segment(3))){
             $this->session->set_flashdata('error','Item não pode ser encontrado, parâmetro não foi passado corretamente.');
             redirect('librecon');
@@ -175,7 +160,6 @@ class Vendas extends CI_Controller {
           $this->session->set_flashdata('error','Você não tem permissão para visualizar vendas.');
           redirect(base_url());
         }
-
         $this->data['custom_error'] = '';
         $this->load->model('librecon_model');
         $this->data['result'] = $this->vendas_model->getById($this->uri->segment(3));
@@ -188,7 +172,6 @@ class Vendas extends CI_Controller {
     }
 	
     function excluir(){
-
         if(!$this->permission->checkPermission($this->session->userdata('permissao'),'dVenda')){
           $this->session->set_flashdata('error','Você não tem permissão para excluir vendas');
           redirect(base_url());
@@ -196,109 +179,91 @@ class Vendas extends CI_Controller {
         
         $id =  $this->input->post('id');
         if ($id == null){
-
             $this->session->set_flashdata('error','Erro ao tentar excluir venda.');            
             redirect(base_url().'index.php/vendas/gerenciar/');
         }
-
         $this->db->where('vendas_id', $id);
         $this->db->delete('itens_de_vendas');
-
         $this->db->where('idVendas', $id);
         $this->db->delete('vendas');           
-
         $this->session->set_flashdata('success','Venda excluída com sucesso!');            
         redirect(base_url().'index.php/vendas/gerenciar/');
-
     }
-
     public function autoCompleteAcervo(){
         
         if (isset($_GET['term'])){
             $q = strtolower($_GET['term']);
             $this->vendas_model->autoCompleteAcervo($q);
         }
-
     }
-
     public function autoCompleteLeitor(){
-
         if (isset($_GET['term'])){
             $q = strtolower($_GET['term']);
             $this->vendas_model->autoCompleteLeitor($q);
         }
-
     }
-
     public function autoCompleteUsuario(){
-
         if (isset($_GET['term'])){
             $q = strtolower($_GET['term']);
             $this->vendas_model->autoCompleteUsuario($q);
         }
-
     }
-
-
-
     public function adicionarAcervo(){
-
         if(!$this->permission->checkPermission($this->session->userdata('permissao'),'eVenda')){
           $this->session->set_flashdata('error','Você não tem permissão para editar vendas.');
           redirect(base_url());
         }
-
+		
         $this->load->library('form_validation');
         $this->form_validation->set_rules('quantidade', 'Quantidade', 'trim|required|xss_clean');
         $this->form_validation->set_rules('idAcervo', 'Acervo', 'trim|required|xss_clean');
         $this->form_validation->set_rules('idVendasAcervo', 'Vendas', 'trim|required|xss_clean');
-        
-        if($this->form_validation->run() == false){
-           echo json_encode(array('result'=> false)); 
-        }
-        else{
-
-            $preco = $this->input->post('preco');
+        	
+			
+			
+        	//$estoque = $this->input->post('estoque');
+            $idVendas = $this->input->post('idVendasAcervo');
             $quantidade = $this->input->post('quantidade');
-            $subtotal = $preco * $quantidade;
-            $acervo = $this->input->post('idAcervo');
+            $acervo = $this->input->post('acervos_id');
+			
+			
+			if($acervo == null){
+				$this->session->set_flashdata('error','Digite o nome do item.');
+				 redirect('vendas/editar/'.$idVendas);
+			}
+			
+			
+			
             $data = array(
                 'quantidade'=> $quantidade,
-                'subTotal'=> $subtotal,
                 'acervos_id'=> $acervo,
-                'vendas_id'=> $this->input->post('idVendasAcervo'),
+                'vendas_id'=> $idVendas,
             );
-
             if($this->vendas_model->add('itens_de_vendas', $data) == true){
-                $sql = "UPDATE acervos set estoque = estoque - ? WHERE idAcervos = ?";
+                $sql = "UPDATE acervos set estoque = estoque - 1 WHERE idAcervos =".$acervo;
                 $this->db->query($sql, array($quantidade, $acervo));
-                
-                echo json_encode(array('result'=> true));
+                redirect('vendas/editar/'.$idVendas);
+               
             }else{
-                echo json_encode(array('result'=> false));
+            	$this->session->set_flashdata('error','Não foi possível adicionar o item.');
+                 redirect('vendas/editar/'.$idVendas);
             }
-
-        }
         
+       
       
     }
-
     function excluirAcervo(){
-
             if(!$this->permission->checkPermission($this->session->userdata('permissao'),'eVenda')){
               $this->session->set_flashdata('error','Você não tem permissão para editar Vendas');
               redirect(base_url());
             }
-
+			
             $ID = $this->input->post('idAcervo');
             if($this->vendas_model->delete('itens_de_vendas','idItens',$ID) == true){
                 
                 $quantidade = $this->input->post('quantidade');
-                $acervo = $this->input->post('acervo');
-
-
-                $sql = "UPDATE acervos set estoque = estoque + ? WHERE idAcervos = ?";
-
+                $acervo = $this->input->post('acervos');
+                $sql = "UPDATE acervos set estoque = estoque + 1 WHERE idAcervos =".$ID;
                 $this->db->query($sql, array($quantidade, $acervo));
                 
                 echo json_encode(array('result'=> true));
@@ -307,42 +272,31 @@ class Vendas extends CI_Controller {
                 echo json_encode(array('result'=> false));
             }           
     }
-
-
-
+    
     public function faturar() {
-
         if(!$this->permission->checkPermission($this->session->userdata('permissao'),'eVenda')){
               $this->session->set_flashdata('error','Você não tem permissão para editar Vendas');
               redirect(base_url());
             }
-
         $this->load->library('form_validation');
         $this->data['custom_error'] = '';
  
-
         if ($this->form_validation->run('receita') == false) {
             $this->data['custom_error'] = (validation_errors() ? '<div class="form_error">' . validation_errors() . '</div>' : false);
         } else {
-
-
             $vencimento = $this->input->post('vencimento');
             $recebimento = $this->input->post('recebimento');
-
             try {
                 
                 $vencimento = explode('/', $vencimento);
                 $vencimento = $vencimento[2].'-'.$vencimento[1].'-'.$vencimento[0];
-
                 if($recebimento != null){
                     $recebimento = explode('/', $recebimento);
                     $recebimento = $recebimento[2].'-'.$recebimento[1].'-'.$recebimento[0];
-
                 }
             } catch (Exception $e) {
                $vencimento = date('Y/m/d'); 
             }
-
             $data = array(
                 'descricao' => set_value('descricao'),
                 'valor' => $this->input->post('valor'),
@@ -354,16 +308,13 @@ class Vendas extends CI_Controller {
                 'forma_pgto' => $this->input->post('formaPgto'),
                 'tipo' => $this->input->post('tipo')
             );
-
             if ($this->vendas_model->add('lancamentos',$data) == TRUE) {
                 
                 $venda = $this->input->post('vendas_id');
-
                 $this->db->set('faturado',1);
                 $this->db->set('valorTotal',$this->input->post('valor'));
                 $this->db->where('idVendas', $venda);
                 $this->db->update('vendas');
-
                 $this->session->set_flashdata('success','Venda faturada com sucesso!');
                 $json = array('result'=>  true);
                 echo json_encode($json);
@@ -375,13 +326,9 @@ class Vendas extends CI_Controller {
                 die();
             }
         }
-
         $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar venda.');
         $json = array('result'=>  false);
         echo json_encode($json);
         
     }
-
-
 }
-

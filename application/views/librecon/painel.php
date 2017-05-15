@@ -39,52 +39,7 @@
 
 
 
-<div class="row-fluid" style="margin-top: 0">
-    
-    <div class="span12">
-        
-        <div class="widget-box">
-            <div class="widget-title"><span class="icon"><i class="icon-signal"></i></span><h5>Acervos Com Estoque Mínimo</h5></div>
-            <div class="widget-content">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Acervo</th>
-                            <th>Preço de Venda</th>
-                            <th>Estoque</th>
-                            <th>Estoque Mínimo</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php 
-                        if($acervos != null){
-                            foreach ($acervos as $p) {
-                                echo '<tr>';
-                                echo '<td>'.$p->idAcervos.'</td>';
-                                echo '<td>'.$p->descricao.'</td>';
-                                echo '<td>R$ '.$p->precoVenda.'</td>';
-                                echo '<td>'.$p->estoque.'</td>';
-                                echo '<td>'.$p->estoqueMinimo.'</td>';
-                                echo '<td>';
-                                if($this->permission->checkPermission($this->session->userdata('permissao'),'eAcervo')){
-                                    echo '<a href="'.base_url().'index.php/acervos/editar/'.$p->idAcervos.'" class="btn btn-info"> <i class="icon-pencil" ></i> </a>  '; 
-                                }
-                                echo '</td>';
-                                echo '</tr>';
-                            }
-                        }
-                        else{
-                            echo '<tr><td colspan="3">Nenhum acervo com estoque baixo.</td></tr>';
-                        }    
 
-                        ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
 
     <div class="span12" style="margin-left: 0">
         

@@ -20,6 +20,14 @@ class Leitores_model extends CI_Model {
         return $result;
     }
 	
+	function getActive($table,$fields){
+        
+        $this->db->select($fields);
+        $this->db->from($table);
+        $query = $this->db->get();
+        return $query->result();;
+    }
+	
 	function getGrupo($perpage=0,$start=0,$one=false){
         
         $this->db->from('leitores');

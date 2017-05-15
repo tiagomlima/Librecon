@@ -11,10 +11,10 @@ class Vendas_model extends CI_Model {
     
     function get($table,$fields,$where='',$perpage=0,$start=0,$one=false,$array='array'){
         
-        $this->db->select($fields.', clientes.nomeCliente, clientes.idClientes');
+        $this->db->select($fields.', leitores.nomeLeitor, leitores.idLeitores');
         $this->db->from($table);
         $this->db->limit($perpage,$start);
-        $this->db->join('clientes', 'clientes.idClientes = '.$table.'.clientes_id');
+        $this->db->join('leitores', 'leitores.idLeitores = '.$table.'.leitores_id');
         $this->db->order_by('idVendas','desc');
         if($where){
             $this->db->where($where);
@@ -27,14 +27,16 @@ class Vendas_model extends CI_Model {
     }
 
     function getById($id){
-        $this->db->select('vendas.*, clientes.*, usuarios.telefone, usuarios.email,usuarios.nome');
+        $this->db->select('vendas.*, leitores.*, usuarios.telefone, usuarios.email,usuarios.nome');
         $this->db->from('vendas');
-        $this->db->join('clientes','clientes.idClientes = vendas.clientes_id');
+        $this->db->join('leitores','leitores.idLeitores = vendas.leitores_id');
         $this->db->join('usuarios','usuarios.idUsuarios = vendas.usuarios_id');
         $this->db->where('vendas.idVendas',$id);
         $this->db->limit(1);
         return $this->db->get()->row();
     }
+	
+	
 
     public function getAcervos($id = null){
         $this->db->select('itens_de_vendas.*, acervos.*');
@@ -89,25 +91,25 @@ class Vendas_model extends CI_Model {
 
         $this->db->select('*');
         $this->db->limit(5);
-        $this->db->like('descricao', $q);
+        $this->db->like('titulo', $q);
         $query = $this->db->get('acervos');
         if($query->num_rows > 0){
             foreach ($query->result_array() as $row){
-                $row_set[] = array('label'=>$row['descricao'].' | Preço: R$ '.$row['precoVenda'].' | Estoque: '.$row['estoque'],'estoque'=>$row['estoque'],'id'=>$row['idAcervos'],'preco'=>$row['precoVenda']);
+                $row_set[] = array('label'=>$row['titulo'].' | Tombo: '.$row['tombo'].' | Estoque: '.$row['estoque'], 'id'=>$row['idAcervos']);
             }
             echo json_encode($row_set);
         }
     }
 
-    public function autoCompleteCliente($q){
+    public function autoCompleteLeitor($q){
 
         $this->db->select('*');
         $this->db->limit(5);
-        $this->db->like('nomeCliente', $q);
-        $query = $this->db->get('clientes');
+        $this->db->like('nomeLeitor', $q);
+        $query = $this->db->get('leitores');
         if($query->num_rows > 0){
             foreach ($query->result_array() as $row){
-                $row_set[] = array('label'=>$row['nomeCliente'].' | Telefone: '.$row['telefone'],'id'=>$row['idClientes']);
+                $row_set[] = array('label'=>$row['nomeLeitor'].' | Telefone: '.$row['telefone'],'id'=>$row['idLeitores']);
             }
             echo json_encode($row_set);
         }

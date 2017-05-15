@@ -20,8 +20,8 @@
                             <td><?php echo $result->tombo ?></td>
                         </tr>
                         <tr>
-                            <td style="text-align: right"><strong>Quantidade</strong></td>
-                            <td> <?php echo $result->quantidade; ?></td>
+                            <td style="text-align: right"><strong>Estoque</strong></td>
+                            <td> <?php echo $result->estoque; ?></td>
                         </tr>
                         <tr>
                             <td style="text-align: right"><strong>Idioma</strong></td>

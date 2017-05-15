@@ -169,8 +169,8 @@ $config = array('leitores' => array(array(
                                     'rules'=>'required|trim|xss_clean'
                                 ),
                                 array(
-                                    'field'=>'quantidade',
-                                    'label'=>'quantidade',
+                                    'field'=>'estoque',
+                                    'label'=>'Estoque',
                                     'rules'=>'required|trim|xss_clean'
                                 ),
                                 array(
@@ -337,9 +337,14 @@ $config = array('leitores' => array(array(
                 ,
                 'vendas' => array(array(
 
-                                    'field' => 'dataVenda',
-                                    'label' => 'Data da Venda',
+                                    'field' => 'dataEmprestimo',
+                                    'label' => 'Data do Emprestimo',
                                     'rules' => 'required|trim|xss_clean'
+                                ),
+                                array(
+                                    'field'=>'dataDevolucao',
+                                    'label'=>'Data da Devolução',
+                                    'rules'=>'required|trim|xss_clean'
                                 ),
                                 array(
                                     'field'=>'leitores_id',

@@ -8,14 +8,14 @@
                 <span class="icon">
                     <i class="icon-tags"></i>
                 </span>
-                <h5>Cadastro de OS</h5>
+                <h5>Realizar Empréstimo</h5>
             </div>
             <div class="widget-content nopadding">
                 
 
                 <div class="span12" id="divAcervosServicos" style=" margin-left: 0">
                     <ul class="nav nav-tabs">
-                        <li class="active" id="tabDetalhes"><a href="#tab1" data-toggle="tab">Detalhes da OS</a></li>
+                        <li class="active" id="tabDetalhes"><a href="#tab1" data-toggle="tab">Detalhes do empréstimo</a></li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab1">
@@ -28,7 +28,7 @@
 
                                     <div class="span12" style="padding: 1%">
                                         <div class="span6">
-                                            <label for="cliente">Cliente<span class="required">*</span></label>
+                                            <label for="leitor">Leitor<span class="required">*</span></label>
                                             <input id="cliente" class="span12" type="text" name="cliente" value=""  />
                                             <input id="clientes_id" class="span12" type="hidden" name="clientes_id" value=""  />
                                         </div>

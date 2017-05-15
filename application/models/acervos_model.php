@@ -29,6 +29,14 @@ class Acervos_model extends CI_Model {
         $this->db->limit(1);
         return $this->db->get('acervos')->row();
     }
+	
+	function getActive($table,$fields){
+        
+        $this->db->select($fields);
+        $this->db->from($table);
+        $query = $this->db->get();
+        return $query->result();;
+    }
     
     function add($table,$data){
         $this->db->insert($table, $data);         

@@ -23,7 +23,7 @@ if(!$results){?>
             <th>#</th>
             <th>Título</th>
             <th>Tombo</th>
-            <th>Quantidade</th>
+            <th>Estoque</th>
             <th>Idioma</th>
             <th></th>
         </tr>
@@ -58,7 +58,7 @@ if(!$results){?>
             <th>#</th>
             <th>Título</th>
             <th>Tombo</th>
-            <th>Quantidade</th>
+            <th>Estoque</th>
             <th>Idioma</th>
             <th></th>
         </tr>
@@ -69,7 +69,7 @@ if(!$results){?>
             echo '<td>'.$r->idAcervos.'</td>';
             echo '<td>'.$r->titulo.'</td>';
             echo '<td>'.$r->tombo.'</td>';
-			echo '<td>'.$r->quantidade.'</td>';
+			echo '<td>'.$r->estoque.'</td>';
 			echo '<td>'.$r->idioma.'</td>';
             
             
