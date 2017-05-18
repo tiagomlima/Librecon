@@ -86,7 +86,8 @@ class Vendas extends CI_Controller {
                 'dataEmprestimo' => $dataEmprestimo,
                 'dataDevolucao' => $dataDevolucao,
                 'leitores_id' => $this->input->post('leitores_id'),
-                'usuarios_id' => $this->input->post('usuarios_id')
+                'usuarios_id' => $this->input->post('usuarios_id'),
+                'status' => $this->input->post('status')
                
             );
             if (is_numeric($id = $this->vendas_model->add('vendas', $data, true)) ) {
@@ -134,17 +135,18 @@ class Vendas extends CI_Controller {
                 'dataEmprestimo' => $dataEmprestimo,
                 'dataDevolucao' => $dataDevolucao,
                 'usuarios_id' => $this->input->post('usuarios_id'),
+                'status' => $this->input->post('status'),
                 'leitores_id' => $this->input->post('leitores_id')
             );
             if ($this->vendas_model->edit('vendas', $data, 'idVendas', $this->input->post('idVendas')) == TRUE) {
-                $this->session->set_flashdata('success','Venda editada com sucesso!');
+                $this->session->set_flashdata('success','Empréstimo editado com sucesso!');
                 redirect(base_url() . 'index.php/vendas/editar/'.$this->input->post('idVendas'));
             } else {
                 $this->data['custom_error'] = '<div class="form_error"><p>Ocorreu um erro</p></div>';
             }
         }
 		
-        $this->data['result'] = $this->vendas_model->getById($this->uri->segment(3));
+        $this->data['result'] = $this->vendas_model->getById($this->uri->segment(3));	
         $this->data['acervos'] = $this->vendas_model->getAcervos($this->uri->segment(3));
         $this->data['view'] = 'vendas/editarVenda';
         $this->load->view('tema/topo', $this->data);
@@ -221,27 +223,32 @@ class Vendas extends CI_Controller {
         	
 			
 			
-        	//$estoque = $this->input->post('estoque');
             $idVendas = $this->input->post('idVendasAcervo');
-            $quantidade = $this->input->post('quantidade');
+           // $quantidade = $this->input->post('quantidade');
             $acervo = $this->input->post('acervos_id');
+			$estoque = $this->input->post('estoque');
 			
-			
+						
 			if($acervo == null){
 				$this->session->set_flashdata('error','Digite o nome do item.');
 				 redirect('vendas/editar/'.$idVendas);
 			}
 			
+			if($estoque <= 0){
+				$this->session->set_flashdata('error','Não há examplares do acervo disponiveis.');
+				 redirect('vendas/editar/'.$idVendas);
+			}
 			
 			
             $data = array(
-                'quantidade'=> $quantidade,
+               // 'quantidade'=> $quantidade,
                 'acervos_id'=> $acervo,
                 'vendas_id'=> $idVendas,
             );
             if($this->vendas_model->add('itens_de_vendas', $data) == true){
                 $sql = "UPDATE acervos set estoque = estoque - 1 WHERE idAcervos =".$acervo;
                 $this->db->query($sql, array($quantidade, $acervo));
+				$this->session->set_flashdata('success','Item adicionado com sucesso'); 
                 redirect('vendas/editar/'.$idVendas);
                
             }else{
@@ -262,8 +269,8 @@ class Vendas extends CI_Controller {
             if($this->vendas_model->delete('itens_de_vendas','idItens',$ID) == true){
                 
                 $quantidade = $this->input->post('quantidade');
-                $acervo = $this->input->post('acervos');
-                $sql = "UPDATE acervos set estoque = estoque + 1 WHERE idAcervos =".$ID;
+                $acervo = $this->input->post('acervo');
+                $sql = "UPDATE acervos set estoque = estoque + 1 WHERE idAcervos =".$acervo;
                 $this->db->query($sql, array($quantidade, $acervo));
                 
                 echo json_encode(array('result'=> true));
@@ -272,6 +279,35 @@ class Vendas extends CI_Controller {
                 echo json_encode(array('result'=> false));
             }           
     }
+
+	public function finalizarEmprestimo(){
+		if(!$this->uri->segment(3) || !is_numeric($this->uri->segment(3))){
+            $this->session->set_flashdata('error','Item não pode ser encontrado, parâmetro não foi passado corretamente.');
+            redirect('librecon');
+        }
+        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'eVenda')){
+          $this->session->set_flashdata('error','Você não tem permissão para finalizar emprestimos');
+          redirect(base_url());
+        }
+        $this->load->library('form_validation');
+        $this->data['custom_error'] = '';
+        if ($this->form_validation->run('vendas') == false) {
+            $this->data['custom_error'] = (validation_errors() ? '<div class="form_error">' . validation_errors() . '</div>' : false);
+        } else {
+			
+            $data = array(                
+                'status' => $this->input->post('status')               
+            );
+            if ($this->vendas_model->edit('vendas', $data == TRUE)) {
+				
+                $this->session->set_flashdata('success','Empréstimo finalizado com sucesso!');
+                redirect(base_url() . 'index.php/vendas/editar/'.$this->input->post('idVendas'));
+            } else {
+                $this->data['custom_error'] = '<div class="form_error"><p>Ocorreu um erro</p></div>';
+            }
+        }
+       
+	}
     
     public function faturar() {
         if(!$this->permission->checkPermission($this->session->userdata('permissao'),'eVenda')){
@@ -299,36 +335,60 @@ class Vendas extends CI_Controller {
             }
             $data = array(
                 'descricao' => set_value('descricao'),
-                'valor' => $this->input->post('valor'),
+                //'valor' => $this->input->post('valor'),
                 'leitores_id' => $this->input->post('leitores_id'),
                 'data_vencimento' => $vencimento,
                 'data_pagamento' => $recebimento,
                 'baixado' => $this->input->post('recebido'),
-                'leitor_fornecedor' => set_value('leitor'),
-                'forma_pgto' => $this->input->post('formaPgto'),
-                'tipo' => $this->input->post('tipo')
+                'cliente_fornecedor' => set_value('leitor')
+                //'forma_pgto' => $this->input->post('formaPgto'),
+               // 'tipo' => $this->input->post('tipo')
             );
             if ($this->vendas_model->add('lancamentos',$data) == TRUE) {
                 
                 $venda = $this->input->post('vendas_id');
-                $this->db->set('faturado',1);
-                $this->db->set('valorTotal',$this->input->post('valor'));
+                $this->db->set('emprestado',1);
+               // $this->db->set('valorTotal',$this->input->post('valor'));
                 $this->db->where('idVendas', $venda);
                 $this->db->update('vendas');
-                $this->session->set_flashdata('success','Venda faturada com sucesso!');
+                $this->session->set_flashdata('success','Emprestimo realizado com sucesso!');
                 $json = array('result'=>  true);
                 echo json_encode($json);
                 die();
             } else {
-                $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar venda.');
+                $this->session->set_flashdata('error','Ocorreu um erro ao tentar realizar o emprestimo.');
                 $json = array('result'=>  false);
                 echo json_encode($json);
                 die();
             }
         }
-        $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar venda.');
+        $this->session->set_flashdata('error','Ocorreu um erro ao tentar realizar o emprestimo.');
         $json = array('result'=>  false);
         echo json_encode($json);
         
     }
+
+	public function emprestar(){
+		if(!$this->permission->checkPermission($this->session->userdata('permissao'),'eVenda')){
+              $this->session->set_flashdata('error','Você não tem permissão para emprestar');
+              redirect(base_url());
+            }
+		
+		
+		$itens = $this->db->get('itens_de_vendas')->row();
+		
+		$status = $this->input->post('status');
+		$idVendas = $this->input->post('idVendas');
+		if(count($itens) > 0){
+			$sql = "UPDATE vendas set status = '".$status."' WHERE idVendas =".$idVendas;
+                $this->db->query($sql, array($status, $idVendas));
+					
+				$this->session->set_flashdata('success','Emprestimo realizado com sucesso!'); 
+				
+				 redirect('vendas');
+		} else{
+			$this->session->set_flashdata('error','Por favor, adicione os itens a serem emprestados.');
+			redirect('vendas/editar/'.$idVendas);
+		}
+	}
 }

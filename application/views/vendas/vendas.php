@@ -1,5 +1,5 @@
 <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'aVenda')){ ?>
-    <a href="<?php echo base_url();?>index.php/vendas/adicionar" class="btn btn-success"><i class="icon-plus icon-white"></i> Adicionar Venda</a>
+    <a href="<?php echo base_url();?>index.php/vendas/adicionar" class="btn btn-success"><i class="icon-plus icon-white"></i> Adicionar Empréstimo</a>
 <?php } ?>
 
 <?php
@@ -9,7 +9,7 @@ if(!$results){?>
         <span class="icon">
             <i class="icon-tags"></i>
          </span>
-        <h5>Vendas</h5>
+        <h5>Emprestimos</h5>
 
      </div>
 
@@ -23,13 +23,14 @@ if(!$results){?>
             <th>Data do Empréstimo</th>
             <th>Data da Devolução</th>
             <th>Leitor</th>
+            <th>Situação</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
 
         <tr>
-            <td colspan="6">Nenhuma venda Cadastrada</td>
+            <td colspan="6">Nenhum emprestimo cadastrado</td>
         </tr>
     </tbody>
 </table>
@@ -43,7 +44,7 @@ if(!$results){?>
         <span class="icon">
             <i class="icon-tags"></i>
          </span>
-        <h5>Vendas</h5>
+        <h5>Empréstimos</h5>
 
      </div>
 
@@ -57,6 +58,7 @@ if(!$results){?>
             <th>Data do Empréstimo</th>
             <th>Data da Devolução</th>
             <th>Leitor</th>
+            <th>Situação</th>
             <th></th>
         </tr>
     </thead>
@@ -70,6 +72,7 @@ if(!$results){?>
             echo '<td>'.$dataEmprestimo.'</td>';
 			echo '<td>'.$dataDevolucao.'</td>';
             echo '<td><a href="'.base_url().'index.php/clientes/visualizar/'.$r->idLeitores.'">'.$r->nomeLeitor.'</a></td>';
+			echo '<td>'.$r->status.'</td>';
             
             
             echo '<td>';
@@ -101,11 +104,11 @@ if(!$results){?>
   <form action="<?php echo base_url() ?>index.php/vendas/excluir" method="post" >
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h5 id="myModalLabel">Excluir Venda</h5>
+    <h5 id="myModalLabel">Excluir Empréstimo</h5>
   </div>
   <div class="modal-body">
     <input type="hidden" id="idVenda" name="id" value="" />
-    <h5 style="text-align: center">Deseja realmente excluir esta Venda?</h5>
+    <h5 style="text-align: center">Deseja realmente excluir este empréstimo?</h5>
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>

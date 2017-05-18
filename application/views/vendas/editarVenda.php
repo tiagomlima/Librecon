@@ -32,6 +32,14 @@
                                         <div class="span2" style="margin-left: 0">
                                             <label for="dataDevolucao">Data de Devolução</label>
                                             <input id="dataDevolucao" class="span12 datepicker" type="text" name="dataDevolucao" value="<?php echo date('d/m/Y', strtotime($result->dataDevolucao)); ?>"  />
+                                            <label  class="control-label">Status</span></label>
+						                        <div class="controls">
+						                            <select name="status" id="status">
+						                                  <?php  {						                                     
+						                                      echo '<option value="'.$result->status.'"selected>'.$result->status.'</option>';
+						                                  } ?>						                                  
+						                            </select>
+						                        </div>
                                         </div>
                                         <div class="span0" style="margin-left: 0">
                                            
@@ -41,8 +49,7 @@
                                             <label for="leitor">Leitor<span class="required">*</span></label>
                                             <input id="leitor" class="span12" type="text" name="leitor" value="<?php echo $result->nomeLeitor ?>"  />
                                             <input id="leitores_id" class="span12" type="hidden" name="leitores_id" value="<?php echo $result->leitores_id ?>"  />
-                                            
-                                           <!-- <input id="valorTotal" type="hidden" name="valorTotal" value=""  />-->
+                                                                                     
                                         </div>
                                         <div class="span5">
                                             <label for="usuario">Usuário<span class="required">*</span></label>
@@ -51,16 +58,17 @@
                                         </div>
                                         
                                     </div>
-                                    
-                                    
-                                   
-                                   
+                                                                                                                                             
                                     <div class="span12" style="padding: 1%; margin-left: 0">
             
                                         <div class="span8 offset2" style="text-align: center">
-                                           <!-- <?php if($result->faturado == 0){ ?>
-                                            <a href="#modal-faturar" id="btn-faturar" role="button" data-toggle="modal" class="btn btn-success"><i class="icon-file"></i> Faturar</a>
-                                            <?php } ?>-->
+                                            <?php if($result->status == 'Emprestado'){ ?>
+                                            <form action="<?php echo base_url(); ?>index.php/vendas/finalizarEmprestimo" method="post">
+                                            <input type="hidden" name="status" id="status" value="Devolvido"/>
+                                            <input type="hidden" name="acervos_id" id="acervos_id" value=""/>
+                                            <button class="btn btn-success " id="btnFinalizarEmprestimo"><i class="icon-file"></i> Finalizar Empréstimo</button>
+                                            </form>
+                                            <?php } ?>
                                             <button class="btn btn-primary" id="btnContinuar"><i class="icon-white icon-ok"></i> Alterar</button>
                                             <a href="<?php echo base_url() ?>index.php/vendas/visualizar/<?php echo $result->idVendas; ?>" class="btn btn-inverse"><i class="icon-eye-open"></i> Visualizar Venda</a>
                                             <a href="<?php echo base_url() ?>index.php/vendas" class="btn"><i class="icon-arrow-left"></i> Voltar</a>
@@ -76,17 +84,13 @@
                                             <div class="span6">
                                                 <input type="hidden" name="idAcervo" id="idAcervo" value=""/>
                                                 <input type="hidden" name="idVendasAcervo" id="idVendasAcervo" value="<?php echo $result->idVendas?>" />
-                                                
-                                               <!-- <input type="hidden" name="estoque" id="estoque" value=""/>-->
-                                                <!--<input type="hidden" name="preco" id="preco" value=""/>-->
                                                 <label for="">Acervo</label>
-                                                <input type="text" class="span12" name="acervos" id="acervos" placeholder="Digite o nome do acervo" value=""/>
-                                                <input type="hidden" class="span12" name="acervos_id" id="acervos_id" value=""/>
+                                                <input type="text"  name="acervos" id="acervos" placeholder="Digite o nome do acervo" value=""/>
+                                                <input type="hidden"  name="acervos_id" id="acervos_id" value=""/>
+                                                <input type="hidden"  name="estoque" id="estoque" value=""/>
+                                                
                                             </div>
-                                            <div class="span0">
-                                              <!--  <label for="">Quantidade</label>-->
-                                                <input type="hidden" placeholder="Quantidade" id="quantidade" name="quantidade" class="span12" value="" />
-                                            </div>
+                                                                                                                                                                          
                                             <div class="span2">
                                                 <label for="">&nbsp</label>
                                                 <button class="btn btn-success span12" id="btnAdicionarAcervo"><i class="icon-white icon-plus"></i> Adicionar</button>
@@ -113,17 +117,9 @@
                                                     echo '</tr>';
                                                 }?>
                                                
-                                               <!-- <tr>
-                                                    <td colspan="3" style="text-align: right"><strong>Total:</strong></td>
-                                                    <td><strong>R$ <?php echo number_format($total,2,',','.');?></strong> <input type="hidden" id="total-venda" value="<?php echo number_format($total,2); ?>"></td>
-                                                </tr> -->
-                                                
+                         
                                             </tbody>
-                                        </table>
-
-
-                                        
-
+                                        </table>                                        
 
                                     </div>
 
@@ -144,78 +140,22 @@
 </div>
 </div>
 
-
-<!-- Modal Faturar-->
-<div id="modal-faturar" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-<form id="formFaturar" action="<?php echo current_url() ?>" method="post">
-<div class="modal-header">
-  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-  <h3 id="myModalLabel">Faturar Venda</h3>
-</div>
-<div class="modal-body">
-    
-    <div class="span12 alert alert-info" style="margin-left: 0"> Obrigatório o preenchimento dos campos com asterisco.</div>
-    <div class="span12" style="margin-left: 0"> 
-      <label for="descricao">Descrição</label>
-      <input class="span12" id="descricao" type="text" name="descricao" value="Fatura de Venda - #<?php echo $result->idVendas; ?> "  />
-      
-    </div>  
-    <div class="span12" style="margin-left: 0"> 
-      <div class="span12" style="margin-left: 0"> 
-        <label for="cliente">Leitor*</label>
-        <input class="span12" id="leitor" type="text" name="leitor" value="<?php echo $result->nomeLeitor ?>" />
-        <input type="hidden" name="leitores_id" id="leitores_id" value="<?php echo $result->leitores_id ?>">
-        <input type="hidden" name="vendas_id" id="vendas_id" value="<?php echo $result->idVendas; ?>">
-      </div>
-      
-      
-    </div>
-    <div class="span12" style="margin-left: 0"> 
-      <div class="span4" style="margin-left: 0">  
-        <label for="valor">Valor*</label>
-        <input type="hidden" id="tipo" name="tipo" value="receita" /> 
-        <input class="span12 money" id="valor" type="text" name="valor" value="<?php echo number_format($total,2); ?> "  />
-      </div>
-      <div class="span4" >
-        <label for="vencimento">Data Vencimento*</label>
-        <input class="span12 datepicker" id="vencimento" type="text" name="vencimento"  />
-      </div>
-      
-    </div>
-    
-    <div class="span12" style="margin-left: 0"> 
-      <div class="span4" style="margin-left: 0">
-        <label for="recebido">Recebido?</label>
-        &nbsp &nbsp &nbsp &nbsp<input  id="recebido" type="checkbox" name="recebido" value="1" /> 
-      </div>
-      <div id="divRecebimento" class="span8" style=" display: none">
-        <div class="span6">
-          <label for="recebimento">Data Recebimento</label>
-          <input class="span12 datepicker" id="recebimento" type="text" name="recebimento" /> 
-        </div>
-        <div class="span6">
-          <label for="formaPgto">Forma Pgto</label>
-          <select name="formaPgto" id="formaPgto" class="span12">
-            <option value="Dinheiro">Dinheiro</option>
-            <option value="Cartão de Crédito">Cartão de Crédito</option>
-            <option value="Cheque">Cheque</option>
-            <option value="Boleto">Boleto</option>
-            <option value="Depósito">Depósito</option>
-            <option value="Débito">Débito</option>        
-          </select>
-        </div>
-      </div>
-      
-    </div>
-    
     
 </div>
 <div class="modal-footer">
-  <button class="btn" data-dismiss="modal" aria-hidden="true" id="btn-cancelar-faturar">Cancelar</button>
-  <button class="btn btn-primary">Faturar</button>
+  <form id="formEmprestar" action="<?php echo base_url(); ?>index.php/vendas/emprestar" method="post">
+  
+  <input id="idVendas" class="span12" type="hidden" name="idVendas" value="<?php echo $result->idVendas ?>"  />
+  
+  <input type="hidden" id="status" name="status" value="Emprestado"/>
+  
+  <a href="<?php echo base_url() ?>index.php/vendas" id="" class="btn"><i class="icon-arrow-left"></i> Voltar</a>
+  <button class="btn btn-primary">Emprestar</button>
+  </form>
 </div>
 </form>
 </div>
+
 
 <!-- Modal -->
 <div id="modal-excluir" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -240,24 +180,7 @@
 <script src="<?php echo base_url();?>js/maskmoney.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-     $(".money").maskMoney(); 
-     $('#recebido').click(function(event) {
-        var flag = $(this).is(':checked');
-        if(flag == true){
-          $('#divRecebimento').show();
-        }
-        else{
-          $('#divRecebimento').hide();
-        }
-     });
-     $(document).on('click', '#btn-faturar', function(event) {
-       event.preventDefault();
-         valor = $('#total-venda').val();
-         valor = valor.replace(',', '' );
-         $('#valor').val(valor);
-     });
-     
-     $("#formFaturar").validate({
+			$("#formFaturar").validate({
           rules:{
              descricao: {required:true},
              cliente: {required:true},
@@ -271,6 +194,7 @@ $(document).ready(function(){
              valor: {required: 'Campo Requerido.'},
              vencimento: {required: 'Campo Requerido.'}
           },
+    
           submitHandler: function( form ){       
             var dados = $( form ).serialize();
             $('#btn-cancelar-faturar').trigger('click');
@@ -286,7 +210,7 @@ $(document).ready(function(){
                     window.location.reload(true);
                 }
                 else{
-                    alert('Ocorreu um erro ao tentar faturar venda.');
+                    alert('Ocorreu um erro ao tentar realizar emprestimo.');
                     $('#progress-fatura').hide();
                 }
               }
@@ -299,6 +223,7 @@ $(document).ready(function(){
             minLength: 2,
             select: function( event, ui ) {
                  $("#acervos_id").val(ui.item.id);
+                 $("#estoque").val(ui.item.estoque);
                 
                  
                  

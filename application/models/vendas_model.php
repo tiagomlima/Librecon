@@ -38,15 +38,15 @@ class Vendas_model extends CI_Model {
 	
 	
 
-    public function getAcervos($id = null){
+    public function getAcervos($id){
         $this->db->select('itens_de_vendas.*, acervos.*');
         $this->db->from('itens_de_vendas');
         $this->db->join('acervos','acervos.idAcervos = itens_de_vendas.acervos_id');
         $this->db->where('vendas_id',$id);
+		
         return $this->db->get()->result();
     }
-
-    
+	
     function add($table,$data,$returnId = false){
         $this->db->insert($table, $data);         
         if ($this->db->affected_rows() == '1')
@@ -71,7 +71,7 @@ class Vendas_model extends CI_Model {
 		
 		return FALSE;       
     }
-    
+	
     function delete($table,$fieldID,$ID){
         $this->db->where($fieldID,$ID);
         $this->db->delete($table);
@@ -82,6 +82,7 @@ class Vendas_model extends CI_Model {
 		
 		return FALSE;        
     }   
+	
 
     function count($table){
 	return $this->db->count_all($table);
@@ -95,7 +96,7 @@ class Vendas_model extends CI_Model {
         $query = $this->db->get('acervos');
         if($query->num_rows > 0){
             foreach ($query->result_array() as $row){
-                $row_set[] = array('label'=>$row['titulo'].' | Tombo: '.$row['tombo'].' | Estoque: '.$row['estoque'], 'id'=>$row['idAcervos']);
+                $row_set[] = array('label'=>$row['titulo'].' | Tombo: '.$row['tombo'].' | Estoque: '.$row['estoque'], 'id'=>$row['idAcervos'], 'estoque'=>$row['estoque']);
             }
             echo json_encode($row_set);
         }
@@ -110,6 +111,20 @@ class Vendas_model extends CI_Model {
         if($query->num_rows > 0){
             foreach ($query->result_array() as $row){
                 $row_set[] = array('label'=>$row['nomeLeitor'].' | Telefone: '.$row['telefone'],'id'=>$row['idLeitores']);
+            }
+            echo json_encode($row_set);
+        }
+    }
+	
+	public function autoCompleteItem($q){
+
+        $this->db->select('*');
+        $this->db->limit(5);
+        $this->db->like('idItens', $q);
+        $query = $this->db->get('itens_de_vendas');
+        if($query->num_rows > 0){
+            foreach ($query->result_array() as $row){
+                $row_set[] = array('label'=>$row['idItens'].' | Quantidade: '.$row['quantidade']);
             }
             echo json_encode($row_set);
         }
