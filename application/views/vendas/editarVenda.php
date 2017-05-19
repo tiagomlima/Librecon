@@ -9,7 +9,7 @@
                 <span class="icon">
                     <i class="icon-tags"></i>
                 </span>
-                <h5>Editar Empréstimo</h5>
+                <h5>Editar Empréstimo </h5>
             </div>
             <div class="widget-content nopadding">
 
@@ -17,9 +17,22 @@
                 <div class="span12" id="divAcervosServicos" style=" margin-left: 0">
                     <ul class="nav nav-tabs">
                         <li class="active" id="tabDetalhes"><a href="#tab1" data-toggle="tab">Detalhes do Empréstimo</a></li>
-
+						
                     </ul>
                     <div class="tab-content">
+                    	
+	                    <div style="margin-left: 82%;">
+	                    	<form action="<?php echo base_url();?>index.php/vendas/finalizarEmprestimo" method="post">
+	                    		<input type="hidden" id="idVendas" name="idVendas" value="<?php echo $result->idVendas ?>">
+	                    		<input type="hidden" id="status" name="status" value="<?php echo $result->status ?>">
+	                    		<?php if($result->status == 'Emprestado'){?>	                   		
+	                    		<button class="btn btn-success " id="btnFinalizarEmprestimo"><i class="icon-ok"></i> Finalizar Empréstimo</button>
+	                    		<?php } ?>
+	                    	</form>
+	                   	   
+	                   	                        		                    	                   			                   			                	 	
+	                   	 </div>
+                   	 
                         <div class="tab-pane active" id="tab1">
 
                             <div class="span12" id="divEditarEmprestimo">
@@ -28,10 +41,20 @@
                                     <?php echo form_hidden('idVendas',$result->idVendas) ?>
                                     
                                     <div class="span12" style="padding: 1%; margin-left: 0">
-                                        <h3>#Emprestimo: <?php echo $result->idVendas ?></h3>
+                                        <h3>#Emprestimo: <?php echo $result->idVendas; 
+                                        if($result->status == 'Devolvido'){
+                                        	echo ' (Finalizado)';
+                                        }
+                                        
+                                        ?></h3>
                                         <div class="span2" style="margin-left: 0">
                                             <label for="dataDevolucao">Data de Devolução</label>
-                                            <input id="dataDevolucao" class="span12 datepicker" type="text" name="dataDevolucao" value="<?php echo date('d/m/Y', strtotime($result->dataDevolucao)); ?>"  />
+                                            <?php if($result->status == 'Devolvido'){
+                                            	$disabled = 'disabled';
+											}else{
+												$disabled = '';
+											} ?>
+                                            <input id="dataDevolucao" class="span12 datepicker" type="text" name="dataDevolucao" value="<?php echo date('d/m/Y', strtotime($result->dataDevolucao)); ?>" <?php echo $disabled ?> />
                                             <label  class="control-label">Status</span></label>
 						                        <div class="controls">
 						                            <select name="status" id="status">
@@ -47,13 +70,13 @@
                                         </div>
                                         <div class="span5" style="margin-left: 0">
                                             <label for="leitor">Leitor<span class="required">*</span></label>
-                                            <input id="leitor" class="span12" type="text" name="leitor" value="<?php echo $result->nomeLeitor ?>"  />
+                                            <input id="leitor" class="span12" type="text" name="leitor" value="<?php echo $result->nomeLeitor ?>" <?php echo $disabled ?>  />
                                             <input id="leitores_id" class="span12" type="hidden" name="leitores_id" value="<?php echo $result->leitores_id ?>"  />
                                                                                      
                                         </div>
                                         <div class="span5">
                                             <label for="usuario">Usuário<span class="required">*</span></label>
-                                            <input id="usuario" class="span12" type="text" name="usuario" value="<?php echo $result->nome ?>"  />
+                                            <input id="usuario" class="span12" type="text" name="usuario" value="<?php echo $result->nome ?>" <?php echo $disabled ?> />
                                             <input id="usuarios_id" class="span12" type="hidden" name="usuarios_id" value="<?php echo $result->usuarios_id ?>"  />
                                         </div>
                                         
@@ -62,14 +85,9 @@
                                     <div class="span12" style="padding: 1%; margin-left: 0">
             
                                         <div class="span8 offset2" style="text-align: center">
-                                            <?php if($result->status == 'Emprestado'){ ?>
-                                            <form action="<?php echo base_url(); ?>index.php/vendas/finalizarEmprestimo" method="post">
-                                            <input type="hidden" name="status" id="status" value="Devolvido"/>
-                                            <input type="hidden" name="acervos_id" id="acervos_id" value=""/>
-                                            <button class="btn btn-success " id="btnFinalizarEmprestimo"><i class="icon-file"></i> Finalizar Empréstimo</button>
-                                            </form>
-                                            <?php } ?>
+                                            <?php if($result->status != 'Devolvido'){ ?>                                                                                                                                                                                                                                                                                                                                                           
                                             <button class="btn btn-primary" id="btnContinuar"><i class="icon-white icon-ok"></i> Alterar</button>
+                                            <?php } ?>
                                             <a href="<?php echo base_url() ?>index.php/vendas/visualizar/<?php echo $result->idVendas; ?>" class="btn btn-inverse"><i class="icon-eye-open"></i> Visualizar Venda</a>
                                             <a href="<?php echo base_url() ?>index.php/vendas" class="btn"><i class="icon-arrow-left"></i> Voltar</a>
                                         </div>
@@ -84,16 +102,20 @@
                                             <div class="span6">
                                                 <input type="hidden" name="idAcervo" id="idAcervo" value=""/>
                                                 <input type="hidden" name="idVendasAcervo" id="idVendasAcervo" value="<?php echo $result->idVendas?>" />
+                                                <?php if($result->status != 'Devolvido'){ ?>
                                                 <label for="">Acervo</label>
                                                 <input type="text"  name="acervos" id="acervos" placeholder="Digite o nome do acervo" value=""/>
                                                 <input type="hidden"  name="acervos_id" id="acervos_id" value=""/>
+                                                <?php } ?>
                                                 <input type="hidden"  name="estoque" id="estoque" value=""/>
                                                 
                                             </div>
                                                                                                                                                                           
                                             <div class="span2">
                                                 <label for="">&nbsp</label>
+                                                <?php if($result->status != 'Devolvido'){ ?>
                                                 <button class="btn btn-success span12" id="btnAdicionarAcervo"><i class="icon-white icon-plus"></i> Adicionar</button>
+                                                <?php } ?>
                                             </div>
                                         </form>
                                     </div>
@@ -103,7 +125,9 @@
                                                 <tr>                                              
                                                    <th>Acervo</th>
                                                    <th>Tombo</th>
-                                                   <th>Ações</th>                                                    
+                                                   <?php if($result->status != 'Devolvido'){ ?>
+                                                   <th>Ações</th>  
+                                                   <?php } ?>                                                  
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -113,14 +137,16 @@
                                                     echo '<tr>';
                                                     echo '<td>'.$p->titulo.'</td>';
                                                     echo '<td>'.$p->tombo.'</td>';
-                                                    echo '<td><a href="" idAcao="'.$p->idItens.'" prodAcao="'.$p->idAcervos.'" quantAcao="'.$p->quantidade.'" title="Excluir Acervo" class="btn btn-danger"><i class="icon-remove icon-white"></i></a></td>';                                                   
+													if($result->status != 'Devolvido'){
+                                                    echo '<td><a href="" idAcao="'.$p->idItens.'" prodAcao="'.$p->idAcervos.'" quantAcao="'.$p->quantidade.'" title="Excluir Acervo" class="btn btn-danger"><i class="icon-remove icon-white"></i></a></td>';
+													}                                                   
                                                     echo '</tr>';
                                                 }?>
-                                               
-                         
+                                                                        
                                             </tbody>
-                                        </table>                                        
-
+                                        </table> 
+                                        
+                                                                                                                                                              
                                     </div>
 
                             </div>
@@ -150,12 +176,13 @@
   <input type="hidden" id="status" name="status" value="Emprestado"/>
   
   <a href="<?php echo base_url() ?>index.php/vendas" id="" class="btn"><i class="icon-arrow-left"></i> Voltar</a>
+  <?php if($result->status != 'Devolvido' && $result->status !='Emprestado'){ ?>
   <button class="btn btn-primary">Emprestar</button>
+  <?php } ?>
   </form>
 </div>
 </form>
 </div>
-
 
 <!-- Modal -->
 <div id="modal-excluir" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

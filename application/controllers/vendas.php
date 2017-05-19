@@ -135,10 +135,11 @@ class Vendas extends CI_Controller {
                 'dataEmprestimo' => $dataEmprestimo,
                 'dataDevolucao' => $dataDevolucao,
                 'usuarios_id' => $this->input->post('usuarios_id'),
-                'status' => $this->input->post('status'),
+               // 'status' => $this->input->post('status'),
                 'leitores_id' => $this->input->post('leitores_id')
             );
             if ($this->vendas_model->edit('vendas', $data, 'idVendas', $this->input->post('idVendas')) == TRUE) {
+				
                 $this->session->set_flashdata('success','Empréstimo editado com sucesso!');
                 redirect(base_url() . 'index.php/vendas/editar/'.$this->input->post('idVendas'));
             } else {
@@ -148,6 +149,7 @@ class Vendas extends CI_Controller {
 		
         $this->data['result'] = $this->vendas_model->getById($this->uri->segment(3));	
         $this->data['acervos'] = $this->vendas_model->getAcervos($this->uri->segment(3));
+		$this->data['acervo'] = $this->vendas_model->getAcervosById($this->uri->segment(3));
         $this->data['view'] = 'vendas/editarVenda';
         $this->load->view('tema/topo', $this->data);
    
@@ -166,8 +168,9 @@ class Vendas extends CI_Controller {
         $this->load->model('librecon_model');
         $this->data['result'] = $this->vendas_model->getById($this->uri->segment(3));
         $this->data['acervos'] = $this->vendas_model->getAcervos($this->uri->segment(3));
+		$this->data['acervo'] = $this->vendas_model->getAcervosById($this->uri->segment(3));
         $this->data['emitente'] = $this->librecon_model->getEmitente();
-        
+        $this->data['curso'] = $this->vendas_model->getCursoById($this->uri->segment(3));
         $this->data['view'] = 'vendas/visualizarVenda';
         $this->load->view('tema/topo', $this->data);
        
@@ -198,6 +201,49 @@ class Vendas extends CI_Controller {
             $this->vendas_model->autoCompleteAcervo($q);
         }
     }
+	
+	public function finalizarEmprestimo(){
+		$idVendas = $this->input->post('idVendas');
+		$status = $this->input->post('status');
+		
+		if($status == 'Emprestado'){
+			// pega todos os ids dos acervos inclusos no itens de emprestimo
+		
+		$sql = "SELECT group_concat(acervos_id separator ',') as id FROM `itens_de_vendas` WHERE vendas_id = ".$idVendas;
+		$query = $this->db->query($sql,array($idVendas));
+		$array1 = $query->row_array();
+		$arr = explode(',',$array1['id']);
+		
+		$i = count($arr);
+		
+		//pega os ids dos acervos contidos no itens de emprestimos e acrescenta no estoque
+		for($i = 0; $i < count($arr);){
+			$acervos_id = $arr[$i];
+			
+			$consulta = "UPDATE acervos set estoque = estoque + 1 WHERE idAcervos =".$acervos_id;
+            $this->db->query($consulta, array($acervos_id));
+			
+			
+				
+			$i++;
+		}
+		
+		//Atualiza o status para devolvido
+		$atualizarStatus = "UPDATE vendas set status = 'Devolvido' WHERE idVendas = ".$idVendas;
+		$this->db->query($atualizarStatus,array($idVendas));
+		
+		$this->session->set_flashdata('success','Empréstimo finalizado com sucesso!');            
+        redirect(base_url().'index.php/vendas/editar/'.$idVendas);
+		
+		//print_r($arr);
+		}else{
+			$this->session->set_flashdata('error','Erro ao finalizar empréstimo');
+			redirect(base_url().'index.php/vendas/editar/'.$idVendas);
+		}
+		
+		
+	}
+	
     public function autoCompleteLeitor(){
         if (isset($_GET['term'])){
             $q = strtolower($_GET['term']);
@@ -234,7 +280,7 @@ class Vendas extends CI_Controller {
 				 redirect('vendas/editar/'.$idVendas);
 			}
 			
-			if($estoque <= 0){
+			if($estoque <= 1){
 				$this->session->set_flashdata('error','Não há examplares do acervo disponiveis.');
 				 redirect('vendas/editar/'.$idVendas);
 			}
@@ -280,34 +326,6 @@ class Vendas extends CI_Controller {
             }           
     }
 
-	public function finalizarEmprestimo(){
-		if(!$this->uri->segment(3) || !is_numeric($this->uri->segment(3))){
-            $this->session->set_flashdata('error','Item não pode ser encontrado, parâmetro não foi passado corretamente.');
-            redirect('librecon');
-        }
-        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'eVenda')){
-          $this->session->set_flashdata('error','Você não tem permissão para finalizar emprestimos');
-          redirect(base_url());
-        }
-        $this->load->library('form_validation');
-        $this->data['custom_error'] = '';
-        if ($this->form_validation->run('vendas') == false) {
-            $this->data['custom_error'] = (validation_errors() ? '<div class="form_error">' . validation_errors() . '</div>' : false);
-        } else {
-			
-            $data = array(                
-                'status' => $this->input->post('status')               
-            );
-            if ($this->vendas_model->edit('vendas', $data == TRUE)) {
-				
-                $this->session->set_flashdata('success','Empréstimo finalizado com sucesso!');
-                redirect(base_url() . 'index.php/vendas/editar/'.$this->input->post('idVendas'));
-            } else {
-                $this->data['custom_error'] = '<div class="form_error"><p>Ocorreu um erro</p></div>';
-            }
-        }
-       
-	}
     
     public function faturar() {
         if(!$this->permission->checkPermission($this->session->userdata('permissao'),'eVenda')){

@@ -1,4 +1,4 @@
-<?php $totalAcervos = 0;?>
+
 <div class="row-fluid" style="margin-top: 0">
     <div class="span12">
         <div class="widget-box">
@@ -6,7 +6,7 @@
                 <span class="icon">
                     <i class="icon-tags"></i>
                 </span>
-                <h5>Venda</h5>
+                <h5>Empréstimo</h5>
                 <div class="buttons">
                     <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'eVenda')){
                         echo '<a title="Icon Title" class="btn btn-mini btn-info" href="'.base_url().'index.php/vendas/editar/'.$result->idVendas.'"><i class="icon-pencil icon-white"></i> Editar</a>'; 
@@ -31,7 +31,7 @@
                                 <tr>
                                     <td style="width: 25%"><img src=" <?php echo $emitente[0]->url_logo; ?> "></td>
                                     <td> <span style="font-size: 20px; "> <?php echo $emitente[0]->nome; ?></span> </br><span><?php echo $emitente[0]->cnpj; ?> </br> <?php echo $emitente[0]->rua.', nº:'.$emitente[0]->numero.', '.$emitente[0]->bairro.' - '.$emitente[0]->cidade.' - '.$emitente[0]->uf; ?> </span> </br> <span> E-mail: <?php echo $emitente[0]->email.' - Fone: '.$emitente[0]->telefone; ?></span></td>
-                                    <td style="width: 18%; text-align: center">#Venda: <span ><?php echo $result->idVendas?></span></br> </br> <span>Emissão: <?php echo date('d/m/Y');?></span></td>
+                                    <td style="width: 18%; text-align: center">#Empréstimo: <span ><?php echo $result->idVendas?></span></br> </br> <span>Emissão: <?php echo date('d/m/Y');?></span></td>
                                 </tr>
 
                                 <?php } ?>
@@ -44,8 +44,10 @@
                                     <td style="width: 50%; padding-left: 0">
                                         <ul>
                                             <li>
-                                                <span><h5>Cliente</h5>
-                                                <span><?php echo $result->nomeCliente?></span><br/>
+                                                <span><h5>Leitor</h5>
+                                                <span><?php echo $result->nomeLeitor?></span><br/>
+                                                <span><?php echo 'R.A '. $result->matricula?></span><br/>
+                                                <span><?php echo $curso->nomeCurso?></span><br/>
                                                 <span><?php echo $result->rua?>, <?php echo $result->numero?>, <?php echo $result->bairro?></span><br/>
                                                 <span><?php echo $result->cidade?> - <?php echo $result->estado?></span>
                                             </li>
@@ -54,7 +56,7 @@
                                     <td style="width: 50%; padding-left: 0">
                                         <ul>
                                             <li>
-                                                <span><h5>Vendedor</h5></span>
+                                                <span><h5>Usuário</h5></span>
                                                 <span><?php echo $result->nome?></span> <br/>
                                                 <span>Telefone: <?php echo $result->telefone?></span><br/>
                                                 <span>Email: <?php echo $result->email?></span>
@@ -75,28 +77,25 @@
                         <table class="table table-bordered table-condensed" id="tblAcervos">
                                     <thead>
                                         <tr>
+                                            <th style="font-size: 15px">Tombo</th>
                                             <th style="font-size: 15px">Acervo</th>
-                                            <th style="font-size: 15px">Quantidade</th>
-                                            <th style="font-size: 15px">Sub-total</th>
+                                            
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
                                         
-                                        foreach ($acervos as $p) {
-                                            $totalAcervos = $totalAcervos + $p->subTotal;
-                                            echo '<tr>';
-                                            echo '<td>'.$p->descricao.'</td>';
-                                            echo '<td>'.$p->quantidade.'</td>';
+                                        foreach ($acervos as $a) {
                                             
-                                            echo '<td>R$ '.number_format($p->subTotal,2,',','.').'</td>';
+                                            echo '<tr>';
+                                            echo '<td>'.$a->tombo.'</td>';
+                                            echo '<td>'.$a->titulo.'</td>';
+                                            
+                                            
                                             echo '</tr>';
                                         }?>
 
-                                        <tr>
-                                            <td colspan="2" style="text-align: right"><strong>Total:</strong></td>
-                                            <td><strong>R$ <?php echo number_format($totalAcervos,2,',','.');?></strong></td>
-                                        </tr>
+                                        
                                     </tbody>
                                 </table>
                                <?php }?>
@@ -104,7 +103,7 @@
                 
                         <hr />
                     
-                        <h4 style="text-align: right">Valor Total: R$ <?php echo number_format($totalAcervos,2,',','.');?></h4>
+                       
 
                     </div>
             

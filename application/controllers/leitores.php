@@ -52,8 +52,7 @@ class Leitores extends CI_Controller {
         
         $this->pagination->initialize($config); 	
         
-	    $this->data['results'] = $this->leitores_model->get('leitores','idLeitores,nomeLeitor,cpf,datanasc,sexo,situacao,matricula,telefone,celular,email,rua,numero,bairro,cidade,estado,cep','',$config['per_page'],$this->uri->segment(3));
-       	
+	    $this->data['results'] = $this->leitores_model->get('leitores','idLeitores,nomeLeitor,cpf,datanasc,sexo,situacao,matricula,telefone,celular,email,rua,numero,bairro,cidade,estado,cep','',$config['per_page'],$this->uri->segment(3));       	
 		$this->data['curso'] = $this->leitores_model->getCurso($config['per_page'],$this->uri->segment(3));
 		$this->data['grupo'] = $this->leitores_model->getGrupo($config['per_page'],$this->uri->segment(3));
        	$this->data['view'] = 'leitores/leitores';

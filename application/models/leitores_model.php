@@ -56,7 +56,8 @@ class Leitores_model extends CI_Model {
         $result =  !$one  ? $query->result() : $query->row();
         return $result;
     }
-
+	
+	
     function getById($id){
         $this->db->where('idLeitores',$id);
         $this->db->limit(1);

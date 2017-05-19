@@ -79,6 +79,7 @@ if(!$results){?>
 			foreach ($grupo as $g) {
 			echo '<td>'.$g->grupo.'</td>';
             echo '<td>';
+			
             if($this->permission->checkPermission($this->session->userdata('permissao'),'vLeitor')){
                 echo '<a href="'.base_url().'index.php/leitores/visualizar/'.$r->idLeitores.'" style="margin-right: 1%" class="btn tip-top" title="Ver mais detalhes"><i class="icon-eye-open"></i></a>'; 
             }
@@ -88,12 +89,13 @@ if(!$results){?>
             if($this->permission->checkPermission($this->session->userdata('permissao'),'dLeitor')){
                 echo '<a href="#modal-excluir" role="button" data-toggle="modal" leitor="'.$r->idLeitores.'" style="margin-right: 1%" class="btn btn-danger tip-top" title="Excluir Leitor"><i class="icon-remove icon-white"></i></a>'; 
             }
-
+			
               
             echo '</td>';
             echo '</tr>';
+			}
             }
-            }
+            
         }?>
         <tr>
             

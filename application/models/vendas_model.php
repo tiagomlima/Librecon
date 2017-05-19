@@ -35,8 +35,6 @@ class Vendas_model extends CI_Model {
         $this->db->limit(1);
         return $this->db->get()->row();
     }
-	
-	
 
     public function getAcervos($id){
         $this->db->select('itens_de_vendas.*, acervos.*');
@@ -46,6 +44,25 @@ class Vendas_model extends CI_Model {
 		
         return $this->db->get()->result();
     }
+	
+	public function getAcervosById($id){
+        $this->db->select('itens_de_vendas.*, acervos.*');
+        $this->db->from('itens_de_vendas');
+        $this->db->join('acervos','acervos.idAcervos = itens_de_vendas.acervos_id');
+        $this->db->where('vendas_id',$id);
+		
+        return $this->db->get()->row();
+    }
+
+	function getCursoById($id){
+		$this->db->select('vendas.*, leitores.*, cursos.idCursos, cursos.nomeCurso');
+        $this->db->from('vendas');
+        $this->db->join('leitores','leitores.idLeitores = vendas.leitores_id');
+        $this->db->join('cursos','cursos.idCursos = leitores.curso_id');
+        $this->db->where('vendas.idVendas',$id);
+        $this->db->limit(1);
+        return $this->db->get()->row();
+	}
 	
     function add($table,$data,$returnId = false){
         $this->db->insert($table, $data);         
@@ -101,6 +118,7 @@ class Vendas_model extends CI_Model {
             echo json_encode($row_set);
         }
     }
+	
 
     public function autoCompleteLeitor($q){
 
