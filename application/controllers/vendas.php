@@ -318,6 +318,8 @@ class Vendas extends CI_Controller {
                 $acervo = $this->input->post('acervo');
                 $sql = "UPDATE acervos set estoque = estoque + 1 WHERE idAcervos =".$acervo;
                 $this->db->query($sql, array($quantidade, $acervo));
+				
+				
                 
                 echo json_encode(array('result'=> true));
             }
@@ -325,66 +327,7 @@ class Vendas extends CI_Controller {
                 echo json_encode(array('result'=> false));
             }           
     }
-
-    
-    public function faturar() {
-        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'eVenda')){
-              $this->session->set_flashdata('error','Você não tem permissão para editar Vendas');
-              redirect(base_url());
-            }
-        $this->load->library('form_validation');
-        $this->data['custom_error'] = '';
- 
-        if ($this->form_validation->run('receita') == false) {
-            $this->data['custom_error'] = (validation_errors() ? '<div class="form_error">' . validation_errors() . '</div>' : false);
-        } else {
-            $vencimento = $this->input->post('vencimento');
-            $recebimento = $this->input->post('recebimento');
-            try {
-                
-                $vencimento = explode('/', $vencimento);
-                $vencimento = $vencimento[2].'-'.$vencimento[1].'-'.$vencimento[0];
-                if($recebimento != null){
-                    $recebimento = explode('/', $recebimento);
-                    $recebimento = $recebimento[2].'-'.$recebimento[1].'-'.$recebimento[0];
-                }
-            } catch (Exception $e) {
-               $vencimento = date('Y/m/d'); 
-            }
-            $data = array(
-                'descricao' => set_value('descricao'),
-                //'valor' => $this->input->post('valor'),
-                'leitores_id' => $this->input->post('leitores_id'),
-                'data_vencimento' => $vencimento,
-                'data_pagamento' => $recebimento,
-                'baixado' => $this->input->post('recebido'),
-                'cliente_fornecedor' => set_value('leitor')
-                //'forma_pgto' => $this->input->post('formaPgto'),
-               // 'tipo' => $this->input->post('tipo')
-            );
-            if ($this->vendas_model->add('lancamentos',$data) == TRUE) {
-                
-                $venda = $this->input->post('vendas_id');
-                $this->db->set('emprestado',1);
-               // $this->db->set('valorTotal',$this->input->post('valor'));
-                $this->db->where('idVendas', $venda);
-                $this->db->update('vendas');
-                $this->session->set_flashdata('success','Emprestimo realizado com sucesso!');
-                $json = array('result'=>  true);
-                echo json_encode($json);
-                die();
-            } else {
-                $this->session->set_flashdata('error','Ocorreu um erro ao tentar realizar o emprestimo.');
-                $json = array('result'=>  false);
-                echo json_encode($json);
-                die();
-            }
-        }
-        $this->session->set_flashdata('error','Ocorreu um erro ao tentar realizar o emprestimo.');
-        $json = array('result'=>  false);
-        echo json_encode($json);
-        
-    }
+  
 
 	public function emprestar(){
 		if(!$this->permission->checkPermission($this->session->userdata('permissao'),'eVenda')){
@@ -400,10 +343,12 @@ class Vendas extends CI_Controller {
 		if(count($itens) > 0){
 			$sql = "UPDATE vendas set status = '".$status."' WHERE idVendas =".$idVendas;
                 $this->db->query($sql, array($status, $idVendas));
-					
-				$this->session->set_flashdata('success','Emprestimo realizado com sucesso!'); 
 				
-				 redirect('vendas');
+				$quantidade = $this->vendas_model->getTotalItem($idVendas);
+				
+				$addQtde = "UPDATE itens_de_vendas set quantidade = ".$quantidade." WHERE vendas_id = ".$idVendas;
+				$this->db->query($addQtde,array($quantidade,$idVendas));
+			    redirect('vendas');
 		} else{
 			$this->session->set_flashdata('error','Por favor, adicione os itens a serem emprestados.');
 			redirect('vendas/editar/'.$idVendas);

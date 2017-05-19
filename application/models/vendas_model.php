@@ -54,6 +54,15 @@ class Vendas_model extends CI_Model {
         return $this->db->get()->row();
     }
 
+	function getTotalItem($id){
+		$this->db->select('*');
+		$this->db->from('itens_de_vendas');
+		$this->db->where('vendas_id',$id);
+		$query = $this->db->get();
+		$rowcount = $query->num_rows();
+		return $rowcount;
+	}
+
 	function getCursoById($id){
 		$this->db->select('vendas.*, leitores.*, cursos.idCursos, cursos.nomeCurso');
         $this->db->from('vendas');

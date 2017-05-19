@@ -103,7 +103,7 @@
                 
                         <hr />
                     
-                       
+                     <h4 style="text-align: left">Total de itens emprestados: <?php echo $acervo->quantidade ?>  </h4> <h4 style="text-align: right">Situação:  <?php echo $result->status;?></h4>
 
                     </div>
             
