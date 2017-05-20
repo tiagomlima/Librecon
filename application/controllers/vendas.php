@@ -51,7 +51,7 @@ class Vendas extends CI_Controller {
         	
         $this->pagination->initialize($config); 	
 		$this->data['results'] = $this->vendas_model->get('vendas','*','',$config['per_page'],$this->uri->segment(3));
-       
+		
 	    $this->data['view'] = 'vendas/vendas';
        	$this->load->view('tema/topo',$this->data);
       
@@ -178,21 +178,49 @@ class Vendas extends CI_Controller {
 	
     function excluir(){
         if(!$this->permission->checkPermission($this->session->userdata('permissao'),'dVenda')){
-          $this->session->set_flashdata('error','Você não tem permissão para excluir vendas');
+          $this->session->set_flashdata('error','Você não tem permissão para excluir emprestimos');
           redirect(base_url());
         }
         
         $id =  $this->input->post('id');
+		$status = $this->input->post('status');
+		
         if ($id == null){
-            $this->session->set_flashdata('error','Erro ao tentar excluir venda.');            
+            $this->session->set_flashdata('error','Erro ao tentar excluir empréstimo.');            
             redirect(base_url().'index.php/vendas/gerenciar/');
         }
-        $this->db->where('vendas_id', $id);
-        $this->db->delete('itens_de_vendas');
-        $this->db->where('idVendas', $id);
-        $this->db->delete('vendas');           
-        $this->session->set_flashdata('success','Venda excluída com sucesso!');            
-        redirect(base_url().'index.php/vendas/gerenciar/');
+		
+		if($status != 'Devolvido'){ // se o status não for devolvido, acrescenta o(s) item(s) de volta ao estoque e exclui a venda
+				// pega todos os ids dos acervos inclusos no itens de emprestimo		
+			$sql = "SELECT group_concat(acervos_id separator ',') as id FROM `itens_de_vendas` WHERE vendas_id = ".$id;
+			$query = $this->db->query($sql,array($id));
+			$array1 = $query->row_array();
+			$arr = explode(',',$array1['id']);
+			
+			$i = count($arr);
+			
+			//pega os ids dos acervos contidos no itens de emprestimos e acrescenta no estoque
+			for($i = 0; $i < count($arr);){
+				$acervos_id = $arr[$i];
+				
+				$consulta = "UPDATE acervos set estoque = estoque + 1 WHERE idAcervos =".$acervos_id;
+	            $this->db->query($consulta, array($acervos_id));
+									
+				$i++;
+			}
+			
+		} 
+			
+		$this->db->where('vendas_id', $id);
+	    $this->db->delete('itens_de_vendas');
+	    $this->db->where('idVendas', $id);
+	    $this->db->delete('vendas');   		
+			        
+	    $this->session->set_flashdata('success','Empréstimo excluído com sucesso!');            
+	    redirect(base_url().'index.php/vendas/gerenciar/');
+					 
+		
+        
     }
     public function autoCompleteAcervo(){
         
@@ -207,8 +235,8 @@ class Vendas extends CI_Controller {
 		$status = $this->input->post('status');
 		
 		if($status == 'Emprestado'){
-			// pega todos os ids dos acervos inclusos no itens de emprestimo
-		
+			
+	    // pega todos os ids dos acervos inclusos no itens de emprestimo		
 		$sql = "SELECT group_concat(acervos_id separator ',') as id FROM `itens_de_vendas` WHERE vendas_id = ".$idVendas;
 		$query = $this->db->query($sql,array($idVendas));
 		$array1 = $query->row_array();
@@ -222,9 +250,7 @@ class Vendas extends CI_Controller {
 			
 			$consulta = "UPDATE acervos set estoque = estoque + 1 WHERE idAcervos =".$acervos_id;
             $this->db->query($consulta, array($acervos_id));
-			
-			
-				
+								
 			$i++;
 		}
 		

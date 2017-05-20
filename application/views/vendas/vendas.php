@@ -83,7 +83,7 @@ if(!$results){?>
                 echo '<a style="margin-right: 1%" href="'.base_url().'index.php/vendas/editar/'.$r->idVendas.'" class="btn btn-info tip-top" title="Editar venda"><i class="icon-pencil icon-white"></i></a>'; 
             }
             if($this->permission->checkPermission($this->session->userdata('permissao'),'dVenda')){
-                echo '<a href="#modal-excluir" role="button" data-toggle="modal" venda="'.$r->idVendas.'" class="btn btn-danger tip-top" title="Excluir Venda"><i class="icon-remove icon-white"></i></a>'; 
+                echo '<a href="#modal-excluir" role="button" data-toggle="modal" status="'.$r->status.'" venda="'.$r->idVendas.'" class="btn btn-danger tip-top" title="Excluir Venda"><i class="icon-remove icon-white"></i></a>'; 
             }
             echo '</td>';
             echo '</tr>';
@@ -108,6 +108,7 @@ if(!$results){?>
   </div>
   <div class="modal-body">
     <input type="hidden" id="idVenda" name="id" value="" />
+    <input type="hidden" id="status" name="status" value=""/>
     <h5 style="text-align: center">Deseja realmente excluir este empréstimo?</h5>
   </div>
   <div class="modal-footer">
@@ -128,6 +129,8 @@ $(document).ready(function(){
         
         var venda = $(this).attr('venda');
         $('#idVenda').val(venda);
+        var status = $(this).attr('status');
+        $('#status').val(status);
     });
 });
 </script>
