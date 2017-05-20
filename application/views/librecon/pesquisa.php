@@ -41,8 +41,8 @@
                         foreach ($acervos as $r) {
                             echo '<tr>';
                             echo '<td>' . $r->idAcervos . '</td>';
-                            echo '<td>' . $r->descricao . '</td>';
-                            echo '<td>' . $r->precoVenda . '</td>';
+                            echo '<td>' . $r->titulo . '</td>';
+                            echo '<td>' . $r->tombo . '</td>';
 
                             echo '<td>';
                             if($this->permission->checkPermission($this->session->userdata('permissao'),'vAcervo')){

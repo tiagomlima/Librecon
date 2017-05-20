@@ -20,7 +20,7 @@
                     </div>
                     
                      <div class="control-group">
-                        <label for="duracao_dias" class="control-label">Duração<span class="required">*</span></label>
+                        <label for="duracao_dias" class="control-label">Duração (dias) <span class="required">*</span></label>
                         <div class="controls">
                             <input id="duracao_dias" type="text" name="duracao_dias" value="<?php echo set_value('duracao_dias'); ?>"  />
                         </div>
@@ -48,14 +48,14 @@
                     </div>
                     
                     <div class="control-group">
-                        <label for="validade_reserva" class="control-label">Validade da Reserva<span class="required">*</span></label>
+                        <label for="validade_reserva" class="control-label">Validade da Reserva (dias) <span class="required">*</span></label>
                         <div class="controls">
                             <input id="validade_reserva" type="text" name="validade_reserva" value="<?php echo set_value('validade_reserva'); ?>"  />
                         </div>
                     </div>
                     
                     <div class="control-group">
-                        <label for="multa" class="control-label">Valor da Multa<span class="required">*</span></label>
+                        <label for="multa" class="control-label">Valor da Multa R$<span class="required">*</span></label>
                         <div class="controls">
                             <input id="multa" type="text" name="multa" value="<?php echo set_value('multa'); ?>"  />
                         </div>

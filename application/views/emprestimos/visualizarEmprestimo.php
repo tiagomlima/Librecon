@@ -8,8 +8,8 @@
                 </span>
                 <h5>Empréstimo</h5>
                 <div class="buttons">
-                    <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'eVenda')){
-                        echo '<a title="Icon Title" class="btn btn-mini btn-info" href="'.base_url().'index.php/vendas/editar/'.$result->idVendas.'"><i class="icon-pencil icon-white"></i> Editar</a>'; 
+                    <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'eEmprestimo')){
+                        echo '<a title="Icon Title" class="btn btn-mini btn-info" href="'.base_url().'index.php/emprestimos/editar/'.$result->idEmprestimos.'"><i class="icon-pencil icon-white"></i> Editar</a>'; 
                     } ?>
                     
                     <a id="imprimir" title="Imprimir" class="btn btn-mini btn-inverse" href=""><i class="icon-print icon-white"></i> Imprimir</a>
@@ -31,7 +31,7 @@
                                 <tr>
                                     <td style="width: 25%"><img src=" <?php echo $emitente[0]->url_logo; ?> "></td>
                                     <td> <span style="font-size: 20px; "> <?php echo $emitente[0]->nome; ?></span> </br><span><?php echo $emitente[0]->cnpj; ?> </br> <?php echo $emitente[0]->rua.', nº:'.$emitente[0]->numero.', '.$emitente[0]->bairro.' - '.$emitente[0]->cidade.' - '.$emitente[0]->uf; ?> </span> </br> <span> E-mail: <?php echo $emitente[0]->email.' - Fone: '.$emitente[0]->telefone; ?></span></td>
-                                    <td style="width: 18%; text-align: center">#Empréstimo: <span ><?php echo $result->idVendas?></span></br> </br> <span>Emissão: <?php echo date('d/m/Y');?></span></td>
+                                    <td style="width: 18%; text-align: center">#Empréstimo: <span ><?php echo $result->idEmprestimos?></span></br> </br> <span>Emissão: <?php echo date('d/m/Y');?></span></td>
                                 </tr>
 
                                 <?php } ?>

@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Vendas_model extends CI_Model {
+class Emprestimos_model extends CI_Model {
 
     
 
@@ -15,7 +15,7 @@ class Vendas_model extends CI_Model {
         $this->db->from($table);
         $this->db->limit($perpage,$start);
         $this->db->join('leitores', 'leitores.idLeitores = '.$table.'.leitores_id');
-        $this->db->order_by('idVendas','desc');
+        $this->db->order_by('idEmprestimos','desc');
         if($where){
             $this->db->where($where);
         }
@@ -27,48 +27,48 @@ class Vendas_model extends CI_Model {
     }
 
     function getById($id){
-        $this->db->select('vendas.*, leitores.*, usuarios.telefone, usuarios.email,usuarios.nome');
-        $this->db->from('vendas');
-        $this->db->join('leitores','leitores.idLeitores = vendas.leitores_id');
-        $this->db->join('usuarios','usuarios.idUsuarios = vendas.usuarios_id');
-        $this->db->where('vendas.idVendas',$id);
+        $this->db->select('emprestimos.*, leitores.*, usuarios.telefone, usuarios.email,usuarios.nome');
+        $this->db->from('emprestimos');
+        $this->db->join('leitores','leitores.idLeitores = emprestimos.leitores_id');
+        $this->db->join('usuarios','usuarios.idUsuarios = emprestimos.usuarios_id');
+        $this->db->where('emprestimos.idEmprestimos',$id);
         $this->db->limit(1);
         return $this->db->get()->row();
     }
 
     public function getAcervos($id){
-        $this->db->select('itens_de_vendas.*, acervos.*');
-        $this->db->from('itens_de_vendas');
-        $this->db->join('acervos','acervos.idAcervos = itens_de_vendas.acervos_id');
-        $this->db->where('vendas_id',$id);
+        $this->db->select('itens_de_emprestimos.*, acervos.*');
+        $this->db->from('itens_de_emprestimos');
+        $this->db->join('acervos','acervos.idAcervos = itens_de_emprestimos.acervos_id');
+        $this->db->where('emprestimos_id',$id);
 		
         return $this->db->get()->result();
     }
 	
 	public function getAcervosById($id){
-        $this->db->select('itens_de_vendas.*, acervos.*');
-        $this->db->from('itens_de_vendas');
-        $this->db->join('acervos','acervos.idAcervos = itens_de_vendas.acervos_id');
-        $this->db->where('vendas_id',$id);
+        $this->db->select('itens_de_emprestimos.*, acervos.*');
+        $this->db->from('itens_de_emprestimos');
+        $this->db->join('acervos','acervos.idAcervos = itens_de_emprestimos.acervos_id');
+        $this->db->where('emprestimos_id',$id);
 		
         return $this->db->get()->row();
     }
 
 	function getTotalItem($id){
 		$this->db->select('*');
-		$this->db->from('itens_de_vendas');
-		$this->db->where('vendas_id',$id);
+		$this->db->from('itens_de_emprestimos');
+		$this->db->where('emprestimos_id',$id);
 		$query = $this->db->get();
 		$rowcount = $query->num_rows();
 		return $rowcount;
 	}
 
 	function getCursoById($id){
-		$this->db->select('vendas.*, leitores.*, cursos.idCursos, cursos.nomeCurso');
-        $this->db->from('vendas');
-        $this->db->join('leitores','leitores.idLeitores = vendas.leitores_id');
+		$this->db->select('emprestimos.*, leitores.*, cursos.idCursos, cursos.nomeCurso');
+        $this->db->from('emprestimos');
+        $this->db->join('leitores','leitores.idLeitores = emprestimos.leitores_id');
         $this->db->join('cursos','cursos.idCursos = leitores.curso_id');
-        $this->db->where('vendas.idVendas',$id);
+        $this->db->where('emprestimos.idEmprestimos',$id);
         $this->db->limit(1);
         return $this->db->get()->row();
 	}
@@ -148,7 +148,7 @@ class Vendas_model extends CI_Model {
         $this->db->select('*');
         $this->db->limit(5);
         $this->db->like('idItens', $q);
-        $query = $this->db->get('itens_de_vendas');
+        $query = $this->db->get('itens_de_emprestimos');
         if($query->num_rows > 0){
             foreach ($query->result_array() as $row){
                 $row_set[] = array('label'=>$row['idItens'].' | Quantidade: '.$row['quantidade']);
@@ -176,5 +176,5 @@ class Vendas_model extends CI_Model {
 
 }
 
-/* End of file vendas_model.php */
-/* Location: ./application/models/vendas_model.php */
+/* End of file emprestimos_model.php */
+/* Location: ./application/models/emprestimos_model.php */

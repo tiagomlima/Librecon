@@ -1,5 +1,5 @@
 <?php
-class Vendas extends CI_Controller {
+class Emprestimos extends CI_Controller {
     
     
     
@@ -11,8 +11,8 @@ class Vendas extends CI_Controller {
         }
 		
 		$this->load->helper(array('form','codegen_helper'));
-		$this->load->model('vendas_model','',TRUE);
-		$this->data['menuVendas'] = 'Vendas';
+		$this->load->model('emprestimos_model','',TRUE);
+		$this->data['menuEmprestimos'] = 'Emprestimos';
 	}	
 	
 	function index(){
@@ -20,15 +20,15 @@ class Vendas extends CI_Controller {
 	}
 	function gerenciar(){
         
-        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'vVenda')){
-           $this->session->set_flashdata('error','Você não tem permissão para visualizar vendas.');
+        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'vEmprestimo')){
+           $this->session->set_flashdata('error','Você não tem permissão para visualizar emprestimos.');
            redirect(base_url());
         }
         $this->load->library('pagination');
         
         
-        $config['base_url'] = base_url().'index.php/vendas/gerenciar/';
-        $config['total_rows'] = $this->vendas_model->count('vendas');
+        $config['base_url'] = base_url().'index.php/emprestimos/gerenciar/';
+        $config['total_rows'] = $this->emprestimos_model->count('emprestimos');
         $config['per_page'] = 10;
         $config['next_link'] = 'Próxima';
         $config['prev_link'] = 'Anterior';
@@ -50,23 +50,23 @@ class Vendas extends CI_Controller {
         $config['last_tag_close'] = '</li>';
         	
         $this->pagination->initialize($config); 	
-		$this->data['results'] = $this->vendas_model->get('vendas','*','',$config['per_page'],$this->uri->segment(3));
+		$this->data['results'] = $this->emprestimos_model->get('emprestimos','*','',$config['per_page'],$this->uri->segment(3));
 		
-	    $this->data['view'] = 'vendas/vendas';
+	    $this->data['view'] = 'emprestimos/emprestimos';
        	$this->load->view('tema/topo',$this->data);
       
 		
     }
 	
     function adicionar(){
-        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'aVenda')){
-          $this->session->set_flashdata('error','Você não tem permissão para adicionar Vendas.');
+        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'aEmprestimo')){
+          $this->session->set_flashdata('error','Você não tem permissão para adicionar emprestimos.');
           redirect(base_url());
         }
         $this->load->library('form_validation');
         $this->data['custom_error'] = '';
         
-        if ($this->form_validation->run('vendas') == false) {
+        if ($this->form_validation->run('emprestimos') == false) {
            $this->data['custom_error'] = (validation_errors() ? true : false);
         } else {
             $dataEmprestimo = $this->input->post('dataEmprestimo');
@@ -90,16 +90,16 @@ class Vendas extends CI_Controller {
                 'status' => $this->input->post('status')
                
             );
-            if (is_numeric($id = $this->vendas_model->add('vendas', $data, true)) ) {
-                $this->session->set_flashdata('success','Venda iniciada com sucesso, adicione os acervos.');
-                redirect('vendas/editar/'.$id);
+            if (is_numeric($id = $this->emprestimos_model->add('emprestimos', $data, true)) ) {
+                $this->session->set_flashdata('success','Emprestimo iniciado com sucesso, adicione os acervos.');
+                redirect('emprestimos/editar/'.$id);
             } else {
                 
                 $this->data['custom_error'] = '<div class="form_error"><p>Ocorreu um erro.</p></div>';
             }
         }
          
-        $this->data['view'] = 'vendas/adicionarVenda';
+        $this->data['view'] = 'emprestimos/adicionarEmprestimo';
         $this->load->view('tema/topo', $this->data);
     }
     
@@ -109,13 +109,13 @@ class Vendas extends CI_Controller {
             $this->session->set_flashdata('error','Item não pode ser encontrado, parâmetro não foi passado corretamente.');
             redirect('librecon');
         }
-        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'eVenda')){
-          $this->session->set_flashdata('error','Você não tem permissão para editar vendas');
+        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'eEmprestimo')){
+          $this->session->set_flashdata('error','Você não tem permissão para editar emprestimos');
           redirect(base_url());
         }
         $this->load->library('form_validation');
         $this->data['custom_error'] = '';
-        if ($this->form_validation->run('vendas') == false) {
+        if ($this->form_validation->run('emprestimos') == false) {
             $this->data['custom_error'] = (validation_errors() ? '<div class="form_error">' . validation_errors() . '</div>' : false);
         } else {
             $dataEmprestimo = $this->input->post('dataEmprestimo');
@@ -138,19 +138,19 @@ class Vendas extends CI_Controller {
                // 'status' => $this->input->post('status'),
                 'leitores_id' => $this->input->post('leitores_id')
             );
-            if ($this->vendas_model->edit('vendas', $data, 'idVendas', $this->input->post('idVendas')) == TRUE) {
+            if ($this->emprestimos_model->edit('emprestimos', $data, 'idEmprestimos', $this->input->post('idEmprestimos')) == TRUE) {
 				
                 $this->session->set_flashdata('success','Empréstimo editado com sucesso!');
-                redirect(base_url() . 'index.php/vendas/editar/'.$this->input->post('idVendas'));
+                redirect(base_url() . 'index.php/Emprestimos/editar/'.$this->input->post('idEmprestimos'));
             } else {
                 $this->data['custom_error'] = '<div class="form_error"><p>Ocorreu um erro</p></div>';
             }
         }
 		
-        $this->data['result'] = $this->vendas_model->getById($this->uri->segment(3));	
-        $this->data['acervos'] = $this->vendas_model->getAcervos($this->uri->segment(3));
-		$this->data['acervo'] = $this->vendas_model->getAcervosById($this->uri->segment(3));
-        $this->data['view'] = 'vendas/editarVenda';
+        $this->data['result'] = $this->emprestimos_model->getById($this->uri->segment(3));	
+        $this->data['acervos'] = $this->emprestimos_model->getAcervos($this->uri->segment(3));
+		$this->data['acervo'] = $this->emprestimos_model->getAcervosById($this->uri->segment(3));
+        $this->data['view'] = 'emprestimos/editarEmprestimo';
         $this->load->view('tema/topo', $this->data);
    
     }
@@ -160,24 +160,24 @@ class Vendas extends CI_Controller {
             redirect('librecon');
         }
         
-        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'vVenda')){
-          $this->session->set_flashdata('error','Você não tem permissão para visualizar vendas.');
+        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'vEmprestimo')){
+          $this->session->set_flashdata('error','Você não tem permissão para visualizar emprestimos.');
           redirect(base_url());
         }
         $this->data['custom_error'] = '';
         $this->load->model('librecon_model');
-        $this->data['result'] = $this->vendas_model->getById($this->uri->segment(3));
-        $this->data['acervos'] = $this->vendas_model->getAcervos($this->uri->segment(3));
-		$this->data['acervo'] = $this->vendas_model->getAcervosById($this->uri->segment(3));
+        $this->data['result'] = $this->emprestimos_model->getById($this->uri->segment(3));
+        $this->data['acervos'] = $this->emprestimos_model->getAcervos($this->uri->segment(3));
+		$this->data['acervo'] = $this->emprestimos_model->getAcervosById($this->uri->segment(3));
         $this->data['emitente'] = $this->librecon_model->getEmitente();
-        $this->data['curso'] = $this->vendas_model->getCursoById($this->uri->segment(3));
-        $this->data['view'] = 'vendas/visualizarVenda';
+        $this->data['curso'] = $this->emprestimos_model->getCursoById($this->uri->segment(3));
+        $this->data['view'] = 'emprestimos/visualizarEmprestimo';
         $this->load->view('tema/topo', $this->data);
        
     }
 	
     function excluir(){
-        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'dVenda')){
+        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'dEmprestimo')){
           $this->session->set_flashdata('error','Você não tem permissão para excluir emprestimos');
           redirect(base_url());
         }
@@ -187,12 +187,12 @@ class Vendas extends CI_Controller {
 		
         if ($id == null){
             $this->session->set_flashdata('error','Erro ao tentar excluir empréstimo.');            
-            redirect(base_url().'index.php/vendas/gerenciar/');
+            redirect(base_url().'index.php/emprestimos/gerenciar/');
         }
 		
-		if($status != 'Devolvido'){ // se o status não for devolvido, acrescenta o(s) item(s) de volta ao estoque e exclui a venda
+		if($status != 'Devolvido'){ // se o status não for devolvido, acrescenta o(s) item(s) de volta ao estoque e exclui o Emprestimo
 				// pega todos os ids dos acervos inclusos no itens de emprestimo		
-			$sql = "SELECT group_concat(acervos_id separator ',') as id FROM `itens_de_vendas` WHERE vendas_id = ".$id;
+			$sql = "SELECT group_concat(acervos_id separator ',') as id FROM `itens_de_emprestimos` WHERE emprestimos_id = ".$id;
 			$query = $this->db->query($sql,array($id));
 			$array1 = $query->row_array();
 			$arr = explode(',',$array1['id']);
@@ -211,13 +211,13 @@ class Vendas extends CI_Controller {
 			
 		} 
 			
-		$this->db->where('vendas_id', $id);
-	    $this->db->delete('itens_de_vendas');
-	    $this->db->where('idVendas', $id);
-	    $this->db->delete('vendas');   		
+		$this->db->where('emprestimos_id', $id);
+	    $this->db->delete('itens_de_emprestimos');
+	    $this->db->where('idEmprestimos', $id);
+	    $this->db->delete('emprestimos');   		
 			        
 	    $this->session->set_flashdata('success','Empréstimo excluído com sucesso!');            
-	    redirect(base_url().'index.php/vendas/gerenciar/');
+	    redirect(base_url().'index.php/emprestimos/gerenciar/');
 					 
 		
         
@@ -226,19 +226,19 @@ class Vendas extends CI_Controller {
         
         if (isset($_GET['term'])){
             $q = strtolower($_GET['term']);
-            $this->vendas_model->autoCompleteAcervo($q);
+            $this->emprestimos_model->autoCompleteAcervo($q);
         }
     }
 	
 	public function finalizarEmprestimo(){
-		$idVendas = $this->input->post('idVendas');
+		$idEmprestimos = $this->input->post('idEmprestimos');
 		$status = $this->input->post('status');
 		
 		if($status == 'Emprestado'){
 			
 	    // pega todos os ids dos acervos inclusos no itens de emprestimo		
-		$sql = "SELECT group_concat(acervos_id separator ',') as id FROM `itens_de_vendas` WHERE vendas_id = ".$idVendas;
-		$query = $this->db->query($sql,array($idVendas));
+		$sql = "SELECT group_concat(acervos_id separator ',') as id FROM `itens_de_emprestimos` WHERE emprestimos_id = ".$idEmprestimos;
+		$query = $this->db->query($sql,array($idEmprestimos));
 		$array1 = $query->row_array();
 		$arr = explode(',',$array1['id']);
 		
@@ -255,16 +255,16 @@ class Vendas extends CI_Controller {
 		}
 		
 		//Atualiza o status para devolvido
-		$atualizarStatus = "UPDATE vendas set status = 'Devolvido' WHERE idVendas = ".$idVendas;
-		$this->db->query($atualizarStatus,array($idVendas));
+		$atualizarStatus = "UPDATE emprestimos set status = 'Devolvido' WHERE idEmprestimos = ".$idEmprestimos;
+		$this->db->query($atualizarStatus,array($idEmprestimos));
 		
 		$this->session->set_flashdata('success','Empréstimo finalizado com sucesso!');            
-        redirect(base_url().'index.php/vendas/editar/'.$idVendas);
+        redirect(base_url().'index.php/emprestimos/editar/'.$idEmprestimos);
 		
 		//print_r($arr);
 		}else{
 			$this->session->set_flashdata('error','Erro ao finalizar empréstimo');
-			redirect(base_url().'index.php/vendas/editar/'.$idVendas);
+			redirect(base_url().'index.php/emprestimos/editar/'.$idEmprestimos);
 		}
 		
 		
@@ -273,77 +273,76 @@ class Vendas extends CI_Controller {
     public function autoCompleteLeitor(){
         if (isset($_GET['term'])){
             $q = strtolower($_GET['term']);
-            $this->vendas_model->autoCompleteLeitor($q);
+            $this->emprestimos_model->autoCompleteLeitor($q);
         }
     }
     public function autoCompleteUsuario(){
         if (isset($_GET['term'])){
             $q = strtolower($_GET['term']);
-            $this->vendas_model->autoCompleteUsuario($q);
+            $this->emprestimos_model->autoCompleteUsuario($q);
         }
     }
     public function adicionarAcervo(){
-        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'eVenda')){
-          $this->session->set_flashdata('error','Você não tem permissão para editar vendas.');
+        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'eEmprestimo')){
+          $this->session->set_flashdata('error','Você não tem permissão para editar emprestimos.');
           redirect(base_url());
         }
 		
         $this->load->library('form_validation');
-        $this->form_validation->set_rules('quantidade', 'Quantidade', 'trim|required|xss_clean');
         $this->form_validation->set_rules('idAcervo', 'Acervo', 'trim|required|xss_clean');
-        $this->form_validation->set_rules('idVendasAcervo', 'Vendas', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('idEmprestimosAcervo', 'Emprestimos', 'trim|required|xss_clean');
         	
 			
 			
-            $idVendas = $this->input->post('idVendasAcervo');
-           // $quantidade = $this->input->post('quantidade');
+            $idEmprestimos = $this->input->post('idEmprestimosAcervo');
+           
             $acervo = $this->input->post('acervos_id');
 			$estoque = $this->input->post('estoque');
 			
 						
 			if($acervo == null){
 				$this->session->set_flashdata('error','Digite o nome do item.');
-				 redirect('vendas/editar/'.$idVendas);
+				 redirect('emprestimos/editar/'.$idEmprestimos);
 			}
 			
 			if($estoque <= 1){
 				$this->session->set_flashdata('error','Não há examplares do acervo disponiveis.');
-				 redirect('vendas/editar/'.$idVendas);
+				 redirect('emprestimos/editar/'.$idEmprestimos);
 			}
 			
 			
             $data = array(
-               // 'quantidade'=> $quantidade,
+              
                 'acervos_id'=> $acervo,
-                'vendas_id'=> $idVendas,
+                'emprestimos_id'=> $idEmprestimos,
             );
-            if($this->vendas_model->add('itens_de_vendas', $data) == true){
+            if($this->emprestimos_model->add('itens_de_emprestimos', $data) == true){
                 $sql = "UPDATE acervos set estoque = estoque - 1 WHERE idAcervos =".$acervo;
-                $this->db->query($sql, array($quantidade, $acervo));
+                $this->db->query($sql, array($acervo));
 				$this->session->set_flashdata('success','Item adicionado com sucesso'); 
-                redirect('vendas/editar/'.$idVendas);
+                redirect('emprestimos/editar/'.$idEmprestimos);
                
             }else{
             	$this->session->set_flashdata('error','Não foi possível adicionar o item.');
-                 redirect('vendas/editar/'.$idVendas);
+                 redirect('emprestimos/editar/'.$idEmprestimos);
             }
         
        
       
     }
     function excluirAcervo(){
-            if(!$this->permission->checkPermission($this->session->userdata('permissao'),'eVenda')){
-              $this->session->set_flashdata('error','Você não tem permissão para editar Vendas');
+            if(!$this->permission->checkPermission($this->session->userdata('permissao'),'eEmprestimo')){
+              $this->session->set_flashdata('error','Você não tem permissão para editar Emprestimos');
               redirect(base_url());
             }
 			
             $ID = $this->input->post('idAcervo');
-            if($this->vendas_model->delete('itens_de_vendas','idItens',$ID) == true){
+            if($this->emprestimos_model->delete('itens_de_emprestimos','idItens',$ID) == true){
                 
-                $quantidade = $this->input->post('quantidade');
+               
                 $acervo = $this->input->post('acervo');
                 $sql = "UPDATE acervos set estoque = estoque + 1 WHERE idAcervos =".$acervo;
-                $this->db->query($sql, array($quantidade, $acervo));
+                $this->db->query($sql, array($acervo));
 				
 				
                 
@@ -356,28 +355,28 @@ class Vendas extends CI_Controller {
   
 
 	public function emprestar(){
-		if(!$this->permission->checkPermission($this->session->userdata('permissao'),'eVenda')){
+		if(!$this->permission->checkPermission($this->session->userdata('permissao'),'eEmprestimo')){
               $this->session->set_flashdata('error','Você não tem permissão para emprestar');
               redirect(base_url());
             }
 		
 		
-		$itens = $this->db->get('itens_de_vendas')->row();
+		$itens = $this->db->get('itens_de_emprestimos')->row();
 		
 		$status = $this->input->post('status');
-		$idVendas = $this->input->post('idVendas');
+		$idEmprestimos = $this->input->post('idEmprestimos');
 		if(count($itens) > 0){
-			$sql = "UPDATE vendas set status = '".$status."' WHERE idVendas =".$idVendas;
-                $this->db->query($sql, array($status, $idVendas));
+			$sql = "UPDATE emprestimos set status = '".$status."' WHERE idEmprestimos =".$idEmprestimos;
+                $this->db->query($sql, array($status, $idEmprestimos));
 				
-				$quantidade = $this->vendas_model->getTotalItem($idVendas);
+				$quantidade = $this->emprestimos_model->getTotalItem($idEmprestimos);
 				
-				$addQtde = "UPDATE itens_de_vendas set quantidade = ".$quantidade." WHERE vendas_id = ".$idVendas;
-				$this->db->query($addQtde,array($quantidade,$idVendas));
-			    redirect('vendas');
+				$addQtde = "UPDATE itens_de_emprestimos set quantidade = ".$quantidade." WHERE emprestimos_id = ".$idEmprestimos;
+				$this->db->query($addQtde,array($quantidade,$idEmprestimos));
+			    redirect('emprestimos');
 		} else{
 			$this->session->set_flashdata('error','Por favor, adicione os itens a serem emprestados.');
-			redirect('vendas/editar/'.$idVendas);
+			redirect('emprestimos/editar/'.$idEmprestimos);
 		}
 	}
 }

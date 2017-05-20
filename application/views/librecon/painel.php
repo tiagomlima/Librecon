@@ -22,8 +22,8 @@
         <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vOs')){ ?>
             <li class="bg_lo"> <a href="<?php echo base_url()?>index.php/os"> <i class="icon-tags"></i> OS</a> </li>
         <?php } ?>
-        <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vVenda')){ ?>
-            <li class="bg_ls"> <a href="<?php echo base_url()?>index.php/vendas"><i class="icon-shopping-cart"></i> Vendas</a></li>
+        <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vEmprestimo')){ ?>
+            <li class="bg_ls"> <a href="<?php echo base_url()?>index.php/emprestimos"><i class="icon-shopping-cart"></i> Emprestimos</a></li>
         <?php } ?>
 
         

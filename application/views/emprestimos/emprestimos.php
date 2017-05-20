@@ -1,5 +1,5 @@
-<?php if($this->permission->checkPermission($this->session->userdata('permissao'),'aVenda')){ ?>
-    <a href="<?php echo base_url();?>index.php/vendas/adicionar" class="btn btn-success"><i class="icon-plus icon-white"></i> Adicionar Empréstimo</a>
+<?php if($this->permission->checkPermission($this->session->userdata('permissao'),'aEmprestimo')){ ?>
+    <a href="<?php echo base_url();?>index.php/emprestimos/adicionar" class="btn btn-success"><i class="icon-plus icon-white"></i> Adicionar Empréstimo</a>
 <?php } ?>
 
 <?php
@@ -68,7 +68,7 @@ if(!$results){?>
 			$dataDevolucao = date(('d/m/Y'),strtotime($r->dataDevolucao));
                      
             echo '<tr>';
-            echo '<td>'.$r->idVendas.'</td>';
+            echo '<td>'.$r->idEmprestimos.'</td>';
             echo '<td>'.$dataEmprestimo.'</td>';
 			echo '<td>'.$dataDevolucao.'</td>';
             echo '<td><a href="'.base_url().'index.php/clientes/visualizar/'.$r->idLeitores.'">'.$r->nomeLeitor.'</a></td>';
@@ -76,14 +76,14 @@ if(!$results){?>
             
             
             echo '<td>';
-            if($this->permission->checkPermission($this->session->userdata('permissao'),'vVenda')){
-                echo '<a style="margin-right: 1%" href="'.base_url().'index.php/vendas/visualizar/'.$r->idVendas.'" class="btn tip-top" title="Ver mais detalhes"><i class="icon-eye-open"></i></a>'; 
+            if($this->permission->checkPermission($this->session->userdata('permissao'),'vEmprestimo')){
+                echo '<a style="margin-right: 1%" href="'.base_url().'index.php/emprestimos/visualizar/'.$r->idEmprestimos.'" class="btn tip-top" title="Ver mais detalhes"><i class="icon-eye-open"></i></a>'; 
             }
-            if($this->permission->checkPermission($this->session->userdata('permissao'),'eVenda')){
-                echo '<a style="margin-right: 1%" href="'.base_url().'index.php/vendas/editar/'.$r->idVendas.'" class="btn btn-info tip-top" title="Editar venda"><i class="icon-pencil icon-white"></i></a>'; 
+            if($this->permission->checkPermission($this->session->userdata('permissao'),'eEmprestimo')){
+                echo '<a style="margin-right: 1%" href="'.base_url().'index.php/emprestimos/editar/'.$r->idEmprestimos.'" class="btn btn-info tip-top" title="Editar emprestimo"><i class="icon-pencil icon-white"></i></a>'; 
             }
-            if($this->permission->checkPermission($this->session->userdata('permissao'),'dVenda')){
-                echo '<a href="#modal-excluir" role="button" data-toggle="modal" status="'.$r->status.'" venda="'.$r->idVendas.'" class="btn btn-danger tip-top" title="Excluir Venda"><i class="icon-remove icon-white"></i></a>'; 
+            if($this->permission->checkPermission($this->session->userdata('permissao'),'dEmprestimo')){
+                echo '<a href="#modal-excluir" role="button" data-toggle="modal" status="'.$r->status.'" emprestimo="'.$r->idEmprestimos.'" class="btn btn-danger tip-top" title="Excluir Emprestimo"><i class="icon-remove icon-white"></i></a>'; 
             }
             echo '</td>';
             echo '</tr>';
@@ -101,13 +101,13 @@ if(!$results){?>
 
 <!-- Modal -->
 <div id="modal-excluir" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <form action="<?php echo base_url() ?>index.php/vendas/excluir" method="post" >
+  <form action="<?php echo base_url() ?>index.php/emprestimos/excluir" method="post" >
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h5 id="myModalLabel">Excluir Empréstimo</h5>
   </div>
   <div class="modal-body">
-    <input type="hidden" id="idVenda" name="id" value="" />
+    <input type="hidden" id="idEmprestimo" name="id" value="" />
     <input type="hidden" id="status" name="status" value=""/>
     <h5 style="text-align: center">Deseja realmente excluir este empréstimo?</h5>
   </div>
@@ -127,8 +127,8 @@ if(!$results){?>
 $(document).ready(function(){
    $(document).on('click', 'a', function(event) {
         
-        var venda = $(this).attr('venda');
-        $('#idVenda').val(venda);
+        var emprestimo = $(this).attr('emprestimo');
+        $('#idEmprestimo').val(emprestimo);
         var status = $(this).attr('status');
         $('#status').val(status);
     });

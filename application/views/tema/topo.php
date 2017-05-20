@@ -120,8 +120,8 @@
         <li class="<?php if(isset($menuOs)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/os"><i class="icon icon-tags"></i> <span>Ordens de Serviço</span></a></li>
     <?php } ?>
 
-    <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vVenda')){ ?>
-        <li class="<?php if(isset($menuVendas)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/vendas"><i class="icon icon-shopping-cart"></i> <span>Vendas</span></a></li>
+    <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vEmprestimo')){ ?>
+        <li class="<?php if(isset($menuEmprestimos)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/emprestimos"><i class="icon icon-shopping-cart"></i> <span>Emprestimos</span></a></li>
     <?php } ?>
     
     <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vArquivo')){ ?>
@@ -137,7 +137,7 @@
         </li>
     <?php } ?>
 
-    <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'rLeitor') || $this->permission->checkPermission($this->session->userdata('permissao'),'rAcervo') || $this->permission->checkPermission($this->session->userdata('permissao'),'rServico') || $this->permission->checkPermission($this->session->userdata('permissao'),'rOs') || $this->permission->checkPermission($this->session->userdlata('permissao'),'rFinanceiro') || $this->permission->checkPermission($this->session->userdata('permissao'),'rVenda')){ ?>
+    <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'rLeitor') || $this->permission->checkPermission($this->session->userdata('permissao'),'rAcervo') || $this->permission->checkPermission($this->session->userdata('permissao'),'rServico') || $this->permission->checkPermission($this->session->userdata('permissao'),'rOs') || $this->permission->checkPermission($this->session->userdlata('permissao'),'rFinanceiro') || $this->permission->checkPermission($this->session->userdata('permissao'),'rEmprestimo')){ ?>
         
         <li class="submenu <?php if(isset($menuRelatorios)){echo 'active open';};?>" >
           <a href="#"><i class="icon icon-list-alt"></i> <span>Relatórios</span> <span class="label"><i class="icon-chevron-down"></i></span></a>
@@ -155,8 +155,8 @@
             <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'rOs')){ ?>
                  <li><a href="<?php echo base_url()?>index.php/relatorios/os">Ordens de Serviço</a></li>
             <?php } ?>
-            <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'rVenda')){ ?>
-                <li><a href="<?php echo base_url()?>index.php/relatorios/vendas">Vendas</a></li>
+            <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'rEmprestimo')){ ?>
+                <li><a href="<?php echo base_url()?>index.php/relatorios/emprestimos">Emprestimos</a></li>
             <?php } ?>
             <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'rFinanceiro')){ ?>
                 <li><a href="<?php echo base_url()?>index.php/relatorios/financeiro">Financeiro</a></li>

@@ -143,10 +143,10 @@ class Permissoes extends CI_Controller {
                   'dOs' => $this->input->post('dOs'),
                   'vOs' => $this->input->post('vOs'),
                 
-                  'aVenda' => $this->input->post('aVenda'),
-                  'eVenda' => $this->input->post('eVenda'),
-                  'dVenda' => $this->input->post('dVenda'),
-                  'vVenda' => $this->input->post('vVenda'),
+                  'aEmprestimo' => $this->input->post('aEmprestimo'),
+                  'eEmprestimo' => $this->input->post('eEmprestimo'),
+                  'dEmprestimo' => $this->input->post('dEmprestimo'),
+                  'vEmprestimo' => $this->input->post('vEmprestimo'),
 
                   'aArquivo' => $this->input->post('aArquivo'),
                   'eArquivo' => $this->input->post('eArquivo'),
@@ -167,7 +167,7 @@ class Permissoes extends CI_Controller {
                   'rAcervo' => $this->input->post('rAcervo'),
                   'rServico' => $this->input->post('rServico'),
                   'rOs' => $this->input->post('rOs'),
-                  'rVenda' => $this->input->post('rVenda'),
+                  'rEmprestimo' => $this->input->post('rEmprestimo'),
                   'rFinanceiro' => $this->input->post('rFinanceiro'),
                   
 
@@ -281,10 +281,10 @@ class Permissoes extends CI_Controller {
                   'vTeste' => $this->input->post('vTeste'),
 				  
 
-                  'aVenda' => $this->input->post('aVenda'),
-                  'eVenda' => $this->input->post('eVenda'),
-                  'dVenda' => $this->input->post('dVenda'),
-                  'vVenda' => $this->input->post('vVenda'),
+                  'aEmprestimo' => $this->input->post('aEmprestimo'),
+                  'eEmprestimo' => $this->input->post('eEmprestimo'),
+                  'dEmprestimo' => $this->input->post('dEmprestimo'),
+                  'vEmprestimo' => $this->input->post('vEmprestimo'),
 
                   'aArquivo' => $this->input->post('aArquivo'),
                   'eArquivo' => $this->input->post('eArquivo'),
@@ -305,7 +305,7 @@ class Permissoes extends CI_Controller {
                   'rAcervo' => $this->input->post('rAcervo'),
                   'rServico' => $this->input->post('rServico'),
                   'rOs' => $this->input->post('rOs'),
-                  'rVenda' => $this->input->post('rVenda'),
+                  'rEmprestimo' => $this->input->post('rEmprestimo'),
                   'rFinanceiro' => $this->input->post('rFinanceiro'),
                  
             );

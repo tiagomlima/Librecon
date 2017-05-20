@@ -53,7 +53,7 @@
                                     <div class="span12" style="padding: 1%; margin-left: 0">
                                         <div class="span6 offset3" style="text-align: center">
                                             <button class="btn btn-success" id="btnContinuar"><i class="icon-share-alt icon-white"></i> Continuar</button>
-                                            <a href="<?php echo base_url() ?>index.php/vendas" class="btn"><i class="icon-arrow-left"></i> Voltar</a>
+                                            <a href="<?php echo base_url() ?>index.php/emprestimos" class="btn"><i class="icon-arrow-left"></i> Voltar</a>
                                         </div>
                                     </div>
                                 </form>
@@ -79,7 +79,7 @@
 <script type="text/javascript">
 $(document).ready(function(){
       $("#leitor").autocomplete({
-            source: "<?php echo base_url(); ?>index.php/vendas/autoCompleteLeitor",
+            source: "<?php echo base_url(); ?>index.php/emprestimos/autoCompleteLeitor",
             minLength: 1,
             select: function( event, ui ) {
                  $("#leitores_id").val(ui.item.id);
@@ -87,7 +87,7 @@ $(document).ready(function(){
             }
       });
       $("#usuario").autocomplete({
-            source: "<?php echo base_url(); ?>index.php/vendas/autoCompleteUsuario",
+            source: "<?php echo base_url(); ?>index.php/emprestimos/autoCompleteUsuario",
             minLength: 1,
             select: function( event, ui ) {
                  $("#usuarios_id").val(ui.item.id);

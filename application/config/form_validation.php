@@ -335,7 +335,7 @@ $config = array('leitores' => array(array(
                                     'rules'=>'required|trim|xss_clean'
                                 ))
                 ,
-                'vendas' => array(array(
+                'emprestimos' => array(array(
 
                                     'field' => 'dataEmprestimo',
                                     'label' => 'Data do Emprestimo',
