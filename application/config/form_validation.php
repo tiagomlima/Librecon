@@ -1,7 +1,7 @@
 <?php
 $config = array('leitores' => array(array(
-                                	'field'=>'nomeLeitor',
-                                	'label'=>'Nome',
+                                	'field'=>'nome',
+                                	'label'=>'nome',
                                 	'rules'=>'required|trim|xss_clean'
                                 ),
 								array(

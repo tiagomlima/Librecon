@@ -69,8 +69,8 @@ if(!$results){?>
     <tbody>
         <?php foreach ($results as $r) {
             echo '<tr>';
-            echo '<td>'.$r->idLeitores.'</td>';
-            echo '<td>'.$r->nomeLeitor.'</td>';
+            echo '<td>'.$r->idUsuarios.'</td>';
+            echo '<td>'.$r->nome.'</td>';
             echo '<td>'.$r->email.'</td>';
             echo '<td>'.$r->telefone.'</td>';
 			echo '<td>'.$r->matricula.'</td>';
@@ -81,13 +81,13 @@ if(!$results){?>
             echo '<td>';
 			
             if($this->permission->checkPermission($this->session->userdata('permissao'),'vLeitor')){
-                echo '<a href="'.base_url().'index.php/leitores/visualizar/'.$r->idLeitores.'" style="margin-right: 1%" class="btn tip-top" title="Ver mais detalhes"><i class="icon-eye-open"></i></a>'; 
+                echo '<a href="'.base_url().'index.php/leitores/visualizar/'.$r->idUsuarios.'" style="margin-right: 1%" class="btn tip-top" title="Ver mais detalhes"><i class="icon-eye-open"></i></a>'; 
             }
             if($this->permission->checkPermission($this->session->userdata('permissao'),'eLeitor')){
-                echo '<a href="'.base_url().'index.php/leitores/editar/'.$r->idLeitores.'" style="margin-right: 1%" class="btn btn-info tip-top" title="Editar Leitor"><i class="icon-pencil icon-white"></i></a>'; 
+                echo '<a href="'.base_url().'index.php/leitores/editar/'.$r->idUsuarios.'" style="margin-right: 1%" class="btn btn-info tip-top" title="Editar Leitor"><i class="icon-pencil icon-white"></i></a>'; 
             }
             if($this->permission->checkPermission($this->session->userdata('permissao'),'dLeitor')){
-                echo '<a href="#modal-excluir" role="button" data-toggle="modal" leitor="'.$r->idLeitores.'" style="margin-right: 1%" class="btn btn-danger tip-top" title="Excluir Leitor"><i class="icon-remove icon-white"></i></a>'; 
+                echo '<a href="#modal-excluir" role="button" data-toggle="modal" leitor="'.$r->idUsuarios.'" style="margin-right: 1%" class="btn btn-danger tip-top" title="Excluir Leitor"><i class="icon-remove icon-white"></i></a>'; 
             }
 			
               
@@ -139,7 +139,7 @@ $(document).ready(function(){
    $(document).on('click', 'a', function(event) {
         
         var leitor = $(this).attr('leitor');
-        $('#idLeitor').val(leitor);
+        $('#idUsuario').val(leitor);
 
     });
 

@@ -13,9 +13,9 @@
                 } ?>
                 <form action="<?php echo current_url(); ?>" id="formLeitor" method="post" class="form-horizontal" >
                     <div class="control-group">
-                        <label for="nomeLeitor" class="control-label">Nome<span class="required">*</span></label>
+                        <label for="nome" class="control-label">Nome<span class="required">*</span></label>
                         <div class="controls">
-                            <input id="nomeLeitor" type="text" name="nomeLeitor" value="<?php echo set_value('nomeLeitor'); ?>"  />
+                            <input id="nome" type="text" name="nome" value="<?php echo set_value('nome'); ?>"  />
                         </div>
                     </div>
                     
@@ -165,6 +165,17 @@
                             <input id="observacoes" type="text" name="observacoes" value="<?php echo set_value('observacoes'); ?>"  />
                         </div>
                     </div>
+                    
+                    <div class="control-group">
+                        <label  class="control-label">Permissões<span class="required">*</span></label>
+                        <div class="controls">
+                            <select name="permissoes_id" id="permissoes_id">
+                                  <?php foreach ($permissoes as $p) {
+                                      echo '<option value="'.$p->idPermissao.'">'.$p->nome.'</option>';
+                                  } ?>
+                            </select>
+                        </div>
+                    </div>
 
                     <div class="form-actions">
                         <div class="span12">
@@ -186,7 +197,7 @@
       $(document).ready(function(){
            $('#formLeitor').validate({
             rules :{
-                  nomeLeitor:{ required: true},
+                  nome:{ required: true},
                   telefone:{ required: true},
                   email:{ required: true},
                   rua:{ required: true},
@@ -203,7 +214,7 @@
                   senhaConfirm:{ required: true}
             },
             messages:{
-                  nomeLeitor :{ required: 'Campo Requerido.'},
+                  nome :{ required: 'Campo Requerido.'},
                   telefone:{ required: 'Campo Requerido.'},
                   email:{ required: 'Campo Requerido.'},
                   rua:{ required: 'Campo Requerido.'},

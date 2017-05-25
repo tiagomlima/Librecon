@@ -29,7 +29,7 @@ class Leitores extends CI_Controller {
         
    
         $config['base_url'] = base_url().'index.php/leitores/gerenciar/';
-        $config['total_rows'] = $this->leitores_model->count('leitores');
+        $config['total_rows'] = $this->leitores_model->count('usuarios');
         $config['per_page'] = 10;
         $config['next_link'] = 'Próxima';
         $config['prev_link'] = 'Anterior';
@@ -52,9 +52,10 @@ class Leitores extends CI_Controller {
         
         $this->pagination->initialize($config); 	
         
-	    $this->data['results'] = $this->leitores_model->get('leitores','idLeitores,nomeLeitor,cpf,datanasc,sexo,situacao,matricula,telefone,celular,email,rua,numero,bairro,cidade,estado,cep','',$config['per_page'],$this->uri->segment(3));       	
+	    $this->data['results'] = $this->leitores_model->get('usuarios','idUsuarios,nome,cpf,datanasc,sexo,situacao,matricula,telefone,celular,email,rua,numero,bairro,cidade,estado,cep','',$config['per_page'],$this->uri->segment(3));       	
 		$this->data['curso'] = $this->leitores_model->getCurso($config['per_page'],$this->uri->segment(3));
 		$this->data['grupo'] = $this->leitores_model->getGrupo($config['per_page'],$this->uri->segment(3));
+		$this->data['permissoes'] = $this->leitores_model->getPermissao($config['per_page'],$this->uri->segment(3));
        	$this->data['view'] = 'leitores/leitores';
        	$this->load->view('tema/topo',$this->data);
 	  
@@ -81,7 +82,7 @@ class Leitores extends CI_Controller {
         if($senha == $senhaConfirm){
         // se sim, prossegue com a inserção dos dados
 
-        if ($this->form_validation->run('leitores') == false) {
+        if ($this->form_validation->run('usuarios') == false) {
             $this->data['custom_error'] = (validation_errors() ? '<div class="form_error">' . validation_errors() . '</div>' : false);
         } else {
 			
@@ -91,7 +92,7 @@ class Leitores extends CI_Controller {
                 $senha = $this->encrypt->sha1($senha);
 			
 	            $data = array(
-	                'nomeLeitor' => set_value('nomeLeitor'),
+	                'nome' => set_value('nome'),
 	                'cpf' => set_value('cpf'),
 	                'telefone' => set_value('telefone'),
 	                'datanasc' => $this->input->post('datanasc'),
@@ -110,13 +111,14 @@ class Leitores extends CI_Controller {
 	                'observacoes' => set_value('observacoes'),
 	                'curso_id' => $this->input->post('curso_id'),
 	                'grupo_id' => $this->input->post('grupo_id'),
+	                 'permissoes_id' => $this->input->post('permissoes_id'),
 	                'dataCadastro' => date('Y-m-d')
 	            );
 				
 	        
 		
 
-            if ($this->leitores_model->add('leitores', $data) == TRUE || $cancelar == false) {
+            if ($this->leitores_model->add('usuarios', $data) == TRUE || $cancelar == false) {
                 $this->session->set_flashdata('success','Leitor adicionado com sucesso!');
                 redirect(base_url() . 'index.php/leitores/adicionar/');
             } else {
@@ -128,6 +130,8 @@ class Leitores extends CI_Controller {
         $this->data['cursos'] = $this->cursos_model->getActive('cursos','cursos.idCursos,cursos.nomeCurso'); 
 		$this->load->model('grupos_model');
         $this->data['grupos'] = $this->grupos_model->getActive('grupos','grupos.idGrupo,grupos.nomeGrupo');
+		$this->load->model('permissoes_model');
+        $this->data['permissoes'] = $this->permissoes_model->getActive('permissoes','permissoes.idPermissao,permissoes.nome');
         $this->data['view'] = 'leitores/adicionarLeitor';
         $this->load->view('tema/topo', $this->data);
 		

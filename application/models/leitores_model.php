@@ -7,12 +7,25 @@ class Leitores_model extends CI_Model {
         parent::__construct();
     }
 	
+	function getPermissao($perpage=0,$start=0,$one=false){
+        
+        $this->db->from('usuarios');
+        $this->db->select('usuarios.*, permissoes.nome as permissoes');
+        $this->db->limit($perpage,$start);
+        $this->db->join('permissoes', 'usuarios.permissoes_id = permissoes.idPermissao', 'left');
+  
+        $query = $this->db->get();
+        
+        $result =  !$one  ? $query->result() : $query->row();
+        return $result;
+    }
+	
 	function getCurso($perpage=0,$start=0,$one=false){
         
-        $this->db->from('leitores');
-        $this->db->select('leitores.*, cursos.nomeCurso as curso');
+        $this->db->from('usuarios');
+        $this->db->select('usuarios.*, cursos.nomeCurso as curso');
         $this->db->limit($perpage,$start);
-        $this->db->join('cursos', 'leitores.curso_id = cursos.idCursos', 'left');
+        $this->db->join('cursos', 'usuarios.curso_id = cursos.idCursos', 'left');
   
         $query = $this->db->get();
         
@@ -45,7 +58,7 @@ class Leitores_model extends CI_Model {
         
         $this->db->select($fields);
         $this->db->from($table);
-        $this->db->order_by('idLeitores','desc');
+        $this->db->order_by('idUsuarios','desc');
         $this->db->limit($perpage,$start);
         if($where){
             $this->db->where($where);
@@ -65,11 +78,11 @@ class Leitores_model extends CI_Model {
     }
 	
 	function getCursoById($id){
-		$this->db->select('leitores.curso_id, cursos.nomeCurso as curso');
-		$this->db->where('idLeitores',$id);
+		$this->db->select('usuarios.curso_id, cursos.nomeCurso as curso');
+		$this->db->where('idLUsuarios',$id);
         $this->db->limit(1);
-        $this->db->join('cursos', 'leitores.curso_id = cursos.idCursos', 'left');
-		return $this->db->get('leitores')->row();
+        $this->db->join('cursos', 'usuarios.curso_id = cursos.idCursos', 'left');
+		return $this->db->get('usuarios')->row();
 	}
 	
 	function getGrupoById($id){
@@ -78,6 +91,14 @@ class Leitores_model extends CI_Model {
 		$this->db->limit(1);
 		$this->db->join('grupos', 'leitores.grupo_id = grupos.idGrupo', 'left');
 		return $this->db->get('leitores')->row();
+	}
+	
+	function getPermissaoById($id){
+		$this->db->select('usuarios.permissoes_id, permissoes.nome as curso');
+		$this->db->where('idUsuarios',$id);
+        $this->db->limit(1);
+        $this->db->join('permissoes', 'usuarios.permissoes_id = permissoes.idPermissao', 'left');
+		return $this->db->get('usuarios')->row();
 	}
 	
 	function pesquisar($termo){
