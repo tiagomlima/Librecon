@@ -21,16 +21,16 @@
                     </div>
                     
                     <div class="control-group">
-                        <label for="duracao_dias" class="control-label">Duração<span class="required">*</span></label>
+                        <label for="duracao_dias" class="control-label">Duração (dias) <span class="required">*</span></label>
                         <div class="controls">
                             <input id="duracao_dias" type="text" name="duracao_dias" value="<?php echo $result->duracao_dias; ?>"  />
                         </div>
                     </div>
                     
                     <div class="control-group">
-                        <label for="qtde_max_exemplares" class="control-label">Quantidade Máxima de Exemplares<span class="required">*</span></label>
+                        <label for="qtde_max_exemplares" class="control-label">Quantidade Máxima de Itens<span class="required">*</span></label>
                         <div class="controls">
-                            <input id="qtde_max_exemplares" type="text" name="qtde_max_exemplares" value="<?php echo $result->qtde_max_exemplares; ?>"  />
+                            <input id="qtde_max_item" type="text" name="qtde_max_item" value="<?php echo $result->qtde_max_item; ?>"  />
                         </div>
                     </div>
                     
@@ -49,14 +49,14 @@
                     </div>
                     
                     <div class="control-group">
-                        <label for="validade_reserva" class="control-label">Validade da Reserva<span class="required">*</span></label>
+                        <label for="validade_reserva" class="control-label">Validade da Reserva (dias) <span class="required">*</span></label>
                         <div class="controls">
                             <input id="validade_reserva" type="text" name="validade_reserva" value="<?php echo $result->validade_reserva; ?>"  />
                         </div>
                     </div>
                     
                     <div class="control-group">
-                        <label for="multa" class="control-label">Valor da Multa<span class="required">*</span></label>
+                        <label for="multa" class="control-label">Valor da Multa R$<span class="required">*</span></label>
                         <div class="controls">
                             <input id="multa" type="text" name="multa" value="<?php echo $result->multa; ?>"  />
                         </div>
@@ -96,7 +96,7 @@
             rules : {
                   nomeGrupo:{ required: true},
                   duracao_dias:{ required: true},
-                  qtde_max_exemplares:{ required: true},
+                  qtde_max_item:{ required: true},
                   qtde_max_renovacao:{ required: true},
                   qtde_max_reserva:{ required: true},
                   validade_reserva:{ required: true},
@@ -106,7 +106,7 @@
             messages: {
                   nomeGrupo :{ required: 'Campo Requerido.'},
                   duracao_dias :{ required: 'Campo Requerido.'},
-                  qtde_max_exemplares :{ required: 'Campo Requerido.'},
+                  qtde_max_item :{ required: 'Campo Requerido.'},
                   qtde_max_renovacao :{ required: 'Campo Requerido.'},
                   qtde_max_reserva :{ required: 'Campo Requerido.'},
 				  validade_reserva :{ required: 'Campo Requerido.'},

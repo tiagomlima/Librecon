@@ -350,29 +350,29 @@
 
                                     <td>
                                         <label>
-                                            <input <?php if(isset($permissoes['vVenda'])){ if($permissoes['vVenda'] == '1'){echo 'checked';}}?> name="vVenda" class="marcar" type="checkbox" value="1" />
-                                            <span class="lbl"> Visualizar Venda</span>
+                                            <input <?php if(isset($permissoes['vEmprestimo'])){ if($permissoes['vEmprestimo'] == '1'){echo 'checked';}}?> name="vEmprestimo" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Visualizar Emprestimo</span>
                                         </label>
                                     </td>
 
                                     <td>
                                         <label>
-                                            <input <?php if(isset($permissoes['aVenda'])){ if($permissoes['aVenda'] == '1'){echo 'checked';}}?> name="aVenda" class="marcar" type="checkbox" value="1" />
-                                            <span class="lbl"> Adicionar Venda</span>
+                                            <input <?php if(isset($permissoes['aEmprestimo'])){ if($permissoes['aEmprestimo'] == '1'){echo 'checked';}}?> name="aEmprestimo" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Adicionar Emprestimo</span>
                                         </label>
                                     </td>
 
                                     <td>
                                         <label>
-                                            <input <?php if(isset($permissoes['eVenda'])){ if($permissoes['eVenda'] == '1'){echo 'checked';}}?> name="eVenda" class="marcar" type="checkbox" value="1" />
-                                            <span class="lbl"> Editar Venda</span>
+                                            <input <?php if(isset($permissoes['eEmprestimo'])){ if($permissoes['eEmprestimo'] == '1'){echo 'checked';}}?> name="eEmprestimo" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Editar Emprestimo</span>
                                         </label>
                                     </td>
 
                                     <td>
                                         <label>
-                                            <input <?php if(isset($permissoes['dVenda'])){ if($permissoes['dVenda'] == '1'){echo 'checked';}}?> name="dVenda" class="marcar" type="checkbox" value="1" />
-                                            <span class="lbl"> Excluir Venda</span>
+                                            <input <?php if(isset($permissoes['dEmprestimo'])){ if($permissoes['dEmprestimo'] == '1'){echo 'checked';}}?> name="dEmprestimo" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Excluir Emprestimo</span>
                                         </label>
                                     </td>
                                  
@@ -484,8 +484,8 @@
 
                                     <td>
                                         <label>
-                                            <input <?php if(isset($permissoes['rVenda'])){ if($permissoes['rVenda'] == '1'){echo 'checked';}}?> name="rVenda" class="marcar" type="checkbox" value="1" />
-                                            <span class="lbl"> Relatório Venda</span>
+                                            <input <?php if(isset($permissoes['rEmprestimo'])){ if($permissoes['rEmprestimo'] == '1'){echo 'checked';}}?> name="rEmprestimo" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Relatório Emprestimo</span>
                                         </label>
                                     </td>
 

@@ -462,29 +462,29 @@
 
                                     <td>
                                         <label>
-                                            <input name="vVenda" class="marcar" type="checkbox" checked="checked" value="1" />
-                                            <span class="lbl"> Visualizar Venda</span>
+                                            <input name="vEmprestimo" class="marcar" type="checkbox" checked="checked" value="1" />
+                                            <span class="lbl"> Visualizar Emprestimo</span>
                                         </label>
                                     </td>
 
                                     <td>
                                         <label>
-                                            <input name="aVenda" class="marcar" type="checkbox" value="1" />
-                                            <span class="lbl"> Adicionar Venda</span>
+                                            <input name="aEmprestimo" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Adicionar Emprestimo</span>
                                         </label>
                                     </td>
 
                                     <td>
                                         <label>
-                                            <input name="eVenda" class="marcar" type="checkbox" value="1" />
-                                            <span class="lbl"> Editar Venda</span>
+                                            <input name="eEmprestimo" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Editar Emprestimo</span>
                                         </label>
                                     </td>
 
                                     <td>
                                         <label>
-                                            <input name="dVenda" class="marcar" type="checkbox" value="1" />
-                                            <span class="lbl"> Excluir Venda</span>
+                                            <input name="dEmprestimo" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Excluir Emprestimo</span>
                                         </label>
                                     </td>
                                  
@@ -597,8 +597,8 @@
 
                                     <td>
                                         <label>
-                                            <input name="rVenda" class="marcar" type="checkbox" value="1" />
-                                            <span class="lbl"> Relatório Venda</span>
+                                            <input name="rEmprestimo" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Relatório Emprestimo</span>
                                         </label>
                                     </td>
 

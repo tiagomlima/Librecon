@@ -105,9 +105,9 @@ class Leitores_model extends CI_Model {
          $data = array();
 
          // buscando produtos
-         $this->db->like('descricao',$termo);
+         $this->db->like('titulo',$termo);
          $this->db->limit(5);
-         $data['produtos'] = $this->db->get('produtos')->result();
+         $data['acervos'] = $this->db->get('acervos')->result();
 
          return $data;
 

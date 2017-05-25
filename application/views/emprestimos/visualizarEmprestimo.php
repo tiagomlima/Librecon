@@ -6,10 +6,19 @@
                 <span class="icon">
                     <i class="icon-tags"></i>
                 </span>
-                <h5>Empréstimo</h5>
+                <?php 
+                	if($result->status == 'Emprestado'){
+                		echo '<h5>Comprovante de Empréstimo</h5>';
+                	}
+					if($result->status == 'Devolvido'){
+                		echo '<h5>Comprovante de Devolução</h5>';
+                	}
+                
+                ?>
+                
                 <div class="buttons">
-                    <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'eVenda')){
-                        echo '<a title="Icon Title" class="btn btn-mini btn-info" href="'.base_url().'index.php/vendas/editar/'.$result->idVendas.'"><i class="icon-pencil icon-white"></i> Editar</a>'; 
+                    <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'eEmprestimo')){
+                        echo '<a title="Icon Title" class="btn btn-mini btn-info" href="'.base_url().'index.php/emprestimos/editar/'.$result->idEmprestimos.'"><i class="icon-pencil icon-white"></i> Editar</a>'; 
                     } ?>
                     
                     <a id="imprimir" title="Imprimir" class="btn btn-mini btn-inverse" href=""><i class="icon-print icon-white"></i> Imprimir</a>
@@ -31,7 +40,7 @@
                                 <tr>
                                     <td style="width: 25%"><img src=" <?php echo $emitente[0]->url_logo; ?> "></td>
                                     <td> <span style="font-size: 20px; "> <?php echo $emitente[0]->nome; ?></span> </br><span><?php echo $emitente[0]->cnpj; ?> </br> <?php echo $emitente[0]->rua.', nº:'.$emitente[0]->numero.', '.$emitente[0]->bairro.' - '.$emitente[0]->cidade.' - '.$emitente[0]->uf; ?> </span> </br> <span> E-mail: <?php echo $emitente[0]->email.' - Fone: '.$emitente[0]->telefone; ?></span></td>
-                                    <td style="width: 18%; text-align: center">#Empréstimo: <span ><?php echo $result->idVendas?></span></br> </br> <span>Emissão: <?php echo date('d/m/Y');?></span></td>
+                                    <td style="width: 18%; text-align: center">#Empréstimo: <span ><?php echo $result->idEmprestimos?></span></br> </br> <span>Emissão: <?php echo date('d/m/Y');?></span></td>
                                 </tr>
 
                                 <?php } ?>
@@ -69,9 +78,17 @@
       
                     </div>
 
-                    <div style="margin-top: 0; padding-top: 0">
-
-
+                    <div style="margin-top: 0; padding-top: 0; margin-bottom: 0; padding-bottom: 0">
+					<?php 
+						$dataEmprestimo = date(('d/m/Y'),strtotime($result->dataEmprestimo));
+						$dataVencimento = date(('d/m/Y'),strtotime($result->dataVencimento));
+						$dataAtual = date(('d/m/Y'),strtotime(date('d/m/Y')));
+										
+					?>
+					<b style="float: left">Data do empréstimo: <?php echo $dataEmprestimo ?> </b>
+                    <b style="float: right">Data de vencimento: <?php echo $dataVencimento ?> </b>
+                    <br>
+                    <br>
                         <?php if($acervos != null){?>
               
                         <table class="table table-bordered table-condensed" id="tblAcervos">
@@ -89,26 +106,46 @@
                                             
                                             echo '<tr>';
                                             echo '<td>'.$a->tombo.'</td>';
-                                            echo '<td>'.$a->titulo.'</td>';
-                                            
-                                            
+                                            echo '<td>'.$a->titulo.'</td>';                                                                                       
                                             echo '</tr>';
                                         }?>
-
+                                         <tr>
+                                            <td colspan="2" style="text-align: right"><strong>Quantidade total:</strong></td>
+                                            <td><strong><?php echo $result->qtde_item ?></strong></td>
+                                        </tr>
+                                        <?php 
+                                        	if($dataAtual > $dataVencimento){
+                                        		echo '<tr>';
+													echo '<td colspan="2" style="text-align: right"><strong>Multa:</strong></td>';
+													echo '<td><strong>R$ '.$grupos->multa.'</strong></td>';
+                                        	}
                                         
+                                        ?>
                                     </tbody>
                                 </table>
-                               <?php }?>
-                        
-                
-                        <hr />
-                    
-                     <h4 style="text-align: left">Total de itens emprestados: <?php echo $acervo->quantidade ?>  </h4> <h4 style="text-align: right">Situação:  <?php echo $result->status;?></h4>
-
+                               <?php } ?>                                     
+                        <hr />                                       
                     </div>
-            
-
-                    
+            		
+					<?php 
+						if($result->status == 'Emprestado'){
+							echo '<b style="float: left">Status: '.$result->status.' </b>';
+							echo '<b style="float: right">Assinatura: ________________________________ </b>';
+						}
+						
+						if($result->status == 'Devolvido'){
+							echo '<b style="float: left">Status: '.$result->status.' </b><br><br>';
+							echo '<b style="float: left">Data da Devolução: '.date('d/m/Y').' </b>';
+							echo '<b style="float: right">Assinatura: ________________________________ </b>';
+						}
+						
+						if($result->status == 'Renovado'){
+							echo '<b style="float: left">Status: '.$result->status.' </b><br><br>';
+							echo '<b style="float: left">Data da Renovação: '.date('d/m/Y').' </b>';
+							echo '<b style="float: right">Assinatura: ________________________________ </b>';
+						}
+					
+					?>
                     
               
                 </div>

@@ -21,40 +21,62 @@
                     </ul>
                     <div class="tab-content">
                     	
-	                    <div style="margin-left: 82%;">
-	                    	<form action="<?php echo base_url();?>index.php/vendas/finalizarEmprestimo" method="post">
-	                    		<input type="hidden" id="idVendas" name="idVendas" value="<?php echo $result->idVendas ?>">
+	                    <div style="float:right;width: 17%">
+	                    	<form action="<?php echo base_url();?>index.php/emprestimos/finalizarEmprestimo" method="post">
+	                    		<input type="hidden" id="idEmprestimos" name="idEmprestimos" value="<?php echo $result->idEmprestimos ?>">
 	                    		<input type="hidden" id="status" name="status" value="<?php echo $result->status ?>">
 	                    		<?php if($result->status == 'Emprestado'){?>	                   		
 	                    		<button class="btn btn-success " id="btnFinalizarEmprestimo"><i class="icon-ok"></i> Finalizar Empréstimo</button>
 	                    		<?php } ?>
-	                    	</form>
-	                   	   
-	                   	                        		                    	                   			                   			                	 	
+	                    		<?php if($result->status == 'Renovado'){?>	                   		
+	                    		<button class="btn btn-success " id="btnFinalizarEmprestimo"><i class="icon-ok"></i> Finalizar Empréstimo</button>
+	                    		<?php } ?>
+	                    	</form>	                   	                    	                        		                    	                   			                   			                	 	
 	                   	 </div>
-                   	 
+                   	     <div style="width: 31%;float:left">
+                   	     	<form action="<?php echo base_url();?>index.php/emprestimos/renovar" method="post">
+                   	     		<input type="hidden" id="idEmprestimos" name="idEmprestimos" value="<?php echo $result->idEmprestimos ?>">
+                   	     		<input type="hidden" id="status" name="status" value="Renovado">
+                   	     		<input type="hidden" id="qtde_max_renovacao" name="qtde_max_renovacao" value="<?php echo $grupos->qtde_max_renovacao ?>">
+                   	     		<input type="hidden" id="qtde_renovacao" name="qtde_renovacao" value="<?php echo $result->qtde_renovacao ?>">
+                   	     		<input type="hidden" id="duracao_dias" name="duracao_dias" value="<?php echo $grupos->duracao_dias ?>">                 	     		
+                   	     		<?php if($result->status == 'Emprestado'){?>	                   		
+	                    		<button class="btn btn-warning " id="btnRenovar"><i class="icon-repeat"></i> Renovar Empréstimo</button>
+	                    		<?php } ?>
+	                    		<?php if($result->status == 'Renovado'){?>	                   		
+	                    		<button class="btn btn-warning " id="btnRenovar"><i class="icon-repeat"></i> Renovar Empréstimo</button>
+	                    		<?php } ?>
+                   	     	</form>                  	     
+                   	     </div>
+                   	     
                         <div class="tab-pane active" id="tab1">
 
                             <div class="span12" id="divEditarEmprestimo">
                                 
                                 <form action="<?php echo current_url(); ?>" method="post" id="formEmprestimo">
-                                    <?php echo form_hidden('idVendas',$result->idVendas) ?>
+                                    <?php echo form_hidden('idEmprestimos',$result->idEmprestimos) ?>
                                     
                                     <div class="span12" style="padding: 1%; margin-left: 0">
-                                        <h3>#Emprestimo: <?php echo $result->idVendas; 
+                                        <h3>#Emprestimo: <?php echo $result->idEmprestimos; 
                                         if($result->status == 'Devolvido'){
                                         	echo ' (Finalizado)';
                                         }
                                         
                                         ?></h3>
                                         <div class="span2" style="margin-left: 0">
-                                            <label for="dataDevolucao">Data de Devolução</label>
+                                            <label for="dataVencimento">Data de Vencimento</label>
                                             <?php if($result->status == 'Devolvido'){
                                             	$disabled = 'disabled';
 											}else{
 												$disabled = '';
-											} ?>
-                                            <input id="dataDevolucao" class="span12 datepicker" type="text" name="dataDevolucao" value="<?php echo date('d/m/Y', strtotime($result->dataDevolucao)); ?>" <?php echo $disabled ?> />
+											} 
+											
+											$duracao = $grupos->duracao_dias;
+											
+											
+																						
+											?>
+                                            <input id="dataVencimento" class="span12 datepicker" type="text" name="dataVencimento" value="<?php echo date('d/m/Y', strtotime("+".$duracao." days")); ?>" readonly="true" />
                                             <label  class="control-label">Status</span></label>
 						                        <div class="controls">
 						                            <select name="status" id="status">
@@ -88,8 +110,13 @@
                                             <?php if($result->status != 'Devolvido'){ ?>                                                                                                                                                                                                                                                                                                                                                           
                                             <button class="btn btn-primary" id="btnContinuar"><i class="icon-white icon-ok"></i> Alterar</button>
                                             <?php } ?>
-                                            <a href="<?php echo base_url() ?>index.php/vendas/visualizar/<?php echo $result->idVendas; ?>" class="btn btn-inverse"><i class="icon-eye-open"></i> Visualizar Empréstimo</a>
-                                            <a href="<?php echo base_url() ?>index.php/vendas" class="btn"><i class="icon-arrow-left"></i> Voltar</a>
+                                            <?php if($result->status != 'Não emprestado'&& $result->status != 'Devolvido') { ?>
+                                            <a href="<?php echo base_url() ?>index.php/emprestimos/visualizar/<?php echo $result->idEmprestimos; ?>" class="btn btn-inverse"><i class="icon-eye-open"></i> Gerar Comprovante</a>
+                                            <?php } ?>
+                                            <?php if($result->status == 'Devolvido') { ?>
+                                            <a href="<?php echo base_url() ?>index.php/emprestimos/visualizar/<?php echo $result->idEmprestimos; ?>" class="btn btn-inverse"><i class="icon-eye-open"></i> Ver Comprovante</a>
+                                            <?php } ?>
+                                            <a href="<?php echo base_url() ?>index.php/emprestimos" class="btn"><i class="icon-arrow-left"></i> Voltar</a>
                                         </div>
 
                                     </div>
@@ -98,23 +125,25 @@
                                 
                                 <div class="span12 well" style="padding: 1%; margin-left: 0">
                                         
-                                        <form id="formAcervos" action="<?php echo base_url(); ?>index.php/vendas/adicionarAcervo" method="post">
-                                            <div class="span6">
+                                        <form id="formAcervos" action="<?php echo base_url(); ?>index.php/emprestimos/adicionarAcervo" method="post">
+                                            <div class="span12">
                                                 <input type="hidden" name="idAcervo" id="idAcervo" value=""/>
-                                                <input type="hidden" name="idVendasAcervo" id="idVendasAcervo" value="<?php echo $result->idVendas?>" />
+                                                <input type="hidden" name="idEmprestimosAcervo" id="idEmprestimosAcervo" value="<?php echo $result->idEmprestimos?>" />
                                                 <?php if($result->status != 'Devolvido'){ ?>
                                                 <label for="">Acervo</label>
                                                 <input type="text"  name="acervos" id="acervos" placeholder="Digite o nome do acervo" value=""/>
                                                 <input type="hidden"  name="acervos_id" id="acervos_id" value=""/>
                                                 <?php } ?>
                                                 <input type="hidden"  name="estoque" id="estoque" value=""/>
+                                                <input type="hidden" id="qtde_max_item"  name="qtde_max_item" value="<?php echo $grupos->qtde_max_item ?>" />
+  												<input type="hidden" id="$qtde_atual" name="qtde_atual" value="<?php echo $result->qtde_item ?> />
                                                 
                                             </div>
                                                                                                                                                                           
                                             <div class="span2">
                                                 <label for="">&nbsp</label>
                                                 <?php if($result->status != 'Devolvido'){ ?>
-                                                <button class="btn btn-success span12" id="btnAdicionarAcervo"><i class="icon-white icon-plus"></i> Adicionar</button>
+                                                <button class="btn btn-success span2" id="btnAdicionarAcervo"><i class="icon-white icon-plus"></i> Adicionar</button>
                                                 <?php } ?>
                                             </div>
                                         </form>
@@ -138,7 +167,7 @@
                                                     echo '<td>'.$p->titulo.'</td>';
                                                     echo '<td>'.$p->tombo.'</td>';
 													if($result->status != 'Devolvido'){
-                                                    echo '<td><a href="" idAcao="'.$p->idItens.'" prodAcao="'.$p->idAcervos.'" quantAcao="'.$p->quantidade.'" title="Excluir Acervo" class="btn btn-danger"><i class="icon-remove icon-white"></i></a></td>';
+                                                    echo '<td><a href="" idAcao="'.$p->idItens.'" prodAcao="'.$p->idAcervos.'" idEmprestimo="'.$p->emprestimos_id.'" title="Excluir Acervo" class="btn btn-danger"><i class="icon-remove icon-white"></i></a></td>';
 													}                                                   
                                                     echo '</tr>';
                                                 }?>
@@ -169,14 +198,19 @@
     
 </div>
 <div class="modal-footer">
-  <form id="formEmprestar" action="<?php echo base_url(); ?>index.php/vendas/emprestar" method="post">
+  <form id="formEmprestar" action="<?php echo base_url(); ?>index.php/emprestimos/emprestar" method="post">
   
-  <input id="idVendas" class="span12" type="hidden" name="idVendas" value="<?php echo $result->idVendas ?>"  />
-  
+  <input id="idEmprestimos" class="span12" type="hidden" name="idEmprestimos" value="<?php echo $result->idEmprestimos ?>"  />
   <input type="hidden" id="status" name="status" value="Emprestado"/>
+  <?php
+  	$duracao = $grupos->duracao_dias;
+	
   
-  <a href="<?php echo base_url() ?>index.php/vendas" id="" class="btn"><i class="icon-arrow-left"></i> Voltar</a>
-  <?php if($result->status != 'Devolvido' && $result->status !='Emprestado'){ ?>
+   ?>
+  <input type="hidden" id="dataVencimento" name="dataVencimento" value="<?php echo date('d/m/Y', strtotime("+".$duracao." days")); ?> "/>
+  
+  <a href="<?php echo base_url() ?>index.php/emprestimos" id="" class="btn"><i class="icon-arrow-left"></i> Voltar</a>
+  <?php if($result->status != 'Devolvido' && $result->status !='Emprestado' && $result->status != 'Renovado'){ ?>
   <button class="btn btn-primary">Emprestar</button>
   <?php } ?>
   </form>
@@ -186,7 +220,7 @@
 
 <!-- Modal -->
 <div id="modal-excluir" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <form action="<?php echo base_url() ?>index.php/vendas/excluirAcervo" method="post" >
+  <form action="<?php echo base_url() ?>index.php/emprestimos/excluirAcervo" method="post" >
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h5 id="myModalLabel">Excluir Item</h5>
@@ -227,7 +261,7 @@ $(document).ready(function(){
             $('#btn-cancelar-faturar').trigger('click');
             $.ajax({
               type: "POST",
-              url: "<?php echo base_url();?>index.php/vendas/faturar",
+              url: "<?php echo base_url();?>index.php/emprestimos/faturar",
               data: dados,
               dataType: 'json',
               success: function(data)
@@ -246,7 +280,7 @@ $(document).ready(function(){
           }
      });
      $("#acervos").autocomplete({
-            source: "<?php echo base_url(); ?>index.php/vendas/autoCompleteAcervo",
+            source: "<?php echo base_url(); ?>index.php/emprestimos/autoCompleteAcervo",
             minLength: 2,
             select: function( event, ui ) {
                  $("#acervos_id").val(ui.item.id);
@@ -257,14 +291,14 @@ $(document).ready(function(){
             }
       });
       $("#leitor").autocomplete({
-            source: "<?php echo base_url(); ?>index.php/vendas/autoCompleteLeitor",
+            source: "<?php echo base_url(); ?>index.php/emprestimos/autoCompleteLeitor",
             minLength: 2,
             select: function( event, ui ) {
                  $("#leitores_id").val(ui.item.id);
             }
       });
       $("#usuario").autocomplete({
-            source: "<?php echo base_url(); ?>index.php/vendas/autoCompleteUsuario",
+            source: "<?php echo base_url(); ?>index.php/emprestimos/autoCompleteUsuario",
             minLength: 2,
             select: function( event, ui ) {
                  $("#usuarios_id").val(ui.item.id);
@@ -275,13 +309,13 @@ $(document).ready(function(){
              leitor: {required:true},
              usuario: {required:true},
              dataEmprestimo: {required:true},
-             dataDevolucao: {required:true}
+             dataVencimento: {required:true}
           },
           messages:{
              leitor: {required: 'Campo Requerido.'},
              usuario: {required: 'Campo Requerido.'},
              dataEmprestimo: {required: 'Campo Requerido.'},
-             dataDevolucao: {required: 'Campo Requerido.'}
+             dataVencimento: {required: 'Campo Requerido.'}
           },
             errorClass: "help-inline",
             errorElement: "span",
@@ -297,14 +331,14 @@ $(document).ready(function(){
      
        $(document).on('click', 'a', function(event) {
             var idAcervo = $(this).attr('idAcao');
-            var quantidade = $(this).attr('quantAcao');
+            var idEmprestimo = $(this).attr('idEmprestimo');
             var acervo = $(this).attr('prodAcao');
             if((idAcervo % 1) == 0){
                 $("#divAcervos").html("<div class='progress progress-info progress-striped active'><div class='bar' style='width: 100%'></div></div>");
                 $.ajax({
                   type: "POST",
-                  url: "<?php echo base_url();?>index.php/vendas/excluirAcervo",
-                  data: "idAcervo="+idAcervo+"&quantidade="+quantidade+"&acervo="+acervo,
+                  url: "<?php echo base_url();?>index.php/emprestimos/excluirAcervo",
+                  data: "idAcervo="+idAcervo+"&idEmprestimo="+idEmprestimo+"&acervo="+acervo,
                   dataType: 'json',
                   success: function(data)
                   {

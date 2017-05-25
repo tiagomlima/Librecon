@@ -19,7 +19,7 @@ if(!$results){?>
             <th>#</th>
             <th>Nome do Grupo</th>
             <th>Duração</th>
-            <th>Quantidade Máxima de Exemplares</th>
+            <th>Quantidade Máxima de Itens</th>
             <th>Quantidade Máxima de Renovação</th>
             <th>Quantidade Máxima de Reserva</th>
             <th>Validade da Reserva</th>
@@ -58,7 +58,7 @@ if(!$results){?>
             <th>#</th>
             <th>Nome do Grupo</th>
             <th>Duração</th>
-            <th>Quantidade Máxima de Exemplares</th>
+            <th>Quantidade Máxima de Itens</th>
             <th>Quantidade Máxima de Renovação</th>
             <th>Quantidade Máxima de Reserva</th>
             <th>Validade da Reserva</th>
@@ -74,7 +74,7 @@ if(!$results){?>
             echo '<td>'.$r->idGrupo.'</td>';
             echo '<td>'.$r->nomeGrupo.'</td>';
 			echo '<td>'.$r->duracao_dias.'</td>';
-			echo '<td>'.$r->qtde_max_exemplares.'</td>';
+			echo '<td>'.$r->qtde_max_item.'</td>';
 			echo '<td>'.$r->qtde_max_renovacao.'</td>';
 			echo '<td>'.$r->qtde_max_reserva.'</td>';
 			echo '<td>'.$r->validade_reserva.'</td>';
