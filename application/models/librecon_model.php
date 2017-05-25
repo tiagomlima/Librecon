@@ -116,11 +116,11 @@ class Librecon_model extends CI_Model {
 		return $this->db->count_all($table);
 	}
 
-    function getOsAbertas(){
-        $this->db->select('os.*, leitores.nomeLeitor');
-        $this->db->from('os');
-        $this->db->join('leitores', 'leitores.idLeitores = os.leitores_id');
-        $this->db->where('os.status','Aberto');
+    function getEmprestimosAbertos(){
+        $this->db->select('emprestimos.*, leitores.nomeLeitor');
+        $this->db->from('emprestimos');
+        $this->db->join('leitores', 'leitores.idLeitores = emprestimos.leitores_id');
+        $this->db->where('emprestimos.status','Emprestado');
         $this->db->limit(10);
         return $this->db->get()->result();
     }
@@ -132,8 +132,8 @@ class Librecon_model extends CI_Model {
 
     }*/
 
-    function getOsEstatisticas(){
-        $sql = "SELECT status, COUNT(status) as total FROM os GROUP BY status ORDER BY status";
+    function getEmpEstatisticas(){
+        $sql = "SELECT status, COUNT(status) as total FROM emprestimos GROUP BY status ORDER BY status";
         return $this->db->query($sql)->result();
     }
 

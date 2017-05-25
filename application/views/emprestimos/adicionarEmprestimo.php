@@ -29,17 +29,15 @@
                                     <div class="span12" style="padding: 1%">
 
                                         <div class="span0">
-                                            
+                                            <input id="dataVencimento" type="hidden" name="dataVencimento" value="<?php echo date('d/m/Y'); ?>" />
                                             <input id="dataEmprestimo" class="span12 datepicker" type="hidden" name="dataEmprestimo" value="<?php echo date('d/m/Y'); ?>" />
                                         </div>
-                                        <div class="span3">
-                                            <label for="dataDevolucao">Data da Devolução<span class="required">*</span></label>
-                                            <input id="dataDevolucao" class="span12 datepicker" type="text" name="dataDevolucao" value="<?php echo date('d/m/Y'); ?>"  />
-                                        </div>
+                                       
                                         <div class="span4">
                                             <label for="leitor">Leitor<span class="required">*</span></label>
                                             <input id="leitor" class="span12" type="text" name="leitor" value=""  />
-                                            <input id="leitores_id" class="span12" type="hidden" name="leitores_id" value=""  />
+                                            <input id="leitores_id" class="span12" type="hidden" name="leitores_id" value=""  /> 
+                                            <input id="grupo_id" class="span12" type="hidden" name="grupo_id" value=""  />                       
                                         </div>
                                         <div class="span4">
                                             <label for="usuario">Usuário<span class="required">*</span></label>
@@ -83,7 +81,7 @@ $(document).ready(function(){
             minLength: 1,
             select: function( event, ui ) {
                  $("#leitores_id").val(ui.item.id);
-                
+                 $("#grupo_id").val(ui.item.grupo);                                 
             }
       });
       $("#usuario").autocomplete({
@@ -99,14 +97,14 @@ $(document).ready(function(){
           rules:{
              leitor: {required:true},
              usuario: {required:true},
-             dataEmprestimo: {required:true},
-             dataDevolucao: {required:true}
+             dataEmprestimo: {required:true}
+             
           },
           messages:{
              leitor: {required: 'Campo Requerido.'},
              usuario: {required: 'Campo Requerido.'},
-             dataEmprestimo: {required: 'Campo Requerido.'},
-             dataDevolucao: {required: 'Campo Requerido.'}
+             dataEmprestimo: {required: 'Campo Requerido.'}
+            
           },
             errorClass: "help-inline",
             errorElement: "span",

@@ -87,8 +87,8 @@ $config = array('leitores' => array(array(
                                     'rules'=>'required|trim|xss_clean'
                                 ),
                                 array(
-                                    'field'=>'qtde_max_exemplares',
-                                    'label'=>'Qtde Max de Exemplares',
+                                    'field'=>'qtde_max_item',
+                                    'label'=>'Qtde Max de Itens',
                                     'rules'=>'required|trim|xss_clean'
                                 ),
                                 array(
@@ -341,11 +341,7 @@ $config = array('leitores' => array(array(
                                     'label' => 'Data do Emprestimo',
                                     'rules' => 'required|trim|xss_clean'
                                 ),
-                                array(
-                                    'field'=>'dataDevolucao',
-                                    'label'=>'Data da Devolução',
-                                    'rules'=>'required|trim|xss_clean'
-                                ),
+                                
                                 array(
                                     'field'=>'leitores_id',
                                     'label'=>'leitores',

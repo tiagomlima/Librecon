@@ -56,7 +56,7 @@ if(!$results){?>
         <tr style="backgroud-color: #2D335B">
             <th>#</th>
             <th>Data do Empréstimo</th>
-            <th>Data da Devolução</th>
+            <th>Data de Vencimento</th>
             <th>Leitor</th>
             <th>Situação</th>
             <th></th>
@@ -65,19 +65,26 @@ if(!$results){?>
     <tbody>
         <?php foreach ($results as $r) {
             $dataEmprestimo = date(('d/m/Y'),strtotime($r->dataEmprestimo));
-			$dataDevolucao = date(('d/m/Y'),strtotime($r->dataDevolucao));
+			$dataVencimento = date(('d/m/Y'),strtotime($r->dataVencimento));
+			$dataAtual = date(('d/m/Y'),strtotime(date('d/m/Y')));
+						
+			if($dataAtual > $dataVencimento){
+				$status = 'ATRASADO';
+			}else{
+				$status = $r->status;
+			}
                      
             echo '<tr>';
             echo '<td>'.$r->idEmprestimos.'</td>';
             echo '<td>'.$dataEmprestimo.'</td>';
-			echo '<td>'.$dataDevolucao.'</td>';
+			echo '<td>'.$dataVencimento.'</td>';
             echo '<td><a href="'.base_url().'index.php/clientes/visualizar/'.$r->idLeitores.'">'.$r->nomeLeitor.'</a></td>';
-			echo '<td>'.$r->status.'</td>';
+			echo '<td>'.$status.'</td>';
             
             
             echo '<td>';
-            if($this->permission->checkPermission($this->session->userdata('permissao'),'vEmprestimo')){
-                echo '<a style="margin-right: 1%" href="'.base_url().'index.php/emprestimos/visualizar/'.$r->idEmprestimos.'" class="btn tip-top" title="Ver mais detalhes"><i class="icon-eye-open"></i></a>'; 
+            if($this->permission->checkPermission($this->session->userdata('permissao'),'vEmprestimo') && $r->status != 'Não emprestado'){
+                echo '<a style="margin-right: 1%" href="'.base_url().'index.php/emprestimos/visualizar/'.$r->idEmprestimos.'" class="btn tip-top" title="Ver comprovante"><i class="icon-eye-open"></i></a>'; 
             }
             if($this->permission->checkPermission($this->session->userdata('permissao'),'eEmprestimo')){
                 echo '<a style="margin-right: 1%" href="'.base_url().'index.php/emprestimos/editar/'.$r->idEmprestimos.'" class="btn btn-info tip-top" title="Editar emprestimo"><i class="icon-pencil icon-white"></i></a>'; 

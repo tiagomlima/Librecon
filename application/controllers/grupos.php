@@ -56,7 +56,7 @@ class Grupos extends CI_Controller {
         
         $this->pagination->initialize($config); 	
         
-	    $this->data['results'] = $this->grupos_model->get('grupos','idGrupo, nomeGrupo, duracao_dias, qtde_max_exemplares, qtde_max_renovacao, qtde_max_reserva, validade_reserva, multa, observacoes','',$config['per_page'],$this->uri->segment(3));
+	    $this->data['results'] = $this->grupos_model->get('grupos','idGrupo, nomeGrupo, duracao_dias, qtde_max_item, qtde_max_renovacao, qtde_max_reserva, validade_reserva, multa, observacoes','',$config['per_page'],$this->uri->segment(3));
        	
        	$this->data['view'] = 'grupos/grupos';
        	$this->load->view('tema/topo',$this->data);
@@ -80,7 +80,7 @@ class Grupos extends CI_Controller {
             $data = array(
                 'nomeGrupo' => set_value('nomeGrupo'),
                 'duracao_dias' => set_value('duracao_dias'),
-                'qtde_max_exemplares' => set_value('qtde_max_exemplares'),
+                'qtde_max_item' => set_value('qtde_max_item'),
                 'qtde_max_renovacao' => set_value('qtde_max_renovacao'),
                 'qtde_max_reserva' => set_value('qtde_max_reserva'),
                 'validade_reserva' => set_value('validade_reserva'),
@@ -123,7 +123,7 @@ class Grupos extends CI_Controller {
             $data = array(
                 'nomeGrupo' => $this->input->post('nomeGrupo'),
                 'duracao_dias' => $this->input->post('duracao_dias'), 
-                'qtde_max_exemplares' => $this->input->post('qtde_max_exemplares'), 
+                'qtde_max_item' => $this->input->post('qtde_max_item'), 
                 'qtde_max_renovacao' => $this->input->post('qtde_max_renovacao'), 
                 'qtde_max_reserva' => $this->input->post('qtde_max_reserva'), 
                 'validade_reserva' => $this->input->post('validade_reserva'),

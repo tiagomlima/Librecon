@@ -27,9 +27,9 @@
                     </div>
                     
                      <div class="control-group">
-                        <label for="qtde_max_exemplares" class="control-label">Quantidade Máxima de Exemplares<span class="required">*</span></label>
+                        <label for="qtde_max_exemplares" class="control-label">Quantidade Máxima de Itens<span class="required">*</span></label>
                         <div class="controls">
-                            <input id="qtde_max_exemplares" type="text" name="qtde_max_exemplares" value="<?php echo set_value('qtde_max_exemplares'); ?>"  />
+                            <input id="qtde_max_item" type="text" name="qtde_max_item" value="<?php echo set_value('qtde_max_item'); ?>"  />
                         </div>
                     </div>
                     
@@ -93,7 +93,7 @@
             rules : {
                   nomeGrupo:{ required: true},
                   duracao_dias:{ required: true},
-                  qtde_max_exemplares:{ required: true},
+                  qtde_max_item:{ required: true},
                   qtde_max_renovacao:{ required: true},
                   qtde_max_reserva:{ required: true},
                   validade_reserva:{ required: true},
@@ -102,7 +102,7 @@
             messages: {
                   nomeGrupo :{ required: 'Campo Requerido.'},
                   duracao_dias :{ required: 'Campo Requerido.'},
-                  qtde_max_exemplares :{ required: 'Campo Requerido.'},
+                  qtde_max_item :{ required: 'Campo Requerido.'},
                   qtde_max_renovacao :{ required: 'Campo Requerido.'},
                   qtde_max_reserva :{ required: 'Campo Requerido.'},
 				  validade_reserva :{ required: 'Campo Requerido.'},

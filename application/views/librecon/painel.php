@@ -17,13 +17,11 @@
             <li class="bg_lg"> <a href="<?php echo base_url()?>index.php/acervos"> <i class="icon-book"></i> Acervo</a> </li>
         <?php } ?>
         <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vServico')){ ?>
-            <li class="bg_ly"> <a href="<?php echo base_url()?>index.php/servicos"> <i class="icon-wrench"></i> Serviços</a> </li>
+            <li class="bg_ly"> <a href="<?php echo base_url()?>index.php/servicos"> <i class="icon-book"></i> Reservas</a> </li>
         <?php } ?>
-        <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vOs')){ ?>
-            <li class="bg_lo"> <a href="<?php echo base_url()?>index.php/os"> <i class="icon-tags"></i> OS</a> </li>
-        <?php } ?>
+        
         <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vEmprestimo')){ ?>
-            <li class="bg_ls"> <a href="<?php echo base_url()?>index.php/emprestimos"><i class="icon-shopping-cart"></i> Emprestimos</a></li>
+            <li class="bg_ls"> <a href="<?php echo base_url()?>index.php/emprestimos"><i class="icon-book"></i> Emprestimos</a></li>
         <?php } ?>
 
         
@@ -44,37 +42,47 @@
     <div class="span12" style="margin-left: 0">
         
         <div class="widget-box">
-            <div class="widget-title"><span class="icon"><i class="icon-signal"></i></span><h5>Ordens de Serviço Em Aberto</h5></div>
+            <div class="widget-title"><span class="icon"><i class="icon-signal"></i></span><h5>Empréstimos Em Aberto</h5></div>
             <div class="widget-content">
                 <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Data Inicial</th>
-                            <th>Data Final</th>
+                            <th>Data Empréstimo</th>
+                            <th>Data Vencimento</th>
                             <th>Leitor</th>
+                            <th>Status</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php 
-                        if($ordens != null){
-                            foreach ($ordens as $o) {
+                        if($emprestimos != null){
+                            foreach ($emprestimos as $e) {
+                            	$dataEmprestimo = date(('d/m/Y'),strtotime($e->dataEmprestimo));
+								$dataVencimento = date(('d/m/Y'),strtotime($e->dataVencimento));
+								
                                 echo '<tr>';
-                                echo '<td>'.$o->idOs.'</td>';
-                                echo '<td>'.date('d/m/Y' ,strtotime($o->dataInicial)).'</td>';
-                                echo '<td>'.date('d/m/Y' ,strtotime($o->dataFinal)).'</td>';
-                                echo '<td>'.$o->nomeLeitor.'</td>';
+                                echo '<td>'.$e->idEmprestimos.'</td>';
+                                echo '<td>'.$dataEmprestimo.'</td>';
+                                echo '<td>'.$dataVencimento.'</td>';
+                                echo '<td>'.$e->nomeLeitor.'</td>';
+								$dataAtual = date('d/m/Y');
+								$status = $e->status;
+								if($dataVencimento < $dataAtual){
+									$status = 'ATRASADO';
+								}
+								echo '<td>'.$status.'</td>';
                                 echo '<td>';
-                                if($this->permission->checkPermission($this->session->userdata('permissao'),'vOs')){
-                                    echo '<a href="'.base_url().'index.php/os/visualizar/'.$o->idOs.'" class="btn"> <i class="icon-eye-open" ></i> </a> '; 
+                                if($this->permission->checkPermission($this->session->userdata('permissao'),'vEmprestimo')){
+                                    echo '<a href="'.base_url().'index.php/emprestimos/visualizar/'.$e->idEmprestimos.'" class="btn"> <i class="icon-eye-open" ></i> </a> '; 
                                 }
                                 echo '</td>';
                                 echo '</tr>';
                             }
                         }
                         else{
-                            echo '<tr><td colspan="3">Nenhuma OS em aberto.</td></tr>';
+                            echo '<tr><td colspan="3">Nenhum empréstimo em aberto.</td></tr>';
                         }    
 
                         ?>
@@ -141,13 +149,13 @@
 </div>
 <?php } } ?>
 
-<?php if($os != null){ ?>
+<?php if($emp != null){ ?>
 <div class="row-fluid" style="margin-top: 0">
 
     <div class="span12">
         
         <div class="widget-box">
-            <div class="widget-title"><span class="icon"><i class="icon-signal"></i></span><h5>Estatísticas de OS</h5></div>
+            <div class="widget-title"><span class="icon"><i class="icon-signal"></i></span><h5>Estatísticas de emprestimo</h5></div>
             <div class="widget-content">
                 <div class="row-fluid">
                     <div class="span12">
@@ -174,8 +182,8 @@
                         <ul class="site-stats">
                             <li class="bg_lh"><i class="icon-group"></i> <strong><?php echo $this->db->count_all('leitores');?></strong> <small>Leitores</small></li>
                             <li class="bg_lh"><i class="icon-barcode"></i> <strong><?php echo $this->db->count_all('acervos');?></strong> <small>Acervos </small></li>
-                            <li class="bg_lh"><i class="icon-tags"></i> <strong><?php echo $this->db->count_all('os');?></strong> <small>Ordens de Serviço</small></li>
-                            <li class="bg_lh"><i class="icon-wrench"></i> <strong><?php echo $this->db->count_all('servicos');?></strong> <small>Serviços</small></li>
+                            <li class="bg_lh"><i class="icon-tags"></i> <strong><?php echo $this->db->count_all('emprestimos');?></strong> <small>Emprestimos</small></li>
+                            <li class="bg_lh"><i class="icon-wrench"></i> <strong><?php echo $this->db->count_all('servicos');?></strong> <small>Reservas</small></li>
                             
                         </ul>
                  
@@ -192,12 +200,12 @@
 <script src="<?php echo base_url();?>js/bootstrap.min.js"></script>
 
 
-<?php if($os != null) {?>
+<?php if($emp != null) {?>
 <script type="text/javascript">
     
     $(document).ready(function(){
       var data = [
-        <?php foreach ($os as $o) {
+        <?php foreach ($emp as $o) {
             echo "['".$o->status."', ".$o->total."],";
         } ?>
        

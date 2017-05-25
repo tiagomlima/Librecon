@@ -53,14 +53,13 @@ class Emprestimos_model extends CI_Model {
 		
         return $this->db->get()->row();
     }
-
-	function getTotalItem($id){
-		$this->db->select('*');
-		$this->db->from('itens_de_emprestimos');
-		$this->db->where('emprestimos_id',$id);
-		$query = $this->db->get();
-		$rowcount = $query->num_rows();
-		return $rowcount;
+	
+	function getGrupoById($id){
+		$this->db->select('emprestimos.grupo_id, grupos.*');
+		$this->db->where('idEmprestimos',$id);
+		$this->db->limit(1);
+		$this->db->join('grupos', 'emprestimos.grupo_id = grupos.idGrupo', 'left');
+		return $this->db->get('emprestimos')->row();
 	}
 
 	function getCursoById($id){
@@ -137,7 +136,7 @@ class Emprestimos_model extends CI_Model {
         $query = $this->db->get('leitores');
         if($query->num_rows > 0){
             foreach ($query->result_array() as $row){
-                $row_set[] = array('label'=>$row['nomeLeitor'].' | Telefone: '.$row['telefone'],'id'=>$row['idLeitores']);
+                $row_set[] = array('label'=>$row['nomeLeitor'].' | Telefone: '.$row['telefone'],'id'=>$row['idLeitores'],'grupo'=>$row['grupo_id']);
             }
             echo json_encode($row_set);
         }
