@@ -39,7 +39,7 @@
 
                                 <tr>
                                     <td style="width: 25%"><img src=" <?php echo $emitente[0]->url_logo; ?> "></td>
-                                    <td> <span style="font-size: 20px; "> <?php echo $emitente[0]->nome; ?></span> </br><span><?php echo $emitente[0]->cnpj; ?> </br> <?php echo $emitente[0]->rua.', nº:'.$emitente[0]->numero.', '.$emitente[0]->bairro.' - '.$emitente[0]->cidade.' - '.$emitente[0]->uf; ?> </span> </br> <span> E-mail: <?php echo $emitente[0]->email.' - Fone: '.$emitente[0]->telefone; ?></span></td>
+                                    <td> <span style="font-size: 20px; "> <?php echo $emitente[0]->nome; ?></span> </br><span><?php echo $emitente[0]->cnpj; ?> </br> <?php echo $emitente[0]->rua.', nº:'.$emitente[0]->numero.', '.$emitente[0]->bairro.' - '.$emitente[0]->cidade.' - '.$emitente[0]->uf; ?> </span> </br> <span> Site: <?php echo $emitente[0]->site.' - Fone: '.$emitente[0]->telefone; ?></span></td>
                                     <td style="width: 18%; text-align: center">#Empréstimo: <span ><?php echo $result->idEmprestimos?></span></br> </br> <span>Emissão: <?php echo date('d/m/Y');?></span></td>
                                 </tr>
 
@@ -54,7 +54,7 @@
                                         <ul>
                                             <li>
                                                 <span><h5>Leitor</h5>
-                                                <span><?php echo $result->nomeLeitor?></span><br/>
+                                                <span><?php echo $result->nome?></span><br/>
                                                 <span><?php echo 'R.A '. $result->matricula?></span><br/>
                                                 <span><?php echo $curso->nomeCurso?></span><br/>
                                                 <span><?php echo $result->rua?>, <?php echo $result->numero?>, <?php echo $result->bairro?></span><br/>
@@ -66,9 +66,9 @@
                                         <ul>
                                             <li>
                                                 <span><h5>Usuário</h5></span>
-                                                <span><?php echo $result->nome?></span> <br/>
-                                                <span>Telefone: <?php echo $result->telefone?></span><br/>
-                                                <span>Email: <?php echo $result->email?></span>
+                                                <span><?php echo $usuario->nome?></span> <br/>
+                                                <span>Telefone: <?php echo $usuario->telefone?></span><br/>
+                                                <span>Email: <?php echo $usuario->email?></span>
                                             </li>
                                         </ul>
                                     </td>
@@ -95,8 +95,7 @@
                                     <thead>
                                         <tr>
                                             <th style="font-size: 15px">Tombo</th>
-                                            <th style="font-size: 15px">Acervo</th>
-                                            
+                                            <th style="font-size: 15px">Item</th>                                            
                                         </tr>
                                     </thead>
                                     <tbody>

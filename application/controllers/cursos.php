@@ -15,7 +15,7 @@ class Cursos extends CI_Controller {
             }
             $this->load->helper(array('codegen_helper'));
             $this->load->model('cursos_model','',TRUE);
-            $this->data['menuCursos'] = 'cursos';
+            $this->data['menuLeitores'] = 'cursos';
 	}	
 	
 	function index(){

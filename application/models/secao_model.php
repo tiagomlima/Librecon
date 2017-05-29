@@ -51,6 +51,14 @@ class Secao_model extends CI_Model {
 		
 		return FALSE;       
     }
+	
+	function getActive($table,$fields){
+        
+        $this->db->select($fields);
+        $this->db->from($table);
+        $query = $this->db->get();
+        return $query->result();;
+    }
     
     function delete($table,$fieldID,$ID){
         $this->db->where($fieldID,$ID);

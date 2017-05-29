@@ -15,7 +15,7 @@ class Grupos extends CI_Controller {
             }
             $this->load->helper(array('codegen_helper'));
             $this->load->model('grupos_model','',TRUE);
-            $this->data['menuGrupos'] = 'grupos';
+            $this->data['menuLeitores'] = 'grupos';
 	}	
 	
 	function index(){

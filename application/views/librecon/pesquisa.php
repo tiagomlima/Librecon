@@ -29,7 +29,8 @@
                         <tr style="backgroud-color: #2D335B">
                             <th>#</th>
                             <th>Nome</th>
-                            <th>Preço</th>
+                            <th>Tombo</th>
+                            <th>Estoque</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -38,18 +39,19 @@
                         if($acervos == null){
                             echo '<tr><td colspan="4">Nenhum acervo foi encontrado.</td></tr>';
                         }
-                        foreach ($acervos as $r) {
+                        foreach ($acervos as $a) {
                             echo '<tr>';
-                            echo '<td>' . $r->idAcervos . '</td>';
-                            echo '<td>' . $r->titulo . '</td>';
-                            echo '<td>' . $r->tombo . '</td>';
+                            echo '<td>' . $a->idAcervos . '</td>';
+                            echo '<td>' . $a->titulo . '</td>';
+                            echo '<td>' . $a->tombo . '</td>';
+							echo '<td>' . $a->estoque . '</td>';
 
                             echo '<td>';
                             if($this->permission->checkPermission($this->session->userdata('permissao'),'vAcervo')){
-                                echo '<a style="margin-right: 1%" href="' . base_url() . 'index.php/acervos/visualizar/' . $r->idAcervos . '" class="btn tip-top" title="Ver mais detalhes"><i class="icon-eye-open"></i></a>'; 
+                                echo '<a style="margin-right: 1%" href="' . base_url() . 'index.php/acervos/visualizar/' . $a->idAcervos . '" class="btn tip-top" title="Ver mais detalhes"><i class="icon-eye-open"></i></a>'; 
                             }
                             if($this->permission->checkPermission($this->session->userdata('permissao'),'eAcervo')){
-                                echo '<a href="' . base_url() . 'index.php/acervos/editar/' . $r->idAcervos . '" class="btn btn-info tip-top" title="Editar Acervo"><i class="icon-pencil icon-white"></i></a>'; 
+                                echo '<a href="' . base_url() . 'index.php/acervos/editar/' . $a->idAcervos . '" class="btn btn-info tip-top" title="Editar Acervo"><i class="icon-pencil icon-white"></i></a>'; 
                             } 
                             
                             echo '</td>';
@@ -90,21 +92,21 @@
                     </thead>
                     <tbody>
                         <?php
-                        if($leitores == null){
+                        if($usuarios == null){
                             echo '<tr><td colspan="4">Nenhum leitor foi encontrado.</td></tr>';
                         }
-                        foreach ($leitores as $r) {
+                        foreach ($usuarios as $u) {
                             echo '<tr>';
-                            echo '<td>' . $r->idLeitores . '</td>';
-                            echo '<td>' . $r->nomeLeitor . '</td>';
-                            echo '<td>' . $r->matricula . '</td>';
+                            echo '<td>' . $u->idUsuarios . '</td>';
+                            echo '<td>' . $u->nome . '</td>';
+                            echo '<td>' . $u->matricula . '</td>';
                             echo '<td>';
 
                             if($this->permission->checkPermission($this->session->userdata('permissao'),'vLeitor')){
-                                echo '<a style="margin-right: 1%" href="' . base_url() . 'index.php/leitores/visualizar/' . $r->idLeitores . '" class="btn tip-top" title="Ver mais detalhes"><i class="icon-eye-open"></i></a>'; 
+                                echo '<a style="margin-right: 1%" href="' . base_url() . 'index.php/leitores/visualizar/' . $u->idUsuarios . '" class="btn tip-top" title="Ver mais detalhes"><i class="icon-eye-open"></i></a>'; 
                             } 
                             if($this->permission->checkPermission($this->session->userdata('permissao'),'eLeitor')){
-                                echo '<a href="' . base_url() . 'index.php/leitores/editar/' . $r->idLeitores . '" class="btn btn-info tip-top" title="Editar Leitor"><i class="icon-pencil icon-white"></i></a>'; 
+                                echo '<a href="' . base_url() . 'index.php/leitores/editar/' . $u->idUsuarios . '" class="btn btn-info tip-top" title="Editar Leitor"><i class="icon-pencil icon-white"></i></a>'; 
                             } 
                             
                             
@@ -130,7 +132,7 @@
                 <span class="icon">
                     <i class="icon-wrench"></i>
                 </span>
-                <h5>Serviços</h5>
+                <h5>Reservas</h5>
 
             </div>
 
@@ -175,14 +177,14 @@
     </div>
 
 
-    <!--Ordens de Serviço-->
+    <!--Emprestimos-->
     <div class="span6">
          <div class="widget-box" style="min-height: 200px">
             <div class="widget-title">
                 <span class="icon">
                     <i class="icon-tags"></i>
                 </span>
-                <h5>Ordens de Serviço</h5>
+                <h5>Emprestimos</h5>
 
             </div>
 
@@ -193,30 +195,31 @@
                     <thead>
                         <tr style="backgroud-color: #2D335B">
                             <th>#</th>
-                            <th>Data Inicial</th>
-                            <th>Defeito</th>
+                            <th>Data Emprestimo</th>
+                            <th>Data Vencimento</th>
+                            <th>Status</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-                        if($os == null){
-                            echo '<tr><td colspan="4">Nenhuma os foi encontrado.</td></tr>';
+                        if($emprestimos == null){
+                            echo '<tr><td colspan="4">Nenhum emprestimo foi encontrado.</td></tr>';
                         }
-                        foreach ($os as $r) {
-                            $dataInicial = date(('d/m/Y'), strtotime($r->dataInicial));
-                            $dataFinal = date(('d/m/Y'), strtotime($r->dataFinal));
+                        foreach ($emprestimos as $e) {
+                            $dataEmprestimo = date(('d/m/Y'), strtotime($r->$dataEmprestimo));
+                            $dataVencimento = date(('d/m/Y'), strtotime($r->$dataVencimento));
                             echo '<tr>';
-                            echo '<td>' . $r->idOs . '</td>';
-                            echo '<td>' . $dataInicial . '</td>';
-                            echo '<td>' . $r->defeito . '</td>';
+                            echo '<td>' . $e->idEmprestimos . '</td>';
+                            echo '<td>' . $dataEmprestimo . '</td>';
+                            echo '<td>' . $e->status . '</td>';
 
                             echo '<td>';
-                            if($this->permission->checkPermission($this->session->userdata('permissao'),'vOs')){
-                                echo '<a style="margin-right: 1%" href="' . base_url() . 'index.php/os/visualizar/' . $r->idOs . '" class="btn tip-top" title="Ver mais detalhes"><i class="icon-eye-open"></i></a>'; 
+                            if($this->permission->checkPermission($this->session->userdata('permissao'),'vEmprestimo')){
+                                echo '<a style="margin-right: 1%" href="' . base_url() . 'index.php/emprestimos/visualizar/' . $e->idEmprestimos . '" class="btn tip-top" title="Ver mais detalhes"><i class="icon-eye-open"></i></a>'; 
                             } 
-                            if($this->permission->checkPermission($this->session->userdata('permissao'),'eOs')){
-                                echo '<a href="' . base_url() . 'index.php/os/editar/' . $r->idOs . '" class="btn btn-info tip-top" title="Editar OS"><i class="icon-pencil icon-white"></i></a>'; 
+                            if($this->permission->checkPermission($this->session->userdata('permissao'),'eEmprestimos')){
+                                echo '<a href="' . base_url() . 'index.php/emprestimos/editar/' . $e->idEmprestimos . '" class="btn btn-info tip-top" title="Editar Empréstimo"><i class="icon-pencil icon-white"></i></a>'; 
                             }  
                             echo '</td>';
                             echo '</tr>';

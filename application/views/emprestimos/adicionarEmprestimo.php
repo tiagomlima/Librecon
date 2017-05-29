@@ -36,7 +36,7 @@
                                         <div class="span4">
                                             <label for="leitor">Leitor<span class="required">*</span></label>
                                             <input id="leitor" class="span12" type="text" name="leitor" value=""  />
-                                            <input id="leitores_id" class="span12" type="hidden" name="leitores_id" value=""  /> 
+                                            <input id="leitor_id" class="span12" type="hidden" name="leitor_id" value=""  /> 
                                             <input id="grupo_id" class="span12" type="hidden" name="grupo_id" value=""  />                       
                                         </div>
                                         <div class="span4">
@@ -80,7 +80,7 @@ $(document).ready(function(){
             source: "<?php echo base_url(); ?>index.php/emprestimos/autoCompleteLeitor",
             minLength: 1,
             select: function( event, ui ) {
-                 $("#leitores_id").val(ui.item.id);
+                 $("#leitor_id").val(ui.item.id);
                  $("#grupo_id").val(ui.item.grupo);                                 
             }
       });
@@ -95,13 +95,13 @@ $(document).ready(function(){
       
       $("#formEmprestimo").validate({
           rules:{
-             leitor: {required:true},
+             leitor_id: {required:true},
              usuario: {required:true},
              dataEmprestimo: {required:true}
              
           },
           messages:{
-             leitor: {required: 'Campo Requerido.'},
+             leitor_id: {required: 'Campo Requerido.'},
              usuario: {required: 'Campo Requerido.'},
              dataEmprestimo: {required: 'Campo Requerido.'}
             

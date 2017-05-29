@@ -66,6 +66,14 @@ class Editora_model extends CI_Model {
     function count($table) {
         return $this->db->count_all($table);
     }
+	
+	function getActive($table,$fields){
+        
+        $this->db->select($fields);
+        $this->db->from($table);
+        $query = $this->db->get();
+        return $query->result();;
+    }
     
     public function getOsByEditora($id){
         $this->db->where('editora_id',$id);

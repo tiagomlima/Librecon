@@ -16,6 +16,10 @@ class Librecon extends CI_Controller {
             redirect('librecon/login');
         }
 		
+		if($this->session->userdata('tipo_usuario') == 1){
+			redirect('acervos');
+		}
+		
 
         $this->data['emprestimos'] = $this->librecon_model->getEmprestimosAbertos();
        // $this->data['acervos'] = $this->librecon_model->getAcervosMinimo(); lembrar de apagar essa linha depos !!
@@ -68,10 +72,10 @@ class Librecon extends CI_Controller {
         $termo = $this->input->get('termo');
 
         $data['results'] = $this->librecon_model->pesquisar($termo);
-        $this->data['acervoss'] = $data['results']['acervos'];
+        $this->data['acervos'] = $data['results']['acervos'];
         $this->data['servicos'] = $data['results']['servicos'];
-        $this->data['os'] = $data['results']['os'];
-        $this->data['leitores'] = $data['results']['leitores'];
+        $this->data['emprestimos'] = $data['results']['emprestimos'];
+        $this->data['usuarios'] = $data['results']['usuarios'];
         $this->data['view'] = 'librecon/pesquisa';
         $this->load->view('tema/topo',  $this->data);
       
@@ -121,7 +125,7 @@ class Librecon extends CI_Controller {
             $usuario = $this->db->get('usuarios')->row();
 			
             if(count($usuario) > 0){
-                $dados = array('nome' => $usuario->nome, 'id' => $usuario->idUsuarios,'permissao' => $usuario->permissoes_id , 'logado' => TRUE);
+                $dados = array('nome' => $usuario->nome, 'id' => $usuario->idUsuarios,'permissao' => $usuario->permissoes_id , 'logado' => TRUE, 'tipo_usuario' =>$usuario->tipo_usuario, 'grupo' =>$usuario->grupo_id);
                 $this->session->set_userdata($dados);
 
                 if($ajax == true){
@@ -261,7 +265,7 @@ class Librecon extends CI_Controller {
         $this->form_validation->set_rules('cidade','Cidade','required|xss_clean|trim');
         $this->form_validation->set_rules('uf','UF','required|xss_clean|trim');
         $this->form_validation->set_rules('telefone','Telefone','required|xss_clean|trim');
-        $this->form_validation->set_rules('email','E-mail','required|xss_clean|trim');
+        $this->form_validation->set_rules('site','Site','required|xss_clean|trim');
 
 
         
@@ -283,12 +287,12 @@ class Librecon extends CI_Controller {
             $cidade = $this->input->post('cidade');
             $uf = $this->input->post('uf');
             $telefone = $this->input->post('telefone');
-            $email = $this->input->post('email');
+            $site = $this->input->post('site');
             $image = $this->do_upload();
             $logo = base_url().'assets/uploads/'.$image;
 
 
-            $retorno = $this->librecon_model->addEmitente($nome, $cnpj, $ie, $logradouro, $numero, $bairro, $cidade, $uf,$telefone,$email, $logo);
+            $retorno = $this->librecon_model->addEmitente($nome, $cnpj, $ie, $logradouro, $numero, $bairro, $cidade, $uf,$telefone,$site, $logo);
             if($retorno){
 
                 $this->session->set_flashdata('success','As informações foram inseridas com sucesso.');
@@ -324,7 +328,7 @@ class Librecon extends CI_Controller {
         $this->form_validation->set_rules('cidade','Cidade','required|xss_clean|trim');
         $this->form_validation->set_rules('uf','UF','required|xss_clean|trim');
         $this->form_validation->set_rules('telefone','Telefone','required|xss_clean|trim');
-        $this->form_validation->set_rules('email','E-mail','required|xss_clean|trim');
+        $this->form_validation->set_rules('site','Site','required|xss_clean|trim');
 
 
         
@@ -346,11 +350,11 @@ class Librecon extends CI_Controller {
             $cidade = $this->input->post('cidade');
             $uf = $this->input->post('uf');
             $telefone = $this->input->post('telefone');
-            $email = $this->input->post('email');
+            $site = $this->input->post('site');
             $id = $this->input->post('id');
 
 
-            $retorno = $this->librecon_model->editEmitente($id, $nome, $cnpj, $ie, $logradouro, $numero, $bairro, $cidade, $uf,$telefone,$email);
+            $retorno = $this->librecon_model->editEmitente($id, $nome, $cnpj, $ie, $logradouro, $numero, $bairro, $cidade, $uf,$telefone,$site);
             if($retorno){
 
                 $this->session->set_flashdata('success','As informações foram alteradas com sucesso.');
@@ -382,7 +386,7 @@ class Librecon extends CI_Controller {
            redirect(base_url().'index.php/librecon/emitente'); 
         }
         $this->load->helper('file');
-        delete_files(FCPATH .'assets/uploads/');
+        //delete_files(FCPATH .'assets/uploads/');
 
         $image = $this->do_upload();
         $logo = base_url().'assets/uploads/'.$image;

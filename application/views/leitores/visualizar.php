@@ -2,10 +2,10 @@
     <div class="widget-title">
         <ul class="nav nav-tabs">
             <li class="active"><a data-toggle="tab" href="#tab1">Dados do Leitor</a></li>
-            <li><a data-toggle="tab" href="#tab2">Ordens de Serviço</a></li>
+            <li><a data-toggle="tab" href="#tab2">Empréstimos</a></li>
             <div class="buttons">
                     <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'eLeitor')){
-                        echo '<a title="Icon Title" class="btn btn-mini btn-info" href="'.base_url().'index.php/leitores/editar/'.$result->idLeitores.'"><i class="icon-pencil icon-white"></i> Editar</a>'; 
+                        echo '<a title="Icon Title" class="btn btn-mini btn-info" href="'.base_url().'index.php/leitores/editar/'.$result->idUsuarios.'"><i class="icon-pencil icon-white"></i> Editar</a>'; 
                     } ?>
                     
             </div>
@@ -29,7 +29,7 @@
                                             <tbody>
                                                 <tr>
                                                     <td style="text-align: right; width: 30%"><strong>Nome</strong></td>
-                                                    <td><?php echo $result->nomeLeitor ?></td>
+                                                    <td><?php echo $result->nome ?></td>
                                                 </tr>
                                                 <tr>
                                                     <td style="text-align: right"><strong>CPF</strong></td>
@@ -157,17 +157,16 @@
                             <thead>
                                 <tr style="backgroud-color: #2D335B">
                                     <th>#</th>
-                                    <th>Data Inicial</th>
-                                    <th>Data Final</th>
-                                    <th>Descricao</th>
-                                    <th>Defeito</th>
+                                    <th>Data Emprestimo</th>
+                                    <th>Data Vencimento</th>
+                                    <th>Status</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
 
                                 <tr>
-                                    <td colspan="6">Nenhuma OS Cadastrada</td>
+                                    <td colspan="6">Nenhum empréstimo cadastrado</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -181,31 +180,29 @@
                             <thead>
                                 <tr style="backgroud-color: #2D335B">
                                     <th>#</th>
-                                    <th>Data Inicial</th>
-                                    <th>Data Final</th>
-                                    <th>Descricao</th>
-                                    <th>Defeito</th>
+                                    <th>Data Emprestimo</th>
+                                    <th>Data Vencimento</th>
+                                    <th>Status</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
 <?php
                 foreach ($results as $r) {
-                    $dataInicial = date(('d/m/Y'), strtotime($r->dataInicial));
-                    $dataFinal = date(('d/m/Y'), strtotime($r->dataFinal));
+                    $dataEmprestimo = date(('d/m/Y'), strtotime($r->$dataEmprestimo));
+                    $dataVencimento = date(('d/m/Y'), strtotime($r->$dataVencimento));
                     echo '<tr>';
-                    echo '<td>' . $r->idOs . '</td>';
-                    echo '<td>' . $dataInicial . '</td>';
-                    echo '<td>' . $dataFinal . '</td>';
-                    echo '<td>' . $r->descricaoAcervo . '</td>';
-                    echo '<td>' . $r->defeito . '</td>';
+                    echo '<td>' . $r->idEmprestimos . '</td>';
+                    echo '<td>' . $dataEmprestimo . '</td>';
+                    echo '<td>' . $dataVencimento . '</td>';
+                    echo '<td>' . $r->status . '</td>';
 
                     echo '<td>';
-                    if($this->permission->checkPermission($this->session->userdata('permissao'),'vOs')){
-                        echo '<a href="' . base_url() . 'index.php/os/visualizar/' . $r->idOs . '" style="margin-right: 1%" class="btn tip-top" title="Ver mais detalhes"><i class="icon-eye-open"></i></a>'; 
+                    if($this->permission->checkPermission($this->session->userdata('permissao'),'vEmprestimo')){
+                        echo '<a href="' . base_url() . 'index.php/emprestimos/visualizar/' . $r->idEmprestimos . '" style="margin-right: 1%" class="btn tip-top" title="Ver mais detalhes"><i class="icon-eye-open"></i></a>'; 
                     }
-                    if($this->permission->checkPermission($this->session->userdata('permissao'),'eOs')){
-                        echo '<a href="' . base_url() . 'index.php/os/editar/' . $r->idOs . '" class="btn btn-info tip-top" title="Editar OS"><i class="icon-pencil icon-white"></i></a>'; 
+                    if($this->permission->checkPermission($this->session->userdata('permissao'),'eEmprestimo')){
+                        echo '<a href="' . base_url() . 'index.php/emprestimos/editar/' . $r->idEmprestimos . '" class="btn btn-info tip-top" title="Editar OS"><i class="icon-pencil icon-white"></i></a>'; 
                     }
                     
                     echo  '</td>';

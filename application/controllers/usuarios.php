@@ -85,13 +85,13 @@ class Usuarios extends CI_Controller {
             $this->load->library('encrypt');                       
             $data = array(
                     'nome' => set_value('nome'),
-					
+					'tipo_usuario' => $this->input->post('tipo_usuario'),
 					'cpf' => set_value('cpf'),
 					'email' => set_value('email'),
 					'senha' => $this->encrypt->sha1($this->input->post('senha')),
 					'telefone' => set_value('telefone'),
 					'celular' => set_value('celular'),
-					'situacao' => set_value('situacao'),
+					'situacao' => $this->input->post('situacao'),
                     'permissoes_id' => $this->input->post('permissoes_id'),
 					'dataCadastro' => date('Y-m-d')
 					
@@ -213,40 +213,21 @@ class Usuarios extends CI_Controller {
 
                 $this->session->set_flashdata('error','Erro ao tentar excluir Usuário.');            
                 redirect(base_url().'index.php/usuarios/gerenciar/');
-            }
+            }					
 			
-			// excluindo OSs vinculadas ao Usuario
+			// excluindo emprestimos vinculados ao usuario
             $this->db->where('usuarios_id', $id);
-            $os = $this->db->get('os')->result();
+            $emprestimos = $this->db->get('emprestimos')->result();
 
-            if($os != null){
+            if($emprestimos != null){
 
-                foreach ($os as $o) {
-                    $this->db->where('os_id', $o->idOs);
-                    $this->db->delete('servicos_os');
-
-                    $this->db->where('os_id', $o->idOs);
-                    $this->db->delete('produtos_os');
+                foreach ($vendas as $e) {
+                    $this->db->where('emprestimos_id', $e->idEmprestimos);
+                    $this->db->delete('itens_de_emprestimos');
 
 
-                    $this->db->where('idOs', $o->idOs);
-                    $this->db->delete('os');
-                }
-            }
-			
-			// excluindo Vendas vinculadas ao usuario
-            $this->db->where('usuarios_id', $id);
-            $vendas = $this->db->get('vendas')->result();
-
-            if($vendas != null){
-
-                foreach ($vendas as $v) {
-                    $this->db->where('vendas_id', $v->idVendas);
-                    $this->db->delete('itens_de_vendas');
-
-
-                    $this->db->where('idVendas', $v->idVendas);
-                    $this->db->delete('vendas');
+                    $this->db->where('idVendas', $e->idEmprestimos);
+                    $this->db->delete('emprestimos');
                 }
             }
 
@@ -259,5 +240,6 @@ class Usuarios extends CI_Controller {
             $this->session->set_flashdata('success','Usuário excluido com sucesso!');            
             redirect(base_url().'index.php/usuarios/gerenciar/');
     }
+
 }
 

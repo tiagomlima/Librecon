@@ -9,7 +9,7 @@
             </div>
             <div class="widget-content nopadding">
                 <?php echo $custom_error; ?>
-                <form action="<?php echo current_url(); ?>" id="formAcervo" method="post" class="form-horizontal" >
+                <form action="<?php echo current_url(); ?>" id="formAcervo" method="post" enctype="multipart/form-data" class="form-horizontal" >
                      <div class="control-group">
                         <label for="titulo" class="control-label">Titulo<span class="required">*</span></label>
                         <div class="controls">
@@ -17,6 +17,61 @@
                         </div>
                     </div>
                     
+                    <div class="control-group">
+                        <label  class="control-label">Autor<span class="required">*</span></label>
+                        <div class="controls">
+                            <select name="autor_id" id="autor_id">
+                                  <?php foreach ($autor as $a) {
+                                      echo '<option value="'.$a->idAutor.'">'.$a->autor.'</option>';
+                                  } ?>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label  class="control-label">Editora<span class="required">*</span></label>
+                        <div class="controls">
+                            <select name="editora_id" id="editora_id">
+                                  <?php foreach ($editora as $e) {
+                                      echo '<option value="'.$e->idEditora.'">'.$e->editora.'</option>';
+                                  } ?>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label  class="control-label">Tipo de Item<span class="required">*</span></label>
+                        <div class="controls">
+                            <select name="tipoItem_id" id="tipoItem_id">
+                                  <?php foreach ($tipoItem as $t) {
+                                      echo '<option value="'.$t->idTipoItem.'">'.$t->nomeTipo.'</option>';
+                                  } ?>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label  class="control-label">Seção</label>
+                        <div class="controls">
+                            <select name="secao_id" id="secao_id">
+                                  <?php foreach ($secao as $s) {
+                                      echo '<option value="'.$s->idSecao.'">'.$s->secao.'</option>';
+                                  } ?>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label  class="control-label">Coleção</label>
+                        <div class="controls">
+                            <select name="colecao_id" id="colecao_id">
+                                  <?php foreach ($colecao as $c) {
+                                      echo '<option value="'.$c->idColecao.'">'.$c->colecao.'</option>';
+                                  } ?>
+                            </select>
+                        </div>
+                    </div>
+                                    
                     <div class="control-group">
                         <label for="tombo" class="control-label">Tombo<span class="required">*</span></label>
                         <div class="controls">
@@ -37,18 +92,21 @@
                             <input id="idioma" type="text" name="idioma" value="<?php echo set_value('idioma'); ?>"  />
                         </div>
                     </div>
-
                     
-
-                    <!--<div class="control-group">
-                        <label for="precoVenda" class="control-label">Preço de Venda<span class="required">*</span></label>
+                    <div class="control-group">
+                        <label for="idioma" class="control-label">Descrição</label>
                         <div class="controls">
-                            <input id="precoVenda" class="money" type="text" name="precoVenda" value="<?php echo set_value('precoVenda'); ?>"  />
+                            <input id="descricao" type="text" name="descricao" value=""  />
                         </div>
-                    </div>-->
-
+                    </div>
                     
-
+                    <div class="control-group">
+                        <label for="logo" class="control-label">Imagem do Livro</label>
+                        <div class="controls">
+                            <input type="file" name="userfile" value="" />
+                        </div>
+                    </div>	
+                                  
                     <div class="form-actions">
                         <div class="span12">
                             <div class="span6 offset3">
@@ -56,9 +114,7 @@
                                 <a href="<?php echo base_url() ?>index.php/acervos" id="" class="btn"><i class="icon-arrow-left"></i> Voltar</a>
                             </div>
                         </div>
-                    </div>
-
-                    
+                    </div>													                    
                 </form>
             </div>
 

@@ -11,7 +11,7 @@
                 <?php if ($custom_error != '') {
                     echo '<div class="alert alert-danger">' . $custom_error . '</div>';
                 } ?>
-                <form action="<?php echo current_url(); ?>" id="formLeitor" method="post" class="form-horizontal" >
+                <form action="<?php echo base_url() ?>index.php/leitores/adicionar" id="formLeitor" method="post" class="form-horizontal" >
                     <div class="control-group">
                         <label for="nome" class="control-label">Nome<span class="required">*</span></label>
                         <div class="controls">
@@ -166,17 +166,9 @@
                         </div>
                     </div>
                     
-                    <div class="control-group">
-                        <label  class="control-label">Permissões<span class="required">*</span></label>
-                        <div class="controls">
-                            <select name="permissoes_id" id="permissoes_id">
-                                  <?php foreach ($permissoes as $p) {
-                                      echo '<option value="'.$p->idPermissao.'">'.$p->nome.'</option>';
-                                  } ?>
-                            </select>
-                        </div>
-                    </div>
-
+                    <input type="hidden" id="permissoes_id" name="permissoes_id" value="2" />
+                    <input type="hidden" id="tipo_usuario" name="tipo_usuario" value="1" />
+                                                          
                     <div class="form-actions">
                         <div class="span12">
                             <div class="span6 offset3">
@@ -209,7 +201,6 @@
                   matricula:{ required: true},
                   cpf:{ required: true},
                   situacao:{ required: true},
-                  sexo:{ required: true},
                   senha:{ required: true},
                   senhaConfirm:{ required: true}
             },
@@ -226,7 +217,6 @@
                   matricula:{ required: 'Campo Requerido.'},
                   cpf:{ required: 'Campo Requerido.'},
                   situacao:{ required: 'Campo Requerido.'},
-                  sexo:{ required: 'Campo Requerido.'},
                   senha:{ required: 'Campo Requerido.'},
                   senhaConfirm:{ required: 'Campo Requerido.'}
 

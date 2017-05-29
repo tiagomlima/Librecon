@@ -14,7 +14,7 @@ class TipoItem extends CI_Controller {
             }
             $this->load->helper(array('codegen_helper'));
             $this->load->model('tipoItem_model','',TRUE);
-            $this->data['menuTipoItem'] = 'tipoItem';
+            $this->data['menuAcervos'] = 'tipoItem';
 	}	
 	
 	function index(){

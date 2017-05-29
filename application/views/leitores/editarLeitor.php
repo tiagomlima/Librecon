@@ -11,12 +11,12 @@
                 <?php if ($custom_error != '') {
                     echo '<div class="alert alert-danger">' . $custom_error . '</div>';
                 } ?>
-                <form action="<?php echo current_url(); ?>" id="formLeitor" method="post" class="form-horizontal" >
+                <form action="<?php echo base_url() ?>index.php/leitores/editar" id="formLeitor" method="post" class="form-horizontal" >
                     <div class="control-group">
-                        <?php echo form_hidden('idLeitores',$result->idLeitores) ?>
+                        <?php echo form_hidden('idUsuarios',$result->idUsuarios) ?>
                         <label for="nomeLeitor" class="control-label">Nome<span class="required">*</span></label>
                         <div class="controls">
-                            <input id="nomeLeitor" type="text" name="nomeLeitor" value="<?php echo $result->nomeLeitor; ?>"  />
+                            <input id="nomeLeitor" type="text" name="nomeLeitor" value="<?php echo $result->nome; ?>"  />
                         </div>
                     </div>
                     <div class="control-group">
@@ -37,8 +37,19 @@
                         <label  class="control-label">Sexo<span class="required">*</span></label>
                         <div class="controls">
                             <select name="sexo" id="sexo">
-                                <option value="Masculino">Masculino</option>
-                                <option value="Feminino">Feminino</option>
+                            <?php
+                            	if($result->sexo == 'Masculino'){
+                            		$op1 = 'Masculino';
+									$op2 = 'Feminino';
+                            	}
+								if($result->sexo == 'Feminino'){
+                            		$op1 = 'Feminino';
+									$op2 = 'Masculino';
+                            	}
+                            	
+                             ?>
+                                <option value="<?php echo $op1 ?>"><?php echo $op1 ?></option>
+                                <option value="<?php echo $op2 ?>"><?php echo $op2 ?></option>
                             </select>
                         </div>
                     </div>
@@ -192,6 +203,7 @@
                   matricula:{ required: true}
             },
             messages:{
+            
                   nomeLeitor :{ required: 'Campo Requerido.'},
                   cpf :{ required: 'Campo Requerido.'},
                   telefone:{ required: 'Campo Requerido.'},

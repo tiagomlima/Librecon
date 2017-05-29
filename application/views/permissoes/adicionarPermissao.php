@@ -394,29 +394,29 @@
 
                                     <td>
                                         <label>
-                                            <input name="vServico" class="marcar" type="checkbox" checked="checked" value="1" />
-                                            <span class="lbl"> Visualizar Serviço</span>
+                                            <input name="vReserva" class="marcar" type="checkbox" checked="checked" value="1" />
+                                            <span class="lbl"> Visualizar Reserva</span>
                                         </label>
                                     </td>
 
                                     <td>
                                         <label>
-                                            <input name="aServico" class="marcar" type="checkbox" value="1" />
-                                            <span class="lbl"> Adicionar Serviço</span>
+                                            <input name="aReserva" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Adicionar Reserva</span>
                                         </label>
                                     </td>
 
                                     <td>
                                         <label>
-                                            <input name="eServico" class="marcar" type="checkbox" value="1" />
-                                            <span class="lbl"> Editar Serviço</span>
+                                            <input name="eReserva" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Editar Reserva</span>
                                         </label>
                                     </td>
 
                                     <td>
                                         <label>
-                                            <input name="dServico" class="marcar" type="checkbox" value="1" />
-                                            <span class="lbl"> Excluir Serviço</span>
+                                            <input name="dReserva" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Excluir Reserva</span>
                                         </label>
                                     </td>
                                  
@@ -572,8 +572,8 @@
 
                                     <td>
                                         <label>
-                                            <input name="rServico" class="marcar" type="checkbox" value="1" />
-                                            <span class="lbl"> Relatório Serviço</span>
+                                            <input name="rReserva" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Relatório Reserva</span>
                                         </label>
                                     </td>
 

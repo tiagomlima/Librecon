@@ -78,7 +78,7 @@ if(!$results){?>
             echo '<td>'.$r->idEmprestimos.'</td>';
             echo '<td>'.$dataEmprestimo.'</td>';
 			echo '<td>'.$dataVencimento.'</td>';
-            echo '<td><a href="'.base_url().'index.php/clientes/visualizar/'.$r->idLeitores.'">'.$r->nomeLeitor.'</a></td>';
+            echo '<td><a href="'.base_url().'index.php/leitores/visualizar/'.$r->leitor_id.'">'.$r->nome.'</a></td>';
 			echo '<td>'.$status.'</td>';
             
             

@@ -15,7 +15,7 @@ class Disciplinas extends CI_Controller {
             }
             $this->load->helper(array('codegen_helper'));
             $this->load->model('disciplinas_model','',TRUE);
-            $this->data['menuDisciplinas'] = 'disciplinas';
+            $this->data['menuLeitores'] = 'disciplinas';
 	}	
 	
 	function index(){

@@ -1,75 +1,5 @@
 <?php
-$config = array('leitores' => array(array(
-                                	'field'=>'nome',
-                                	'label'=>'nome',
-                                	'rules'=>'required|trim|xss_clean'
-                                ),
-								array(
-                                	'field'=>'cpf',
-                                	'label'=>'CPF',
-                                	'rules'=>'required|trim|xss_clean|is_unique[leitores.cpf]'
-                                ),
-								array(
-                                	'field'=>'telefone',
-                                	'label'=>'Telefone',
-                                	'rules'=>'required|trim|xss_clean'
-                                ),
-                                array(
-                                    'field'=>'senha',
-                                    'label'=>'Senha',
-                                    'rules'=>'required|trim|xss_clean|min_length[12]'
-                                ),
-								array(
-                                	'field'=>'matricula',
-                                	'label'=>'Matricula',
-                                	'rules'=>'required|trim|xss_clean|is_unique[leitores.matricula]'
-                                ),
-                                array(
-                                    'field'=>'situacao',
-                                    'label'=>'Situação',
-                                    'rules'=>'required|trim|xss_clean'
-                                ),
-                                array(
-                                    'field'=>'sexo',
-                                    'label'=>'Sexo',
-                                    'rules'=>'required|trim|xss_clean'
-                                ),
-								array(
-                                	'field'=>'email',
-                                	'label'=>'Email',
-                                	'rules'=>'required|trim|valid_email|xss_clean'
-                                ),
-								array(
-                                	'field'=>'rua',
-                                	'label'=>'Rua',
-                                	'rules'=>'required|trim|xss_clean'
-                                ),
-								array(
-                                	'field'=>'numero',
-                                	'label'=>'Número',
-                                	'rules'=>'required|trim|xss_clean'
-                                ),
-								array(
-                                	'field'=>'bairro',
-                                	'label'=>'Bairro',
-                                	'rules'=>'required|trim|xss_clean'
-                                ),
-								array(
-                                	'field'=>'cidade',
-                                	'label'=>'Cidade',
-                                	'rules'=>'required|trim|xss_clean'
-                                ),
-								array(
-                                	'field'=>'estado',
-                                	'label'=>'Estado',
-                                	'rules'=>'required|trim|xss_clean'
-                                ),
-								array(
-                                	'field'=>'cep',
-                                	'label'=>'CEP',
-                                	'rules'=>'required|trim|xss_clean'
-                                ))
-                ,
+$config = array(
                 'cursos' => array(array(
                                     'field'=>'nomeCurso',
                                     'label'=>'Nome do Curso',
@@ -189,8 +119,7 @@ $config = array('leitores' => array(array(
                                     'field'=>'cpf',
                                     'label'=>'CPF',
                                     'rules'=>'required|trim|xss_clean|is_unique[usuarios.cpf]'
-                                ),
-                                
+                                ),                               
                                 array(
                                     'field'=>'email',
                                     'label'=>'Email',
@@ -199,16 +128,11 @@ $config = array('leitores' => array(array(
                                 array(
                                     'field'=>'senha',
                                     'label'=>'Senha',
-                                    'rules'=>'required|trim|xss_clean|min_length[12]'
+                                    'rules'=>'required|trim|xss_clean|min_length[5]'
                                 ),
                                 array(
                                     'field'=>'telefone',
                                     'label'=>'Telefone',
-                                    'rules'=>'required|trim|xss_clean'
-                                ),
-                                array(
-                                    'field'=>'situacao',
-                                    'label'=>'Situacao',
                                     'rules'=>'required|trim|xss_clean'
                                 ))
                 ,   
@@ -343,8 +267,8 @@ $config = array('leitores' => array(array(
                                 ),
                                 
                                 array(
-                                    'field'=>'leitores_id',
-                                    'label'=>'leitores',
+                                    'field'=>'leitor_id',
+                                    'label'=>'Leitor',
                                     'rules'=>'trim|xss_clean|required'
                                 ),
                                 array(

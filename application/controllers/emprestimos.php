@@ -86,8 +86,8 @@ class Emprestimos extends CI_Controller {
             $data = array(
                 'dataEmprestimo' => $dataEmprestimo,
                 'dataVencimento' => $dataVencimento,
-                'leitores_id' => $this->input->post('leitores_id'),
                 'usuarios_id' => $this->input->post('usuarios_id'),
+                'leitor_id' => $this->input->post('leitor_id'),
                 'grupo_id' => $this->input->post('grupo_id'),
                 'status' => $this->input->post('status')
                
@@ -137,7 +137,7 @@ class Emprestimos extends CI_Controller {
                 'dataVencimento' => $dataVencimento,
                 'usuarios_id' => $this->input->post('usuarios_id'),
                // 'status' => $this->input->post('status'),
-                'leitores_id' => $this->input->post('leitores_id')
+                'leitor_id' => $this->input->post('leitor_id')
             );
             if ($this->emprestimos_model->edit('emprestimos', $data, 'idEmprestimos', $this->input->post('idEmprestimos')) == TRUE) {
 				
@@ -150,7 +150,8 @@ class Emprestimos extends CI_Controller {
 		
 		
 		$this->data['grupos'] = $this->emprestimos_model->getGrupoById($this->uri->segment(3));
-        $this->data['result'] = $this->emprestimos_model->getById($this->uri->segment(3));	
+        $this->data['leitor'] = $this->emprestimos_model->getLeitorById($this->uri->segment(3));
+		$this->data['result'] = $this->emprestimos_model->getById($this->uri->segment(3));	
         $this->data['acervos'] = $this->emprestimos_model->getAcervos($this->uri->segment(3));
 		$this->data['acervo'] = $this->emprestimos_model->getAcervosById($this->uri->segment(3));
         $this->data['view'] = 'emprestimos/editarEmprestimo';
@@ -170,7 +171,8 @@ class Emprestimos extends CI_Controller {
         $this->data['custom_error'] = '';
         $this->load->model('librecon_model');
 		$this->data['grupos'] = $this->emprestimos_model->getGrupoById($this->uri->segment(3));
-        $this->data['result'] = $this->emprestimos_model->getById($this->uri->segment(3));
+        $this->data['result'] = $this->emprestimos_model->getLeitorById($this->uri->segment(3));
+		$this->data['usuario'] = $this->emprestimos_model->getById($this->uri->segment(3));
         $this->data['acervos'] = $this->emprestimos_model->getAcervos($this->uri->segment(3));
 		$this->data['acervo'] = $this->emprestimos_model->getAcervosById($this->uri->segment(3));
         $this->data['emitente'] = $this->librecon_model->getEmitente();
@@ -388,14 +390,13 @@ class Emprestimos extends CI_Controller {
 		if(!$this->permission->checkPermission($this->session->userdata('permissao'),'eEmprestimo')){
               $this->session->set_flashdata('error','Você não tem permissão para emprestar');
               redirect(base_url());
-            }	
-		
+            }
+				
 		$itens = $this->db->get('itens_de_emprestimos')->row();		    						
 		$status = $this->input->post('status');
 		$idEmprestimos = $this->input->post('idEmprestimos');
 		$dataVencimento = strtr($this->input->post('dataVencimento'), '/', '-'); //converte o formato da data ao padrao do mysql parte 1
-		
-		
+				
 		$dataVencimento = date('Y-m-d', strtotime($dataVencimento)); //converte o formato da data ao padrao do mysql parte 2
 		//atualiza a data de devoluçao de acordo com o grupo do leitor
 		$data = "UPDATE emprestimos set dataVencimento = '".$dataVencimento."' WHERE idEmprestimos = ".$idEmprestimos;
@@ -404,9 +405,12 @@ class Emprestimos extends CI_Controller {
 		if(count($itens) > 0){
 			//atualiza o status do emprestimo
 			$sql = "UPDATE emprestimos set status = '".$status."' WHERE idEmprestimos =".$idEmprestimos;
-                $this->db->query($sql, array($status, $idEmprestimos));
-															
-			    redirect('emprestimos');
+            $this->db->query($sql, array($status, $idEmprestimos));
+            
+            $acervos_id = $this->emprestimos_model->getAcervosById($idEmprestimos);				
+					 			   
+			$this->session->set_flashdata('success','Empréstimos realizado com sucesso!');											
+			redirect('emprestimos');
 		} else{
 			$this->session->set_flashdata('error','Por favor, adicione os itens a serem emprestados.');
 			redirect('emprestimos/editar/'.$idEmprestimos);

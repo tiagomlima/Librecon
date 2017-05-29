@@ -23,6 +23,14 @@ class TipoItem_model extends CI_Model {
         $result =  !$one  ? $query->result() : $query->row();
         return $result;
     }
+	
+	function getActive($table,$fields){
+        
+        $this->db->select($fields);
+        $this->db->from($table);
+        $query = $this->db->get();
+        return $query->result();;
+    }
 
     function getById($id){
         $this->db->where('idTipoItem',$id);

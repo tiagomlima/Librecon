@@ -72,18 +72,15 @@
         </li>
     <?php } ?>
     
-    <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vAcervo')){ ?>
-        <li class="<?php if(isset($menuAcervos)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/acervos"><i class="icon icon-barcode"></i> <span>Acervos</span></a></li>
-    <?php } ?>
     
     <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vAcervo') || $this->permission->checkPermission($this->session->userdata('permissao'),'vAutor') || $this->permission->checkPermission($this->session->userdata('permissao'),'vEditora') || $this->permission->checkPermission($this->session->userdata('permissao'),'vTipoItem') || $this->permission->checkPermission($this->session->userdlata('permissao'),'vSecao') || $this->permission->checkPermission($this->session->userdata('permissao'),'vColecao')){ ?>
         
-        <li class="submenu <?php if(isset($menuAcervo)){echo 'active open';};?>" >
-          <a href="#"><i class="icon icon-list-alt"></i> <span>Acervo</span> <span class="label"><i class="icon-chevron-down"></i></span></a>
+        <li class="submenu <?php if(isset($menuAcervos)){echo 'active open';};?>" >
+          <a href="#"><i class="icon icon-book"></i> <span>Acervo</span> <span class="label"><i class="icon-chevron-down"></i></span></a>
           <ul>
 
             <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vAcervo')){ ?>
-                <li><a href="<?php echo base_url()?>index.php/acervo">Acervo</a></li>
+                <li><a href="<?php echo base_url()?>index.php/acervos">Acervo</a></li>
             <?php } ?>
             
             <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vAutor')){ ?>
@@ -112,16 +109,13 @@
     <?php } ?>
     
  
-    <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vServico')){ ?>
-        <li class="<?php if(isset($menuServicos)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/servicos"><i class="icon icon-wrench"></i> <span>Serviços</span></a></li>
+    <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vReserva')){ ?>
+        <li class="<?php if(isset($menuReserva)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/reservas"><i class="icon icon-calendar"></i> <span>Reservas</span></a></li>
     <?php } ?>
 
-    <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vOs')){ ?>
-        <li class="<?php if(isset($menuOs)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/os"><i class="icon icon-tags"></i> <span>Ordens de Serviço</span></a></li>
-    <?php } ?>
 
     <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vEmprestimo')){ ?>
-        <li class="<?php if(isset($menuEmprestimos)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/emprestimos"><i class="icon icon-shopping-cart"></i> <span>Emprestimos</span></a></li>
+        <li class="<?php if(isset($menuEmprestimos)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/emprestimos"><i class="icon icon-book"></i> <span>Emprestimos</span></a></li>
     <?php } ?>
     
     <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vArquivo')){ ?>

@@ -19,7 +19,7 @@
                         </div>
                     </div>
 
-                    
+                    <input type="hidden" id="tipo_usuario" name="tipo_usuario" value="0" />
 
                     <div class="control-group">
                         <label for="cpf" class="control-label">CPF<span class="required">*</span></label>

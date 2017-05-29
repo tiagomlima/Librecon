@@ -23,6 +23,56 @@ class Acervos_model extends CI_Model {
         $result =  !$one  ? $query->result() : $query->row();
         return $result;
     }
+	
+	function getAutor($perpage=0,$start=0,$one=false){
+        
+        $this->db->from('acervos');
+        $this->db->select('acervos.*, autor.autor as autor');
+        $this->db->limit($perpage,$start);
+        $this->db->join('autor', 'acervos.autor_id = autor.idAutor', 'left');
+        $this->db->limit(1);
+        $query = $this->db->get();
+        
+        $result =  !$one  ? $query->result() : $query->row();
+        return $result;
+    }
+	
+	function getAutorById($id){
+		$this->db->select('acervos.autor_id, autor.autor as autor');
+		$this->db->where('idAcervos',$id);
+        $this->db->limit(1);
+        $this->db->join('autor', 'acervos.autor_id = autor.idAutor', 'left');
+		return $this->db->get('acervos')->row();
+	}
+	
+	function getEditora($perpage=0,$start=0,$one=false){
+        
+        $this->db->from('acervos');
+        $this->db->select('acervos.*, editora.editora as editora');
+        $this->db->limit($perpage,$start);
+        $this->db->join('editora', 'acervos.editora_id = editora.idEditora', 'left');
+        $this->db->limit(1);
+        $query = $this->db->get();
+        
+        $result =  !$one  ? $query->result() : $query->row();
+        return $result;
+    }
+	
+	function getEditoraById($id){
+		$this->db->select('acervos.editora_id, editora.editora as editora');
+		$this->db->where('idAcervos',$id);
+        $this->db->limit(1);
+        $this->db->join('editora', 'acervos.editora_id = editora.idEditora', 'left');
+		return $this->db->get('acervos')->row();
+	}
+
+	function getColecaoById($id){
+		$this->db->select('acervos.colecao_id, colecao.colecao as colecao');
+		$this->db->where('idAcervos',$id);
+        $this->db->limit(1);
+        $this->db->join('colecao', 'acervos.colecao_id = colecao.idColecao', 'left');
+		return $this->db->get('acervos')->row();
+	}
 
     function getById($id){
         $this->db->where('idAcervos',$id);
@@ -37,6 +87,14 @@ class Acervos_model extends CI_Model {
         $query = $this->db->get();
         return $query->result();;
     }
+	
+	function getReserva($id,$acervos_id){
+		$this->db->select('*');
+		$this->db->from('reserva');
+		$this->db->like('acervos_id', $acervos_id);
+		$this->db->where('usuario_id',$id);
+		return $this->db->get()->row();
+	}
     
     function add($table,$data){
         $this->db->insert($table, $data);         
@@ -58,6 +116,14 @@ class Acervos_model extends CI_Model {
 		}
 		
 		return FALSE;       
+    }
+	
+	public function editImg($id, $img){
+        
+        $this->db->set('img_acervo', $img); 
+        $this->db->where('idAcervos', $id);
+        return $this->db->update('acervos'); 
+         
     }
     
     function delete($table,$fieldID,$ID){

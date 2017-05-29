@@ -21,10 +21,14 @@ if(!$results){?>
     <thead>
         <tr>
             <th>#</th>
+            <th>Imagem</th>
             <th>Título</th>
+            <th>Autor</th>
+            <th>Editora</th>
             <th>Tombo</th>
             <th>Estoque</th>
             <th>Idioma</th>
+            <th>Status</th>
             <th></th>
         </tr>
     </thead>
@@ -56,36 +60,53 @@ if(!$results){?>
     <thead>
         <tr style="backgroud-color: #2D335B">
             <th>#</th>
+            <th>Imagem</th>
             <th>Título</th>
+            <th>Autor</th>
+            <th>Editora</th>
             <th>Tombo</th>
             <th>Estoque</th>
             <th>Idioma</th>
+            <th>Status</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        <?php foreach ($results as $r) {
-            echo '<tr>';
-            echo '<td>'.$r->idAcervos.'</td>';
-            echo '<td>'.$r->titulo.'</td>';
-            echo '<td>'.$r->tombo.'</td>';
-			echo '<td>'.$r->estoque.'</td>';
-			echo '<td>'.$r->idioma.'</td>';
-            
-            
-            echo '<td>';
-            if($this->permission->checkPermission($this->session->userdata('permissao'),'vAcervo')){
-                echo '<a style="margin-right: 1%" href="'.base_url().'index.php/acervos/visualizar/'.$r->idAcervos.'" class="btn tip-top" title="Visualizar Acervo"><i class="icon-eye-open"></i></a>  '; 
-            }
-            if($this->permission->checkPermission($this->session->userdata('permissao'),'eAcervo')){
-                echo '<a style="margin-right: 1%" href="'.base_url().'index.php/acervos/editar/'.$r->idAcervos.'" class="btn btn-info tip-top" title="Editar Acervo"><i class="icon-pencil icon-white"></i></a>'; 
-            }
-            if($this->permission->checkPermission($this->session->userdata('permissao'),'dAcervo')){
-                echo '<a href="#modal-excluir" role="button" data-toggle="modal" acervo="'.$r->idAcervos.'" class="btn btn-danger tip-top" title="Excluir Acervo"><i class="icon-remove icon-white"></i></a>'; 
-            }
-                     
-            echo '</td>';
-            echo '</tr>';
+        <?php 	   
+        	foreach ($results as $r) {
+        		foreach ($autor as $a){
+        			foreach ($editora as $e){
+			            echo '<tr>';
+			            echo '<td>'.$r->idAcervos.'</td>';
+						echo '<td><a href="'.base_url().'index.php/acervos/visualizar/'.$r->idAcervos.'"><img src="'.$r->img_acervo.'" alt="imagem do acervo" style="width:108px;height:118px"/></td></a>';
+						echo '<td>'.$r->titulo.'</td>';
+						echo '<td>'.$a->autor.'</td>';
+						echo '<td>'.$e->editora.'</td>';
+			            echo '<td>'.$r->tombo.'</td>';
+						echo '<td>'.$r->estoque.'</td>';
+						echo '<td>'.$r->idioma.'</td>';
+						if($r->estoque <= 1){
+				        	$status = 'Não disponivel';
+				        }else{
+				        	$status = 'Disponivel';
+				        }
+			            echo '<td>'.$status.'</td>';
+			            
+			            echo '<td>';
+			            if($this->permission->checkPermission($this->session->userdata('permissao'),'vAcervo') && $this->session->userdata('tipo_usuario') != 1){
+			                echo '<a style="margin-right: 1%" href="'.base_url().'index.php/acervos/visualizar/'.$r->idAcervos.'" class="btn tip-top" title="Visualizar Acervo"><i class="icon-eye-open"></i></a>  '; 
+			            }
+			            if($this->permission->checkPermission($this->session->userdata('permissao'),'eAcervo')){
+			                echo '<a style="margin-right: 1%" href="'.base_url().'index.php/acervos/editar/'.$r->idAcervos.'" class="btn btn-info tip-top" title="Editar Acervo"><i class="icon-pencil icon-white"></i></a>'; 
+			            }
+			            if($this->permission->checkPermission($this->session->userdata('permissao'),'dAcervo')){
+			                echo '<a href="#modal-excluir" role="button" data-toggle="modal" acervo="'.$r->idAcervos.'" class="btn btn-danger tip-top" title="Excluir Acervo"><i class="icon-remove icon-white"></i></a>'; 
+			            }
+			                     
+			            echo '</td>';
+			            echo '</tr>';
+			        }
+			  }
         }?>
         <tr>
             

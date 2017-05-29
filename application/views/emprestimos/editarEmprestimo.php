@@ -92,8 +92,8 @@
                                         </div>
                                         <div class="span5" style="margin-left: 0">
                                             <label for="leitor">Leitor<span class="required">*</span></label>
-                                            <input id="leitor" class="span12" type="text" name="leitor" value="<?php echo $result->nomeLeitor ?>" <?php echo $disabled ?>  />
-                                            <input id="leitores_id" class="span12" type="hidden" name="leitores_id" value="<?php echo $result->leitores_id ?>"  />
+                                            <input id="leitor" class="span12" type="text" name="leitor" value="<?php echo $leitor->nome ?>" <?php echo $disabled ?>  />
+                                            <input id="leitor_id" class="span12" type="hidden" name="leitor_id" value="<?php echo $result->leitor_id ?>"  />
                                                                                      
                                         </div>
                                         <div class="span5">
@@ -203,9 +203,7 @@
   <input id="idEmprestimos" class="span12" type="hidden" name="idEmprestimos" value="<?php echo $result->idEmprestimos ?>"  />
   <input type="hidden" id="status" name="status" value="Emprestado"/>
   <?php
-  	$duracao = $grupos->duracao_dias;
-	
-  
+  	$duracao = $grupos->duracao_dias;  
    ?>
   <input type="hidden" id="dataVencimento" name="dataVencimento" value="<?php echo date('d/m/Y', strtotime("+".$duracao." days")); ?> "/>
   
@@ -217,6 +215,8 @@
 </div>
 </form>
 </div>
+
+
 
 <!-- Modal -->
 <div id="modal-excluir" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -294,7 +294,7 @@ $(document).ready(function(){
             source: "<?php echo base_url(); ?>index.php/emprestimos/autoCompleteLeitor",
             minLength: 2,
             select: function( event, ui ) {
-                 $("#leitores_id").val(ui.item.id);
+                 $("#leitor_id").val(ui.item.id);
             }
       });
       $("#usuario").autocomplete({

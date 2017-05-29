@@ -11,7 +11,7 @@
             </div>
             <div class="widget-content ">
                 <div class="alert alert-danger">Nenhum dado foi cadastrado até o momento. Essas informações 
-                estarão disponíveis na tela de impressão de OS.</div>
+                estarão disponíveis na tela de geração de comprovante de empréstimo.</div>
                 <a href="#modalCadastrar" data-toggle="modal" role="button" class="btn btn-success">Cadastrar Dados</a>
             </div>
         </div>    
@@ -84,9 +84,9 @@
                         </div>
                     </div>
                     <div class="control-group">
-                        <label for="descricao" class="control-label"><span class="required">E-mail*</span></label>
+                        <label for="descricao" class="control-label"><span class="required">Site*</span></label>
                         <div class="controls">
-                            <input type="text" name="email" value="" />
+                            <input type="text" name="site" value="" />
                         </div>
                     </div>
 
@@ -123,7 +123,7 @@
                     <tbody>
                         <tr>
                             <td style="width: 25%"><img src=" <?php echo $dados[0]->url_logo; ?> "></td>
-                            <td> <span style="font-size: 20px; "> <?php echo $dados[0]->nome; ?> </span> </br><span><?php echo $dados[0]->cnpj; ?> </br> <?php echo $dados[0]->rua.', nº:'.$dados[0]->numero.', '.$dados[0]->bairro.' - '.$dados[0]->cidade.' - '.$dados[0]->uf; ?> </span> </br> <span> E-mail: <?php echo $dados[0]->email.' - Fone: '.$dados[0]->telefone; ?></span></td>
+                            <td> <span style="font-size: 20px; "> <?php echo $dados[0]->nome; ?> </span> </br><span><?php echo $dados[0]->cnpj; ?> </br> <?php echo $dados[0]->rua.', nº:'.$dados[0]->numero.', '.$dados[0]->bairro.' - '.$dados[0]->cidade.' - '.$dados[0]->uf; ?> </span> </br> <span> Site: <?php echo $dados[0]->site.' - Fone: '.$dados[0]->telefone; ?></span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -203,9 +203,9 @@
                         </div>
                     </div>
                     <div class="control-group">
-                        <label for="descricao" class="control-label"><span class="required">E-mail*</span></label>
+                        <label for="descricao" class="control-label"><span class="required">Site*</span></label>
                         <div class="controls">
-                            <input type="text" name="email" value="<?php echo $dados[0]->email; ?>" />
+                            <input type="text" name="site" value="<?php echo $dados[0]->site; ?>" />
                         </div>
                     </div>
 
@@ -288,7 +288,7 @@ $(document).ready(function(){
          cidade: {required:true},
          uf: {required:true},
          telefone: {required:true},
-         email: {required:true}
+         site: {required:true}
       },
       messages:{
          userfile: {required: 'Campo Requerido.'},
@@ -301,7 +301,7 @@ $(document).ready(function(){
          cidade: {required:'Campo Requerido.'},
          uf: {required:'Campo Requerido.'},
          telefone: {required:'Campo Requerido.'},
-         email: {required:'Campo Requerido.'}
+         site: {required:'Campo Requerido.'}
       },
 
         errorClass: "help-inline",
@@ -329,7 +329,7 @@ $(document).ready(function(){
          cidade: {required:true},
          uf: {required:true},
          telefone: {required:true},
-         email: {required:true}
+         site: {required:true}
       },
       messages:{
          userfile: {required: 'Campo Requerido.'},
@@ -342,7 +342,7 @@ $(document).ready(function(){
          cidade: {required:'Campo Requerido.'},
          uf: {required:'Campo Requerido.'},
          telefone: {required:'Campo Requerido.'},
-         email: {required:'Campo Requerido.'}
+         site: {required:'Campo Requerido.'}
       },
 
         errorClass: "help-inline",

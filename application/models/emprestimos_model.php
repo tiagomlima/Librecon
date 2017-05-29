@@ -11,10 +11,10 @@ class Emprestimos_model extends CI_Model {
     
     function get($table,$fields,$where='',$perpage=0,$start=0,$one=false,$array='array'){
         
-        $this->db->select($fields.', leitores.nomeLeitor, leitores.idLeitores');
+        $this->db->select($fields.', usuarios.nome, usuarios.idUsuarios');
         $this->db->from($table);
         $this->db->limit($perpage,$start);
-        $this->db->join('leitores', 'leitores.idLeitores = '.$table.'.leitores_id');
+        $this->db->join('usuarios', 'usuarios.idUsuarios = '.$table.'.leitor_id');//mudei aqui, usuarios_id para leitor_id
         $this->db->order_by('idEmprestimos','desc');
         if($where){
             $this->db->where($where);
@@ -25,11 +25,23 @@ class Emprestimos_model extends CI_Model {
         $result =  !$one  ? $query->result() : $query->row();
         return $result;
     }
+	
 
-    function getById($id){
-        $this->db->select('emprestimos.*, leitores.*, usuarios.telefone, usuarios.email,usuarios.nome');
+    function getLeitorById($id){
+    	
+        $this->db->select('emprestimos.*, usuarios.*');
         $this->db->from('emprestimos');
-        $this->db->join('leitores','leitores.idLeitores = emprestimos.leitores_id');
+        $this->db->join('usuarios','usuarios.idUsuarios = emprestimos.leitor_id');
+        $this->db->where('emprestimos.idEmprestimos',$id);
+        $this->db->limit(1);
+        return $this->db->get()->row();      
+        
+        
+    }
+	
+	function getById($id){
+        $this->db->select('emprestimos.*, usuarios.telefone, usuarios.email,usuarios.nome');
+        $this->db->from('emprestimos');
         $this->db->join('usuarios','usuarios.idUsuarios = emprestimos.usuarios_id');
         $this->db->where('emprestimos.idEmprestimos',$id);
         $this->db->limit(1);
@@ -63,10 +75,10 @@ class Emprestimos_model extends CI_Model {
 	}
 
 	function getCursoById($id){
-		$this->db->select('emprestimos.*, leitores.*, cursos.idCursos, cursos.nomeCurso');
+		$this->db->select('emprestimos.*, usuarios.*, cursos.idCursos, cursos.nomeCurso');
         $this->db->from('emprestimos');
-        $this->db->join('leitores','leitores.idLeitores = emprestimos.leitores_id');
-        $this->db->join('cursos','cursos.idCursos = leitores.curso_id');
+        $this->db->join('usuarios','usuarios.idUsuarios = emprestimos.leitor_id');
+        $this->db->join('cursos','cursos.idCursos = usuarios.curso_id');
         $this->db->where('emprestimos.idEmprestimos',$id);
         $this->db->limit(1);
         return $this->db->get()->row();
@@ -132,11 +144,12 @@ class Emprestimos_model extends CI_Model {
 
         $this->db->select('*');
         $this->db->limit(5);
-        $this->db->like('nomeLeitor', $q);
-        $query = $this->db->get('leitores');
+        $this->db->like('nome', $q);
+		$this->db->where('tipo_usuario',1);
+        $query = $this->db->get('usuarios');
         if($query->num_rows > 0){
             foreach ($query->result_array() as $row){
-                $row_set[] = array('label'=>$row['nomeLeitor'].' | Telefone: '.$row['telefone'],'id'=>$row['idLeitores'],'grupo'=>$row['grupo_id']);
+                $row_set[] = array('label'=>$row['nome'].' | Telefone: '.$row['telefone'],'id'=>$row['idUsuarios'],'grupo'=>$row['grupo_id']);
             }
             echo json_encode($row_set);
         }
@@ -161,7 +174,7 @@ class Emprestimos_model extends CI_Model {
         $this->db->select('*');
         $this->db->limit(5);
         $this->db->like('nome', $q);
-        $this->db->where('situacao',1);
+        $this->db->where('tipo_usuario',0);
         $query = $this->db->get('usuarios');
         if($query->num_rows > 0){
             foreach ($query->result_array() as $row){

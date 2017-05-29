@@ -61,24 +61,24 @@ if(!$results){?>
             <th>E-mail</th>
             <th>Telefone</th>
             <th>Matricula</th>
-            <th>Curso</th>
-            <th>Grupo</th>
+			<th>Curso</th>
+			<th>Grupo</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
         <?php foreach ($results as $r) {
-            echo '<tr>';
-            echo '<td>'.$r->idUsuarios.'</td>';
-            echo '<td>'.$r->nome.'</td>';
-            echo '<td>'.$r->email.'</td>';
-            echo '<td>'.$r->telefone.'</td>';
-			echo '<td>'.$r->matricula.'</td>';
-			foreach ($curso as $c) {
-			echo '<td>'.$c->curso.'</td>';
-			foreach ($grupo as $g) {
-			echo '<td>'.$g->grupo.'</td>';
-            echo '<td>';
+        		foreach ($curso as $c ){
+        			foreach ($grupo as $g){
+			            echo '<tr>';
+			            echo '<td>'.$r->idUsuarios.'</td>';
+			            echo '<td>'.$r->nome.'</td>';
+			            echo '<td>'.$r->email.'</td>';
+			            echo '<td>'.$r->telefone.'</td>';
+						echo '<td>'.$r->matricula.'</td>';
+						echo '<td>'.$c->curso.'</td>';
+						echo '<td>'.$g->grupo.'</td>';			
+            			echo '<td>';
 			
             if($this->permission->checkPermission($this->session->userdata('permissao'),'vLeitor')){
                 echo '<a href="'.base_url().'index.php/leitores/visualizar/'.$r->idUsuarios.'" style="margin-right: 1%" class="btn tip-top" title="Ver mais detalhes"><i class="icon-eye-open"></i></a>'; 
@@ -93,9 +93,9 @@ if(!$results){?>
               
             echo '</td>';
             echo '</tr>';
+			
 			}
-            }
-            
+            } 
         }?>
         <tr>
             
@@ -117,7 +117,7 @@ if(!$results){?>
     <h5 id="myModalLabel">Excluir Leitor</h5>
   </div>
   <div class="modal-body">
-    <input type="hidden" id="idLeitor" name="id" value="" />
+    <input type="hidden" id="idUsuarios" name="idUsuarios" value="" />
     <h5 style="text-align: center">Deseja realmente excluir este leitor e os dados associados a ele?</h5>
   </div>
   <div class="modal-footer">
@@ -139,7 +139,7 @@ $(document).ready(function(){
    $(document).on('click', 'a', function(event) {
         
         var leitor = $(this).attr('leitor');
-        $('#idUsuario').val(leitor);
+        $('#idUsuarios').val(leitor);
 
     });
 

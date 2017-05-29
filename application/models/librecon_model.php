@@ -54,17 +54,18 @@ class Librecon_model extends CI_Model {
     function pesquisar($termo){
          $data = array();
          // buscando leitores
-         $this->db->like('nomeLeitor',$termo);
+         $this->db->like('nome',$termo);
+		 $this->db->where('tipo_usuario',1);
          $this->db->limit(5);
-         $data['leitoress'] = $this->db->get('leitores')->result();
+         $data['usuarios'] = $this->db->get('usuarios')->result();
 
-         // buscando os
-         $this->db->like('idOs',$termo);
+         // buscando emprestimos
+         $this->db->like('idEmprestimos',$termo);
          $this->db->limit(5);
-         $data['os'] = $this->db->get('os')->result();
+         $data['emprestimos'] = $this->db->get('emprestimos')->result();
 
          // buscando acervos
-         $this->db->like('descricao',$termo);
+         $this->db->like('titulo',$termo);
          $this->db->limit(5);
          $data['acervos'] = $this->db->get('acervos')->result();
 
@@ -117,9 +118,9 @@ class Librecon_model extends CI_Model {
 	}
 
     function getEmprestimosAbertos(){
-        $this->db->select('emprestimos.*, leitores.nomeLeitor');
+        $this->db->select('emprestimos.*, usuarios.nome');
         $this->db->from('emprestimos');
-        $this->db->join('leitores', 'leitores.idLeitores = emprestimos.leitores_id');
+        $this->db->join('usuarios', 'usuarios.idUsuarios = emprestimos.leitor_id');
         $this->db->where('emprestimos.status','Emprestado');
         $this->db->limit(10);
         return $this->db->get()->result();
@@ -151,7 +152,7 @@ class Librecon_model extends CI_Model {
         return $this->db->get('emitente')->result();
     }
 
-    public function addEmitente($nome, $cnpj, $ie, $logradouro, $numero, $bairro, $cidade, $uf,$telefone,$email, $logo){
+    public function addEmitente($nome, $cnpj, $ie, $logradouro, $numero, $bairro, $cidade, $uf,$telefone,$site, $logo){
        
        $this->db->set('nome', $nome);
        $this->db->set('cnpj', $cnpj);
@@ -162,7 +163,7 @@ class Librecon_model extends CI_Model {
        $this->db->set('cidade', $cidade);
        $this->db->set('uf', $uf);
        $this->db->set('telefone', $telefone);
-       $this->db->set('email', $email);
+       $this->db->set('site', $site);
        $this->db->set('url_logo', $logo);
        return $this->db->insert('emitente');
     }
