@@ -25,16 +25,42 @@ class Reservas_model extends CI_Model {
         return $result;
     }
 
-    function getById($id){
+   /* function getById($id){
         $this->db->where('idReserva',$id);
         $this->db->limit(1);
         return $this->db->get('reserva')->row();
+    }*/
+    
+    function getById($id){
+        $this->db->select('reserva.*, usuarios.telefone, usuarios.email,usuarios.nome');
+        $this->db->from('reserva');
+        $this->db->join('usuarios','usuarios.idUsuarios = reserva.usuario_id');
+        $this->db->where('reserva.idReserva',$id);
+        $this->db->limit(1);
+        return $this->db->get()->row();
     }
 	
+	function getReservaById($id){
+		$this->db->select('*');
+		$this->db->from('reserva');
+		$this->db->where('usuario_id',$id);
+		$this->db->limit(1);
+		return $this->db->get()->row();
+	}
+	
+	function getReservaRetirado($id){
+		$this->db->select('*');
+		$this->db->from('reserva');
+		$this->db->where('idReserva',$id);
+		$this->db->where('status','Retirado');
+		$this->db->limit(1);
+		return $this->db->get()->row();
+	}
+			
 	function getLeitor($perpage=0,$start=0,$one=false){
         
         $this->db->from('reserva');
-        $this->db->select('reserva.*, usuarios.nome as leitor');
+        $this->db->select('reserva.*, usuarios.nome as leitor, usuarios.idUsuarios as id');
         $this->db->limit($perpage,$start);
         $this->db->join('usuarios', 'reserva.usuario_id = usuarios.idUsuarios', 'left');
         $this->db->limit(1);
@@ -44,12 +70,41 @@ class Reservas_model extends CI_Model {
         return $result;
     }
 	
+	function getLeitorById($id){
+    	
+        $this->db->select('reserva.*, usuarios.*');
+        $this->db->from('reserva');
+        $this->db->join('usuarios','usuarios.idUsuarios = reserva.usuario_id');
+        $this->db->where('reserva.idReserva',$id);
+        $this->db->limit(1);
+        return $this->db->get()->row();      
+        
+        
+    }
+	
+	public function getAcervos($id){
+        $this->db->select('itens_de_reserva.*, acervos.*');
+        $this->db->from('itens_de_reserva');
+        $this->db->join('acervos','acervos.idAcervos = itens_de_reserva.acervos_id');
+        $this->db->where('reserva_id',$id);		
+        return $this->db->get()->result();
+    }
+	
+	public function getAcervosById($id){
+        $this->db->select('itens_de_reserva.*, acervos.*');
+        $this->db->from('itens_de_reserva');
+        $this->db->join('acervos','acervos.idAcervos = itens_de_reserva.acervos_id');
+        $this->db->where('reserva_id',$id);	
+         return $this->db->get()->result();
+    }
+	
+	
 	function getAcervo($perpage=0,$start=0,$one=false){
         
-        $this->db->from('reserva');
-        $this->db->select('reserva.*, acervos.titulo as acervo');
+        $this->db->from('itens_de_reserva');
+        $this->db->select('itens_de_reserva.*, acervos.titulo as acervo, acervos.idAcervos as id');
         $this->db->limit($perpage,$start);
-        $this->db->join('acervos', 'reserva.acervos_id = acervos.idAcervos', 'left');
+        $this->db->join('acervos', 'itens_de_reserva.acervos_id = acervos.idAcervos', 'left');
         $this->db->limit(1);
         $query = $this->db->get();
         
@@ -57,12 +112,26 @@ class Reservas_model extends CI_Model {
         return $result;
     }
 	
+	
 	function getAutor($perpage=0,$start=0,$one=false){
         
-        $this->db->from('reserva');
-        $this->db->select('reserva.*, autor.autor as autor');
+        $this->db->from('acervos');
+        $this->db->select('acervos.*, autor.autor as autor');
         $this->db->limit($perpage,$start);
-        $this->db->join('autor', 'reserva.acervos_id = acervos.idAcervos', 'left');
+        $this->db->join('autor', 'acervos.autor_id = autor.idAutor', 'left');
+        $this->db->limit(1);
+        $query = $this->db->get();
+        
+        $result =  !$one  ? $query->result() : $query->row();
+        return $result;
+    }
+	
+	function getEditora($perpage=0,$start=0,$one=false){
+        
+        $this->db->from('acervos');
+        $this->db->select('acervos.*, editora.editora as editora');
+        $this->db->limit($perpage,$start);
+        $this->db->join('editora', 'acervos.editora_id = editora.idEditora', 'left');
         $this->db->limit(1);
         $query = $this->db->get();
         

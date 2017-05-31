@@ -153,24 +153,25 @@
                                             <thead>
                                                 <tr>                                              
                                                    <th>Acervo</th>
-                                                   <th>Tombo</th>
                                                    <?php if($result->status != 'Devolvido'){ ?>
-                                                   <th>Ações</th>  
+                                                   <th>Remover</th>  
                                                    <?php } ?>                                                  
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php
-                                                foreach ($acervos as $p) {
+                                                <?php                                                                                                													
+													foreach ($acervos as $p) {
                                                 	                                                                                                   
                                                     echo '<tr>';
-                                                    echo '<td>'.$p->titulo.'</td>';
-                                                    echo '<td>'.$p->tombo.'</td>';
+                                                    echo '<td style="text-align:center"><a href="'.base_url().'index.php/acervos/visualizar/'.$p->idAcervos.'">'.$p->titulo.'</a></td>';
 													if($result->status != 'Devolvido'){
-                                                    echo '<td><a href="" idAcao="'.$p->idItens.'" prodAcao="'.$p->idAcervos.'" idEmprestimo="'.$p->emprestimos_id.'" title="Excluir Acervo" class="btn btn-danger"><i class="icon-remove icon-white"></i></a></td>';
+                                                    echo '<td style="text-align:center"><a href="" idAcao="'.$p->idItens.'" prodAcao="'.$p->idAcervos.'" idEmprestimo="'.$p->emprestimos_id.'" title="Excluir Acervo" class="btn btn-danger"><i class="icon-remove icon-white"></i></a></td>';
 													}                                                   
                                                     echo '</tr>';
-                                                }?>
+                                                }  
+												?>
+                                                
+                                                
                                                                         
                                             </tbody>
                                         </table> 
@@ -202,6 +203,7 @@
   
   <input id="idEmprestimos" class="span12" type="hidden" name="idEmprestimos" value="<?php echo $result->idEmprestimos ?>"  />
   <input type="hidden" id="status" name="status" value="Emprestado"/>
+  <input type="hidden" id="leitor_id" name="leitor_id" value="<?php echo $result->leitor_id ?>"/>
   <?php
   	$duracao = $grupos->duracao_dias;  
    ?>

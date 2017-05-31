@@ -8,6 +8,7 @@ class Librecon extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('librecon_model','',TRUE);
+		$this->load->model('reservas_model','',TRUE);
         
     }
 
@@ -23,8 +24,7 @@ class Librecon extends CI_Controller {
 
         $this->data['emprestimos'] = $this->librecon_model->getEmprestimosAbertos();
        // $this->data['acervos'] = $this->librecon_model->getAcervosMinimo(); lembrar de apagar essa linha depos !!
-        $this->data['emp'] = $this->librecon_model->getEmpEstatisticas();
-        $this->data['estatisticas_financeiro'] = $this->librecon_model->getEstatisticasFinanceiro();
+        $this->data['emp'] = $this->librecon_model->getEmpEstatisticas();        
         $this->data['menuPainel'] = 'Painel';
         $this->data['view'] = 'librecon/painel';
         $this->load->view('tema/topo',  $this->data);

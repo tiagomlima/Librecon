@@ -73,6 +73,7 @@ class Emprestimos_model extends CI_Model {
 		$this->db->join('grupos', 'emprestimos.grupo_id = grupos.idGrupo', 'left');
 		return $this->db->get('emprestimos')->row();
 	}
+	
 
 	function getCursoById($id){
 		$this->db->select('emprestimos.*, usuarios.*, cursos.idCursos, cursos.nomeCurso');

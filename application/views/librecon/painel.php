@@ -16,8 +16,8 @@
         <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vAcervo')){ ?>
             <li class="bg_lg"> <a href="<?php echo base_url()?>index.php/acervos"> <i class="icon-book"></i> Acervo</a> </li>
         <?php } ?>
-        <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vServico')){ ?>
-            <li class="bg_ly"> <a href="<?php echo base_url()?>index.php/servicos"> <i class="icon-book"></i> Reservas</a> </li>
+        <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vReserva')){ ?>
+            <li class="bg_ly"> <a href="<?php echo base_url()?>index.php/reservas"> <i class="icon-book"></i> Reservas</a> </li>
         <?php } ?>
         
         <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vEmprestimo')){ ?>
@@ -66,13 +66,8 @@
                                 echo '<td>'.$e->idEmprestimos.'</td>';
                                 echo '<td>'.$dataEmprestimo.'</td>';
                                 echo '<td>'.$dataVencimento.'</td>';
-                                echo '<td>'.$e->nomeLeitor.'</td>';
-								$dataAtual = date('d/m/Y');
-								$status = $e->status;
-								if($dataVencimento < $dataAtual){
-									$status = 'ATRASADO';
-								}
-								echo '<td>'.$status.'</td>';
+                                echo '<td><a href="'.base_url().'index.php/leitores/visualizar/'.$e->leitor_id.'">'.$e->nome.'</a></td>';																						
+								echo '<td>'.$e->status.'</td>';								
                                 echo '<td>';
                                 if($this->permission->checkPermission($this->session->userdata('permissao'),'vEmprestimo')){
                                     echo '<a href="'.base_url().'index.php/emprestimos/visualizar/'.$e->idEmprestimos.'" class="btn"> <i class="icon-eye-open" ></i> </a> '; 
@@ -94,60 +89,6 @@
 
 </div>
 
-
-
-<?php if($estatisticas_financeiro != null){ 
-      if($estatisticas_financeiro->total_receita != null || $estatisticas_financeiro->total_despesa != null || $estatisticas_financeiro->total_receita_pendente != null || $estatisticas_financeiro->total_despesa_pendente != null){  ?>
-<div class="row-fluid" style="margin-top: 0">
-
-    <div class="span4">
-        
-        <div class="widget-box">
-            <div class="widget-title"><span class="icon"><i class="icon-signal"></i></span><h5>Estatísticas financeiras - Realizado</h5></div>
-            <div class="widget-content">
-                <div class="row-fluid">
-                    <div class="span12">
-                      <div id="chart-financeiro" style=""></div>
-                    </div>
-            
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="span4">
-        
-        <div class="widget-box">
-            <div class="widget-title"><span class="icon"><i class="icon-signal"></i></span><h5>Estatísticas financeiras - Pendente</h5></div>
-            <div class="widget-content">
-                <div class="row-fluid">
-                    <div class="span12">
-                      <div id="chart-financeiro2" style=""></div>
-                    </div>
-            
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="span4">
-        
-        <div class="widget-box">
-            <div class="widget-title"><span class="icon"><i class="icon-signal"></i></span><h5>Total em caixa / Previsto</h5></div>
-            <div class="widget-content">
-                <div class="row-fluid">
-                    <div class="span12">
-                      <div id="chart-financeiro-caixa" style=""></div>
-                    </div>
-            
-                </div>
-            </div>
-        </div>
-    </div>
-
-</div>
-<?php } } ?>
 
 <?php if($emp != null){ ?>
 <div class="row-fluid" style="margin-top: 0">
@@ -180,10 +121,10 @@
                 <div class="row-fluid">           
                     <div class="span12">
                         <ul class="site-stats">
-                            <li class="bg_lh"><i class="icon-group"></i> <strong><?php echo $this->db->count_all('leitores');?></strong> <small>Leitores</small></li>
+                            <li class="bg_lh"><i class="icon-group"></i> <strong><?php $this->db->from('usuarios'); $this->db->where('tipo_usuario',1); echo count($this->db->get()->row());?></strong> <small>Leitores</small></li>
                             <li class="bg_lh"><i class="icon-barcode"></i> <strong><?php echo $this->db->count_all('acervos');?></strong> <small>Acervos </small></li>
                             <li class="bg_lh"><i class="icon-tags"></i> <strong><?php echo $this->db->count_all('emprestimos');?></strong> <small>Emprestimos</small></li>
-                            <li class="bg_lh"><i class="icon-wrench"></i> <strong><?php echo $this->db->count_all('servicos');?></strong> <small>Reservas</small></li>
+                            <li class="bg_lh"><i class="icon-wrench"></i> <strong><?php echo $this->db->count_all('reserva');?></strong> <small>Reservas</small></li>
                             
                         </ul>
                  

@@ -9,10 +9,13 @@ if(!$results){?>
     <div class="widget-box">
      <div class="widget-title">
         <span class="icon">
-            <i class="icon-wrench"></i>
+            <i class="icon-book"></i>
          </span>
-        <h5>Serviços</h5>
-
+         <?php if($this->session->userdata('tipo_usuario') != 1){ ?>
+        <h5>Reservas</h5>
+		<?php }else { ?>
+		<h5>Minhas reservas</h5>
+		<?php } ?>
      </div>
 
 <div class="widget-content nopadding">
@@ -21,15 +24,14 @@ if(!$results){?>
 <table class="table table-bordered ">
     <thead>
         <tr style="backgroud-color: #2D335B">
-            <th>#</th>
-            <th>Leitor</th>
-            <th>Titulo</th>
-            <th>Autor</th>
-            <th>Editora</th>
+            <th>Reserva</th>
+            <th>Leitor</th>           
             <th>Data Reserva</th>
-            <th>Data Validade/th>
+            <th>Data Prazo</th>
             <th>Status</th>
-            <th></th>
+            <?php if($this->session->userdata('tipo_usuario') != 1){ ?>
+            <th>Aprovar/Recusar</th>
+            <?php } ?>
         </tr>
     </thead>
     <tbody>
@@ -50,9 +52,13 @@ else{ ?>
 <div class="widget-box">
      <div class="widget-title">
         <span class="icon">
-            <i class="icon-wrench"></i>
+            <i class="icon-book"></i>
          </span>
+        <?php if($this->session->userdata('tipo_usuario') != 1){ ?>
         <h5>Reservas</h5>
+		<?php }else { ?>
+		<h5>Minhas reservas</h5>
+		<?php } ?>
 
      </div>
 
@@ -62,44 +68,46 @@ else{ ?>
 <table class="table table-bordered ">
     <thead>
         <tr style="backgroud-color: #2D335B">
-            <th>#</th>
-            <th>Leitor</th>
-            <th>Titulo</th>
-            <th>Autor</th>
-            <th>Editora</th>
+            <th>Reserva</th>
+            <th>Leitor</th>           
             <th>Data Reserva</th>
-            <th>Data Validade</th>
+            <th>Data Prazo</th>
             <th>Status</th>
-            <th></th>
+            <?php if($this->session->userdata('tipo_usuario') != 1){ ?>
+            <th>Aprovar/Recusar</th>
+            <?php } ?>
         </tr>
     </thead>
     <tbody>
         <?php foreach ($results as $r) {
         		foreach ($leitor as $l){
         			foreach ($acervo as $a){
-            echo '<tr>';
-            echo '<td>'.$r->idReserva.'</td>';
-			echo '<td>'.$l->leitor.'</td>';
-            echo '<td>'.$a->acervo.'</td>';
-			echo '<td>'.$r->Autor.'</td>';
-            echo '<td>'.$r->Editora.'</td>';
-			echo '<td>'.$r->dataReserva.'</td>';
-			echo '<td>'.$r->dataPrazo.'</td>';
-			echo '<td>'.$r->status.'</td>';
-            echo '<td>';
-            if($this->permission->checkPermission($this->session->userdata('permissao'),'eReserva')){
-                echo '<a style="margin-right: 1%" href="'.base_url().'index.php/servicos/editar/'.$r->idReserva.'" class="btn btn-info tip-top" title="Editar Serviço"><i class="icon-pencil icon-white"></i></a>'; 
-            }
-            if($this->permission->checkPermission($this->session->userdata('permissao'),'dReserva')){
-                echo '<a href="#modal-excluir" role="button" data-toggle="modal" servico="'.$r->idReserva.'" class="btn btn-danger tip-top" title="Excluir Serviço"><i class="icon-remove icon-white"></i></a>  '; 
-            }    
-                      
-                      
-            echo '</td>';
-            echo '</tr>';
-            }
-          }
-        }?>
+        				
+        					foreach ($editora as $e){
+					            echo '<tr>';
+					            echo '<td style="text-align: center"><a href="'.base_url().'index.php/reservas/editar/'.$r->idReserva.'">Ver Reserva</td>';
+								echo '<td style="text-align: center"><a href="'.base_url().'index.php/leitores/visualizar/'.$l->id.'">'.$l->leitor.'</a></td>';							
+								echo '<td style="text-align: center">'.date('d/m/Y', strtotime($r->dataReserva)).'</td>';
+								echo '<td style="text-align: center">'.date('d/m/Y', strtotime($r->dataPrazo)).'</td>';
+								echo '<td style="text-align: center">'.$r->status.'</td>';
+								if($this->session->userdata('tipo_usuario') != 1){
+					            echo '<td style="text-align: center">';
+								}
+								if($this->permission->checkPermission($this->session->userdata('permissao'),'vReserva') && $this->session->userdata('tipo_usuario') != 1){
+					                echo '<a href="#modal-aprovar" role="button" data-toggle="modal" leitor="'.$l->id.'" idReserva="'.$r->idReserva.'" " class="btn btn-success tip-top" title="Aprovar Reserva"><i class="icon-ok icon-white"></i></a>  '; 
+					            } 
+					            if($this->permission->checkPermission($this->session->userdata('permissao'),'eReserva') && $this->session->userdata('tipo_usuario != 0')){
+					                echo '<a style="margin-right: 1%" href="'.base_url().'index.php/reservas/editar/'.$r->idReserva.'" class="btn btn-info tip-top" title="Editar Reserva"><i class="icon-pencil icon-white"></i></a>'; 
+					            }
+					            if($this->permission->checkPermission($this->session->userdata('permissao'),'dReserva')){
+					                echo '<a href="#modal-recusar" role="button" data-toggle="modal" idReserva="'.$r->idReserva.'" " class="btn btn-danger tip-top" title="Recusar Reserva"><i class="icon-remove icon-white"></i></a>  '; 
+					            }    					                      					                      
+					            echo '</td>';
+					            echo '</tr>';	           
+	              }
+	            } 
+	          }
+	        }?>
         <tr>
             
         </tr>
@@ -114,26 +122,43 @@ else{ ?>
 
 <?php echo $this->pagination->create_links();}?>
 
+<!--
 
-<!-- Modal -->
-<div id="modal-excluir" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <form action="<?php echo base_url() ?>index.php/servicos/excluir" method="post" >
+<div id="modal-recusar" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <form action="<?php echo base_url() ?>index.php/reservas/recusar" method="post" >
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h5 id="myModalLabel">Excluir Serviço</h5>
+    <h5 id="myModalLabel">Recusar Reserva</h5>
   </div>
   <div class="modal-body">
-    <input type="hidden" id="idServico" name="id" value="" />
-    <h5 style="text-align: center">Deseja realmente excluir este serviço?</h5>
+    <input type="hidden" id="leitor_id" name="leitor_id" value="" />
+    <h5 style="text-align: center">Deseja realmente recusar o pedido de reserva?</h5>
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
-    <button class="btn btn-danger">Excluir</button>
+    <button class="btn btn-danger">Recusar</button>
+  </div>
+  </form>
+</div>-->
+
+<!-- Modal aprovar-->
+<div id="modal-aprovar" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <form action="<?php echo base_url() ?>index.php/emprestimos/emprestarReserva" method="post" >
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h5 id="myModalLabel">Aprovar Reserva</h5>
+  </div>
+  <div class="modal-body">
+    <input type="hidden" id="leitor_id" name="leitor_id" value="" />
+    <input type="hidden" id="idReserva" name="idReserva" value="" />
+    <h5 style="text-align: center">Deseja aprovar essa reserva?</h5>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+    <button class="btn btn-success">Aprovar</button>
   </div>
   </form>
 </div>
-
-
 
 
 
@@ -144,8 +169,11 @@ $(document).ready(function(){
 
    $(document).on('click', 'a', function(event) {
         
-        var servico = $(this).attr('servico');
-        $('#idServico').val(servico);
+        var reserva = $(this).attr('idReserva');
+        $('#idReserva').val(reserva);
+        
+        var leitor = $(this).attr('leitor');
+        $('#leitor_id').val(leitor);
 
     });
 

@@ -18,6 +18,7 @@ class Acervos extends CI_Controller {
 		$this->load->model('secao_model', '', TRUE);
 		$this->load->model('grupos_model', '', TRUE);
 		$this->load->model('colecao_model', '', TRUE);
+		$this->load->model('reservas_model', '', TRUE);
         $this->data['menuAcervos'] = 'Acervos';
 		
 		$this->data['grupo'] = $this->grupos_model->getById($this->session->userdata('grupo'));
@@ -291,27 +292,46 @@ class Acervos extends CI_Controller {
         $this->session->set_flashdata('success','Acervo excluido com sucesso!');            
         redirect(base_url().'index.php/acervos/gerenciar/');
     }
+
 	
 	function reservar(){
 		if($this->session->userdata('tipo_usuario') != 1){
 			redirect('librecon');
 		}
-			
+					
 		$acervos_id = $this->input->post('acervos_id');
 		$usuario_id = $this->input->post('usuario_id');
+						
+		$verificaReserva = $this->reservas_model->getReservaById($usuario_id);
 		
-		$acervo = $this->acervos_model->getById($acervos_id);
-		
-		if(count($acervo) <= 1){
-			$this->session->set_flashdata('error','Não há exemplares deste acervo disponiveis para reserva.');            
-        	redirect(base_url().'index.php/acervos/visualizar/'.$acervos_id);
-		}
-		
-		$reserva = $this->acervos_model->getReserva($usuario_id,$acervos_id);
-		if(count($reserva) >= 1){
-			$this->session->set_flashdata('error','Você já reservou esse livro, por favor retire-o na biblioteca.');            
-        	redirect(base_url().'index.php/acervos/visualizar/'.$acervos_id);
-		}
+		if(count($verificaReserva) > 0){
+			
+			$verificaRetirado = $this->reservas_model->getReservaRetirado($verificaReserva->idReserva); 
+												
+			$verificaAcervo = $this->acervos_model->verificaAcervo($verificaReserva->idReserva,$acervos_id);
+
+			if(count($verificaAcervo) > 0){
+				$this->session->set_flashdata('error','Esse item já se encontra na sua lista de reserva.');            
+        		redirect(base_url().'index.php/acervos/visualizar/'.$acervos_id);
+			}			
+									
+			$data = array(
+				'reserva_id' => $verificaReserva->idReserva,
+				'acervos_id' => $acervos_id
+			);
+			
+			$this->acervos_model->add('itens_de_reserva',$data);
+			
+			$addQtde = "UPDATE reserva set qtde_item = qtde_item + 1 WHERE idReserva = ".$verificaReserva->idReserva;
+			$this->db->query($addQtde,array($verificaReserva->idReserva));
+			
+			$delEstoque = "UPDATE acervos set estoque = estoque -1 WHERE idAcervos = ".$acervos_id;
+			$this->db->query($delEstoque,array($acervos_id));
+			
+			$this->session->set_flashdata('success','Item adicionado na lista de reserva');            
+        	redirect(base_url().'index.php/reservas/editar/'.$verificaReserva->idReserva);
+			
+		} else {		
 		
 		$validade_reserva = $this->input->post('validade_reserva');
 		$dataPrazo = date('Y-m-d', strtotime("+".$validade_reserva." days"));
@@ -319,24 +339,30 @@ class Acervos extends CI_Controller {
 			'dataPrazo' => $dataPrazo,
 			'dataReserva' => date('Y-m-d'),
 			'usuario_id' => $usuario_id,
-			'acervos_id' => $acervos_id		
+			'qtde_item' => 1	
 		);
-		
-		$reservou = $this->acervos_model->add('reserva',$data);
-		
-		if($reservou){
+							
+		if(is_numeric($id = $this->acervos_model->add('reserva',$data,true))){
 			$sql = "UPDATE acervos set estoque = estoque -1 WHERE idAcervos = ".$acervos_id;
 			$this->db->query($sql,array($acervos_id));
 			
-			$status = "UPDATE reserva set status = 'Reservado' WHERE usuario_id = ".$usuario_id;
+			$status = "UPDATE reserva set status = 'Em andamento' WHERE usuario_id = ".$usuario_id;
 			$this->db->query($status,array($usuario_id));
 			
-			$this->session->set_flashdata('success','Acervo reservado com sucesso!');            
-        	redirect(base_url().'index.php/acervos/gerenciar/');
+			$data2 = array(
+				'reserva_id' => $id,
+				'acervos_id' => $acervos_id
+			);
+			
+			$this->acervos_model->add('itens_de_reserva',$data2);
+			
+			$this->session->set_flashdata('success','Reserva iniciada com sucesso!');            
+        	redirect(base_url().'index.php/reservas/editar/'.$id);
 		}else{
 			$this->session->set_flashdata('error','Não foi possivel reservar o acervo.');            
         	redirect(base_url().'index.php/acervos/gerenciar/');
-		}
+		}		
+	  }
 	}
 }
 

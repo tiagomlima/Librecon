@@ -26,7 +26,9 @@ if(!$results){?>
             <th>Autor</th>
             <th>Editora</th>
             <th>Tombo</th>
+            <?php if($this->session->userdata('tipo_usuario') == 0){ ?>
             <th>Estoque</th>
+            <?php } ?>
             <th>Idioma</th>
             <th>Status</th>
             <th></th>
@@ -65,7 +67,9 @@ if(!$results){?>
             <th>Autor</th>
             <th>Editora</th>
             <th>Tombo</th>
+            <?php if($this->session->userdata('tipo_usuario') == 0){ ?>
             <th>Estoque</th>
+            <?php } ?>
             <th>Idioma</th>
             <th>Status</th>
             <th></th>
@@ -83,7 +87,9 @@ if(!$results){?>
 						echo '<td>'.$a->autor.'</td>';
 						echo '<td>'.$e->editora.'</td>';
 			            echo '<td>'.$r->tombo.'</td>';
+						if($this->session->userdata('tipo_usuario') == 0){
 						echo '<td>'.$r->estoque.'</td>';
+						}
 						echo '<td>'.$r->idioma.'</td>';
 						if($r->estoque <= 1){
 				        	$status = 'Não disponivel';

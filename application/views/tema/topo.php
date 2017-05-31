@@ -108,8 +108,16 @@
 
     <?php } ?>
     
- 
-    <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vReserva')){ ?>
+	<?php 
+		if($this->session->userdata('tipo_usuario') == 1){
+			$reserva = $this->reservas_model->getReservaById($this->session->userdata('id'));
+			
+			if(count($reserva) > 0){ ?>
+				<li class="<?php if(isset($menuReserva)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/reservas"><i class="icon icon-calendar"></i> <span>Reservas</span></a></li>
+		<?php	}
+		} ?>		
+		
+    <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vReserva') && $this->session->userdata('tipo_usuario') == 0){ ?>
         <li class="<?php if(isset($menuReserva)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/reservas"><i class="icon icon-calendar"></i> <span>Reservas</span></a></li>
     <?php } ?>
 

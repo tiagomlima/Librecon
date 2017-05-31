@@ -24,6 +24,15 @@ class Acervos_model extends CI_Model {
         return $result;
     }
 	
+	function verificaAcervo($reserva_id,$acervos_id){
+		$this->db->select('*');
+		$this->db->from('itens_de_reserva');
+		$this->db->where('reserva_id',$reserva_id);
+		$this->db->where('acervos_id',$acervos_id);
+		$this->db->limit(1);
+		return $this->db->get()->row();
+	}
+	
 	function getAutor($perpage=0,$start=0,$one=false){
         
         $this->db->from('acervos');
@@ -96,16 +105,19 @@ class Acervos_model extends CI_Model {
 		return $this->db->get()->row();
 	}
     
-    function add($table,$data){
+    function add($table,$data,$returnId = false){
         $this->db->insert($table, $data);         
         if ($this->db->affected_rows() == '1')
 		{
+                        if($returnId == true){
+                            return $this->db->insert_id($table);
+                        }
 			return TRUE;
 		}
 		
 		return FALSE;       
     }
-    
+	   
     function edit($table,$data,$fieldID,$ID){
         $this->db->where($fieldID,$ID);
         $this->db->update($table, $data);

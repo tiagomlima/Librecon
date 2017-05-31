@@ -12,6 +12,8 @@ class Emprestimos extends CI_Controller {
 		
 		$this->load->helper(array('form','codegen_helper'));
 		$this->load->model('emprestimos_model','',TRUE);
+		$this->load->model('usuarios_model','',TRUE);
+		$this->load->model('reservas_model','',TRUE);
 		$this->data['menuEmprestimos'] = 'Emprestimos';
 	}	
 	
@@ -103,7 +105,83 @@ class Emprestimos extends CI_Controller {
         $this->data['view'] = 'emprestimos/adicionarEmprestimo';
         $this->load->view('tema/topo', $this->data);
     }
-    
+
+	function emprestarReserva(){
+		 if(!$this->permission->checkPermission($this->session->userdata('permissao'),'aEmprestimo')){
+          $this->session->set_flashdata('error','Você não tem permissão para adicionar emprestimos.');
+          redirect(base_url());
+        }
+
+		$dataEmprestimo = date('d/m/Y');
+		$dataVencimento = date('d/m/Y');
+		
+		try {              
+                $dataEmprestimo = explode('/', $dataEmprestimo);
+                $dataEmprestimo = $dataEmprestimo[2].'-'.$dataEmprestimo[1].'-'.$dataEmprestimo[0];
+				
+				$dataVencimento = explode('/', $dataVencimento);
+                $dataVencimento = $dataVencimento[2].'-'.$dataVencimento[1].'-'.$dataVencimento[0];
+            } catch (Exception $e) {
+               $dataEmprestimo = date('Y-m-d'); 
+			   $dataVencimento = date('Y-m-d');
+            }
+			
+			$leitor_id = $this->input->post('leitor_id');
+			$grupo_id = $this->usuarios_model->getById($leitor_id);
+			$status = 'Não emprestado';
+			$idReserva = $this->input->post('idReserva');
+			
+			$data = array(
+                'dataEmprestimo' => $dataEmprestimo,
+                'dataVencimento' => $dataVencimento,
+                'usuarios_id' => $this->session->userdata('id'),
+                'leitor_id' => $leitor_id,
+                'grupo_id' => $grupo_id->grupo_id,
+                'status' => $status              
+            );
+			if (is_numeric($id = $this->emprestimos_model->add('emprestimos', $data, true)) ) {
+				$sql = "UPDATE reserva set status = 'Aprovado' WHERE idReserva = ".$idReserva;
+				$this->db->query($sql,array($idReserva));
+							
+			   $itemReserva = $this->reservas_model->getAcervosById($idReserva);
+			   
+			    $sql = "SELECT group_concat(acervos_id separator ',') as id FROM `itens_de_reserva` WHERE reserva_id = ".$idReserva;
+				$query = $this->db->query($sql,array($idReserva));
+				$array1 = $query->row_array();
+				$arr = explode(',',$array1['id']);
+				
+				$i = count($arr);
+				
+				//pega os acervos contidos no itens de reserva e joga no itens de emprestimos
+				for($i = 0; $i < count($arr);){
+					$acervos_id = $arr[$i];
+					
+					$data2 = array(
+						'emprestimos_id' => $id,
+						'acervos_id' => $acervos_id
+					);
+					
+					$data3 = array(
+						'qtde_item' => $i += $i
+					);
+						$this->emprestimos_model->add('itens_de_emprestimos',$data2);
+						$this->emprestimos_model->edit('emprestimos',$data3,'idEmprestimos',$id);			
+					$i++;
+				}
+				
+			   	$dataRetirada = date('Y-m-d');
+			   	$retirada = "UPDATE reserva set dataRetirada = ".$dataRetirada." WHERE idReserva = ".$idReserva;
+			   				
+                $this->session->set_flashdata('success','Emprestimo iniciado com sucesso!.');
+                redirect('emprestimos/editar/'.$id);
+            } else {
+                
+                $this->data['custom_error'] = '<div class="form_error"><p>Ocorreu um erro.</p></div>';
+            }
+			
+			    
+ 	}
+    	
     
     function editar() {
         if(!$this->uri->segment(3) || !is_numeric($this->uri->segment(3))){
@@ -148,16 +226,16 @@ class Emprestimos extends CI_Controller {
             }
         }
 		
-		
 		$this->data['grupos'] = $this->emprestimos_model->getGrupoById($this->uri->segment(3));
         $this->data['leitor'] = $this->emprestimos_model->getLeitorById($this->uri->segment(3));
 		$this->data['result'] = $this->emprestimos_model->getById($this->uri->segment(3));	
         $this->data['acervos'] = $this->emprestimos_model->getAcervos($this->uri->segment(3));
-		$this->data['acervo'] = $this->emprestimos_model->getAcervosById($this->uri->segment(3));
+		//$this->data['acervo'] = $this->emprestimos_model->getAcervosById($this->uri->segment(3));
         $this->data['view'] = 'emprestimos/editarEmprestimo';
         $this->load->view('tema/topo', $this->data);
 
     }
+	
     public function visualizar(){
         if(!$this->uri->segment(3) || !is_numeric($this->uri->segment(3))){
             $this->session->set_flashdata('error','Item não pode ser encontrado, parâmetro não foi passado corretamente.');
@@ -408,7 +486,20 @@ class Emprestimos extends CI_Controller {
             $this->db->query($sql, array($status, $idEmprestimos));
             
             $acervos_id = $this->emprestimos_model->getAcervosById($idEmprestimos);				
-					 			   
+			$leitor_id = $this->input->post('leitor_id');	
+			$reserva = $this->reservas_model->getReservaById($leitor_id);
+			
+			if(count($reserva) > 0){
+				$sql = "UPDATE reserva set status = 'Retirado' WHERE usuario_id = ".$leitor_id;
+				$this->db->query($sql,array($leitor_id));
+			}
+			
+			$verificaReserva = $this->reservas_model->getReservaById($leitor_id);
+			
+			if(count($verificaReserva) > 0){
+				$this->reservas_model->delete('reserva','usuario_id',$leitor_id);
+			}
+				 			   
 			$this->session->set_flashdata('success','Empréstimos realizado com sucesso!');											
 			redirect('emprestimos');
 		} else{
