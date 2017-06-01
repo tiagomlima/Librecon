@@ -108,7 +108,7 @@
 </div>
 <div class="modal-footer">
   <form id="formReservar" action="<?php echo base_url(); ?>index.php/reservas/reservar" method="post">
-  
+  <input id="qtde_atual" class="span12" type="hidden" name="qtde_atual" value="<?php echo $result->qtde_item ?>"  />
   <input id="idReserva" class="span12" type="hidden" name="idReserva" value="<?php echo $result->idReserva ?>"  /> 
   <a href="<?php echo base_url() ?>index.php/reservas" id="" class="btn"><i class="icon-arrow-left"></i> Voltar</a>
   <?php if($result->status != 'Retirado' && $result->status !='Reservado' && $this->session->userdata('tipo_usuario') == 1 && $result->status != 'Recusado'){ ?>

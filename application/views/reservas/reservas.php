@@ -100,7 +100,7 @@ else{ ?>
 					                echo '<a style="margin-right: 1%" href="'.base_url().'index.php/reservas/editar/'.$r->idReserva.'" class="btn btn-info tip-top" title="Editar Reserva"><i class="icon-pencil icon-white"></i></a>'; 
 					            }
 					            if($this->permission->checkPermission($this->session->userdata('permissao'),'dReserva')){
-					                echo '<a href="#modal-recusar" role="button" data-toggle="modal" idReserva="'.$r->idReserva.'" " class="btn btn-danger tip-top" title="Recusar Reserva"><i class="icon-remove icon-white"></i></a>  '; 
+					                echo '<a href="'.base_url().'index.php/reservas/recusar/'.$r->idReserva.'" role="button" data-toggle="modal" class="btn btn-danger tip-top"><i class="icon-remove icon-white"></i></a>  '; 
 					            }    					                      					                      
 					            echo '</td>';
 					            echo '</tr>';	           

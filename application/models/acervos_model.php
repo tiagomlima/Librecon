@@ -36,7 +36,7 @@ class Acervos_model extends CI_Model {
 	function getAutor($perpage=0,$start=0,$one=false){
         
         $this->db->from('acervos');
-        $this->db->select('acervos.*, autor.autor as autor');
+        $this->db->select('acervos.*, autor.idAutor, autor.autor as autor');
         $this->db->limit($perpage,$start);
         $this->db->join('autor', 'acervos.autor_id = autor.idAutor', 'left');
         $this->db->limit(1);

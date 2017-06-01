@@ -22,16 +22,18 @@ if(!$results){?>
         <tr>
             <th>#</th>
             <th>Imagem</th>
-            <th>Título</th>
-            <th>Autor</th>
-            <th>Editora</th>
+            <th>Título</th>           
             <th>Tombo</th>
             <?php if($this->session->userdata('tipo_usuario') == 0){ ?>
             <th>Estoque</th>
             <?php } ?>
             <th>Idioma</th>
             <th>Status</th>
+            <?php if($this->session->userdata('tipo_usuario') == 0){ ?>
+            <th>Visualizar/Editar/Excluir</th>
+            <?php }else{ ?>
             <th></th>
+             <?php } ?>
         </tr>
     </thead>
     <tbody>
@@ -63,29 +65,27 @@ if(!$results){?>
         <tr style="backgroud-color: #2D335B">
             <th>#</th>
             <th>Imagem</th>
-            <th>Título</th>
-            <th>Autor</th>
-            <th>Editora</th>
+            <th>Título</th>            
             <th>Tombo</th>
             <?php if($this->session->userdata('tipo_usuario') == 0){ ?>
             <th>Estoque</th>
             <?php } ?>
             <th>Idioma</th>
             <th>Status</th>
+            <?php if($this->session->userdata('tipo_usuario') == 0){ ?>
+            <th>Visualizar/Editar/Excluir</th>
+            <?php }else{ ?>
             <th></th>
+             <?php } ?>
         </tr>
     </thead>
     <tbody>
         <?php 	   
-        	foreach ($results as $r) {
-        		foreach ($autor as $a){
-        			foreach ($editora as $e){
+        	foreach ($results as $r) {  	
 			            echo '<tr>';
 			            echo '<td>'.$r->idAcervos.'</td>';
 						echo '<td><a href="'.base_url().'index.php/acervos/visualizar/'.$r->idAcervos.'"><img src="'.$r->img_acervo.'" alt="imagem do acervo" style="width:108px;height:118px"/></td></a>';
-						echo '<td>'.$r->titulo.'</td>';
-						echo '<td>'.$a->autor.'</td>';
-						echo '<td>'.$e->editora.'</td>';
+						echo '<td>'.$r->titulo.'</td>';						
 			            echo '<td>'.$r->tombo.'</td>';
 						if($this->session->userdata('tipo_usuario') == 0){
 						echo '<td>'.$r->estoque.'</td>';
@@ -98,7 +98,7 @@ if(!$results){?>
 				        }
 			            echo '<td>'.$status.'</td>';
 			            
-			            echo '<td>';
+			            echo '<td style="text-align:center">';
 			            if($this->permission->checkPermission($this->session->userdata('permissao'),'vAcervo') && $this->session->userdata('tipo_usuario') != 1){
 			                echo '<a style="margin-right: 1%" href="'.base_url().'index.php/acervos/visualizar/'.$r->idAcervos.'" class="btn tip-top" title="Visualizar Acervo"><i class="icon-eye-open"></i></a>  '; 
 			            }
@@ -110,9 +110,7 @@ if(!$results){?>
 			            }
 			                     
 			            echo '</td>';
-			            echo '</tr>';
-			        }
-			  }
+			            echo '</tr>';			        			  
         }?>
         <tr>
             

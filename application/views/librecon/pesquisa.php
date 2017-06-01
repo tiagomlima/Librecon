@@ -86,7 +86,7 @@
                         <tr>
                             <th>#</th>
                             <th>Nome</th>
-                            <th>CPF/CNPJ</th>
+                            <th>Matricula</th>
                             <th></th>
                         </tr>
                     </thead>

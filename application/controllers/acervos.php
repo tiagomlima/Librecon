@@ -68,9 +68,7 @@ class Acervos extends CI_Controller {
         
         $this->pagination->initialize($config); 	
 
-	    $this->data['results'] = $this->acervos_model->get('acervos','idAcervos,titulo,tombo,estoque,idioma,img_acervo','',$config['per_page'],$this->uri->segment(3));
-        $this->data['autor'] = $this->acervos_model->getAutor($config['per_page'],$this->uri->segment(3));
-		$this->data['editora'] = $this->acervos_model->getEditora($config['per_page'],$this->uri->segment(3));
+	    $this->data['results'] = $this->acervos_model->get('acervos','idAcervos,titulo,tombo,estoque,idioma,img_acervo','',$config['per_page'],$this->uri->segment(3));       
 	    $this->data['view'] = 'acervos/acervos';
        	$this->load->view('tema/topo',$this->data);
        
@@ -301,19 +299,25 @@ class Acervos extends CI_Controller {
 					
 		$acervos_id = $this->input->post('acervos_id');
 		$usuario_id = $this->input->post('usuario_id');
+		$qtde_atual = $this->input->post('qtde_atual');
 						
 		$verificaReserva = $this->reservas_model->getReservaById($usuario_id);
 		
 		if(count($verificaReserva) > 0){
 			
-			$verificaRetirado = $this->reservas_model->getReservaRetirado($verificaReserva->idReserva); 
-												
-			$verificaAcervo = $this->acervos_model->verificaAcervo($verificaReserva->idReserva,$acervos_id);
+			$verificaRetirado = $this->reservas_model->getReservaRetirado($verificaReserva->idReserva); 															
 
 			if(count($verificaAcervo) > 0){
 				$this->session->set_flashdata('error','Esse item já se encontra na sua lista de reserva.');            
         		redirect(base_url().'index.php/acervos/visualizar/'.$acervos_id);
-			}			
+			}		
+
+			$limiteReserva = $this->reservas_model->getReservaById($usuario_id);
+			
+			if($qtde_atual > 1){
+				$this->session->set_flashdata('error','Limite de itens por reserva excedido.');            
+        		redirect(base_url().'index.php/acervos/visualizar/'.$acervos_id);
+			}	
 									
 			$data = array(
 				'reserva_id' => $verificaReserva->idReserva,
@@ -335,6 +339,12 @@ class Acervos extends CI_Controller {
 		
 		$validade_reserva = $this->input->post('validade_reserva');
 		$dataPrazo = date('Y-m-d', strtotime("+".$validade_reserva." days"));
+		
+		if($qtde_atual > 1){
+				$this->session->set_flashdata('error','Limite de itens por reserva excedido.');            
+        		redirect(base_url().'index.php/acervos/visualizar/'.$acervos_id);
+			}	
+		
 		$data = array(
 			'dataPrazo' => $dataPrazo,
 			'dataReserva' => date('Y-m-d'),

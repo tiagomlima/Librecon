@@ -169,15 +169,28 @@ class Reservas extends CI_Controller {
 		$idReserva = $this->input->post('idReserva');	
 		
 		if(count($itens) > 0){
+			
+			if(count($itens) > 3){
+				$this->session->set_flashdata('error','Limite de acervos por reserva excedido');
+              redirect(base_url());
+			}
+			
 			//atualiza o status da reserva
 			$sql = "UPDATE reserva set status = 'Reservado' WHERE idReserva =".$idReserva;
             $this->db->query($sql, array($idReserva));
 			
 			$this->session->set_flashdata('success','Reserva realizada com sucesso!');											
 			redirect('reservas/editar/'.$idReserva);
-		}
+		}else{
 			$this->session->set_flashdata('error','Por favor, adicione os itens a serem reservados.');
 			redirect('reservas/editar/'.$idReserva);
+		}
+			
+	}
+	
+	function testar(){
+		$itens = $this->db->get('itens_de_reserva')->row();
+		print_r($itens);
 	}
 	
 	function cancelar(){
@@ -197,9 +210,27 @@ class Reservas extends CI_Controller {
 			$this->session->set_flashdata('success','Reserva cancelada com sucesso.');											
 			redirect(base_url().'index.php/acervos');
 		}else{
-			$this->reservas_model->delete('reserva','usuario_id',$usuario_id);
+			$sql = "SELECT group_concat(acervos_id separator ',') as id FROM `itens_de_reserva` WHERE reserva_id = ".$reserva_id->idReserva;
+			$query = $this->db->query($sql,array($id));
+			$array1 = $query->row_array();
+			$arr = explode(',',$array1['id']);
 			
+			$i = count($arr);
+					
+			for($i = 0; $i < count($arr);){
+				$acervos_id = $arr[$i];
+				
+				$consulta = "UPDATE acervos set estoque = estoque + 1 WHERE idAcervos =".$acervos_id;
+	            $this->db->query($consulta, array($acervos_id));
+				$this->reservas_model->delete('itens_de_reserva','reserva_id',$reserva_id->idReserva);
+									
+				$i++;
+			}
+			
+			
+			$this->reservas_model->delete('reserva','usuario_id',$usuario_id);			
 			$this->reservas_model->delete('itens_de_reserva','reserva_id',$reserva_id->idReserva);
+			
 			$this->session->set_flashdata('success','Reserva cancelada com sucesso.');											
 			redirect(base_url().'index.php/acervos');
 		}
@@ -228,29 +259,35 @@ class Reservas extends CI_Controller {
 		$this->session->set_flashdata('success','Reserva cancelada com sucesso.');											
 		redirect(base_url().'index.php/acervos');
 	}
-
-	function recusar(){
-		if(!$this->permission->checkPermission($this->session->userdata('permissao'),'eReserva') or $this->session->userdata('tipo_usuario') != 0){
+	
+	function recusar($idReserva){
+		if(!$this->permission->checkPermission($this->session->userdata('permissao'),'dReserva') or $this->session->userdata('tipo_usuario') != 0){
               $this->session->set_flashdata('error','Você não tem permissão para fazer isso');
               redirect(base_url());
             }
+						
+			$sql = "SELECT group_concat(acervos_id separator ',') as id FROM `itens_de_reserva` WHERE reserva_id = ".$idReserva;
+			$query = $this->db->query($sql,array($id));
+			$array1 = $query->row_array();
+			$arr = explode(',',$array1['id']);
+			
+			$i = count($arr);
+			
+			//pega os ids dos acervos contidos no itens de emprestimos e acrescenta no estoque
+			for($i = 0; $i < count($arr);){
+				$acervos_id = $arr[$i];
+				
+				$consulta = "UPDATE acervos set estoque = estoque + 1 WHERE idAcervos =".$acervos_id;
+	            $this->db->query($consulta, array($acervos_id));
+									
+				$i++;
+			}
+			
+		$this->reservas_model->delete('reserva','idReserva',$idReserva);
+		$this->reservas_model->delete('itens_de_reserva','reserva_id',$idReserva);
 		
-		$idReserva = $this->input->post('idReserva');
-		$status = 'Recusado';
-		
-		$data = array(
-			'status' => $status
-		);
-		
-		if($this->reservas_model->edit('reserva',$data,'idReserva',$idReserva) == true){
-			$this->session->set_flashdata('success','Reserva recusada com sucesso.');											
-			redirect(base_url().'index.php/reservas');
-		} else {
-			$this->session->set_flashdata('error','Ocorreu um erro.');											
-			redirect(base_url().'index.php/reservas');
-		}
-		
-		
+		$this->session->set_flashdata('success','Reserva recusada com sucesso.');											
+		redirect(base_url().'index.php/reservas');
 	}
 }
 

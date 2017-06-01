@@ -69,10 +69,10 @@ class Librecon_model extends CI_Model {
          $this->db->limit(5);
          $data['acervos'] = $this->db->get('acervos')->result();
 
-         //buscando serviços
-         $this->db->like('nome',$termo);
+         //buscando reservas
+         $this->db->like('usuario_id',$termo);
          $this->db->limit(5);
-         $data['servicos'] = $this->db->get('servicos')->result();
+         $data['servicos'] = $this->db->get('reserva')->result();
 
          return $data;
 
