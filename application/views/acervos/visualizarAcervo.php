@@ -10,9 +10,9 @@
         </div>
         <div class="collapse in accordion-body">
             <div class="widget-content">
-            <span style="float:left"><img src="<?php echo $result->img_acervo ?>" alt="imagem do acervo" style="width:60%;height:60%"/></span>
+            <span style="float:left;width:50%"><img src="<?php echo $result->img_acervo ?>" alt="imagem do acervo" style="width:40%;height:40%"/></span>
             <span><h5>Descrição: </h5></span><br>
-            <span style="position: relative; right: 10%"><p style="text-align:justify"><?php echo $result->descricao ?></p></span>
+            <span style="position: relative; right: 17%;width: 45%"><p style="text-align:justify"><?php echo $result->descricao ?></p></span>
                 <table class="table table-bordered">
                     <tbody>
                     	
@@ -35,7 +35,11 @@
                         <tr>
                             <td style="text-align: right"><strong>Tombo</strong></td>
                             <td><?php echo $result->tombo ?></td>
-                        </tr>                        
+                        </tr> 
+                        <tr>
+                            <td style="text-align: right"><strong>Categoria</strong></td>
+                            <td><?php echo $categoria->categoria ?></td>
+                        </tr>                          
                         <tr>
                             <td style="text-align: right"><strong>Idioma</strong></td>
                             <td><?php echo $result->idioma; ?></td>

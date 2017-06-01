@@ -123,6 +123,11 @@ class Permissoes extends CI_Controller {
                   'dTipoItem' => $this->input->post('dTipoItem'),
                   'vTipoItem' => $this->input->post('vTipoItem'),
                   
+				  'aCategoria' => $this->input->post('aCategoria'),
+                  'eCategoria' => $this->input->post('eCategoria'),
+                  'dCategoria' => $this->input->post('dCategoria'),
+                  'vCategoria' => $this->input->post('vCategoria'),
+                  
 				  'aSecao' => $this->input->post('aSecao'),
                   'eSecao' => $this->input->post('eSecao'),
                   'dSecao' => $this->input->post('dSecao'),
@@ -234,12 +239,7 @@ class Permissoes extends CI_Controller {
                   'eAcervo' => $this->input->post('eAcervo'),
                   'dAcervo' => $this->input->post('dAcervo'),
                   'vAcervo' => $this->input->post('vAcervo'),
-                  
-				  'aAcervo' => $this->input->post('aAcervo'),
-                  'eAcervo' => $this->input->post('eAcervo'),
-                  'dAcervo' => $this->input->post('dAcervo'),
-                  'vAcervo' => $this->input->post('vAcervo'),
-                  
+                  				                    
 				  'aAutor' => $this->input->post('aAutor'),
                   'eAutor' => $this->input->post('eAutor'),
                   'dAutor' => $this->input->post('dAutor'),
@@ -255,6 +255,11 @@ class Permissoes extends CI_Controller {
                   'dTipoItem' => $this->input->post('dTipoItem'),
                   'vTipoItem' => $this->input->post('vTipoItem'),
                   
+				  'aCategoria' => $this->input->post('aCategoria'),
+                  'eCategoria' => $this->input->post('eCategoria'),
+                  'dCategoria' => $this->input->post('dCategoria'),
+                  'vCategoria' => $this->input->post('vCategoria'),
+				  
 				  'aSecao' => $this->input->post('aSecao'),
                   'eSecao' => $this->input->post('eSecao'),
                   'dSecao' => $this->input->post('dSecao'),

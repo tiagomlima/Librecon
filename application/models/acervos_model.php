@@ -24,6 +24,7 @@ class Acervos_model extends CI_Model {
         return $result;
     }
 	
+	
 	function verificaAcervo($reserva_id,$acervos_id){
 		$this->db->select('*');
 		$this->db->from('itens_de_reserva');
@@ -51,6 +52,14 @@ class Acervos_model extends CI_Model {
 		$this->db->where('idAcervos',$id);
         $this->db->limit(1);
         $this->db->join('autor', 'acervos.autor_id = autor.idAutor', 'left');
+		return $this->db->get('acervos')->row();
+	}
+	
+	function getCategoriaById($id){
+		$this->db->select('acervos.categoria_id, categoria.nomeCategoria as categoria');
+		$this->db->where('idAcervos',$id);
+        $this->db->limit(1);
+        $this->db->join('categoria', 'acervos.categoria_id = categoria.idCategoria', 'left');
 		return $this->db->get('acervos')->row();
 	}
 	
@@ -152,4 +161,19 @@ class Acervos_model extends CI_Model {
 	function count($table){
 		return $this->db->count_all($table);
 	}
+	
+	function pesquisar($nome,$autor,$categoria,$palavra_chave){
+         $data = array();
+         
+         // buscando acervos
+         $this->db->like('titulo',$nome);
+		 $this->db->like('autor_id',$autor);
+		 $this->db->like('categoria_id',$categoria);
+		 $this->db->like('palavra_chave',$palavra_chave);
+         $this->db->limit(5);
+         $data['acervos'] = $this->db->get('acervos')->result();
+       
+         return $data;
+
+    }
 }

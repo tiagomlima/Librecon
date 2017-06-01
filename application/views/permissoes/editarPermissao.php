@@ -277,6 +277,40 @@
                                  
                                 </tr>
                                 
+                                 <tr><td colspan="4"></td></tr>
+                                
+                                <tr>
+
+                                    <td>
+                                        <label>
+                                            <input <?php if(isset($permissoes['vCategoria'])){ if($permissoes['vCategoria'] == '1'){echo 'checked';}}?> name="vCategoria" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Visualizar Categoria</span>
+                                        </label>
+                                    </td>
+
+                                    <td>
+                                        <label>
+                                            <input <?php if(isset($permissoes['aCategoria'])){ if($permissoes['aCategoria'] == '1'){echo 'checked';}}?> name="aCategoria" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Adicionar Categoria</span>
+                                        </label>
+                                    </td>
+
+                                    <td>
+                                        <label>
+                                            <input <?php if(isset($permissoes['eCategoria'])){ if($permissoes['eCategoria'] == '1'){echo 'checked';}}?> name="eCategoria" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Editar Categoria</span>
+                                        </label>
+                                    </td>
+
+                                    <td>
+                                        <label>
+                                            <input <?php if(isset($permissoes['dCategoria'])){ if($permissoes['dCategoria'] == '1'){echo 'checked';}}?> name="dCategoria" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Excluir Categoria</span>
+                                        </label>
+                                    </td>
+                                 
+                                </tr>
+                                
                                 <tr><td colspan="4"></td></tr>
                                 
                                 <tr>

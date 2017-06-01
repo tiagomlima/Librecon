@@ -164,15 +164,15 @@ class Reservas extends CI_Controller {
 		if($this->session->userdata('tipo_usuario') != 1){
 			redirect('librecon');
 		}
-		
-		$itens = $this->db->get('itens_de_reserva')->row();
+				
 		$idReserva = $this->input->post('idReserva');	
+		$itens = $this->reservas_model->getAcervos($idReserva);
 		
 		if(count($itens) > 0){
 			
 			if(count($itens) > 3){
-				$this->session->set_flashdata('error','Limite de acervos por reserva excedido');
-              redirect(base_url());
+				$this->session->set_flashdata('error','Limite de acervos por reserva excedido (limite: 3)');
+              redirect('reservas/editar/'.$idReserva);
 			}
 			
 			//atualiza o status da reserva
@@ -187,12 +187,7 @@ class Reservas extends CI_Controller {
 		}
 			
 	}
-	
-	function testar(){
-		$itens = $this->db->get('itens_de_reserva')->row();
-		print_r($itens);
-	}
-	
+		
 	function cancelar(){
 		if(!$this->permission->checkPermission($this->session->userdata('permissao'),'eReserva')){
               $this->session->set_flashdata('error','Você não tem permissão para reservar');

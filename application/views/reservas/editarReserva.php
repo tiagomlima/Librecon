@@ -112,12 +112,13 @@
   <input id="idReserva" class="span12" type="hidden" name="idReserva" value="<?php echo $result->idReserva ?>"  /> 
   <a href="<?php echo base_url() ?>index.php/reservas" id="" class="btn"><i class="icon-arrow-left"></i> Voltar</a>
   <?php if($result->status != 'Retirado' && $result->status !='Reservado' && $this->session->userdata('tipo_usuario') == 1 && $result->status != 'Recusado'){ ?>
-  <button class="btn btn-primary">Reservar</button>  
+  <button class="btn btn-primary">Reservar</button>
+  <?php } ?>
+  <?php if($this->session->userdata('tipo_usuario') == 1 && $result->status != 'Retirado'){?>
+  <a href="<?php echo base_url(); ?>index.php/reservas/cancelar"><span class="btn btn-danger">Cancelar</span></a>   
   <?php } ?>
   </form>
-  <?php if($this->session->userdata('tipo_usuario') == 1 && $result->status != 'Retirado'){?>
-  <a href="<?php echo base_url(); ?>index.php/reservas/cancelar"><button class="btn btn-danger">Cancelar</button></a>
-  <?php } ?>
+  
 </div>
 </form>
 </div>

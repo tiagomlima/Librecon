@@ -195,39 +195,7 @@
                                     </td>
                                  
                                 </tr>
-                                
-                                <tr><td colspan="4"></td></tr>
-                                
-                                <tr>
-
-                                    <td>
-                                        <label>
-                                            <input name="vAcervo" class="marcar" type="checkbox" checked="checked" value="1" />
-                                            <span class="lbl"> Visualizar Acervo</span>
-                                        </label>
-                                    </td>
-                                   <td>
-                                        <label>
-                                            <input name="aAcervo" class="marcar" type="checkbox" value="1" />
-                                            <span class="lbl"> Adicionar Acervo</span>
-                                        </label>
-                                    </td>
-
-                                    <td>
-                                        <label>
-                                            <input name="eAcervo" class="marcar" type="checkbox" value="1" />
-                                            <span class="lbl"> Editar Acervo</span>
-                                        </label>
-                                    </td>
-
-                                    <td>
-                                        <label>
-                                            <input name="dAcervo" class="marcar" type="checkbox" value="1" />
-                                            <span class="lbl"> Excluir Acervo</span>
-                                        </label>
-                                    </td>
-
-                                </tr>
+                                                               
                                 <tr><td colspan="4"></td></tr>
                                 
                                 <tr>
@@ -356,6 +324,40 @@
                                     </td>
 
                                 </tr>
+                                
+                                <tr><td colspan="4"></td></tr>
+                                
+                                <tr>
+
+                                    <td>
+                                        <label>
+                                            <input name="vCategoria" class="marcar" type="checkbox" checked="checked" value="1" />
+                                            <span class="lbl"> Visualizar Categoria</span>
+                                        </label>
+                                    </td>
+                                   <td>
+                                        <label>
+                                            <input name="aCategoria" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Adicionar Categoria</span>
+                                        </label>
+                                    </td>
+
+                                    <td>
+                                        <label>
+                                            <input name="eCategoria" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Editar Categoria</span>
+                                        </label>
+                                    </td>
+
+                                    <td>
+                                        <label>
+                                            <input name="dCategoria" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Excluir Categoria</span>
+                                        </label>
+                                    </td>
+
+                                </tr>
+                                
                                 <tr><td colspan="4"></td></tr>
                                 
                                 <tr>

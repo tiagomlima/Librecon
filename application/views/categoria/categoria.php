@@ -1,4 +1,4 @@
-<a href="<?php echo base_url()?>index.php/tipoItem/adicionar" class="btn btn-success"><i class="icon-plus icon-white"></i> Adicionar Tipo de Item</a>
+<a href="<?php echo base_url()?>index.php/categoria/adicionar" class="btn btn-success"><i class="icon-plus icon-white"></i> Adicionar Categoria</a>
 <?php
 if(!$results){?>
         <div class="widget-box">
@@ -6,7 +6,7 @@ if(!$results){?>
         <span class="icon">
             <i class="icon-user"></i>
         </span>
-        <h5>Tipo de Item</h5>
+        <h5>Categoria</h5>
 
      </div>
 
@@ -17,13 +17,13 @@ if(!$results){?>
     <thead>
         <tr style="backgroud-color: #2D335B">
             <th>#</th>
-            <th>Nome do Item</th>
+            <th>Categoria</th>
             <th></th>
         </tr>
     </thead>
     <tbody>    
         <tr>
-            <td colspan="5">Nenhum Item Cadastrado</td>
+            <td colspan="5">Nenhuma categoria cadastrada</td>
         </tr>
     </tbody>
 </table>
@@ -38,7 +38,7 @@ if(!$results){?>
         <span class="icon">
             <i class="icon-user"></i>
          </span>
-        <h5>Tipo de Item</h5>
+        <h5>Categoria</h5>
 
      </div>
 
@@ -49,7 +49,7 @@ if(!$results){?>
     <thead>
         <tr style="backgroud-color: #2D335B">
             <th>#</th>
-            <th>Nome do Item</th>
+            <th>Categoria</th>
             <th></th>
         </tr>
     </thead>
@@ -57,14 +57,14 @@ if(!$results){?>
         <?php foreach ($results as $r) {
            
             echo '<tr>';
-            echo '<td>'.$r->idTipoItem.'</td>';
-            echo '<td>'.$r->nomeTipo.'</td>';
+            echo '<td>'.$r->idCategoria.'</td>';
+            echo '<td>'.$r->nomeCategoria.'</td>';
             echo '<td>';
-                      if($this->permission->checkPermission($this->session->userdata('permissao'),'eTipoItem')){
-                		echo '<a href="'.base_url().'index.php/tipoItem/editar/'.$r->idTipoItem.'" style="margin-right: 1%" class="btn btn-info tip-top" title="Editar Tipo de Item"><i class="icon-pencil icon-white"></i></a>'; 
+                      if($this->permission->checkPermission($this->session->userdata('permissao'),'eCategoria')){
+                		echo '<a href="'.base_url().'index.php/categoria/editar/'.$r->idCategoria.'" style="margin-right: 1%" class="btn btn-info tip-top" title="Editar Tipo de Item"><i class="icon-pencil icon-white"></i></a>'; 
            		 	  }
-            		  if($this->permission->checkPermission($this->session->userdata('permissao'),'dTipoItem')){
-                		echo '<a href="#modal-excluir" role="button" data-toggle="modal" tipoItem="'.$r->idTipoItem.'" style="margin-right: 1%" class="btn btn-danger tip-top" title="Excluir Tipo de Item"><i class="icon-remove icon-white"></i></a>'; 
+            		  if($this->permission->checkPermission($this->session->userdata('permissao'),'dCategoria')){
+                		echo '<a href="#modal-excluir" role="button" data-toggle="modal" categoria="'.$r->idCategoria.'" style="margin-right: 1%" class="btn btn-danger tip-top" title="Excluir Categoria"><i class="icon-remove icon-white"></i></a>'; 
             		  }
                   '</td>';
             echo '</tr>';
@@ -82,14 +82,14 @@ if(!$results){?>
 
 <!-- Modal -->
 <div id="modal-excluir" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <form action="<?php echo base_url() ?>index.php/tipoItem/excluir" method="post" >
+  <form action="<?php echo base_url() ?>index.php/categoria/excluir" method="post" >
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h5 id="myModalLabel">Excluir Tipo de Item</h5>
+    <h5 id="myModalLabel">Excluir Categoria</h5>
   </div>
   <div class="modal-body">
-    <input type="hidden" id="idTipoItem" name="id" value="" />
-    <h5 style="text-align: center">Deseja realmente excluir este tipo de item?</h5>
+    <input type="hidden" id="idCategoria" name="id" value="" />
+    <h5 style="text-align: center">Deseja realmente excluir essa categoria?</h5>
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
@@ -107,8 +107,8 @@ $(document).ready(function(){
 
    $(document).on('click', 'a', function(event) {
         
-        var tipoItem = $(this).attr('tipoItem');
-        $('#idTipoItem').val(tipoItem);
+        var categoria = $(this).attr('categoria');
+        $('#idCategoria').val(categoria);
 
     });
 

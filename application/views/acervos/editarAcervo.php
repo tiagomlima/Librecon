@@ -55,6 +55,18 @@
                     </div>
                     
                     <div class="control-group">
+                        <label  class="control-label">Categoria<span class="required">*</span></label>
+                        <div class="controls">
+                            <select name="categoria_id" id="categoria_id">
+                                  <?php foreach ($categoria as $c) {
+                                     if($t->idCategoria == $result->categoria_id){ $selected = 'selected';}else{$selected = '';}
+                                      echo '<option value="'.$c->idCategoria.'"'.$selected.'>'.$c->nomeCategoria.'</option>';
+                                  } ?>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
                         <label  class="control-label">Seção<span class="required">*</span></label>
                         <div class="controls">
                             <select name="secao_id" id="secao_id">
@@ -77,6 +89,83 @@
                             </select>
                         </div>
                     </div>
+                    
+                    <div class="control-group">
+                        <label for="dataAquisicao" class="control-label">Data de aquisição<span class="required">*</span></label>
+                        <div class="controls">
+                            <input id="dataAquisicao" type="date" name="dataAquisicao" value="<?php echo $result->dataAquisicao; ?>"  />
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="origemAquisicao" class="control-label">Origem aquisição<span class="required">*</span></label>
+                        <div class="controls">
+                            <input id="origemAquisicao" type="text" name="origemAquisicao" value="<?php echo $result->origemAquisicao; ?>"  />
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="observacaoAquisicao" class="control-label">Observação Aquisição</label>
+                        <div class="controls">
+                            <input id="observacaoAquisicao" type="text" name="observacaoAquisicao" value="<?php echo $result->observacaoAquisicao ?>"  />
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="preco" class="control-label">Preço<span class="required">*</span></label>
+                        <div class="controls">
+                            <input id="preco" type="text" name="preco" value="<?php echo $result->preco; ?>"  />
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="tabelaCutter" class="control-label">Tabela Cutter<span class="required">*</span></label>
+                        <div class="controls">
+                            <input id="tabelaCutter" type="text" name="tabelaCutter" value="<?php echo $result->tabelaCutter; ?>"  />
+                        </div>
+                    </div>
+                    
+                     <div class="control-group">
+                        <label for="isbn" class="control-label">ISBN<span class="required">*</span></label>
+                        <div class="controls">
+                            <input id="isbn" type="text" name="isbn" value="<?php echo $result->isbn; ?>"  />
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="anoEdicao" class="control-label">Ano Edição<span class="required">*</span></label>
+                        <div class="controls">
+                            <input id="anoEdicao" type="date" name="anoEdicao" value="<?php echo $result->anoEdicao; ?>"  />
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="artigo" class="control-label">Artigo<span class="required">*</span></label>
+                        <div class="controls">
+                            <input id="artigo" type="text" name="artigo" value="<?php echo $result->artigo; ?>"  />
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="notas" class="control-label">Notas</label>
+                        <div class="controls">
+                            <input id="notas" type="text" name="notas" value="<?php echo $result->notas; ?>"  />
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="numero_paginas" class="control-label">Nº Páginas<span class="required">*</span></label>
+                        <div class="controls">
+                            <input id="numero_paginas" type="text" name="numero_paginas" value="<?php echo $result->numero_paginas; ?>"  />
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="formato" class="control-label">Formato<span class="required">*</span></label>
+                        <div class="controls">
+                            <input id="formato" type="text" name="formato" value="<?php echo $result->formato; ?>"  />
+                        </div>
+                    </div>                     
 					
                     <div class="control-group">
                         <label for="tombo" class="control-label">Tombo<span class="required">*</span></label>
@@ -96,6 +185,22 @@
                         <label for="idioma" class="control-label">Idioma<span class="required">*</span></label>
                         <div class="controls">
                             <input id="idioma" type="text" name="idioma" value="<?php echo $result->idioma; ?>"  />
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="idioma" class="control-label">Palavra Chave</label>
+                        <div class="controls">
+                            <input id="palavra_chave" type="text" name="palavra_chave" value="<?php echo $result->palavra_chave; ?>"  />
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="descricao" class="control-label">Descrição</label>
+                        <div class="controls">
+                            <textarea name="descricao" rows="8" cols="40" placeholder="Digite uma breve descrição ou resumo do livro" style="width: 30%">
+							<?php echo $result->descricao ?>	
+							</textarea>
                         </div>
                     </div>
                                      

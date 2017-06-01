@@ -95,6 +95,10 @@
                 <li><a href="<?php echo base_url()?>index.php/tipoItem">Tipo de Item</a></li>
             <?php } ?>
             
+            <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vCategoria')){ ?>
+                <li><a href="<?php echo base_url()?>index.php/categoria">Categoria</a></li>
+            <?php } ?>
+            
             <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vSecao')){ ?>
                 <li><a href="<?php echo base_url()?>index.php/secao">Seção</a></li>
             <?php } ?>

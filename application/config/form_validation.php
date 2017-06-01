@@ -48,6 +48,12 @@ $config = array(
                                     'rules'=>'required|trim|xss_clean'
                                 ))
                 ,
+                'categoria' => array(array(
+                                    'field'=>'nomeCategoria',
+                                    'label'=>'Nome da categoria',
+                                    'rules'=>'required|trim|xss_clean'
+                                ))
+                ,
                 'secao' => array(array(
                                     'field'=>'secao',
                                     'label'=>'Secao',
@@ -101,6 +107,51 @@ $config = array(
                                 array(
                                     'field'=>'estoque',
                                     'label'=>'Estoque',
+                                    'rules'=>'required|trim|xss_clean'
+                                ),
+                                array(
+                                    'field'=>'dataAquisicao',
+                                    'label'=>'Data de Aquisição',
+                                    'rules'=>'required|trim|xss_clean'
+                                ),
+                                array(
+                                    'field'=>'origemAquisicao',
+                                    'label'=>'Origem de Aquisição',
+                                    'rules'=>'required|trim|xss_clean'
+                                ),                               
+                                array(
+                                    'field'=>'preco',
+                                    'label'=>'Preço',
+                                    'rules'=>'required|trim|xss_clean'
+                                ),
+                                array(
+                                    'field'=>'tabelaCutter',
+                                    'label'=>'Tabela Cutter',
+                                    'rules'=>'required|trim|xss_clean'
+                                ),
+                                array(
+                                    'field'=>'isbn',
+                                    'label'=>'ISBN',
+                                    'rules'=>'required|trim|xss_clean|is_unique[acervos.isbn]'
+                                ),
+                                array(
+                                    'field'=>'anoEdicao',
+                                    'label'=>'Ano de Edição',
+                                    'rules'=>'required|trim|xss_clean'
+                                ),
+                                array(
+                                    'field'=>'artigo',
+                                    'label'=>'Artigo',
+                                    'rules'=>'required|trim|xss_clean'
+                                ),
+                                array(
+                                    'field'=>'numero_paginas',
+                                    'label'=>'Número de páginas',
+                                    'rules'=>'required|trim|xss_clean'
+                                ),
+                                array(
+                                    'field'=>'formato',
+                                    'label'=>'Formato',
                                     'rules'=>'required|trim|xss_clean'
                                 ),
                                 array(

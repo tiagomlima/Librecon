@@ -19,8 +19,11 @@ class Acervos extends CI_Controller {
 		$this->load->model('grupos_model', '', TRUE);
 		$this->load->model('colecao_model', '', TRUE);
 		$this->load->model('reservas_model', '', TRUE);
+		$this->load->model('autor_model', '', TRUE);
+		$this->load->model('categoria_model', '', TRUE);
         $this->data['menuAcervos'] = 'Acervos';
 		
+		$this->data['categoria'] = $this->categoria_model->getActive('categoria','categoria.idCategoria,categoria.nomeCategoria');
 		$this->data['grupo'] = $this->grupos_model->getById($this->session->userdata('grupo'));
         $this->data['autor'] = $this->autor_model->getActive('autor','autor.idAutor,autor.autor');
         $this->data['editora'] = $this->editora_model->getActive('editora','editora.idEditora,editora.editora');
@@ -67,8 +70,9 @@ class Acervos extends CI_Controller {
         $config['last_tag_close'] = '</li>';
         
         $this->pagination->initialize($config); 	
-
-	    $this->data['results'] = $this->acervos_model->get('acervos','idAcervos,titulo,tombo,estoque,idioma,img_acervo','',$config['per_page'],$this->uri->segment(3));       
+		
+		$this->data['autor'] = $this->autor_model->getActive('autor','autor.idAutor,autor.autor');
+	    $this->data['results'] = $this->acervos_model->get('acervos','idAcervos,titulo,tombo,estoque,idioma,img_acervo,categoria_id,autor_id,tipoItem_id,secao_id,colecao_id,palavra_chave','',$config['per_page'],$this->uri->segment(3));       
 	    $this->data['view'] = 'acervos/acervos';
        	$this->load->view('tema/topo',$this->data);
        
@@ -139,9 +143,23 @@ class Acervos extends CI_Controller {
                 'tipoItem_id' => $this->input->post('tipoItem_id'),
                 'secao_id' => $this->input->post('secao_id'),
                 'colecao_id' => $this->input->post('colecao_id'),
+                'categoria_id' => $this->input->post('categoria_id'),
                 'tombo' => set_value('tombo'),
+                'palavra_chave' => $this->input->post('palavra_chave'),
                 'estoque' => set_value('estoque'),
                 'idioma' => set_value('idioma'),
+                'descricao' => $this->input->post('descricao'),
+                'dataAquisicao' => set_value('dataAquisicao'),
+                'origemAquisicao' => set_value('origemAquisicao'),
+                'observacaoAquisicao' => $this->input->post('observacaoAquisicao'),
+                'preco' => set_value('preco'),
+                'tabelaCutter' => set_value('tabelaCutter'),
+                'isbn' => set_value('isbn'),
+                'anoEdicao' => set_value('anoEdicao'),
+                'artigo' => set_value('artigo'),
+                'notas' => $this->input->post('notas'),
+                'numero_paginas' => set_value('numero_paginas'),
+                'formato' => set_value('formato'),                
                 'img_acervo' => $img                
             );
 
@@ -184,8 +202,22 @@ class Acervos extends CI_Controller {
                 'tipoItem_id' => $this->input->post('tipoItem_id'),
                 'secao_id' => $this->input->post('secao_id'),
                 'colecao_id' => $this->input->post('colecao_id'),
+                'categoria_id' => $this->input->post('categoria_id'),
+                'palavra_chave' => $this->input->post('palavra_chave'),
                 'tombo' => $this->input->post('tombo'),
                 'estoque' => $this->input->post('estoque'),
+                'descricao' => $this->input->post('descricao'),
+                'dataAquisicao' => $this->input->post('dataAquisicao'),
+                'origemAquisicao' => $this->input->post('origemAquisicao'),
+                'observacaoAquisicao' => $this->input->post('observacaoAquisicao'),
+                'preco' => $this->input->post('preco'),
+                'tabelaCutter' => $this->input->post('tabelaCutter'),
+                'isbn' => $this->input->post('isbn'),
+                'anoEdicao' => $this->input->post('anoEdicao'),
+                'artigo' => $this->input->post('artigo'),
+                'notas' => $this->input->post('notas'),
+                'numero_paginas' => $this->input->post('numero_paginas'),
+                'formato' => $this->input->post('formato'),    
                 'idioma' => $this->input->post('idioma')               
             );
 
@@ -257,7 +289,8 @@ class Acervos extends CI_Controller {
             $this->session->set_flashdata('error','Acervo não encontrado.');
             redirect(base_url() . 'index.php/acervos/editar/'.$this->input->post('idAcervos'));
         }
-
+		
+		$this->data['categoria'] = $this->acervos_model->getCategoriaById($this->uri->segment(3));
 		$this->data['autor'] = $this->acervos_model->getAutorById($this->uri->segment(3));
 		$this->data['editora'] = $this->acervos_model->getEditoraById($this->uri->segment(3));
 		$this->data['colecao'] = $this->acervos_model->getColecaoById($this->uri->segment(3));
@@ -298,8 +331,7 @@ class Acervos extends CI_Controller {
 		}
 					
 		$acervos_id = $this->input->post('acervos_id');
-		$usuario_id = $this->input->post('usuario_id');
-		$qtde_atual = $this->input->post('qtde_atual');
+		$usuario_id = $this->input->post('usuario_id');		
 						
 		$verificaReserva = $this->reservas_model->getReservaById($usuario_id);
 		
@@ -311,14 +343,7 @@ class Acervos extends CI_Controller {
 				$this->session->set_flashdata('error','Esse item já se encontra na sua lista de reserva.');            
         		redirect(base_url().'index.php/acervos/visualizar/'.$acervos_id);
 			}		
-
-			$limiteReserva = $this->reservas_model->getReservaById($usuario_id);
-			
-			if($qtde_atual > 1){
-				$this->session->set_flashdata('error','Limite de itens por reserva excedido.');            
-        		redirect(base_url().'index.php/acervos/visualizar/'.$acervos_id);
-			}	
-									
+															
 			$data = array(
 				'reserva_id' => $verificaReserva->idReserva,
 				'acervos_id' => $acervos_id
@@ -374,5 +399,47 @@ class Acervos extends CI_Controller {
 		}		
 	  }
 	}
+	
+	function pesquisar(){
+		
+		$this->load->library('table');
+        $this->load->library('pagination');
+        
+        
+        $config['base_url'] = base_url().'index.php/acervos/gerenciar/';
+        $config['total_rows'] = $this->acervos_model->count('acervos');
+        $config['per_page'] = 10;
+        $config['next_link'] = 'Próxima';
+        $config['prev_link'] = 'Anterior';
+        $config['full_tag_open'] = '<div class="pagination alternate"><ul>';
+        $config['full_tag_close'] = '</ul></div>';
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
+        $config['cur_tag_open'] = '<li><a style="color: #2D335B"><b>';
+        $config['cur_tag_close'] = '</b></a></li>';
+        $config['prev_tag_open'] = '<li>';
+        $config['prev_tag_close'] = '</li>';
+        $config['next_tag_open'] = '<li>';
+        $config['next_tag_close'] = '</li>';
+        $config['first_link'] = 'Primeira';
+        $config['last_link'] = 'Última';
+        $config['first_tag_open'] = '<li>';
+        $config['first_tag_close'] = '</li>';
+        $config['last_tag_open'] = '<li>';
+        $config['last_tag_close'] = '</li>';
+        
+        $this->pagination->initialize($config); 	
+		
+		$nome = $this->input->post('nome');
+		$autor = $this->input->post('autor_id');
+		$categoria = $this->input->post('categoria_id');
+		$palavra_chave = $this->input->post('palavra_chave');
+							
+		$data['results'] = $this->acervos_model->pesquisar($nome,$autor,$categoria,$palavra_chave);
+        $this->data['acervos'] = $data['results']['acervos'];
+		$this->data['view'] = 'acervos/pesquisar';
+        $this->load->view('tema/topo',  $this->data);
+	}
+
 }
 
