@@ -62,7 +62,8 @@ class Reservas extends CI_Controller {
         $config['last_tag_close'] = '</li>';
 
         $this->pagination->initialize($config); 	
-
+		
+		$this->data['reservas'] = $this->reservas_model->getReservaById($this->session->userdata('id'));
 		$this->data['results'] = $this->reservas_model->get('reserva','idReserva,usuario_id,dataReserva,dataPrazo,dataRetirada,status','',$config['per_page'],$this->uri->segment(3));
         $this->data['leitor'] = $this->reservas_model->getLeitor($config['per_page'],$this->uri->segment(3));
 		$this->data['autor'] = $this->reservas_model->getAutor($config['per_page'],$this->uri->segment(3));

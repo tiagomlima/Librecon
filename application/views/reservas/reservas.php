@@ -25,7 +25,9 @@ if(!$results){?>
     <thead>
         <tr style="backgroud-color: #2D335B">
             <th>Reserva</th>
-            <th>Leitor</th>           
+            <?php if($this->session->userdata('tipo_usuario') != 1){ ?>
+            <th>Leitor</th>
+            <?php } ?>           
             <th>Data Reserva</th>
             <th>Data Prazo</th>
             <th>Status</th>
@@ -69,7 +71,9 @@ else{ ?>
     <thead>
         <tr style="backgroud-color: #2D335B">
             <th>Reserva</th>
-            <th>Leitor</th>           
+            <?php if($this->session->userdata('tipo_usuario') != 1){ ?>
+            <th>Leitor</th>
+            <?php } ?>                   
             <th>Data Reserva</th>
             <th>Data Prazo</th>
             <th>Status</th>
@@ -79,14 +83,21 @@ else{ ?>
         </tr>
     </thead>
     <tbody>
-        <?php foreach ($results as $r) {
+    	<?php
+    	
+    	if($this->session->userdata('tipo_usuario') == 1){
+    		
+    	
+         foreach ($reservas as $r) {
         		foreach ($leitor as $l){
         			foreach ($acervo as $a){
         				
         					foreach ($editora as $e){
 					            echo '<tr>';
 					            echo '<td style="text-align: center"><a href="'.base_url().'index.php/reservas/editar/'.$r->idReserva.'">Ver Reserva</td>';
-								echo '<td style="text-align: center"><a href="'.base_url().'index.php/leitores/visualizar/'.$l->id.'">'.$l->leitor.'</a></td>';							
+								if($this->session->userdata('tipo_usuario') != 1){
+								echo '<td style="text-align: center"><a href="'.base_url().'index.php/leitores/visualizar/'.$l->id.'">'.$l->leitor.'</a></td>';	
+								}						
 								echo '<td style="text-align: center">'.date('d/m/Y', strtotime($r->dataReserva)).'</td>';
 								echo '<td style="text-align: center">'.date('d/m/Y', strtotime($r->dataPrazo)).'</td>';
 								echo '<td style="text-align: center">'.$r->status.'</td>';
@@ -107,6 +118,41 @@ else{ ?>
 	              }
 	            } 
 	          }
+	        } 
+	        }else {
+	        			
+	        	foreach ($results as $r) {
+        		foreach ($leitor as $l){
+        			foreach ($acervo as $a){
+        				
+        					foreach ($editora as $e){
+					            echo '<tr>';
+					            echo '<td style="text-align: center"><a href="'.base_url().'index.php/reservas/editar/'.$r->idReserva.'">Ver Reserva</td>';
+								if($this->session->userdata('tipo_usuario') != 1){
+								echo '<td style="text-align: center"><a href="'.base_url().'index.php/leitores/visualizar/'.$l->id.'">'.$l->leitor.'</a></td>';	
+								}						
+								echo '<td style="text-align: center">'.date('d/m/Y', strtotime($r->dataReserva)).'</td>';
+								echo '<td style="text-align: center">'.date('d/m/Y', strtotime($r->dataPrazo)).'</td>';
+								echo '<td style="text-align: center">'.$r->status.'</td>';
+								if($this->session->userdata('tipo_usuario') != 1){
+					            echo '<td style="text-align: center">';
+								}
+								if($this->permission->checkPermission($this->session->userdata('permissao'),'vReserva') && $this->session->userdata('tipo_usuario') != 1){
+					                echo '<a href="#modal-aprovar" role="button" data-toggle="modal" leitor="'.$l->id.'" idReserva="'.$r->idReserva.'" " class="btn btn-success tip-top" title="Aprovar Reserva"><i class="icon-ok icon-white"></i></a>  '; 
+					            } 
+					            if($this->permission->checkPermission($this->session->userdata('permissao'),'eReserva') && $this->session->userdata('tipo_usuario != 0')){
+					                echo '<a style="margin-right: 1%" href="'.base_url().'index.php/reservas/editar/'.$r->idReserva.'" class="btn btn-info tip-top" title="Editar Reserva"><i class="icon-pencil icon-white"></i></a>'; 
+					            }
+					            if($this->permission->checkPermission($this->session->userdata('permissao'),'dReserva')){
+					                echo '<a href="'.base_url().'index.php/reservas/recusar/'.$r->idReserva.'" role="button" data-toggle="modal" class="btn btn-danger tip-top"><i class="icon-remove icon-white"></i></a>  '; 
+					            }    					                      					                      
+					            echo '</td>';
+					            echo '</tr>';	           
+	              }
+	            } 
+	          }
+	        } 	
+	        	
 	        }?>
         <tr>
             

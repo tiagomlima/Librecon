@@ -45,7 +45,7 @@ class Reservas_model extends CI_Model {
 		$this->db->from('reserva');
 		$this->db->where('usuario_id',$id);
 		$this->db->limit(1);
-		return $this->db->get()->row();
+		return $this->db->get()->result();
 	}
 	
 	function getReservaRetirado($id){
