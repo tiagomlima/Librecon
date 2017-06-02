@@ -190,6 +190,42 @@ class Reservas extends CI_Controller {
 	}
 		
 	function cancelar(){
+		//verifica se o usuario é leitor, caso contrario impede de cancelar a reserva
+		if($this->session->userdata('tipo_usuario') != 1){			
+            redirect(base_url());
+		}		
+		
+		$usuario_id = $this->session->userdata('id');
+
+		$this->db->select('idReserva');
+		$this->db->where('usuario_id',$usuario_id);
+	    $reserva = $this->db->get('reserva')->row();
+		
+		//verifica se existe alguma reserva feita pelo leitor
+		if($reserva != null){
+			
+			$this->db->where('reserva_id',$reserva->idReserva);
+			$itens = $this->db->get('itens_de_reserva')->result();
+			
+			//verifica se há itens na lista de reserva
+			if($itens != null){
+				//se sim, acrescenta o item de volta ao estoque 
+				foreach ($itens as $i){
+					$this->db->query("UPDATE acervos set estoque = estoque + 1 WHERE idAcervos = ".$i->acervos_id);					
+				}				
+				$this->reservas_model->delete('itens_de_reserva','reserva_id',$reserva->idReserva);
+			}
+									
+			if($this->reservas_model->delete('reserva','usuario_id',$usuario_id)){
+				$this->session->set_flashdata('success','Reserva cancelada com sucesso');											
+				redirect('acervos');
+			} else{
+				$this->session->set_flashdata('error','Erro ao cancelar reserva');
+				redirect(current_url());
+			}
+		}
+		
+		/*
 		if(!$this->permission->checkPermission($this->session->userdata('permissao'),'eReserva')){
               $this->session->set_flashdata('error','Você não tem permissão para reservar');
               redirect(base_url());
@@ -198,6 +234,7 @@ class Reservas extends CI_Controller {
 		$usuario_id = $this->session->userdata('id');
 		$reserva_id = $this->reservas_model->getReservaById($usuario_id);
 		
+		$this->db->where('reserva_id',$reserva_id[0]->idReserva);
 		$itens = $this->db->get('itens_de_reserva')->row();
 		
 		if(count($itens) <= 0){
@@ -253,7 +290,7 @@ class Reservas extends CI_Controller {
 		} 
 																		
 		$this->session->set_flashdata('success','Reserva cancelada com sucesso.');											
-		redirect(base_url().'index.php/acervos');
+		redirect(base_url().'index.php/acervos');*/
 	}
 	
 	function recusar($idReserva){

@@ -221,7 +221,7 @@ class Usuarios extends CI_Controller {
 
             if($emprestimos != null){
 
-                foreach ($vendas as $e) {
+                foreach ($emprestimos as $e) {
                     $this->db->where('emprestimos_id', $e->idEmprestimos);
                     $this->db->delete('itens_de_emprestimos');
 
@@ -230,7 +230,21 @@ class Usuarios extends CI_Controller {
                     $this->db->delete('emprestimos');
                 }
             }
-
+			
+			//excluindo reservas vinculadas
+			$this->db->where('usuario_id', $id);
+            $reservas = $this->db->get('reserva')->result();
+			
+			if($reservas != null){
+				
+				foreach ($reservas as $r) {
+					$this->db->where('reserva_id', $r->idReserva);
+                    $this->db->delete('itens_de_reserva');
+					
+					$this->db->where('idReserva', $r->idReserva);
+					$this->db->delete('reserva');
+				}
+			}
             //$ID =  $this->uri->segment(3);
            // $this->usuarios_model->delete('usuarios','idUsuarios',$ID);             
             //redirect(base_url().'index.php/usuarios/gerenciar/');
