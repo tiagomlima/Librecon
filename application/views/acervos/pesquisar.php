@@ -53,7 +53,7 @@ if(!$acervos){?>
          </span>
         <h5>Acervos</h5>
         	
-        	<form style="margin-left:15%" action="<?php base_url() ?>acervos/pesquisar" method="post">       		
+        	<form style="margin-left:15%" action="<?php current_url() ?>" method="post">       		
 	            <select name="categoria_id" id="categoria_id" style="width:15%">                                 
 	            	<option value="">Categoria</option>
 	            	<?php foreach ($categoria as $c) {

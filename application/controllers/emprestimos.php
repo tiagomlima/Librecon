@@ -106,7 +106,7 @@ class Emprestimos extends CI_Controller {
         $this->load->view('tema/topo', $this->data);
     }
 
-	function emprestarReserva(){
+	/*function emprestarReserva(){
 		 if(!$this->permission->checkPermission($this->session->userdata('permissao'),'aEmprestimo')){
           $this->session->set_flashdata('error','Você não tem permissão para adicionar emprestimos.');
           redirect(base_url());
@@ -127,7 +127,8 @@ class Emprestimos extends CI_Controller {
             }
 			
 			$leitor_id = $this->input->post('leitor_id');
-			$grupo_id = $this->usuarios_model->getById($leitor_id);
+			$this->db->where('idUsuarios',$leitor_id);
+			$grupo = $this->db->get('usuarios')->row();
 			$status = 'Não emprestado';
 			$idReserva = $this->input->post('idReserva');
 			
@@ -136,7 +137,7 @@ class Emprestimos extends CI_Controller {
                 'dataVencimento' => $dataVencimento,
                 'usuarios_id' => $this->session->userdata('id'),
                 'leitor_id' => $leitor_id,
-                'grupo_id' => $grupo_id->grupo_id,
+                'grupo_id' => $grupo->grupo_id,
                 'status' => $status              
             );
 			if (is_numeric($id = $this->emprestimos_model->add('emprestimos', $data, true)) ) {
@@ -180,8 +181,8 @@ class Emprestimos extends CI_Controller {
             }
 			
 			    
- 	}
-    	
+ 	}*/
+
     
     function editar() {
         if(!$this->uri->segment(3) || !is_numeric($this->uri->segment(3))){

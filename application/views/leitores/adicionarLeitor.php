@@ -74,7 +74,7 @@
                     <div class="control-group">
                         <label for="celular" class="control-label">Celular</label>
                         <div class="controls">
-                            <input id="celular" type="text" name="celular" value="<?php echo set_value('celular'); ?>"  />
+                            <input id="celular" type="text" name="celular" value=""  />
                         </div>
                     </div>
 
@@ -162,7 +162,7 @@
                     <div class="control-group" class="control-label">
                         <label for="observacoes" class="control-label">Observações</label>
                         <div class="controls">
-                            <input id="observacoes" type="text" name="observacoes" value="<?php echo set_value('observacoes'); ?>"  />
+                            <input id="observacoes" type="text" name="observacoes" value=""  />
                         </div>
                     </div>
                     

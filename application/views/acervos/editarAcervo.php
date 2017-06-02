@@ -59,7 +59,7 @@
                         <div class="controls">
                             <select name="categoria_id" id="categoria_id">
                                   <?php foreach ($categoria as $c) {
-                                     if($t->idCategoria == $result->categoria_id){ $selected = 'selected';}else{$selected = '';}
+                                     if($c->idCategoria == $result->categoria_id){ $selected = 'selected';}else{$selected = '';}
                                       echo '<option value="'.$c->idCategoria.'"'.$selected.'>'.$c->nomeCategoria.'</option>';
                                   } ?>
                             </select>
@@ -255,6 +255,14 @@
                   tombo: { required: true},
                   estoque: { required: true},
                   idioma: { required: true},
+                  dataAquisicao: { required: true},
+                  origemAquisicao: { required: true},
+                  tabelaCutter: { required: true},
+                  isbn: { required: true},
+                  anoEdicao: { required: true},
+                  artigo: { required: true},
+                  numero_paginas: { required: true},
+                  formato: { required: true}
                   
             },
             messages:{

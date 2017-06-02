@@ -128,7 +128,7 @@ class Leitores extends CI_Controller {
 	                'sexo' => $this->input->post('sexo'),
 	                'situacao' => $this->input->post('situacao'),
 	                'senha' => $this->encrypt->sha1($this->input->post('senha')),
-	                'observacoes' => set_value('observacoes'),
+	                'observacoes' => $this->input->post('observacoes'),
 	                'curso_id' => $this->input->post('curso_id'),
 	                'grupo_id' => $this->input->post('grupo_id'),
 	                'permissoes_id' => $this->input->post('permissoes_id'),
@@ -138,7 +138,7 @@ class Leitores extends CI_Controller {
            
 			if ($this->usuarios_model->add('usuarios',$data) == TRUE)
 			{
-                                $this->session->set_flashdata('success','Leitor cadastrado com sucesso!');
+                $this->session->set_flashdata('success','Leitor cadastrado com sucesso!');
 				redirect(base_url().'index.php/leitores/adicionar/');
 			}
 			else

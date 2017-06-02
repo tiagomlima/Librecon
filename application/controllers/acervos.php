@@ -152,7 +152,7 @@ class Acervos extends CI_Controller {
                 'dataAquisicao' => set_value('dataAquisicao'),
                 'origemAquisicao' => set_value('origemAquisicao'),
                 'observacaoAquisicao' => $this->input->post('observacaoAquisicao'),
-                'preco' => set_value('preco'),
+                'preco' => $this->input->post('preco'),
                 'tabelaCutter' => set_value('tabelaCutter'),
                 'isbn' => set_value('isbn'),
                 'anoEdicao' => set_value('anoEdicao'),
@@ -350,6 +350,7 @@ class Acervos extends CI_Controller {
 		if($verificaReserva != null){
 			
 			$this->db->where('acervos_id',$acervos_id);
+			$this->db->where('reserva_id',$verificaReserva->idReserva);
 			$acervo = $this->db->get('itens_de_reserva')->row();
 			//verifica se o item ja esta na lista de reserva
 			if($acervo != null){
@@ -411,74 +412,8 @@ class Acervos extends CI_Controller {
         			redirect(base_url().'index.php/acervos/visualizar/'.$acervos_id);
 				}
 			}
-		}
-			
-		/*				
-		$verificaReserva = $this->reservas_model->getReservaById($usuario_id);
+		}			
 		
-		if(count($verificaReserva) > 0){
-			
-			$verificaRetirado = $this->reservas_model->getReservaRetirado($verificaReserva->idReserva); 															
-
-			if(count($verificaAcervo) > 0){
-				$this->session->set_flashdata('error','Esse item já se encontra na sua lista de reserva.');            
-        		redirect(base_url().'index.php/acervos/visualizar/'.$acervos_id);
-			}		
-															
-			$data = array(
-				'reserva_id' => $verificaReserva->idReserva,
-				'acervos_id' => $acervos_id
-			);
-			
-			$this->acervos_model->add('itens_de_reserva',$data);
-			
-			$addQtde = "UPDATE reserva set qtde_item = qtde_item + 1 WHERE idReserva = ".$verificaReserva->idReserva;
-			$this->db->query($addQtde,array($verificaReserva->idReserva));
-			
-			$delEstoque = "UPDATE acervos set estoque = estoque -1 WHERE idAcervos = ".$acervos_id;
-			$this->db->query($delEstoque,array($acervos_id));
-			
-			$this->session->set_flashdata('success','Item adicionado na lista de reserva');            
-        	redirect(base_url().'index.php/reservas/editar/'.$verificaReserva->idReserva);
-			
-		} else {		
-		
-		$validade_reserva = $this->input->post('validade_reserva');
-		$dataPrazo = date('Y-m-d', strtotime("+".$validade_reserva." days"));
-		
-		if($qtde_atual > 1){
-				$this->session->set_flashdata('error','Limite de itens por reserva excedido.');            
-        		redirect(base_url().'index.php/acervos/visualizar/'.$acervos_id);
-			}	
-		
-		$data = array(
-			'dataPrazo' => $dataPrazo,
-			'dataReserva' => date('Y-m-d'),
-			'usuario_id' => $usuario_id,
-			'qtde_item' => 1	
-		);
-							
-		if(is_numeric($id = $this->acervos_model->add('reserva',$data,true))){
-			$sql = "UPDATE acervos set estoque = estoque -1 WHERE idAcervos = ".$acervos_id;
-			$this->db->query($sql,array($acervos_id));
-			
-			$status = "UPDATE reserva set status = 'Em andamento' WHERE usuario_id = ".$usuario_id;
-			$this->db->query($status,array($usuario_id));
-			
-			$data2 = array(
-				'reserva_id' => $id,
-				'acervos_id' => $acervos_id
-			);
-			
-			$this->acervos_model->add('itens_de_reserva',$data2);
-			
-			$this->session->set_flashdata('success','Reserva iniciada com sucesso!');            
-        	redirect(base_url().'index.php/reservas/editar/'.$id);
-		}else{
-			$this->session->set_flashdata('error','Não foi possivel reservar o acervo.');            
-        	redirect(base_url().'index.php/acervos/gerenciar/');
-		}		
-	  }*/
 	}
 	
 	function pesquisar(){

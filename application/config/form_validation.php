@@ -87,13 +87,8 @@ $config = array(
                                     'field'=>'descricao',
                                     'label'=>'',
                                     'rules'=>'trim|xss_clean'
-                                ),
-                                array(
-                                    'field'=>'preco',
-                                    'label'=>'',
-                                    'rules'=>'required|trim|xss_clean'
                                 ))
-                ,
+                                          ,
                 'acervos' => array(array(
                                     'field'=>'titulo',
                                     'label'=>'titulo',
@@ -174,12 +169,47 @@ $config = array(
                                 array(
                                     'field'=>'email',
                                     'label'=>'Email',
-                                    'rules'=>'required|trim|valid_email|xss_clean'
+                                    'rules'=>'required|trim|valid_email|xss_clean|is_unique[usuarios.email]'
                                 ),
                                 array(
                                     'field'=>'senha',
                                     'label'=>'Senha',
                                     'rules'=>'required|trim|xss_clean|min_length[5]'
+                                ),
+                                array(
+                                    'field'=>'matricula',
+                                    'label'=>'Matricula',
+                                    'rules'=>'required|trim|xss_clean|is_unique[usuarios.matricula]'
+                                ),
+                                array(
+                                    'field'=>'rua',
+                                    'label'=>'Rua',
+                                    'rules'=>'required|trim|xss_clean'
+                                ),
+                                array(
+                                    'field'=>'numero',
+                                    'label'=>'Numero',
+                                    'rules'=>'required|trim|xss_clean'
+                                ),
+                                array(
+                                    'field'=>'bairro',
+                                    'label'=>'Bairro',
+                                    'rules'=>'required|trim|xss_clean'
+                                ),
+                                array(
+                                    'field'=>'cidade',
+                                    'label'=>'Cidade',
+                                    'rules'=>'required|trim|xss_clean'
+                                ),
+                                array(
+                                    'field'=>'estado',
+                                    'label'=>'Estado',
+                                    'rules'=>'required|trim|xss_clean'
+                                ),
+                                array(
+                                    'field'=>'cep',
+                                    'label'=>'CEP',
+                                    'rules'=>'required|trim|xss_clean'
                                 ),
                                 array(
                                     'field'=>'telefone',
@@ -191,72 +221,8 @@ $config = array(
                                     'field'=>'nomeDisciplina',
                                     'label'=>'Nome',
                                     'rules'=>'required|trim|xss_clean'
-                                ))
-                ,    
-                'os' => array(array(
-                                    'field'=>'dataInicial',
-                                    'label'=>'DataInicial',
-                                    'rules'=>'required|trim|xss_clean'
-                                ),
-                                array(
-                                    'field'=>'dataFinal',
-                                    'label'=>'DataFinal',
-                                    'rules'=>'trim|xss_clean'
-                                ),
-                                array(
-                                    'field'=>'garantia',
-                                    'label'=>'Garantia',
-                                    'rules'=>'trim|xss_clean'
-                                ),
-                                array(
-                                    'field'=>'descricaoAcervo',
-                                    'label'=>'DescricaoAcervo',
-                                    'rules'=>'trim|xss_clean'
-                                ),
-                                array(
-                                    'field'=>'defeito',
-                                    'label'=>'Defeito',
-                                    'rules'=>'trim|xss_clean'
-                                ),
-                                array(
-                                    'field'=>'status',
-                                    'label'=>'Status',
-                                    'rules'=>'required|trim|xss_clean'
-                                ),
-                                array(
-                                    'field'=>'observacoes',
-                                    'label'=>'Observacoes',
-                                    'rules'=>'trim|xss_clean'
-                                ),
-                                array(
-                                    'field'=>'leitores_id',
-                                    'label'=>'leitores',
-                                    'rules'=>'trim|xss_clean|required'
-                                ),
-                                array(
-                                    'field'=>'usuarios_id',
-                                    'label'=>'usuarios_id',
-                                    'rules'=>'trim|xss_clean|required'
-                                ),
-                                array(
-                                    'field'=>'laudoTecnico',
-                                    'label'=>'Laudo Tecnico',
-                                    'rules'=>'trim|xss_clean'
-                                ))
-
-                  ,
-				'tiposUsuario' => array(array(
-                                	'field'=>'nomeTipo',
-                                	'label'=>'NomeTipo',
-                                	'rules'=>'required|trim|xss_clean'
-                                ),
-								array(
-                                	'field'=>'situacao',
-                                	'label'=>'Situacao',
-                                	'rules'=>'required|trim|xss_clean'
-                                ))
-
-                ,
+                                ))                                   
+                  ,				
                 'receita' => array(array(
                                     'field'=>'descricao',
                                     'label'=>'Descrição',

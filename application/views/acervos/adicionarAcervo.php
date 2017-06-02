@@ -105,9 +105,9 @@
                     </div>
                     
                     <div class="control-group">
-                        <label for="preco" class="control-label">Preço<span class="required">*</span></label>
+                        <label for="preco" class="control-label">Preço</label>
                         <div class="controls">
-                            <input id="preco" type="text" name="preco" value="<?php echo set_value('preco'); ?>"  />
+                            <input id="preco" type="text" name="preco" value=""  />
                         </div>
                     </div>
                     
@@ -233,7 +233,6 @@
                   idioma: { required: true},
                   dataAquisicao: { required: true},
                   origemAquisicao: { required: true},
-                  preco: { required: true},
                   tabelaCutter: { required: true},
                   isbn: { required: true},
                   anoEdicao: { required: true},

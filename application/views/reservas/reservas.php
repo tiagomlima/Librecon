@@ -138,7 +138,7 @@ else{ ?>
 					            echo '<td style="text-align: center">';
 								}
 								if($this->permission->checkPermission($this->session->userdata('permissao'),'vReserva') && $this->session->userdata('tipo_usuario') != 1){
-					                echo '<a href="#modal-aprovar" role="button" data-toggle="modal" leitor="'.$l->id.'" idReserva="'.$r->idReserva.'" " class="btn btn-success tip-top" title="Aprovar Reserva"><i class="icon-ok icon-white"></i></a>  '; 
+					                echo '<a href="#modal-aprovar" role="button" data-toggle="modal" leitor_id="'.$l->id.'" idReserva="'.$r->idReserva.'" " class="btn btn-success tip-top" title="Aprovar Reserva"><i class="icon-ok icon-white"></i></a>  '; 
 					            } 
 					            if($this->permission->checkPermission($this->session->userdata('permissao'),'eReserva') && $this->session->userdata('tipo_usuario != 0')){
 					                echo '<a style="margin-right: 1%" href="'.base_url().'index.php/reservas/editar/'.$r->idReserva.'" class="btn btn-info tip-top" title="Editar Reserva"><i class="icon-pencil icon-white"></i></a>'; 
@@ -218,7 +218,7 @@ $(document).ready(function(){
         var reserva = $(this).attr('idReserva');
         $('#idReserva').val(reserva);
         
-        var leitor = $(this).attr('leitor');
+        var leitor = $(this).attr('leitor_id');
         $('#leitor_id').val(leitor);
 
     });
