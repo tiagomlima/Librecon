@@ -47,6 +47,14 @@ class Emprestimos_model extends CI_Model {
         $this->db->limit(1);
         return $this->db->get()->row();
     }
+	
+	function getEmprestimoById($id){
+		$this->db->select('*');
+		$this->db->from('emprestimos');
+		$this->db->where('leitor_id',$id);
+		$this->db->limit(1);
+		return $this->db->get()->result();
+	}
 
     public function getAcervos($id){
         $this->db->select('itens_de_emprestimos.*, acervos.*');

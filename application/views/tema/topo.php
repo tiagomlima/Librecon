@@ -117,16 +117,25 @@
 			$reserva = $this->reservas_model->getReservaById($this->session->userdata('id'));
 			
 			if(count($reserva) > 0){ ?>
-				<li class="<?php if(isset($menuReserva)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/reservas"><i class="icon icon-calendar"></i> <span>Reservas</span></a></li>
+				<li class="<?php if(isset($menuReserva)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/reservas"><i class="icon icon-calendar"></i> <span>Minhas Reservas</span></a></li>
 		<?php	}
 		} ?>		
 		
     <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vReserva') && $this->session->userdata('tipo_usuario') == 0){ ?>
         <li class="<?php if(isset($menuReserva)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/reservas"><i class="icon icon-calendar"></i> <span>Reservas</span></a></li>
     <?php } ?>
-
-
-    <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vEmprestimo')){ ?>
+	
+	<?php 
+		if($this->session->userdata('tipo_usuario') == 1){
+			$this->db->where('leitor_id',$this->session->userdata('id'));
+			$emprestimo = $this->db->get('emprestimos')->result();
+			
+			if(count($emprestimo) > 0){ ?>
+				<li class="<?php if(isset($menuEmprestimos)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/emprestimos"><i class="icon icon-book"></i> <span>Meus Emprestimos</span></a></li>
+		<?php	}
+		} ?>	
+	
+    <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vEmprestimo') && $this->session->userdata('tipo_usuario') == 0){ ?>
         <li class="<?php if(isset($menuEmprestimos)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/emprestimos"><i class="icon icon-book"></i> <span>Emprestimos</span></a></li>
     <?php } ?>
     

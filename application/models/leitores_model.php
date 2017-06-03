@@ -160,5 +160,20 @@ class Leitores_model extends CI_Model {
         $this->db->limit(10);
         return $this->db->get('emprestimos')->result();
     }
+	
+	function pesquisarLeitor($nome,$curso,$grupo,$matricula){
+         $data = array();
+         
+         // buscando leitores
+         $this->db->like('nome',$nome);
+		 $this->db->like('curso_id',$curso);
+		 $this->db->like('grupo_id',$grupo);
+		 $this->db->like('matricula',$matricula);
+         $this->db->limit(5);
+         $data['usuarios'] = $this->db->get('usuarios')->result();
+       
+         return $data;
+
+    }
 
 }

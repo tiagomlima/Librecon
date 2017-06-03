@@ -64,7 +64,7 @@ class Reservas extends CI_Controller {
         $this->pagination->initialize($config); 	
 		
 		$this->data['reservas'] = $this->reservas_model->getReservaById($this->session->userdata('id'));
-		$this->data['results'] = $this->reservas_model->get('reserva','idReserva,usuario_id,dataReserva,dataPrazo,dataRetirada,status','',$config['per_page'],$this->uri->segment(3));
+		$this->data['results'] = $this->reservas_model->get('reserva','idReserva,usuario_id,dataReserva,dataPrazo,status','',$config['per_page'],$this->uri->segment(3));
         $this->data['leitor'] = $this->reservas_model->getLeitor($config['per_page'],$this->uri->segment(3));
 		$this->data['autor'] = $this->reservas_model->getAutor($config['per_page'],$this->uri->segment(3));
 		$this->data['editora'] = $this->reservas_model->getEditora($config['per_page'],$this->uri->segment(3));
@@ -294,6 +294,7 @@ class Reservas extends CI_Controller {
 	}
 	
 	function recusar($idReserva){
+		
 		if(!$this->permission->checkPermission($this->session->userdata('permissao'),'dReserva') or $this->session->userdata('tipo_usuario') != 0){
               $this->session->set_flashdata('error','Você não tem permissão para fazer isso');
               redirect(base_url());

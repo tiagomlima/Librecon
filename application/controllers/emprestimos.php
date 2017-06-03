@@ -106,8 +106,60 @@ class Emprestimos extends CI_Controller {
         $this->load->view('tema/topo', $this->data);
     }
 
-	/*function emprestarReserva(){
-		 if(!$this->permission->checkPermission($this->session->userdata('permissao'),'aEmprestimo')){
+	function emprestarReserva(){
+		
+		$leitor_id = $this->input->post('leitor_id');
+		$idReserva = $this->input->post('idReserva');
+		$usuario_id = $this->session->userdata('id');
+		
+		//pega o id do grupo que o leitor faz parte
+		$this->db->where('idUsuarios',$leitor_id);
+		$grupo = $this->db->get('usuarios')->row();
+		$grupo_id = $grupo->grupo_id;
+		
+		//pega a quantidade de itens na lista de reserva e acrescenta no emprestimo
+		$this->db->where('idReserva',$idReserva);
+		$qtde = $this->db->get('reserva')->row();
+		
+		$dataEmprestimo = date('Y-m-d');
+		$dataVencimento = date('Y-m-d');
+				
+		$data = array(
+			'dataEmprestimo' => $dataEmprestimo,
+			'dataVencimento' => $dataVencimento,
+			'leitor_id' => $leitor_id,
+			'usuarios_id' => $usuario_id,
+			'status' => 'Não emprestado',
+			'grupo_id' => $grupo_id,
+			'qtde_item' => $qtde->qtde_item			
+		);
+		
+		if(is_numeric($id = $this->emprestimos_model->add('emprestimos',$data,true))){
+			
+			$this->db->query("UPDATE reserva set status = 'Aprovado' WHERE idReserva = ".$idReserva);
+			
+			$this->db->where('reserva_id',$idReserva);
+			$lista = $this->db->get('itens_de_reserva')->result();
+			
+			foreach ($lista as $l){
+				$data = array(
+					'emprestimos_id' => $id,
+					'acervos_id' => $l->acervos_id
+				);
+				
+				$this->emprestimos_model->add('itens_de_emprestimos',$data);
+				
+				
+			}						
+			$this->session->set_flashdata('success','Emprestimo iniciado com sucesso!');
+            redirect('emprestimos/editar/'.$id);	
+		}else{
+			$this->session->set_flashdata('error','Erro ao aprovar essa reserva,tente novamente');
+            redirect('reservas');
+		}
+		
+		
+		/* if(!$this->permission->checkPermission($this->session->userdata('permissao'),'aEmprestimo')){
           $this->session->set_flashdata('error','Você não tem permissão para adicionar emprestimos.');
           redirect(base_url());
         }
@@ -180,8 +232,8 @@ class Emprestimos extends CI_Controller {
                 $this->data['custom_error'] = '<div class="form_error"><p>Ocorreu um erro.</p></div>';
             }
 			
-			    
- 	}*/
+			    */
+ 	}
 
     
     function editar() {
@@ -541,7 +593,6 @@ class Emprestimos extends CI_Controller {
 			
 			$this->session->set_flashdata('success','Empréstimo renovado com sucesso!.');
 			redirect('emprestimos/editar/'.$idEmprestimos);
-		}
-		
-	}
+		}		
+	}	
 }

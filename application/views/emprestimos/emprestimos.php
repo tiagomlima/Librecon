@@ -7,7 +7,7 @@ if(!$results){?>
 	<div class="widget-box">
      <div class="widget-title">
         <span class="icon">
-            <i class="icon-tags"></i>
+            <i class="icon-book"></i>
          </span>
         <h5>Emprestimos</h5>
 
@@ -22,7 +22,9 @@ if(!$results){?>
             <th>#</th>
             <th>Data do Empréstimo</th>
             <th>Data da Devolução</th>
+            <?php if($this->session->userdata('tipo_usuario') != 1){ ?>
             <th>Leitor</th>
+            <?php } ?>
             <th>Situação</th>
             <th></th>
         </tr>
@@ -42,7 +44,7 @@ if(!$results){?>
 <div class="widget-box">
      <div class="widget-title">
         <span class="icon">
-            <i class="icon-tags"></i>
+            <i class="icon-book"></i>
          </span>
         <h5>Empréstimos</h5>
 
@@ -57,13 +59,17 @@ if(!$results){?>
             <th>#</th>
             <th>Data do Empréstimo</th>
             <th>Data de Vencimento</th>
+            <?php if($this->session->userdata('tipo_usuario') != 1){ ?>
             <th>Leitor</th>
+            <?php } ?>
             <th>Situação</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        <?php foreach ($results as $r) {
+    <?php
+    	if($this->session->userdata('tipo_usuario') == 0){    		    	
+         foreach ($results as $r) {
             $dataEmprestimo = date(('d/m/Y'),strtotime($r->dataEmprestimo));
 			$dataVencimento = date(('d/m/Y'),strtotime($r->dataVencimento));
 			$dataAtual = date(('d/m/Y'),strtotime(date('d/m/Y')));
@@ -75,7 +81,7 @@ if(!$results){?>
 			}
                      
             echo '<tr>';
-            echo '<td>'.$r->idEmprestimos.'</td>';
+            echo '<td><a href="'.base_url().'index.php/emprestimos/visualizar/'.$r->idEmprestimos.'">'.$r->idEmprestimos.'</a></td>';
             echo '<td>'.$dataEmprestimo.'</td>';
 			echo '<td>'.$dataVencimento.'</td>';
             echo '<td><a href="'.base_url().'index.php/leitores/visualizar/'.$r->leitor_id.'">'.$r->nome.'</a></td>';
@@ -94,7 +100,36 @@ if(!$results){?>
             }
             echo '</td>';
             echo '</tr>';
-        }?>
+          }
+        }else{
+        	$this->db->where('leitor_id',$this->session->userdata('id'));
+			$emprestimo = $this->db->get('emprestimos')->result();
+        	foreach ($emprestimo as $r) {
+            $dataEmprestimo = date(('d/m/Y'),strtotime($r->dataEmprestimo));
+			$dataVencimento = date(('d/m/Y'),strtotime($r->dataVencimento));
+			$dataAtual = date(('d/m/Y'),strtotime(date('d/m/Y')));
+						
+			if($dataAtual > $dataVencimento){
+				$status = 'ATRASADO';
+			}else{
+				$status = $r->status;
+			}
+                     
+            echo '<tr>';
+            echo '<td>'.$r->idEmprestimos.'</td>';
+            echo '<td>'.$dataEmprestimo.'</td>';
+			echo '<td>'.$dataVencimento.'</td>';
+			echo '<td>'.$status.'</td>';
+                        
+            echo '<td>';
+            if($this->permission->checkPermission($this->session->userdata('permissao'),'vEmprestimo') && $r->status != 'Não emprestado'){
+                echo '<a style="margin-right: 1%" href="'.base_url().'index.php/emprestimos/visualizar/'.$r->idEmprestimos.'" class="btn tip-top" title="Ver comprovante"><i class="icon-eye-open"></i></a>'; 
+            }          
+            echo '</td>';
+            echo '</tr>';
+          }
+        }
+        ?>
         <tr>
             
         </tr>

@@ -24,6 +24,7 @@ class Reservas_model extends CI_Model {
         $result =  !$one  ? $query->result() : $query->row();
         return $result;
     }
+		    
 
    /* function getById($id){
         $this->db->where('idReserva',$id);
@@ -57,18 +58,6 @@ class Reservas_model extends CI_Model {
 		return $this->db->get()->row();
 	}
 			
-	function getLeitor($perpage=0,$start=0,$one=false){
-        
-        $this->db->from('reserva');
-        $this->db->select('reserva.*, usuarios.nome as leitor, usuarios.idUsuarios as id');
-        $this->db->limit($perpage,$start);
-        $this->db->join('usuarios', 'reserva.usuario_id = usuarios.idUsuarios', 'left');
-        $this->db->limit(1);
-        $query = $this->db->get();
-        
-        $result =  !$one  ? $query->result() : $query->row();
-        return $result;
-    }
 	
 	function getLeitorById($id){
     	
@@ -80,6 +69,19 @@ class Reservas_model extends CI_Model {
         return $this->db->get()->row();      
         
         
+    }
+	
+	function getLeitor($perpage=0,$start=0,$one=false){
+        
+        $this->db->from('usuarios');
+        $this->db->select('usuarios.*, reserva.idReserva');
+        $this->db->limit($perpage,$start);
+        $this->db->join('reserva', 'usuarios.idUsuarios = reserva.usuario_id', 'left');
+        $this->db->limit(1);
+        $query = $this->db->get();
+        
+        $result =  !$one  ? $query->result() : $query->row();
+        return $result;
     }
 	
 	public function getAcervos($id){

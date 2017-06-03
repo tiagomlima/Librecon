@@ -3,7 +3,7 @@
 <?php } ?>
 
 <?php
-if(!$results){?>
+if(!$leitores){?>
 
         <div class="widget-box">
         <div class="widget-title">
@@ -12,7 +12,7 @@ if(!$results){?>
             </span>
             <h5>Leitores</h5>
             
-				<form style="margin-left:15%" action="<?php base_url() ?>leitores/pesquisar" method="post">       		
+				<form style="margin-left:15%" action="<?php current_url() ?>" method="post">       		
 	            <select name="curso_id" id="curso_id" style="width:15%">                                 
 	            	<option value="">Curso</option>
 	            	<?php foreach ($cursos as $c) {
@@ -64,7 +64,7 @@ if(!$results){?>
             <i class="icon-user"></i>
          </span>
         <h5>Leitores</h5>
-        	<form style="margin-left:15%" action="<?php base_url() ?>leitores/pesquisar" method="post">       		
+        	<form style="margin-left:15%" action="<?php current_url() ?>" method="post">       		
 	            <select name="curso_id" id="curso_id" style="width:15%">                                 
 	            	<option value="">Curso</option>
 	            	<?php foreach ($cursos as $c) {
@@ -101,7 +101,7 @@ if(!$results){?>
     </thead>
     <tbody>
         <?php 
-        	foreach ($results as $r){
+        	foreach ($leitores as $r){
         		echo '<tr>';
 				echo '<td style="text-align:center"><a href="'.base_url().'index.php/leitores/visualizar/'.$r->idUsuarios.'">'.$r->nome.'</a></td>';
 				echo '<td style="text-align:center">'.$r->matricula.'</td>';

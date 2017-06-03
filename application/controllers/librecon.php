@@ -9,6 +9,7 @@ class Librecon extends CI_Controller {
         parent::__construct();
         $this->load->model('librecon_model','',TRUE);
 		$this->load->model('reservas_model','',TRUE);
+		$this->load->model('emprestimos_model','',TRUE);
         
     }
 

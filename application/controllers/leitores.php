@@ -12,7 +12,12 @@ class Leitores extends CI_Controller {
 			$this->load->model('usuarios_model', '', TRUE);
             $this->load->helper(array('codegen_helper'));
             $this->load->model('leitores_model','',TRUE);
+			$this->load->model('cursos_model','',TRUE);
+			$this->load->model('grupos_model','',TRUE);
             $this->data['menuLeitores'] = 'leitores';
+			
+			$this->data['cursos'] = $this->cursos_model->getActive('cursos','cursos.idCursos,cursos.nomeCurso');
+			$this->data['grupos'] = $this->grupos_model->getActive('grupos','grupos.idGrupo,grupos.nomeGrupo');
 	}	
 	
 	function index(){
@@ -53,7 +58,7 @@ class Leitores extends CI_Controller {
         
         $this->pagination->initialize($config); 	
         
-	    $this->data['results'] = $this->leitores_model->get('usuarios','idUsuarios,nome,cpf,datanasc,sexo,situacao,matricula,telefone,celular,email,rua,numero,bairro,cidade,estado,cep','',$config['per_page'],$this->uri->segment(3));       	
+	    $this->data['results'] = $this->leitores_model->get('usuarios','idUsuarios,nome,cpf,datanasc,sexo,situacao,matricula,telefone,celular,email,rua,numero,bairro,cidade,estado,cep,curso_id,grupo_id','',$config['per_page'],$this->uri->segment(3));       	
 		$this->data['curso'] = $this->leitores_model->getCurso($config['per_page'],$this->uri->segment(3));
 		$this->data['grupo'] = $this->leitores_model->getGrupo($config['per_page'],$this->uri->segment(3));
 		$this->data['permissoes'] = $this->leitores_model->getPermissao($config['per_page'],$this->uri->segment(3));
@@ -231,7 +236,6 @@ class Leitores extends CI_Controller {
                 'matricula' => $this->input->post('matricula'),
                 'sexo' => $this->input->post('sexo'),
                 'situacao' => $this->input->post('situacao'),
-                'senha' => $senha,
                 'observacoes' => $this->input->post('observacoes'),
                 'curso_id' => $this->input->post('curso_id'),
 	            'grupo_id' => $this->input->post('grupo_id'),
@@ -295,5 +299,46 @@ class Leitores extends CI_Controller {
             $this->session->set_flashdata('success','Leitor excluido com sucesso!');            
             redirect(base_url().'index.php/leitores/gerenciar/');
     }
+
+	function pesquisar(){
+		
+		$this->load->library('table');
+        $this->load->library('pagination');
+        
+        
+        $config['base_url'] = base_url().'index.php/leitores/gerenciar/';
+        $config['total_rows'] = $this->leitores_model->count('usuarios');
+        $config['per_page'] = 10;
+        $config['next_link'] = 'Próxima';
+        $config['prev_link'] = 'Anterior';
+        $config['full_tag_open'] = '<div class="pagination alternate"><ul>';
+        $config['full_tag_close'] = '</ul></div>';
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
+        $config['cur_tag_open'] = '<li><a style="color: #2D335B"><b>';
+        $config['cur_tag_close'] = '</b></a></li>';
+        $config['prev_tag_open'] = '<li>';
+        $config['prev_tag_close'] = '</li>';
+        $config['next_tag_open'] = '<li>';
+        $config['next_tag_close'] = '</li>';
+        $config['first_link'] = 'Primeira';
+        $config['last_link'] = 'Última';
+        $config['first_tag_open'] = '<li>';
+        $config['first_tag_close'] = '</li>';
+        $config['last_tag_open'] = '<li>';
+        $config['last_tag_close'] = '</li>';
+        
+        $this->pagination->initialize($config); 	
+		
+		$nome = $this->input->post('nome');
+		$curso = $this->input->post('curso_id');
+		$grupo = $this->input->post('grupo_id');
+		$matricula = $this->input->post('matricula');
+							
+		$data['results'] = $this->leitores_model->pesquisarLeitor($nome,$curso,$grupo,$matricula);
+        $this->data['leitores'] = $data['results']['usuarios'];
+		$this->data['view'] = 'leitores/pesquisar';
+        $this->load->view('tema/topo',  $this->data);
+	}
 }
 

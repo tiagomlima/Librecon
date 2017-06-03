@@ -84,76 +84,53 @@ else{ ?>
     </thead>
     <tbody>
     	<?php
-    	
-    	if($this->session->userdata('tipo_usuario') == 1){
-    		
-    	
-         foreach ($reservas as $r) {
-        		foreach ($leitor as $l){
-        			foreach ($acervo as $a){
-        				
-        					foreach ($editora as $e){
-					            echo '<tr>';
-					            echo '<td style="text-align: center"><a href="'.base_url().'index.php/reservas/editar/'.$r->idReserva.'">Ver Reserva</td>';
-								if($this->session->userdata('tipo_usuario') != 1){
-								echo '<td style="text-align: center"><a href="'.base_url().'index.php/leitores/visualizar/'.$l->id.'">'.$l->leitor.'</a></td>';	
-								}						
-								echo '<td style="text-align: center">'.date('d/m/Y', strtotime($r->dataReserva)).'</td>';
-								echo '<td style="text-align: center">'.date('d/m/Y', strtotime($r->dataPrazo)).'</td>';
-								echo '<td style="text-align: center">'.$r->status.'</td>';
-								if($this->session->userdata('tipo_usuario') != 1){
-					            echo '<td style="text-align: center">';
-								}
-								if($this->permission->checkPermission($this->session->userdata('permissao'),'vReserva') && $this->session->userdata('tipo_usuario') != 1){
-					                echo '<a href="#modal-aprovar" role="button" data-toggle="modal" leitor="'.$l->id.'" idReserva="'.$r->idReserva.'" " class="btn btn-success tip-top" title="Aprovar Reserva"><i class="icon-ok icon-white"></i></a>  '; 
-					            } 
-					            if($this->permission->checkPermission($this->session->userdata('permissao'),'eReserva') && $this->session->userdata('tipo_usuario != 0')){
-					                echo '<a style="margin-right: 1%" href="'.base_url().'index.php/reservas/editar/'.$r->idReserva.'" class="btn btn-info tip-top" title="Editar Reserva"><i class="icon-pencil icon-white"></i></a>'; 
-					            }
-					            if($this->permission->checkPermission($this->session->userdata('permissao'),'dReserva')){
-					                echo '<a href="'.base_url().'index.php/reservas/recusar/'.$r->idReserva.'" role="button" data-toggle="modal" class="btn btn-danger tip-top"><i class="icon-remove icon-white"></i></a>  '; 
-					            }    					                      					                      
-					            echo '</td>';
-					            echo '</tr>';	           
-	              }
-	            } 
-	          }
-	        } 
-	        }else {
-	        			
-	        	foreach ($results as $r) {
-        		foreach ($leitor as $l){
-        			foreach ($acervo as $a){
-        				
-        					foreach ($editora as $e){
-					            echo '<tr>';
-					            echo '<td style="text-align: center"><a href="'.base_url().'index.php/reservas/editar/'.$r->idReserva.'">Ver Reserva</td>';
-								if($this->session->userdata('tipo_usuario') != 1){
-								echo '<td style="text-align: center"><a href="'.base_url().'index.php/leitores/visualizar/'.$l->id.'">'.$l->leitor.'</a></td>';	
-								}						
-								echo '<td style="text-align: center">'.date('d/m/Y', strtotime($r->dataReserva)).'</td>';
-								echo '<td style="text-align: center">'.date('d/m/Y', strtotime($r->dataPrazo)).'</td>';
-								echo '<td style="text-align: center">'.$r->status.'</td>';
-								if($this->session->userdata('tipo_usuario') != 1){
-					            echo '<td style="text-align: center">';
-								}
-								if($this->permission->checkPermission($this->session->userdata('permissao'),'vReserva') && $this->session->userdata('tipo_usuario') != 1){
-					                echo '<a href="#modal-aprovar" role="button" data-toggle="modal" leitor_id="'.$l->id.'" idReserva="'.$r->idReserva.'" " class="btn btn-success tip-top" title="Aprovar Reserva"><i class="icon-ok icon-white"></i></a>  '; 
-					            } 
-					            if($this->permission->checkPermission($this->session->userdata('permissao'),'eReserva') && $this->session->userdata('tipo_usuario != 0')){
-					                echo '<a style="margin-right: 1%" href="'.base_url().'index.php/reservas/editar/'.$r->idReserva.'" class="btn btn-info tip-top" title="Editar Reserva"><i class="icon-pencil icon-white"></i></a>'; 
-					            }
-					            if($this->permission->checkPermission($this->session->userdata('permissao'),'dReserva')){
-					                echo '<a href="'.base_url().'index.php/reservas/recusar/'.$r->idReserva.'" role="button" data-toggle="modal" class="btn btn-danger tip-top"><i class="icon-remove icon-white"></i></a>  '; 
-					            }    					                      					                      
-					            echo '</td>';
-					            echo '</tr>';	           
-	              }
-	            } 
-	          }
-	        } 	
-	        	
-	        }?>
+    	if($this->session->userdata('tipo_usuario') == 0){
+    		foreach ($results as $r){
+	    		echo '<tr>';
+				echo '<td style="text-align:center"><a href="'.base_url().'index.php/reservas/editar/'.$r->idReserva.'">Ver Reserva</a></td>';
+				
+				$this->db->where('idUsuarios',$r->usuario_id);
+				$leitor = $this->db->get('usuarios')->result();
+				
+				foreach($leitor as $l){
+					echo '<td style="text-align:center"><a href="'.base_url().'index.php/leitores/visualizar/'.$l->idUsuarios.'">'.$l->nome.'</a></td>';											
+					echo '<td style="text-align:center">'.date('d/m/Y', strtotime($r->dataReserva)).'</td>';
+					echo '<td style="text-align:center">'.date('d/m/Y', strtotime($r->dataPrazo)).'</td>';
+					echo '<td style="text-align:center">'.$r->status.'</td>';								
+					echo '<td style="text-align:center">';
+					
+					if($this->permission->checkPermission($this->session->userdata('permissao'),'vReserva')){
+						echo '<a role="button" data-toggle="modal" data-target="#modal-aprovar" leitor_id="'.$l->idUsuarios.'" idReserva="'.$r->idReserva.'" class="btn btn-success tip-top" title="Aprovar Reserva"><i class="icon-ok icon-white"></i></a>';						
+					}
+					if($this->permission->checkPermission($this->session->userdata('permissao'),'dReserva')){
+					  	echo '<a href="'.base_url().'index.php/reservas/recusar/'.$r->idReserva.'" role="button" class="btn btn-danger tip-top"><i class="icon-remove icon-white"></i></a>  '; 
+				    }    
+					
+					echo '</td>';		
+					echo '</tr>';	
+				}		
+    		}
+    	} else {
+    		$this->db->where('usuario_id',$this->session->userdata('id'));
+			$reserva = $this->db->get('reserva')->result();
+    		foreach ($reserva as $r){
+	    		echo '<tr>';
+				echo '<td style="text-align:center"><a href="'.base_url().'index.php/reservas/editar/'.$r->idReserva.'">Ver Reserva</a></td>';
+				
+				$this->db->where('idUsuarios',$r->usuario_id);
+				$leitor = $this->db->get('usuarios')->result();
+				
+				foreach($leitor as $l){											
+					echo '<td style="text-align:center">'.date('d/m/Y', strtotime($r->dataReserva)).'</td>';
+					echo '<td style="text-align:center">'.date('d/m/Y', strtotime($r->dataPrazo)).'</td>';
+					echo '<td style="text-align:center">'.$r->status.'</td>';								
+					
+					echo '</tr>';	
+				}		
+    		}
+    	}
+    		        	
+	        ?>
         <tr>
             
         </tr>
@@ -168,8 +145,8 @@ else{ ?>
 
 <?php echo $this->pagination->create_links();}?>
 
-<!--
 
+<!-- Modal recusar
 <div id="modal-recusar" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <form action="<?php echo base_url() ?>index.php/reservas/recusar" method="post" >
   <div class="modal-header">
@@ -177,7 +154,7 @@ else{ ?>
     <h5 id="myModalLabel">Recusar Reserva</h5>
   </div>
   <div class="modal-body">
-    <input type="hidden" id="leitor_id" name="leitor_id" value="" />
+    <input type="hidden" id="reserva" name="idReserva" value="" />
     <h5 style="text-align: center">Deseja realmente recusar o pedido de reserva?</h5>
   </div>
   <div class="modal-footer">
@@ -222,7 +199,9 @@ $(document).ready(function(){
         $('#leitor_id').val(leitor);
 
     });
-
+        
 });
+
+
 
 </script>
