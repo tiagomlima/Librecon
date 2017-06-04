@@ -147,7 +147,7 @@
     <?php } ?>
     
     <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vArquivo')){ ?>
-        <li class="<?php if(isset($menuArquivos)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/arquivos"><i class="icon icon-paperclip"></i> <span>Arquivos</span></a></li>
+        <li class="<?php if(isset($menuArquivos)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/arquivos"><i class="icon icon-file"></i> <span>Arquivos</span></a></li>
     <?php } ?>
     
     <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vLink')){ ?>
