@@ -1,4 +1,12 @@
 <?php
+
+/*  ___________________________________________________________
+   |                                                           |    
+   |   Autores: André Luis - email: andre.pedroso34@gmail.com  |
+   |            Tiago Lima - email: tiago.m.lima@outlook.com   |
+   |___________________________________________________________| 
+*/
+
 class Relatorios_model extends CI_Model {
 
 
@@ -62,41 +70,35 @@ class Relatorios_model extends CI_Model {
         return $this->db->count_all($table);
     }
     
-    public function clientesCustom($dataInicial = null,$dataFinal = null){
+    public function leitoresCustom($dataInicial = null,$dataFinal = null){
         
         if($dataInicial == null || $dataFinal == null){
             $dataInicial = date('Y-m-d');
             $dataFinal = date('Y-m-d');
         }
-        $query = "SELECT * FROM clientes WHERE dataCadastro BETWEEN ? AND ?";
+        $query = "SELECT * FROM usuarios WHERE dataCadastro BETWEEN ? AND ? AND tipo_usuario = 1";
         return $this->db->query($query, array($dataInicial,$dataFinal))->result();
     }
 
-    public function clientesRapid(){
-        $this->db->order_by('nomeCliente','asc');
-        return $this->db->get('clientes')->result();
+    public function leitoresRapid(){
+        $this->db->order_by('nome','asc');
+		$this->db->where('tipo_usuario',1);
+        return $this->db->get('usuarios')->result();
     }
 
     public function acervosRapid(){
-        $this->db->order_by('descricao','asc');
+        $this->db->order_by('titulo','asc');
         return $this->db->get('acervos')->result();
     }
 
-    public function servicosRapid(){
-        $this->db->order_by('nome','asc');
-        return $this->db->get('servicos')->result();
-    }
-
-    public function osRapid(){
-        $this->db->select('os.*,clientes.nomeCliente');
-        $this->db->from('os');
-        $this->db->join('clientes','clientes.idClientes = os.clientes_id');
-        return $this->db->get()->result();
-    }
-
     public function acervosRapidMin(){
-        $this->db->order_by('descricao','asc');
-        $this->db->where('estoque < estoqueMinimo');
+        $this->db->order_by('titulo','asc');
+        $this->db->where('estoque <= 1');
+        return $this->db->get('acervos')->result();
+    }
+	
+	public function acervosDataAquisicao(){
+        $this->db->order_by('dataAquisicao','desc');
         return $this->db->get('acervos')->result();
     }
 
@@ -112,100 +114,42 @@ class Relatorios_model extends CI_Model {
         $query = "SELECT * FROM acervos WHERE estoque >= 0 $wherePreco $whereEstoque";
         return $this->db->query($query)->result();
     }
-
-    public function servicosCustom($precoInicial = null,$precoFinal = null){
-        $query = "SELECT * FROM servicos WHERE preco BETWEEN ? AND ?";
-        return $this->db->query($query, array($precoInicial,$precoFinal))->result();
-    }
-
-
-    public function osCustom($dataInicial = null,$dataFinal = null,$cliente = null,$responsavel = null,$status = null){
-        $whereData = "";
-        $whereCliente = "";
-        $whereResponsavel = "";
-        $whereStatus = "";
-        if($dataInicial != null){
-            $whereData = "AND dataInicial BETWEEN ".$this->db->escape($dataInicial)." AND ".$this->db->escape($dataFinal);
-        }
-        if($cliente != null){
-            $whereCliente = "AND clientes_id = ".$this->db->escape($cliente);
-        }
-        if($responsavel != null){
-            $whereResponsavel = "AND usuarios_id = ".$this->db->escape($responsavel);
-        }
-        if($status != null){
-            $whereStatus = "AND status = ".$this->db->escape($status);
-        }
-        $query = "SELECT os.*,clientes.nomeCliente FROM os LEFT JOIN clientes ON os.clientes_id = clientes.idClientes WHERE idOs != 0 $whereData $whereCliente $whereResponsavel $whereStatus";
-        return $this->db->query($query)->result();
-    }
-
-
-    public function financeiroRapid(){
-        
-        $dataInicial = date('Y-m-01');
-        $dataFinal = date("Y-m-t");
-        $query = "SELECT * FROM lancamentos WHERE data_vencimento BETWEEN ? and ? ORDER BY tipo";
-        return $this->db->query($query, array($dataInicial,$dataFinal))->result();
-    }
-
-
-    public function financeiroCustom($dataInicial, $dataFinal, $tipo = null, $situacao = null){
-        
-        $whereTipo = "";
-        $whereSituacao = "";
-
-        if($dataInicial == null){
-            $dataInicial = date('Y-m-01');
-        }
-        if($dataFinal == null){
-            $dataFinal = date("Y-m-t");  
-        }
-
-        if($tipo == 'receita'){
-            $whereTipo = "AND tipo = 'receita'";
-        }
-        if($tipo == 'despesa'){
-            $whereTipo = "AND tipo = 'despesa'";
-        }
-        if($situacao == 'pendente'){
-            $whereSituacao = "AND baixado = 0";
-        }
-        if($situacao == 'pago'){
-            $whereSituacao = "AND baixado = 1";
-        } 
-        
-        
-        $query = "SELECT * FROM lancamentos WHERE data_vencimento BETWEEN ? and ? $whereTipo $whereSituacao";
-        return $this->db->query($query, array($dataInicial,$dataFinal))->result();
-    }
-
-
-    public function vendasRapid(){
-        $this->db->select('vendas.*,clientes.nomeCliente, usuarios.nome');
-        $this->db->from('vendas');
-        $this->db->join('clientes','clientes.idClientes = vendas.clientes_id');
-        $this->db->join('usuarios', 'usuarios.idUsuarios = vendas.usuarios_id');
+	
+	public function acervosMaisEmprestados(){
+		$query = "SELECT COUNT(emprestimos_id) as total, acervos.*
+				  FROM itens_de_emprestimos
+				  INNER JOIN acervos ON itens_de_emprestimos.acervos_id = acervos.idAcervos
+				  GROUP BY acervos_id
+				  ORDER BY total DESC";
+				  
+		return $this->db->query($query)->result();
+	}   
+         
+    public function emprestimosRapid(){
+        $this->db->select('emprestimos.*,usuarios.nome');
+        $this->db->from('emprestimos');
+        $this->db->join('usuarios','usuarios.idUsuarios = emprestimos.leitor_id');
+		$this->db->where('status','Devolvido');
         return $this->db->get()->result();
     }
 
 
-    public function vendasCustom($dataInicial = null,$dataFinal = null,$cliente = null,$responsavel = null){
+    public function emprestimosCustom($dataInicial = null,$dataFinal = null,$leitor = null,$usuario = null){
         $whereData = "";
-        $whereCliente = "";
-        $whereResponsavel = "";
+        $whereLeitor = "";
+        $whereUsuario = "";
         $whereStatus = "";
         if($dataInicial != null){
-            $whereData = "AND dataVenda BETWEEN ".$this->db->escape($dataInicial)." AND ".$this->db->escape($dataFinal);
+            $whereData = "AND dataEmprestimo BETWEEN ".$this->db->escape($dataInicial)." AND ".$this->db->escape($dataFinal);
         }
-        if($cliente != null){
-            $whereCliente = "AND clientes_id = ".$this->db->escape($cliente);
+        if($leitor != null){
+            $whereCliente = "AND leitor_id = ".$this->db->escape($leitor);
         }
-        if($responsavel != null){
-            $whereResponsavel = "AND usuarios_id = ".$this->db->escape($responsavel);
+        if($usuario != null){
+            $whereResponsavel = "AND usuarios_id = ".$this->db->escape($usuario);
         }
        
-        $query = "SELECT vendas.*,clientes.nomeCliente,usuarios.nome FROM vendas LEFT JOIN clientes ON vendas.clientes_id = clientes.idClientes LEFT JOIN usuarios ON vendas.usuarios_id = usuarios.idUsuarios WHERE idVendas != 0 $whereData $whereCliente $whereResponsavel";
+        $query = "SELECT emprestimos.*,usuarios.nome FROM emprestimos LEFT JOIN usuarios ON emprestimos.leitor_id = usuarios.idUsuarios  WHERE idEmprestimos != 0 $whereData $whereLeitor $whereUsuario";
         return $this->db->query($query)->result();
     }
 }

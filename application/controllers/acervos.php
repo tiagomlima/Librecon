@@ -1,4 +1,10 @@
 <?php
+/*  ___________________________________________________________
+   |                                                           |    
+   |   Autores: André Luis - email: andre.pedroso34@gmail.com  |
+   |            Tiago Lima - email: tiago.m.lima@outlook.com   |
+   |___________________________________________________________| 
+*/
 
 class Acervos extends CI_Controller {
     
@@ -132,10 +138,14 @@ class Acervos extends CI_Controller {
         if ($this->form_validation->run('acervos') == false) {
             $this->data['custom_error'] = (validation_errors() ? '<div class="form_error">' . validation_errors() . '</div>' : false);
         } else {
-        				
-			$image = $this->do_upload();
-            $img = base_url().'assets/uploads/'.$image;
-            
+        	
+			if($this->input->post('userfile') == null){
+				$img = base_url().'assets/uploads/img_default.jpg';
+			} else {
+				$image = $this->do_upload();
+            	$img = base_url().'assets/uploads/'.$image;
+			}
+							           
             $data = array(
                 'titulo' => set_value('titulo'),
                 'autor_id' => $this->input->post('autor_id'),
@@ -163,13 +173,15 @@ class Acervos extends CI_Controller {
                 'img_acervo' => $img                
             );
 
-            if ($this->acervos_model->add('acervos', $data) == TRUE) {
+            if ($this->acervos_model->add('acervos', $data,true) == TRUE) {         	
+				
                 $this->session->set_flashdata('success','Acervo adicionado com sucesso!');
                 redirect(base_url() . 'index.php/acervos/adicionar/');
             } else {
                 $this->data['custom_error'] = '<div class="form_error"><p>An Error Occured.</p></div>';
             }
         }
+		
 		
 		
         $this->data['view'] = 'acervos/adicionarAcervo';
@@ -458,4 +470,5 @@ class Acervos extends CI_Controller {
 	}
 
 }
+
 

@@ -1,3 +1,13 @@
+<?php 
+
+/*  ___________________________________________________________
+   |                                                           |    
+   |   Autores: André Luis - email: andre.pedroso34@gmail.com  |
+   |            Tiago Lima - email: tiago.m.lima@outlook.com   |
+   |___________________________________________________________| 
+*/
+
+?>
 <div class="span6" style="margin-left: 0">
         <div class="widget-box">
             <div class="widget-title">
@@ -9,12 +19,27 @@
             <div class="widget-content">
                 <div class="row-fluid">
                     <div class="span12" style="min-height: 260px">
+                    <?php if($this->session->userdata('tipo_usuario') == 0){ ?>
                         <ul class="site-stats">
                             <li class="bg_ls span12"><strong>Nome: <?php echo $usuario->nome?></strong></li>
                             <li class="bg_lb span12" style="margin-left: 0"><strong>Telefone: <?php echo $usuario->telefone?></strong></li>
                             <li class="bg_lg span12" style="margin-left: 0"><strong>Email: <?php echo $usuario->email?></strong></li>
                             <li class="bg_lo span12" style="margin-left: 0"><strong>Nível: <?php echo $usuario->permissao; ?></strong></li>
                         </ul>
+                      <?php }else { ?>
+                      
+                      <ul class="site-stats">
+                            <li class="bg_ls span12"><strong>Nome: <?php echo $usuario->nome?></strong></li>
+                            <li class="bg_lb span12" style="margin-left: 0"><strong>R.A: <?php echo $usuario->matricula?></strong></li>
+                            <li class="bg_lg span12" style="margin-left: 0"><strong>Email: <?php echo $usuario->email?></strong></li>
+                            <?php 
+                            	$this->db->where('idCursos',$usuario->curso_id);
+                            	$curso = $this->db->get('cursos')->row();
+                            ?>
+                            <li class="bg_ly span12" style="margin-left: 0"><strong>Curso: <?php echo $curso->nomeCurso?></strong></li>
+                            <li class="bg_lo span12" style="margin-left: 0"><strong>Data Cadastro: <?php echo date('d/m/Y', strtotime($usuario->dataCadastro)); ?></strong></li>
+                        </ul>
+                        <?php } ?>
                     </div>
 
                 </div>

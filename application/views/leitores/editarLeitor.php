@@ -1,3 +1,13 @@
+<?php 
+
+/*  ___________________________________________________________
+   |                                                           |    
+   |   Autores: André Luis - email: andre.pedroso34@gmail.com  |
+   |            Tiago Lima - email: tiago.m.lima@outlook.com   |
+   |___________________________________________________________| 
+*/
+
+?>
 <div class="row-fluid" style="margin-top:0">
     <div class="span12">
         <div class="widget-box">
@@ -171,6 +181,7 @@
                         <div class="span12">
                             <div class="span6 offset3">
                                 <button type="submit" class="btn btn-primary"><i class="icon-ok icon-white"></i> Alterar</button>
+                                <a href="#modalImg" data-toggle="modal" role="button" class="btn btn-inverse">Alterar Imagem</a>
                                 <a href="<?php echo base_url() ?>index.php/leitores" id="" class="btn"><i class="icon-arrow-left"></i> Voltar</a>
                             </div>
                         </div>
@@ -181,7 +192,28 @@
     </div>
 </div>
 
-
+<div id="modalImg" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <form action="<?php echo base_url(); ?>index.php/leitores/editarImg" id="formImg" enctype="multipart/form-data" method="post" class="form-horizontal" >
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="">Librecon - Alterar a foto do leitor</h3>
+  </div>
+  <div class="modal-body">
+         <div class="span12 alert alert-info">Selecione uma nova imagem do leitor. Tamanho indicado (130 X 130).</div>          
+         <div class="control-group">
+            <label for="logo" class="control-label"><span class="required">Imagem*</span></label>
+            <div class="controls">
+                <input type="file" name="userfile" value="" />
+                <input id="idUsuarios" type="hidden" name="idUsuarios" value="<?php echo $result->idUsuarios; ?>"  />
+            </div>
+        </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true" id="btnCancelExcluir">Cancelar</button>
+    <button class="btn btn-primary">Alterar</button>
+  </div>
+  </form>
+</div>
 
 <script src="<?php echo base_url()?>js/jquery.validate.js"></script>
 <script type="text/javascript">

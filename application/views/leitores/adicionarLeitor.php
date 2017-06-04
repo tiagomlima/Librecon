@@ -1,3 +1,13 @@
+<?php 
+
+/*  ___________________________________________________________
+   |                                                           |    
+   |   Autores: André Luis - email: andre.pedroso34@gmail.com  |
+   |            Tiago Lima - email: tiago.m.lima@outlook.com   |
+   |___________________________________________________________| 
+*/
+
+?>
 <div class="row-fluid" style="margin-top:0">
     <div class="span12">
         <div class="widget-box">
@@ -11,7 +21,7 @@
                 <?php if ($custom_error != '') {
                     echo '<div class="alert alert-danger">' . $custom_error . '</div>';
                 } ?>
-                <form action="<?php echo base_url() ?>index.php/leitores/adicionar" id="formLeitor" method="post" class="form-horizontal" >
+                <form action="<?php echo base_url() ?>index.php/leitores/adicionar" id="formLeitor" method="post" enctype="multipart/form-data" class="form-horizontal" >
                     <div class="control-group">
                         <label for="nome" class="control-label">Nome<span class="required">*</span></label>
                         <div class="controls">
@@ -168,6 +178,13 @@
                     
                     <input type="hidden" id="permissoes_id" name="permissoes_id" value="2" />
                     <input type="hidden" id="tipo_usuario" name="tipo_usuario" value="1" />
+                    
+                    <div class="control-group">
+                        <label for="logo" class="control-label">Foto</label>
+                        <div class="controls">
+                            <input type="file" name="userfile" value="" />
+                        </div>
+                    </div>	
                                                           
                     <div class="form-actions">
                         <div class="span12">

@@ -1,4 +1,14 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php 
+
+/*  ___________________________________________________________
+   |                                                           |    
+   |   Autores: André Luis - email: andre.pedroso34@gmail.com  |
+   |            Tiago Lima - email: tiago.m.lima@outlook.com   |
+   |___________________________________________________________| 
+*/
+
+if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
 
 class Librecon extends CI_Controller {
 
@@ -19,7 +29,7 @@ class Librecon extends CI_Controller {
         }
 		
 		if($this->session->userdata('tipo_usuario') == 1){
-			redirect('acervos');
+			redirect('librecon/leitor');
 		}
 		
 
@@ -31,6 +41,12 @@ class Librecon extends CI_Controller {
         $this->load->view('tema/topo',  $this->data);
       
     }
+	
+	public function leitor(){
+		$this->data['menuPainel'] = 'Painel';
+        $this->data['view'] = 'librecon/leitor';
+        $this->load->view('tema/topo',  $this->data);
+	}
 
 
     public function minhaConta() {

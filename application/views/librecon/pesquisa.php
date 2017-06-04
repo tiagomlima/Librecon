@@ -1,3 +1,13 @@
+<?php 
+
+/*  ___________________________________________________________
+   |                                                           |    
+   |   Autores: André Luis - email: andre.pedroso34@gmail.com  |
+   |            Tiago Lima - email: tiago.m.lima@outlook.com   |
+   |___________________________________________________________| 
+*/
+
+?>
 <div class="span12" style="margin-left: 0; margin-top: 0">
     <div class="span12" style="margin-left: 0">
         <form action="<?php echo current_url()?>">

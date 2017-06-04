@@ -1,3 +1,13 @@
+<?php 
+
+/*  ___________________________________________________________
+   |                                                           |    
+   |   Autores: André Luis - email: andre.pedroso34@gmail.com  |
+   |            Tiago Lima - email: tiago.m.lima@outlook.com   |
+   |___________________________________________________________| 
+*/
+
+?>
 <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'aLeitor')){ ?>
     <a href="<?php echo base_url();?>index.php/leitores/adicionar" class="btn btn-success"><i class="icon-plus icon-white"></i> Adicionar Leitor</a>    
 <?php } ?>
@@ -36,6 +46,7 @@ if(!$results){?>
             <table class="table table-bordered">
                 <thead>
                     <tr>
+                    	<th></th>
                         <th>Nome</th>
 			            <th>R.A</th>
 			            <th>Curso</th>
@@ -90,6 +101,7 @@ if(!$results){?>
 <table class="table table-bordered ">
     <thead>
         <tr>
+        	<th></th>
             <th>Nome</th>
             <th>R.A</th>
             <th>Curso</th>
@@ -103,6 +115,7 @@ if(!$results){?>
         <?php 
         	foreach ($results as $r){
         		echo '<tr>';
+				echo '<td style="text-align:center"><a href="'.base_url().'index.php/leitores/visualizar/'.$r->idUsuarios.'"><img src="'.$r->img_leitor.'" alt="foto do leitor" style="width:108px;height:118px"/></td></a>';
 				echo '<td style="text-align:center"><a href="'.base_url().'index.php/leitores/visualizar/'.$r->idUsuarios.'">'.$r->nome.'</a></td>';
 				echo '<td style="text-align:center">'.$r->matricula.'</td>';
 				

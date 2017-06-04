@@ -1,4 +1,12 @@
 <?php
+
+/*  ___________________________________________________________
+   |                                                           |    
+   |   Autores: André Luis - email: andre.pedroso34@gmail.com  |
+   |            Tiago Lima - email: tiago.m.lima@outlook.com   |
+   |___________________________________________________________| 
+*/
+
 class Leitores_model extends CI_Model {
 
     
@@ -159,6 +167,14 @@ class Leitores_model extends CI_Model {
         $this->db->order_by('idEmprestimos','desc');
         $this->db->limit(10);
         return $this->db->get('emprestimos')->result();
+    }
+	
+	public function editImg($id, $img){
+        
+        $this->db->set('img_leitor', $img); 
+        $this->db->where('idUsuarios', $id);
+        return $this->db->update('usuarios'); 
+         
     }
 	
 	function pesquisarLeitor($nome,$curso,$grupo,$matricula){

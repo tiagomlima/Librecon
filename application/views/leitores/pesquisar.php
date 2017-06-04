@@ -1,3 +1,13 @@
+<?php 
+
+/*  ___________________________________________________________
+   |                                                           |    
+   |   Autores: André Luis - email: andre.pedroso34@gmail.com  |
+   |            Tiago Lima - email: tiago.m.lima@outlook.com   |
+   |___________________________________________________________| 
+*/
+
+?>
 <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'aLeitor')){ ?>
     <a href="<?php echo base_url();?>index.php/leitores/adicionar" class="btn btn-success"><i class="icon-plus icon-white"></i> Adicionar Leitor</a>    
 <?php } ?>

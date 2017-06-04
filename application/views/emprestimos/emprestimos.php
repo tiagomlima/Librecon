@@ -1,3 +1,13 @@
+<?php 
+
+/*  ___________________________________________________________
+   |                                                           |    
+   |   Autores: André Luis - email: andre.pedroso34@gmail.com  |
+   |            Tiago Lima - email: tiago.m.lima@outlook.com   |
+   |___________________________________________________________| 
+*/
+
+?>
 <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'aEmprestimo')){ ?>
     <a href="<?php echo base_url();?>index.php/emprestimos/adicionar" class="btn btn-success"><i class="icon-plus icon-white"></i> Adicionar Empréstimo</a>
 <?php } ?>
@@ -10,7 +20,31 @@ if(!$results){?>
             <i class="icon-book"></i>
          </span>
         <h5>Emprestimos</h5>
-
+        
+        <?php if($this->session->userdata('tipo_usuario') == 0){ ?>
+        <form style="margin-left:15%" action="<?php base_url() ?>emprestimos/pesquisar" method="post">       		
+	            <select name="status" id="status" style="width:15%">                                 
+	            	<option value="">Status</option>
+	            	<option value="Devolvido">Devolvido</option>	
+					<option value="Emprestado">Emprestado</option>   
+					<option value="Não emprestado">Não emprestado</option>
+					<option value="ATRASADO">Atrasado</option>        	                               
+	            </select>                                        	                       
+                De: <input type="date" name="dataInicial" id="dataInicial" value="" style="width: 15%">
+                Ate: <input type="date" name="dataFinal" id="dataFinal" value="" style="width: 15%">
+                <input type="text" id="nome" name="nome" value="" placeholder="Procurar por nome" style="width:15%">               
+                <button style="margin-bottom:1%"><i class="icon-search icon-white"></i></button>     
+        	</form>        	
+		<?php }else { ?>
+		
+		<form style="margin-left:15%" action="<?php base_url() ?>emprestimos/pesquisar" method="post">       		
+	                                                    	                       
+                De: <input type="date" name="dataInicial" id="dataInicial" value="" style="width: 15%">
+                Ate: <input type="date" name="dataFinal" id="dataFinal" value="" style="width: 15%">
+                               
+                <button style="margin-bottom:1%"><i class="icon-search icon-white"></i></button>     
+        	</form>    
+		<?php } ?>
      </div>
 
 <div class="widget-content nopadding">
@@ -19,14 +53,17 @@ if(!$results){?>
 <table class="table table-bordered ">
     <thead>
         <tr style="backgroud-color: #2D335B">
-            <th>#</th>
             <th>Data do Empréstimo</th>
             <th>Data da Devolução</th>
             <?php if($this->session->userdata('tipo_usuario') != 1){ ?>
             <th>Leitor</th>
             <?php } ?>
             <th>Situação</th>
-            <th></th>
+           <?php if($this->session->userdata('tipo_usuario') != 1){ ?>
+            <th>Visualizar/Editar/Excluir</th>
+            <?php }else { ?>
+            <th>Visualizar</th>
+            <?php } ?>
         </tr>
     </thead>
     <tbody>
@@ -47,7 +84,31 @@ if(!$results){?>
             <i class="icon-book"></i>
          </span>
         <h5>Empréstimos</h5>
-
+        
+			<?php if($this->session->userdata('tipo_usuario') == 0){ ?>
+        <form style="margin-left:15%" action="<?php base_url() ?>emprestimos/pesquisar" method="post">       		
+	            <select name="status" id="status" style="width:15%">                                 
+	            	<option value="">Status</option>
+	            	<option value="Devolvido">Devolvido</option>	
+					<option value="Emprestado">Emprestado</option>   
+					<option value="Não emprestado">Não emprestado</option>
+					<option value="ATRASADO">Atrasado</option>        	                               
+	            </select>                                        	                       
+                De: <input type="date" name="dataInicial" id="dataInicial" value="" style="width: 15%">
+                Ate: <input type="date" name="dataFinal" id="dataFinal" value="" style="width: 15%">
+                <input type="text" id="nome" name="nome" value="" placeholder="Procurar por nome" style="width:15%">               
+                <button style="margin-bottom:1%"><i class="icon-search icon-white"></i></button>     
+        	</form>        	
+		<?php }else { ?>
+		
+		<form style="margin-left:15%" action="<?php base_url() ?>emprestimos/pesquisar" method="post">       		
+	                                                    	                       
+                De: <input type="date" name="dataInicial" id="dataInicial" value="" style="width: 15%">
+                Ate: <input type="date" name="dataFinal" id="dataFinal" value="" style="width: 15%">
+                               
+                <button style="margin-bottom:1%"><i class="icon-search icon-white"></i></button>     
+        	</form>    
+		<?php } ?>
      </div>
 
 <div class="widget-content nopadding">
@@ -56,14 +117,17 @@ if(!$results){?>
 <table class="table table-bordered ">
     <thead>
         <tr style="backgroud-color: #2D335B">
-            <th>#</th>
             <th>Data do Empréstimo</th>
             <th>Data de Vencimento</th>
             <?php if($this->session->userdata('tipo_usuario') != 1){ ?>
             <th>Leitor</th>
             <?php } ?>
             <th>Situação</th>
-            <th></th>
+            <?php if($this->session->userdata('tipo_usuario') != 1){ ?>
+            <th>Visualizar/Editar/Excluir</th>
+            <?php }else { ?>
+            <th>Visualizar</th>
+            <?php } ?>
         </tr>
     </thead>
     <tbody>
@@ -81,14 +145,13 @@ if(!$results){?>
 			}
                      
             echo '<tr>';
-            echo '<td><a href="'.base_url().'index.php/emprestimos/visualizar/'.$r->idEmprestimos.'">'.$r->idEmprestimos.'</a></td>';
             echo '<td>'.$dataEmprestimo.'</td>';
 			echo '<td>'.$dataVencimento.'</td>';
             echo '<td><a href="'.base_url().'index.php/leitores/visualizar/'.$r->leitor_id.'">'.$r->nome.'</a></td>';
 			echo '<td>'.$status.'</td>';
             
             
-            echo '<td>';
+            echo '<td style="text-align:center">';
             if($this->permission->checkPermission($this->session->userdata('permissao'),'vEmprestimo') && $r->status != 'Não emprestado'){
                 echo '<a style="margin-right: 1%" href="'.base_url().'index.php/emprestimos/visualizar/'.$r->idEmprestimos.'" class="btn tip-top" title="Ver comprovante"><i class="icon-eye-open"></i></a>'; 
             }
@@ -116,12 +179,11 @@ if(!$results){?>
 			}
                      
             echo '<tr>';
-            echo '<td>'.$r->idEmprestimos.'</td>';
             echo '<td>'.$dataEmprestimo.'</td>';
 			echo '<td>'.$dataVencimento.'</td>';
 			echo '<td>'.$status.'</td>';
                         
-            echo '<td>';
+            echo '<td style="text-align:center">';
             if($this->permission->checkPermission($this->session->userdata('permissao'),'vEmprestimo') && $r->status != 'Não emprestado'){
                 echo '<a style="margin-right: 1%" href="'.base_url().'index.php/emprestimos/visualizar/'.$r->idEmprestimos.'" class="btn tip-top" title="Ver comprovante"><i class="icon-eye-open"></i></a>'; 
             }          

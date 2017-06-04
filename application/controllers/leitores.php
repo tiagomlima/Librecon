@@ -1,5 +1,12 @@
 <?php
 
+/*  ___________________________________________________________
+   |                                                           |    
+   |   Autores: André Luis - email: andre.pedroso34@gmail.com  |
+   |            Tiago Lima - email: tiago.m.lima@outlook.com   |
+   |___________________________________________________________| 
+*/
+
 class Leitores extends CI_Controller {
     
    
@@ -58,7 +65,7 @@ class Leitores extends CI_Controller {
         
         $this->pagination->initialize($config); 	
         
-	    $this->data['results'] = $this->leitores_model->get('usuarios','idUsuarios,nome,cpf,datanasc,sexo,situacao,matricula,telefone,celular,email,rua,numero,bairro,cidade,estado,cep,curso_id,grupo_id','',$config['per_page'],$this->uri->segment(3));       	
+	    $this->data['results'] = $this->leitores_model->get('usuarios','idUsuarios,nome,cpf,datanasc,sexo,situacao,matricula,telefone,celular,email,rua,numero,bairro,cidade,estado,cep,curso_id,grupo_id,img_leitor','',$config['per_page'],$this->uri->segment(3));       	
 		$this->data['curso'] = $this->leitores_model->getCurso($config['per_page'],$this->uri->segment(3));
 		$this->data['grupo'] = $this->leitores_model->getGrupo($config['per_page'],$this->uri->segment(3));
 		$this->data['permissoes'] = $this->leitores_model->getPermissao($config['per_page'],$this->uri->segment(3));
@@ -92,6 +99,46 @@ class Leitores extends CI_Controller {
         
     }
 
+	function do_upload(){
+
+        if((!$this->session->userdata('session_id')) || (!$this->session->userdata('logado'))){
+            redirect('librecon/login');
+        }
+
+        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'cEmitente')){
+           $this->session->set_flashdata('error','Você não tem permissão para configurar emitente.');
+           redirect(base_url());
+        }
+
+        $this->load->library('upload');
+
+        $image_upload_folder = FCPATH . 'assets/img/leitor';
+
+        if (!file_exists($image_upload_folder)) {
+            mkdir($image_upload_folder, DIR_WRITE_MODE, true);
+        }
+
+        $this->upload_config = array(
+            'upload_path'   => $image_upload_folder,
+            'allowed_types' => 'png|jpg|jpeg|bmp',
+            'max_size'      => 2048,
+            'remove_space'  => TRUE,
+            'encrypt_name'  => TRUE,
+        );
+
+        $this->upload->initialize($this->upload_config);
+
+        if (!$this->upload->do_upload()) {
+            $upload_error = $this->upload->display_errors();
+            print_r($upload_error);
+            exit();
+        } else {
+            $file_info = array($this->upload->data());
+            return $file_info[0]['file_name'];
+        }
+
+    }
+
 	function adicionar(){  
         if(!$this->permission->checkPermission($this->session->userdata('permissao'),'aLeitor')){
            $this->session->set_flashdata('error','Você não tem permissão para adicionar leitores.');
@@ -112,7 +159,13 @@ class Leitores extends CI_Controller {
              $this->data['custom_error'] = (validation_errors() ? '<div class="alert alert-danger">'.validation_errors().'</div>' : false);
 
         } else
-        {     
+        {
+        	if($this->input->post('userfile') == null){
+				$img = base_url().'assets/img/leitor/img_default.jpg';
+			} else {
+				$image = $this->do_upload();
+            	$img = base_url().'assets/img/leitor/'.$image;
+			}     
 
             $this->load->library('encrypt');                       
             $data = array(
@@ -137,7 +190,8 @@ class Leitores extends CI_Controller {
 	                'curso_id' => $this->input->post('curso_id'),
 	                'grupo_id' => $this->input->post('grupo_id'),
 	                'permissoes_id' => $this->input->post('permissoes_id'),
-	                'dataCadastro' => date('Y-m-d')
+	                'dataCadastro' => date('Y-m-d'),
+	                'img_leitor' => $img
 					
             );
            
@@ -269,6 +323,41 @@ class Leitores extends CI_Controller {
 			
       
     }	
+
+	public function editarImg(){
+        
+        if((!$this->session->userdata('session_id')) || (!$this->session->userdata('logado'))){
+            redirect('index.php/librecon/login');
+        }
+
+        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'eAcervo')){
+           $this->session->set_flashdata('error','Você não tem permissão para editar acervos.');
+           redirect(base_url());
+        }
+
+        $id = $this->input->post('idUsuarios');
+        if($id == null || !is_numeric($id)){
+           $this->session->set_flashdata('error','Ocorreu um erro ao tentar alterar a imagem.');
+           redirect(base_url().'index.php/leitores'); 
+        }
+        $this->load->helper('file');
+        //delete_files(FCPATH .'assets/uploads/');
+
+        $image = $this->do_upload();
+        $img = base_url().'assets/img/leitor/'.$image;
+
+        $retorno = $this->leitores_model->editImg($id, $img);
+        if($retorno){
+
+            $this->session->set_flashdata('success','A imagem foi alterada com sucesso !');
+            redirect(base_url().'index.php/leitores/editar/'.$id);
+        }
+        else{
+            $this->session->set_flashdata('error','Ocorreu um erro ao tentar alterar a imagem.');
+            redirect(base_url().'index.php/leitores/editar/'.$id);
+        }
+
+    }
 
 	 public function excluir(){
             

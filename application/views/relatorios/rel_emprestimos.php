@@ -1,3 +1,13 @@
+<?php 
+
+/*  ___________________________________________________________
+   |                                                           |    
+   |   Autores: André Luis - email: andre.pedroso34@gmail.com  |
+   |            Tiago Lima - email: tiago.m.lima@outlook.com   |
+   |___________________________________________________________| 
+*/
+
+?>
 <div class="row-fluid" style="margin-top: 0">
     <div class="span4">
         <div class="widget-box">
@@ -9,7 +19,7 @@
             </div>
             <div class="widget-content">
                 <ul class="site-stats">
-                    <li><a target="_blank" href="<?php echo base_url()?>index.php/relatorios/osRapid"><i class="icon-tags"></i> <small>Todas as OS</small></a></li>
+                    <li><a target="_blank" href="<?php echo base_url()?>index.php/relatorios/emprestimosRapid"><i class="icon-tags"></i> <small>Todas os empréstimos</small></a></li>
                     
                 </ul>
             </div>
@@ -27,7 +37,7 @@
             <div class="widget-content">
                 <div class="span12 well">
 
-                    <form target="_blank" action="<?php echo base_url() ?>index.php/relatorios/osCustom" method="get">
+                    <form target="_blank" action="<?php echo base_url() ?>index.php/relatorios/emprestimosCustom" method="get">
                         <div class="span12 well">
                             <div class="span6">
                                 <label for="">Data de:</label>
@@ -37,35 +47,7 @@
                                 <label for="">até:</label>
                                 <input type="date"  name="dataFinal" class="span12" />
                             </div>
-                        </div>
-                        <div class="span12 well" style="margin-left: 0">
-                            <div class="span6">
-                                <label for="">Cliente:</label>
-                                <input type="text"  id="cliente" class="span12" />
-                                <input type="hidden" name="cliente" id="clienteHide" />
-
-                            </div>
-                            <div class="span6">
-                                <label for="">Responsável:</label>
-                                <input type="text" id="tecnico"   class="span12" />
-                                <input type="hidden" name="responsavel" id="responsavelHide" />
-                            </div>
-                        </div>
-                        <div class="span12 well" style="margin-left: 0">
-                            <div class="span6">
-                                <label for="">Status:</label>
-                                <select name="status" id="" class="span12">
-                                    <option value=""></option>
-                                    <option value="Orçamento">Orçamento</option>
-                                    <option value="Aberto">Aberto</option>
-                                    <option value="Em Andamento">Em Andamento</option>
-                                    <option value="Finalizado">Finalizado</option>
-                                    <option value="Cancelado">Cancelado</option>
-                                </select>
-
-                            </div>
-
-                        </div>
+                        </div>                                
 
                         <div class="span12" style="margin-left: 0; text-align: center">
                             <input type="reset" class="btn" value="Limpar" />
@@ -84,25 +66,24 @@
 <script src="<?php echo base_url();?>js/maskmoney.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
-        $(".money").maskMoney();
         
-        $("#cliente").autocomplete({
-            source: "<?php echo base_url(); ?>index.php/os/autoCompleteCliente",
+        $("#leitor").autocomplete({
+            source: "<?php echo base_url(); ?>index.php/emprestimos/autoCompleteLeitor",
             minLength: 2,
             select: function( event, ui ) {
 
-                 $("#clienteHide").val(ui.item.id);
+                 $("#leitorHide").val(ui.item.id);
 
 
             }
       });
 
-      $("#tecnico").autocomplete({
-            source: "<?php echo base_url(); ?>index.php/os/autoCompleteUsuario",
+      $("#usuario").autocomplete({
+            source: "<?php echo base_url(); ?>index.php/emprestimos/autoCompleteUsuario",
             minLength: 2,
             select: function( event, ui ) {
 
-                 $("#responsavelHide").val(ui.item.id);
+                 $("#usuarioHide").val(ui.item.id);
 
 
             }

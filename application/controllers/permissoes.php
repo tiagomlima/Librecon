@@ -1,5 +1,12 @@
 <?php
 
+/*  ___________________________________________________________
+   |                                                           |    
+   |   Autores: André Luis - email: andre.pedroso34@gmail.com  |
+   |            Tiago Lima - email: tiago.m.lima@outlook.com   |
+   |___________________________________________________________| 
+*/
+
 class Permissoes extends CI_Controller {
     
 
@@ -113,6 +120,11 @@ class Permissoes extends CI_Controller {
                   'dAutor' => $this->input->post('dAutor'),
                   'vAutor' => $this->input->post('vAutor'),
                   
+				  'aLink' => $this->input->post('aLink'),
+                  'eLink' => $this->input->post('eLink'),
+                  'dLink' => $this->input->post('dLink'),
+                  'vLink' => $this->input->post('vLink'),
+                  
 				  'aEditora' => $this->input->post('aEditora'),
                   'eEditora' => $this->input->post('eEditora'),
                   'dEditora' => $this->input->post('dEditora'),
@@ -141,12 +153,7 @@ class Permissoes extends CI_Controller {
                   'aReserva' => $this->input->post('aReserva'),
                   'eReserva' => $this->input->post('eReserva'),
                   'dReserva' => $this->input->post('dReserva'),
-                  'vReserva' => $this->input->post('vReserva'),
-
-                  'aOs' => $this->input->post('aOs'),
-                  'eOs' => $this->input->post('eOs'),
-                  'dOs' => $this->input->post('dOs'),
-                  'vOs' => $this->input->post('vOs'),
+                  'vReserva' => $this->input->post('vReserva'),                 
                 
                   'aEmprestimo' => $this->input->post('aEmprestimo'),
                   'eEmprestimo' => $this->input->post('eEmprestimo'),
@@ -157,12 +164,7 @@ class Permissoes extends CI_Controller {
                   'eArquivo' => $this->input->post('eArquivo'),
                   'dArquivo' => $this->input->post('dArquivo'),
                   'vArquivo' => $this->input->post('vArquivo'),
-
-                  'aLancamento' => $this->input->post('aLancamento'),
-                  'eLancamento' => $this->input->post('eLancamento'),
-                  'dLancamento' => $this->input->post('dLancamento'),
-                  'vLancamento' => $this->input->post('vLancamento'),
-
+                  
                   'cUsuario' => $this->input->post('cUsuario'),
                   'cEmitente' => $this->input->post('cEmitente'),
                   'cPermissao' => $this->input->post('cPermissao'),
@@ -170,10 +172,8 @@ class Permissoes extends CI_Controller {
 
                   'rLeitor' => $this->input->post('rLeitor'),
                   'rAcervo' => $this->input->post('rAcervo'),
-                  'rReserva' => $this->input->post('rReserva'),
-                  'rOs' => $this->input->post('rOs'),
-                  'rEmprestimo' => $this->input->post('rEmprestimo'),
-                  'rFinanceiro' => $this->input->post('rFinanceiro'),
+                  'rEmprestimo' => $this->input->post('rEmprestimo')
+
                   
 
             );
@@ -245,6 +245,11 @@ class Permissoes extends CI_Controller {
                   'dAutor' => $this->input->post('dAutor'),
                   'vAutor' => $this->input->post('vAutor'),
                   
+				  'aLink' => $this->input->post('aLink'),
+                  'eLink' => $this->input->post('eLink'),
+                  'dLink' => $this->input->post('dLink'),
+                  'vLink' => $this->input->post('vLink'),
+                  
 				  'aEditora' => $this->input->post('aEditora'),
                   'eEditora' => $this->input->post('eEditora'),
                   'dEditora' => $this->input->post('dEditora'),
@@ -274,18 +279,7 @@ class Permissoes extends CI_Controller {
                   'eReserva' => $this->input->post('eReserva'),
                   'dReserva' => $this->input->post('dReserva'),
                   'vReserva' => $this->input->post('vReserva'),
-
-                  'aOs' => $this->input->post('aOs'),
-                  'eOs' => $this->input->post('eOs'),
-                  'dOs' => $this->input->post('dOs'),
-                  'vOs' => $this->input->post('vOs'),
-                  
-				  'aTeste' => $this->input->post('aTeste'),
-                  'eTeste' => $this->input->post('eTeste'),
-                  'dTeste' => $this->input->post('dTeste'),
-                  'vTeste' => $this->input->post('vTeste'),
-				  
-
+                  				 				  
                   'aEmprestimo' => $this->input->post('aEmprestimo'),
                   'eEmprestimo' => $this->input->post('eEmprestimo'),
                   'dEmprestimo' => $this->input->post('dEmprestimo'),
@@ -295,12 +289,7 @@ class Permissoes extends CI_Controller {
                   'eArquivo' => $this->input->post('eArquivo'),
                   'dArquivo' => $this->input->post('dArquivo'),
                   'vArquivo' => $this->input->post('vArquivo'),
-
-                  'aLancamento' => $this->input->post('aLancamento'),
-                  'eLancamento' => $this->input->post('eLancamento'),
-                  'dLancamento' => $this->input->post('dLancamento'),
-                  'vLancamento' => $this->input->post('vLancamento'),
-
+                  
                   'cUsuario' => $this->input->post('cUsuario'),
                   'cEmitente' => $this->input->post('cEmitente'),
                   'cPermissao' => $this->input->post('cPermissao'),
@@ -308,10 +297,8 @@ class Permissoes extends CI_Controller {
 
                   'rLeitor' => $this->input->post('rLeitor'),
                   'rAcervo' => $this->input->post('rAcervo'),
-                  'rReserva' => $this->input->post('rReserva'),
-                  'rOs' => $this->input->post('rOs'),
-                  'rEmprestimo' => $this->input->post('rEmprestimo'),
-                  'rFinanceiro' => $this->input->post('rFinanceiro'),
+                  'rEmprestimo' => $this->input->post('rEmprestimo')
+
                  
             );
             $permissoes = serialize($permissoes);

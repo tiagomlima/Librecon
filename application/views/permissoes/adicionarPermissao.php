@@ -1,3 +1,13 @@
+<?php 
+
+/*  ___________________________________________________________
+   |                                                           |    
+   |   Autores: André Luis - email: andre.pedroso34@gmail.com  |
+   |            Tiago Lima - email: tiago.m.lima@outlook.com   |
+   |___________________________________________________________| 
+*/
+
+?>
 <div class="span12" style="margin-left: 0">
     <form action="<?php echo base_url();?>index.php/permissoes/adicionar" id="formPermissao" method="post">
 
@@ -429,29 +439,29 @@
 
                                     <td>
                                         <label>
-                                            <input name="vOs" class="marcar" type="checkbox" checked="checked" value="1" />
-                                            <span class="lbl"> Visualizar OS</span>
+                                            <input name="vLink" class="marcar" type="checkbox" checked="checked" value="1" />
+                                            <span class="lbl"> Visualizar Link</span>
                                         </label>
                                     </td>
 
                                     <td>
                                         <label>
-                                            <input name="aOs" class="marcar" type="checkbox" value="1" />
-                                            <span class="lbl"> Adicionar OS</span>
+                                            <input name="aLink" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Adicionar Link</span>
                                         </label>
                                     </td>
 
                                     <td>
                                         <label>
-                                            <input name="eOs" class="marcar" type="checkbox" value="1" />
-                                            <span class="lbl"> Editar OS</span>
+                                            <input name="eLink" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Editar Link</span>
                                         </label>
                                     </td>
 
                                     <td>
                                         <label>
-                                            <input name="dOs" class="marcar" type="checkbox" value="1" />
-                                            <span class="lbl"> Excluir OS</span>
+                                            <input name="dLink" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Excluir Link</span>
                                         </label>
                                     </td>
                                  

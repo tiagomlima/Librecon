@@ -1,4 +1,13 @@
+<?php 
 
+/*  ___________________________________________________________
+   |                                                           |    
+   |   Autores: André Luis - email: andre.pedroso34@gmail.com  |
+   |            Tiago Lima - email: tiago.m.lima@outlook.com   |
+   |___________________________________________________________| 
+*/
+
+?>
 <div class="row-fluid" style="margin-top: 0">
     <div class="span12">
         <div class="widget-box">

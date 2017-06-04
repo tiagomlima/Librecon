@@ -1,3 +1,13 @@
+<?php 
+
+/*  ___________________________________________________________
+   |                                                           |    
+   |   Autores: André Luis - email: andre.pedroso34@gmail.com  |
+   |            Tiago Lima - email: tiago.m.lima@outlook.com   |
+   |___________________________________________________________| 
+*/
+
+?>
 <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'aReserva') && $this->session->userdata('tipo_usuario') == 1){ ?>
     <a href="<?php echo base_url()?>index.php/acervos/gerenciar" class="btn btn-success"><i class="icon-plus icon-white"></i> Fazer uma reserva</a>
 <?php } ?>

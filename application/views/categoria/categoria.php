@@ -1,3 +1,13 @@
+<?php 
+
+/*  ___________________________________________________________
+   |                                                           |    
+   |   Autores: André Luis - email: andre.pedroso34@gmail.com  |
+   |            Tiago Lima - email: tiago.m.lima@outlook.com   |
+   |___________________________________________________________| 
+*/
+
+?>
 <a href="<?php echo base_url()?>index.php/categoria/adicionar" class="btn btn-success"><i class="icon-plus icon-white"></i> Adicionar Categoria</a>
 <?php
 if(!$results){?>

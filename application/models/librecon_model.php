@@ -1,4 +1,12 @@
 <?php
+
+/*  ___________________________________________________________
+   |                                                           |    
+   |   Autores: André Luis - email: andre.pedroso34@gmail.com  |
+   |            Tiago Lima - email: tiago.m.lima@outlook.com   |
+   |___________________________________________________________| 
+*/
+
 class Librecon_model extends CI_Model {
 
     
@@ -126,26 +134,17 @@ class Librecon_model extends CI_Model {
         return $this->db->get()->result();
     }
 
-    /*function getAcervosMinimo(){  -- lembrar de apagar essa função
+   function getAcervosMinimo(){  
 
-        $sql = "SELECT * FROM acervos WHERE estoque <= estoqueMinimo LIMIT 10"; 
+        $sql = "SELECT * FROM acervos WHERE estoque <= 1 LIMIT 10"; 
         return $this->db->query($sql)->result();
 
-    }*/
+    }
 
     function getEmpEstatisticas(){
         $sql = "SELECT status, COUNT(status) as total FROM emprestimos GROUP BY status ORDER BY status";
         return $this->db->query($sql)->result();
     }
-
-    public function getEstatisticasFinanceiro(){
-        $sql = "SELECT SUM(CASE WHEN baixado = 1 AND tipo = 'receita' THEN valor END) as total_receita, 
-                       SUM(CASE WHEN baixado = 1 AND tipo = 'despesa' THEN valor END) as total_despesa,
-                       SUM(CASE WHEN baixado = 0 AND tipo = 'receita' THEN valor END) as total_receita_pendente,
-                       SUM(CASE WHEN baixado = 0 AND tipo = 'despesa' THEN valor END) as total_despesa_pendente FROM lancamentos";
-        return $this->db->query($sql)->row();
-    }
-
 
     public function getEmitente()
     {

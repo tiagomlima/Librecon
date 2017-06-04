@@ -1,3 +1,13 @@
+<?php 
+
+/*  ___________________________________________________________
+   |                                                           |    
+   |   Autores: André Luis - email: andre.pedroso34@gmail.com  |
+   |            Tiago Lima - email: tiago.m.lima@outlook.com   |
+   |___________________________________________________________| 
+*/
+
+?>
   <head>
     <title>LIBRECON</title>
     <meta charset="UTF-8" />
@@ -21,29 +31,28 @@
 
                   <div class="widget-box">
                       <div class="widget-title">
-                          <h4 style="text-align: center">Acervos</h4>
+                          <h4 style="text-align: center">Empréstimos</h4>
                       </div>
                       <div class="widget-content nopadding">
 
                   <table class="table table-bordered">
                       <thead>
                           <tr>
-                              <th style="font-size: 1.2em; padding: 5px;">Nome</th>
-                              <th style="font-size: 1.2em; padding: 5px;">UN</th>
-                              <th style="font-size: 1.2em; padding: 5px;">Preço Compra</th>
-                              <th style="font-size: 1.2em; padding: 5px;">Preço Venda</th>
-                              <th style="font-size: 1.2em; padding: 5px;">Estoque</th>
+                              <th style="font-size: 1.2em; padding: 5px;">Leitor</th>
+                              <th style="font-size: 1.2em; padding: 5px;">Data Empréstimo</th>
+                              <th style="font-size: 1.2em; padding: 5px;">Quantidade</th>
+                              <th style="font-size: 1.2em; padding: 5px;">Status</th>
                           </tr>
                       </thead>
                       <tbody>
                           <?php
-                          foreach ($acervos as $p) {
+                          foreach ($emprestimos as $e) {
+
                               echo '<tr>';
-                              echo '<td>' . $p->descricao. '</td>';
-                              echo '<td>' . $p->unidade . '</td>';
-                              echo '<td>' . $p->precoCompra . '</td>';
-                              echo '<td>' . $p->precoVenda . '</td>';
-                              echo '<td>' . $p->estoque. '</td>';
+                              echo '<td>' . $e->nome . '</td>';
+                              echo '<td>' . date('d/m/Y',  strtotime($e->dataEmprestimo)). '</td>';                                              
+                              echo '<td>' . $e->qtde_item. '</td>';
+                              echo '<td>' . $e->status. '</td>';
                               echo '</tr>';
                           }
                           ?>
@@ -77,4 +86,10 @@
             <script src="<?php echo base_url();?>js/dashboard.js"></script>
   </body>
 </html>
+
+
+
+
+
+
 

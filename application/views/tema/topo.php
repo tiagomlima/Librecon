@@ -1,4 +1,13 @@
+<?php 
 
+/*  ___________________________________________________________
+   |                                                           |    
+   |   Autores: André Luis - email: andre.pedroso34@gmail.com  |
+   |            Tiago Lima - email: tiago.m.lima@outlook.com   |
+   |___________________________________________________________| 
+*/
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -113,13 +122,11 @@
     <?php } ?>
     
 	<?php 
-		if($this->session->userdata('tipo_usuario') == 1){
-			$reserva = $this->reservas_model->getReservaById($this->session->userdata('id'));
-			
-			if(count($reserva) > 0){ ?>
+		if($this->permission->checkPermission($this->session->userdata('permissao'),'vReserva') && $this->session->userdata('tipo_usuario') == 1){						
+			 ?>
 				<li class="<?php if(isset($menuReserva)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/reservas"><i class="icon icon-calendar"></i> <span>Minhas Reservas</span></a></li>
 		<?php	}
-		} ?>		
+		 ?>		
 		
     <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vReserva') && $this->session->userdata('tipo_usuario') == 0){ ?>
         <li class="<?php if(isset($menuReserva)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/reservas"><i class="icon icon-calendar"></i> <span>Reservas</span></a></li>
@@ -140,18 +147,13 @@
     <?php } ?>
     
     <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vArquivo')){ ?>
-        <li class="<?php if(isset($menuArquivos)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/arquivos"><i class="icon icon-hdd"></i> <span>Arquivos</span></a></li>
+        <li class="<?php if(isset($menuArquivos)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/arquivos"><i class="icon icon-paperclip"></i> <span>Arquivos</span></a></li>
     <?php } ?>
-
-    <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vLancamento')){ ?>
-        <li class="submenu <?php if(isset($menuFinanceiro)){echo 'active open';};?>">
-          <a href="#"><i class="icon icon-money"></i> <span>Financeiro</span> <span class="label"><i class="icon-chevron-down"></i></span></a>
-          <ul>
-            <li><a href="<?php echo base_url()?>index.php/financeiro/lancamentos">Lançamentos</a></li>
-          </ul>
-        </li>
+    
+    <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vLink')){ ?>
+        <li class="<?php if(isset($menuLinks)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/links"><i class="icon icon-link"></i> <span>Links</span></a></li>
     <?php } ?>
-
+    
     <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'rLeitor') || $this->permission->checkPermission($this->session->userdata('permissao'),'rAcervo') || $this->permission->checkPermission($this->session->userdata('permissao'),'rServico') || $this->permission->checkPermission($this->session->userdata('permissao'),'rOs') || $this->permission->checkPermission($this->session->userdata('permissao'),'rFinanceiro') || $this->permission->checkPermission($this->session->userdata('permissao'),'rEmprestimo')){ ?>
         
         <li class="submenu <?php if(isset($menuRelatorios)){echo 'active open';};?>" >
@@ -163,20 +165,10 @@
             <?php } ?>
             <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'rAcervo')){ ?>
                 <li><a href="<?php echo base_url()?>index.php/relatorios/acervos">Acervos</a></li>
-            <?php } ?>
-            <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'rServico')){ ?>
-                <li><a href="<?php echo base_url()?>index.php/relatorios/servicos">Serviços</a></li>
-            <?php } ?>
-            <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'rOs')){ ?>
-                 <li><a href="<?php echo base_url()?>index.php/relatorios/os">Ordens de Serviço</a></li>
-            <?php } ?>
+            <?php } ?>            
             <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'rEmprestimo')){ ?>
                 <li><a href="<?php echo base_url()?>index.php/relatorios/emprestimos">Emprestimos</a></li>
-            <?php } ?>
-            <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'rFinanceiro')){ ?>
-                <li><a href="<?php echo base_url()?>index.php/relatorios/financeiro">Financeiro</a></li>
-            <?php } ?>
-            
+            <?php } ?>                        
           </ul>
         </li>
 
@@ -240,9 +232,7 @@
   </div>
 </div>
 <!--Footer-part-->
-<div class="row-fluid">
-  <div id="footer" class="span12"> <?php echo date('Y'); ?> &copy; </div>
-</div>
+<div id="footer" class="span12"> <?php echo date('Y'); ?> Librecon - Desenvolvido por Tiago Lima e André Luis </div>
 <!--end-Footer-part-->
 
 

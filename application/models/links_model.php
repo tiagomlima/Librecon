@@ -1,10 +1,17 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php
 
-class Financeiro_model extends CI_Model {
-	
+/*  ___________________________________________________________
+   |                                                           |    
+   |   Autores: André Luis - email: andre.pedroso34@gmail.com  |
+   |            Tiago Lima - email: tiago.m.lima@outlook.com   |
+   |___________________________________________________________| 
+*/
+
+class Links_model extends CI_Model {
+
     
     
-	function __construct() {
+    function __construct() {
         parent::__construct();
     }
 
@@ -13,7 +20,7 @@ class Financeiro_model extends CI_Model {
         
         $this->db->select($fields);
         $this->db->from($table);
-        $this->db->order_by('data_vencimento', 'asc');
+        $this->db->order_by('idLink','desc');
         $this->db->limit($perpage,$start);
         if($where){
             $this->db->where($where);
@@ -25,11 +32,10 @@ class Financeiro_model extends CI_Model {
         return $result;
     }
 
-
     function getById($id){
-        $this->db->where('idClientes',$id);
+        $this->db->where('idLink',$id);
         $this->db->limit(1);
-        return $this->db->get('clientes')->row();
+        return $this->db->get('links')->row();
     }
     
     function add($table,$data){
@@ -65,14 +71,16 @@ class Financeiro_model extends CI_Model {
 		return FALSE;        
     }
 
-    function count($table, $where) {
-
-        $this->db->from($table);
-        if($where){
-            $this->db->where($where);
-        }
-        return $this->db->count_all_results();
+    function count($table) {
+        return $this->db->count_all($table);
     }
-
+	
+	function getActive($table,$fields){
+        
+        $this->db->select($fields);
+        $this->db->from($table);
+        $query = $this->db->get();
+        return $query->result();;
+    }   
+    
 }
-

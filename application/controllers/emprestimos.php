@@ -1,4 +1,12 @@
 <?php
+
+/*  ___________________________________________________________
+   |                                                           |    
+   |   Autores: André Luis - email: andre.pedroso34@gmail.com  |
+   |            Tiago Lima - email: tiago.m.lima@outlook.com   |
+   |___________________________________________________________| 
+*/
+
 class Emprestimos extends CI_Controller {
     
     
@@ -595,4 +603,45 @@ class Emprestimos extends CI_Controller {
 			redirect('emprestimos/editar/'.$idEmprestimos);
 		}		
 	}	
+
+	function pesquisar(){
+		
+		$this->load->library('table');
+        $this->load->library('pagination');
+        
+        
+        $config['base_url'] = base_url().'index.php/emprestimos/gerenciar/';
+        $config['total_rows'] = $this->emprestimos_model->count('emprestimos');
+        $config['per_page'] = 10;
+        $config['next_link'] = 'Próxima';
+        $config['prev_link'] = 'Anterior';
+        $config['full_tag_open'] = '<div class="pagination alternate"><ul>';
+        $config['full_tag_close'] = '</ul></div>';
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
+        $config['cur_tag_open'] = '<li><a style="color: #2D335B"><b>';
+        $config['cur_tag_close'] = '</b></a></li>';
+        $config['prev_tag_open'] = '<li>';
+        $config['prev_tag_close'] = '</li>';
+        $config['next_tag_open'] = '<li>';
+        $config['next_tag_close'] = '</li>';
+        $config['first_link'] = 'Primeira';
+        $config['last_link'] = 'Última';
+        $config['first_tag_open'] = '<li>';
+        $config['first_tag_close'] = '</li>';
+        $config['last_tag_open'] = '<li>';
+        $config['last_tag_close'] = '</li>';
+        
+        $this->pagination->initialize($config); 	
+		
+		$nome = $this->input->post('nome');
+		$dataInicial = date('Y-m-d', strtotime($this->input->post('dataInicial')));
+		$dataFinal = date('Y-m-d', strtotime($this->input->post('dataFinal')));
+		$status = $this->input->post('status');
+							
+		$data['results'] = $this->emprestimos_model->pesquisar($nome,$dataInicial,$dataFinal,$status);
+        $this->data['emprestimos'] = $data['results']['emprestimos'];
+		$this->data['view'] = 'emprestimos/pesquisar';
+        $this->load->view('tema/topo',  $this->data);
+	}
 }

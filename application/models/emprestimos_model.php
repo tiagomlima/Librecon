@@ -1,4 +1,13 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php 
+
+/*  ___________________________________________________________
+   |                                                           |    
+   |   Autores: André Luis - email: andre.pedroso34@gmail.com  |
+   |            Tiago Lima - email: tiago.m.lima@outlook.com   |
+   |___________________________________________________________| 
+*/
+
+if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Emprestimos_model extends CI_Model {
 
@@ -193,7 +202,25 @@ class Emprestimos_model extends CI_Model {
         }
     }
 
-
+	public function pesquisar($nome = null, $dataInicial = null,$dataFinal = null,$status = null){
+        $whereData = "";
+        $likeLeitor = "";
+        $whereStatus = "";
+        if($dataInicial != null){
+            $whereData = "AND dataEmprestimo BETWEEN '".$dataInicial."' AND '".$dataFinal."'";
+        }
+        if($nome != null){
+            $likeLeitor = "AND usuarios.nome LIKE '%".$nome."%'";
+        }
+        if($status != null){
+            $whereStatus = "AND status = ".$this->db->escape($status);
+        }
+       
+        $query = "SELECT emprestimos.*,usuarios.nome FROM emprestimos LEFT JOIN usuarios ON emprestimos.leitor_id = usuarios.idUsuarios  WHERE idEmprestimos != 0 $whereData $likeLeitor $whereStatus";
+		$data['emprestimos'] = $this->db->query($query)->result();
+       
+         return $data;
+    }
 
 }
 

@@ -1,4 +1,13 @@
-<?php if($this->permission->checkPermission($this->session->userdata('permissao'),'aAcervo')){ ?>
+<?php 
+
+/*  ___________________________________________________________
+   |                                                           |    
+   |   Autores: André Luis - email: andre.pedroso34@gmail.com  |
+   |            Tiago Lima - email: tiago.m.lima@outlook.com   |
+   |___________________________________________________________| 
+*/
+
+	if($this->permission->checkPermission($this->session->userdata('permissao'),'aAcervo')){ ?>
     <a href="<?php echo base_url();?>index.php/acervos/adicionar" class="btn btn-success"><i class="icon-plus icon-white"></i> Adicionar Acervo</a>
 <?php } ?>
 
