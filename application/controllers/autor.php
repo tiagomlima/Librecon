@@ -19,7 +19,7 @@ class Autor extends CI_Controller {
             }
             $this->load->helper(array('codegen_helper'));
             $this->load->model('autor_model','',TRUE);
-            $this->data['menuAutor'] = 'autor';
+            $this->data['menuAcervos'] = 'autor';
 	}	
 	
 	function index(){

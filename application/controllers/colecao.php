@@ -18,7 +18,7 @@ class Colecao extends CI_Controller {
             }
             $this->load->helper(array('codegen_helper'));
             $this->load->model('colecao_model','',TRUE);
-            $this->data['menuColecao'] = 'colecao';
+            $this->data['menuAcervos'] = 'colecao';
 	}	
 	
 	function index(){

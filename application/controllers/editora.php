@@ -18,7 +18,7 @@ class Editora extends CI_Controller {
             }
             $this->load->helper(array('codegen_helper'));
             $this->load->model('editora_model','',TRUE);
-            $this->data['menuEditora'] = 'editora';
+            $this->data['menuAcervos'] = 'editora';
 	}	
 	
 	function index(){

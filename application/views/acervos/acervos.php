@@ -19,7 +19,25 @@ if(!$results){?>
             <i class="icon-barcode"></i>
          </span>
         <h5>Acervos</h5>
-		
+			
+			<form style="margin-left:15%" action="<?php base_url() ?>acervos/pesquisar" method="post">       		
+	            <select name="categoria_id" id="categoria_id" style="width:15%">                                 
+	            	<option value="">Categoria</option>
+	            	<?php foreach ($categoria as $c) {
+                           echo '<option value="'.$c->idCategoria.'">'.$c->nomeCategoria.'</option>';
+                    } ?>                                  
+	            </select>                                        	                       
+                <select name="autor_id" id="autor_id" style="width:15%">                                 
+                	<option value="">Autor</option>
+                	<?php foreach ($autor as $a) {
+                           echo '<option value="'.$a->idAutor.'">'.$a->autor.'</option>';
+                    } ?>                                  
+                </select>
+                <input type="text" id="nome" name="nome" value="" placeholder="Procurar por nome" style="width:15%">
+                <input type="text" id="palavra_chave" name="palavra_chave" value="" placeholder="Procurar por palavra-chave" style="width:18%">
+                <button style="margin-bottom:1%"><i class="icon-search icon-white"></i></button>     
+        	</form>        	
+			
      </div>
 
 <div class="widget-content nopadding">
@@ -31,7 +49,7 @@ if(!$results){?>
             <th>#</th>
             <th>Imagem</th>
             <th>Título</th>           
-            <<?php if($this->session->userdata('tipo_usuario') == 0){ ?>
+            <?php if($this->session->userdata('tipo_usuario') == 0){ ?>
             <th>Tombo</th>
             <?php } ?>
             <?php if($this->session->userdata('tipo_usuario') == 0){ ?>
