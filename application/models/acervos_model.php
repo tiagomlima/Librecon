@@ -63,6 +63,22 @@ class Acervos_model extends CI_Model {
 		return $this->db->get('acervos')->row();
 	}
 	
+	function getSecaoById($id){
+		$this->db->select('acervos.secao_id, secao.secao as secao');
+		$this->db->where('idAcervos',$id);
+        $this->db->limit(1);
+        $this->db->join('secao', 'acervos.secao_id = secao.idSecao', 'left');
+		return $this->db->get('acervos')->row();
+	}
+	
+	function getTipoById($id){
+		$this->db->select('acervos.tipoItem_id, tipo_de_item.nomeTipo as tipo');
+		$this->db->where('idAcervos',$id);
+        $this->db->limit(1);
+        $this->db->join('tipo_de_item', 'acervos.tipoItem_id = tipo_de_item.idTipoItem', 'left');
+		return $this->db->get('acervos')->row();
+	}
+	
 	function getCategoriaById($id){
 		$this->db->select('acervos.categoria_id, categoria.nomeCategoria as categoria');
 		$this->db->where('idAcervos',$id);

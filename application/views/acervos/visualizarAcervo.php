@@ -43,17 +43,78 @@
                             <td><?php echo $colecao->colecao ?></td>
                         </tr>
                         <tr>
+                            <td style="text-align: right"><strong>ISBN</strong></td>
+                            <td><?php echo $result->isbn ?></td>
+                        </tr> 
+                        <?php if($this->session->userdata('tipo_usuario') == 0){ ?>  
+                        <tr>                       	 
+                            <td style="text-align: right"><strong>Tabela Cutter</strong></td>
+                            <td><?php echo $result->tabelaCutter ?></td>
+                               
+                        </tr>
+                         <?php } ?>  
+                        <tr>
                             <td style="text-align: right"><strong>Tombo</strong></td>
                             <td><?php echo $result->tombo ?></td>
                         </tr> 
                         <tr>
                             <td style="text-align: right"><strong>Categoria</strong></td>
                             <td><?php echo $categoria->categoria ?></td>
-                        </tr>                          
+                        </tr>
+                        <tr>
+                            <td style="text-align: right"><strong>Tipo:</strong></td>
+                            <td><?php echo $tipo->tipo ?></td>
+                        </tr>     
+                        <?php if($this->session->userdata('tipo_usuario') == 0){ ?>    
+                        <tr>
+                            <td style="text-align: right"><strong>Seção:</strong></td>
+                            <td><?php echo $secao->secao ?></td>
+                        </tr> 	
+                        <tr>
+                            <td style="text-align: right"><strong>Data Aquisição:</strong></td>
+                            <td><?php echo date('d/m/Y', strtotime($result->dataAquisicao)) ?></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right"><strong>Origem Aquisição:</strong></td>
+                            <td><?php echo $result->origemAquisicao ?></td>
+                        </tr>    
+                        <tr>
+                            <td style="text-align: right"><strong>Observação Aquisição:</strong></td>
+                            <td><?php echo $result->observacaoAquisicao ?></td>
+                        </tr>   
+                        <tr>
+                            <td style="text-align: right"><strong>Preço:</strong></td>
+                            <?php 
+                            	$preco = $result->preco;
+								$preco = str_replace(".",",",$preco);
+                            ?>
+                            <td><?php echo 'R$: '.$preco ?></td>
+                        </tr> 
+                        <tr>
+                            <td style="text-align: right"><strong>Artigo</strong></td>
+                            <td><?php echo $result->artigo ?></td>
+                        </tr>  
+                        <tr>
+                            <td style="text-align: right"><strong>Formato</strong></td>
+                            <td><?php echo $result->formato ?></td>
+                        </tr>                             
+                        <tr>
+                            <td style="text-align: right"><strong>Notas</strong></td>
+                            <td><?php echo $result->notas ?></td>
+                        </tr> 
+						<?php } ?>       
                         <tr>
                             <td style="text-align: right"><strong>Idioma</strong></td>
                             <td><?php echo $result->idioma; ?></td>
                         </tr>
+                        <tr>
+                            <td style="text-align: right"><strong>Nº de Páginas</strong></td>
+                            <td><?php echo $result->numero_paginas ?></td>
+                        </tr> 
+                        <tr>
+                            <td style="text-align: right"><strong>Ano de Edição</strong></td>
+                            <td><?php echo $result->anoEdicao ?></td>
+                        </tr> 
                         <tr>
                         <?php 
                         	if($this->session->userdata('tipo_usuario') == 1){

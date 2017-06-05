@@ -115,12 +115,12 @@
                         </div>
                     </div>
                     
-                    <div class="control-group">
-                        <label for="preco" class="control-label">Preço</label>
+                   <!-- <div class="control-group">
+                        <label for="preco" class="control-label">Preço R$</label>
                         <div class="controls">
                             <input id="preco" type="text" name="preco" value=""  />
                         </div>
-                    </div>
+                   </div>-->
                     
                     <div class="control-group">
                         <label for="tabelaCutter" class="control-label">Tabela Cutter<span class="required">*</span></label>
@@ -139,7 +139,7 @@
                     <div class="control-group">
                         <label for="anoEdicao" class="control-label">Ano Edição<span class="required">*</span></label>
                         <div class="controls">
-                            <input id="anoEdicao" type="date" name="anoEdicao" value="<?php echo set_value('anoEdicao'); ?>"  />
+                            <input id="anoEdicao" type="text" name="anoEdicao" value="<?php echo set_value('anoEdicao'); ?>"  />
                         </div>
                     </div>
                     
@@ -258,8 +258,7 @@
                   estoque: { required: 'Campo Requerido.'},
                   idioma: { required: 'Campo Requerido.'},
                   dataAquisicao: { required: 'Campo Requerido.'},
-                  origemAquisicao: { required: 'Campo Requerido.'},
-                  preco: { required: 'Campo Requerido.'},
+                  origemAquisicao: { required: 'Campo Requerido.'},                  
                   tabelaCutter: { required: 'Campo Requerido.'},
                   isbn: { required: 'Campo Requerido.'},
                   anoEdicao: { required: 'Campo Requerido.'},

@@ -145,6 +145,9 @@ class Acervos extends CI_Controller {
 				$image = $this->do_upload();
             	$img = base_url().'assets/uploads/'.$image;
 			}
+			
+			//$preco = $this->input->post('preco');
+			//$preco = str_replace(",", ".", $preco);
 							           
             $data = array(
                 'titulo' => set_value('titulo'),
@@ -162,7 +165,7 @@ class Acervos extends CI_Controller {
                 'dataAquisicao' => set_value('dataAquisicao'),
                 'origemAquisicao' => set_value('origemAquisicao'),
                 'observacaoAquisicao' => $this->input->post('observacaoAquisicao'),
-                'preco' => $this->input->post('preco'),
+                //'preco' => $preco,
                 'tabelaCutter' => set_value('tabelaCutter'),
                 'isbn' => set_value('isbn'),
                 'anoEdicao' => set_value('anoEdicao'),
@@ -207,7 +210,10 @@ class Acervos extends CI_Controller {
         if ($this->form_validation->run('acervos') == false) {
             $this->data['custom_error'] = (validation_errors() ? '<div class="form_error">' . validation_errors() . '</div>' : false);
         } else {
-        	      		
+        	
+			//$preco = $this->input->post('preco');
+			//$preco = str_replace(",", ".", $preco);
+			      		
             $data = array(
                 'titulo' => $this->input->post('titulo'),
                 'autor_id' => $this->input->post('autor_id'),
@@ -223,7 +229,7 @@ class Acervos extends CI_Controller {
                 'dataAquisicao' => $this->input->post('dataAquisicao'),
                 'origemAquisicao' => $this->input->post('origemAquisicao'),
                 'observacaoAquisicao' => $this->input->post('observacaoAquisicao'),
-                'preco' => $this->input->post('preco'),
+                //'preco' => $preco,
                 'tabelaCutter' => $this->input->post('tabelaCutter'),
                 'isbn' => $this->input->post('isbn'),
                 'anoEdicao' => $this->input->post('anoEdicao'),
@@ -303,6 +309,8 @@ class Acervos extends CI_Controller {
             redirect(base_url() . 'index.php/acervos/editar/'.$this->input->post('idAcervos'));
         }
 		
+		$this->data['secao'] = $this->acervos_model->getSecaoById($this->uri->segment(3));
+		$this->data['tipo'] = $this->acervos_model->getTipoById($this->uri->segment(3));
 		$this->data['categoria'] = $this->acervos_model->getCategoriaById($this->uri->segment(3));
 		$this->data['autor'] = $this->acervos_model->getAutorById($this->uri->segment(3));
 		$this->data['editora'] = $this->acervos_model->getEditoraById($this->uri->segment(3));
@@ -329,6 +337,9 @@ class Acervos extends CI_Controller {
 
         $this->db->where('acervos_id', $id);
         $this->db->delete('itens_de_emprestimos');
+		
+		$this->db->where('acervos_id', $id);
+        $this->db->delete('itens_de_reserva');
         
         $this->acervos_model->delete('acervos','idAcervos',$id);             
         

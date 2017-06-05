@@ -122,9 +122,13 @@
                     </div>
                     
                     <div class="control-group">
-                        <label for="preco" class="control-label">Preço<span class="required">*</span></label>
+                        <label for="preco" class="control-label">Preço R$</label>
                         <div class="controls">
-                            <input id="preco" type="text" name="preco" value="<?php echo $result->preco; ?>"  />
+                        	<?php
+                        		$preco = $result->preco;
+								$preco = str_replace(".",",",$preco);
+                        	 ?>
+                            <input id="preco" type="text" name="preco" value="<?php echo $preco; ?>"  />
                         </div>
                     </div>
                     
@@ -145,7 +149,7 @@
                     <div class="control-group">
                         <label for="anoEdicao" class="control-label">Ano Edição<span class="required">*</span></label>
                         <div class="controls">
-                            <input id="anoEdicao" type="date" name="anoEdicao" value="<?php echo $result->anoEdicao; ?>"  />
+                            <input id="anoEdicao" type="text" name="anoEdicao" value="<?php echo $result->anoEdicao; ?>"  />
                         </div>
                     </div>
                     
@@ -280,6 +284,14 @@
                   tombo: {required: 'Campo Requerido.'},
                   estoque: { required: 'Campo Requerido.'},
                   idioma: { required: 'Campo Requerido.'},
+                  dataAquisicao: { required: 'Campo Requerido.'},
+                  origemAquisicao: { required: 'Campo Requerido.'},
+                  tabelaCutter: { required: 'Campo Requerido.'},
+                  isbn: { required: 'Campo Requerido.'},
+                  anoEdicao: { required: 'Campo Requerido.'},
+                  artigo: { required: 'Campo Requerido.'},
+                  numero_paginas: { required: 'Campo Requerido.'},
+                  formato: { required: 'Campo Requerido.'}
                   
             },
 

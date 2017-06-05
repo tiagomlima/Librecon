@@ -43,6 +43,7 @@ class Librecon extends CI_Controller {
     }
 	
 	public function leitor(){
+		$this->data['usuario'] = $this->librecon_model->getById($this->session->userdata('id'));
 		$this->data['menuPainel'] = 'Painel';
         $this->data['view'] = 'librecon/leitor';
         $this->load->view('tema/topo',  $this->data);

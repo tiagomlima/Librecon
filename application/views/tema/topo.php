@@ -137,9 +137,9 @@
 			$this->db->where('leitor_id',$this->session->userdata('id'));
 			$emprestimo = $this->db->get('emprestimos')->result();
 			
-			if(count($emprestimo) > 0){ ?>
+			 ?>
 				<li class="<?php if(isset($menuEmprestimos)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/emprestimos"><i class="icon icon-book"></i> <span>Meus Emprestimos</span></a></li>
-		<?php	}
+		<?php	
 		} ?>	
 	
     <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vEmprestimo') && $this->session->userdata('tipo_usuario') == 0){ ?>

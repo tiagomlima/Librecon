@@ -19,6 +19,9 @@
             <div class="widget-content">
                 <div class="row-fluid">
                     <div class="span12" style="min-height: 260px">
+                    	<?php if($this->session->userdata('tipo_usuario') == 1){?>
+                    	<img src="<?php echo $usuario->img_leitor?>" alt="foto do leitor" width="30%" height="30%"/><br><br>
+                    	<?php } ?>
                     <?php if($this->session->userdata('tipo_usuario') == 0){ ?>
                         <ul class="site-stats">
                             <li class="bg_ls span12"><strong>Nome: <?php echo $usuario->nome?></strong></li>
@@ -37,7 +40,7 @@
                             	$curso = $this->db->get('cursos')->row();
                             ?>
                             <li class="bg_ly span12" style="margin-left: 0"><strong>Curso: <?php echo $curso->nomeCurso?></strong></li>
-                            <li class="bg_lo span12" style="margin-left: 0"><strong>Data Cadastro: <?php echo date('d/m/Y', strtotime($usuario->dataCadastro)); ?></strong></li>
+                            <li class="bg_lo span12" style="margin-left: 0"><strong>Data de Cadastro: <?php echo date('d/m/Y', strtotime($usuario->dataCadastro)); ?></strong></li>
                         </ul>
                         <?php } ?>
                     </div>

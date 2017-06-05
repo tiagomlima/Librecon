@@ -137,18 +137,12 @@ if(!$results){?>
             $dataEmprestimo = date(('d/m/Y'),strtotime($r->dataEmprestimo));
 			$dataVencimento = date(('d/m/Y'),strtotime($r->dataVencimento));
 			$dataAtual = date(('d/m/Y'),strtotime(date('d/m/Y')));
-						
-			if($dataAtual > $dataVencimento){
-				$status = 'ATRASADO';
-			}else{
-				$status = $r->status;
-			}
                      
             echo '<tr>';
             echo '<td>'.$dataEmprestimo.'</td>';
 			echo '<td>'.$dataVencimento.'</td>';
             echo '<td><a href="'.base_url().'index.php/leitores/visualizar/'.$r->leitor_id.'">'.$r->nome.'</a></td>';
-			echo '<td>'.$status.'</td>';
+			echo '<td>'.$r->status.'</td>';
             
             
             echo '<td style="text-align:center">';
@@ -171,17 +165,11 @@ if(!$results){?>
             $dataEmprestimo = date(('d/m/Y'),strtotime($r->dataEmprestimo));
 			$dataVencimento = date(('d/m/Y'),strtotime($r->dataVencimento));
 			$dataAtual = date(('d/m/Y'),strtotime(date('d/m/Y')));
-						
-			if($dataAtual > $dataVencimento){
-				$status = 'ATRASADO';
-			}else{
-				$status = $r->status;
-			}
-                     
+									
             echo '<tr>';
             echo '<td>'.$dataEmprestimo.'</td>';
 			echo '<td>'.$dataVencimento.'</td>';
-			echo '<td>'.$status.'</td>';
+			echo '<td>'.$r->status.'</td>';
                         
             echo '<td style="text-align:center">';
             if($this->permission->checkPermission($this->session->userdata('permissao'),'vEmprestimo') && $r->status != 'Não emprestado'){

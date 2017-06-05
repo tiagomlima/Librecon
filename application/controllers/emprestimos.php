@@ -99,7 +99,8 @@ class Emprestimos extends CI_Controller {
                 'usuarios_id' => $this->input->post('usuarios_id'),
                 'leitor_id' => $this->input->post('leitor_id'),
                 'grupo_id' => $this->input->post('grupo_id'),
-                'status' => $this->input->post('status')
+                'status' => $this->input->post('status'),
+                'qtde_item' => 0
                
             );
             if (is_numeric($id = $this->emprestimos_model->add('emprestimos', $data, true)) ) {
@@ -334,6 +335,33 @@ class Emprestimos extends CI_Controller {
             redirect(base_url().'index.php/emprestimos/gerenciar/');
         }
 		
+		$this->db->where('emprestimos_id',$id);
+		$itens = $this->db->get('itens_de_emprestimos')->row();
+		
+		print_r($itens->acervos_id);
+		/*
+		if(count($itens) > 0){
+			foreach ($itens as $i){
+				$this->db->query("UPDATE acervos set estoque = estoque + 1 WHERE idAcervos = ".$itens->acervos_id);
+			}
+			
+			$this->db->where('emprestimos_id', $id);
+		    $this->db->delete('itens_de_emprestimos');
+		    $this->db->where('idEmprestimos', $id);
+		    $this->db->delete('emprestimos');
+			$this->session->set_flashdata('success','Empréstimo excluído com sucesso!');            
+		    redirect(base_url().'index.php/emprestimos/gerenciar/');
+		} else {
+			$this->db->where('emprestimos_id', $id);
+		    $this->db->delete('itens_de_emprestimos');
+		    $this->db->where('idEmprestimos', $id);
+		    $this->db->delete('emprestimos');
+			$this->session->set_flashdata('success','Empréstimo excluído com sucesso!');            
+		    redirect(base_url().'index.php/emprestimos/gerenciar/');
+		}
+		
+		
+		
 		if($status == 'Não emprestado'){
 			$this->db->where('emprestimos_id', $id);
 		    $this->db->delete('itens_de_emprestimos');
@@ -341,6 +369,16 @@ class Emprestimos extends CI_Controller {
 		    $this->db->delete('emprestimos');   		
 				        
 		    $this->session->set_flashdata('success','Empréstimo excluído com sucesso!');            
+		    redirect(base_url().'index.php/emprestimos/gerenciar/');
+		}
+		
+		if($status == 'Devolvido'){
+			$this->db->where('emprestimos_id', $id);
+		    $this->db->delete('itens_de_emprestimos');
+		    $this->db->where('idEmprestimos', $id);
+		    $this->db->delete('emprestimos'); 
+			
+			$this->session->set_flashdata('success','Empréstimo excluído com sucesso!');            
 		    redirect(base_url().'index.php/emprestimos/gerenciar/');
 		}
 				
@@ -373,7 +411,7 @@ class Emprestimos extends CI_Controller {
 	    $this->session->set_flashdata('success','Empréstimo excluído com sucesso!');            
 	    redirect(base_url().'index.php/emprestimos/gerenciar/');
 					 
-		
+		*/
         
     }
     public function autoCompleteAcervo(){

@@ -113,12 +113,7 @@ $config = array(
                                     'field'=>'origemAquisicao',
                                     'label'=>'Origem de Aquisição',
                                     'rules'=>'required|trim|xss_clean'
-                                ),                               
-                                array(
-                                    'field'=>'preco',
-                                    'label'=>'Preço',
-                                    'rules'=>'required|trim|xss_clean'
-                                ),
+                                ),                                                              
                                 array(
                                     'field'=>'tabelaCutter',
                                     'label'=>'Tabela Cutter',

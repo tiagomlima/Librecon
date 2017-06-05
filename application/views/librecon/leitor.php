@@ -21,7 +21,7 @@
   <div class="container-fluid">
     <div class="quick-actions_homepage">
       <ul class="quick-actions">
-   		<h2>Seja Bem-vindo ao Librecon !</h2>
+   		<h2>Seja Bem-vindo <?php echo $usuario->nome ?> ao Librecon !</h2>
    		
    		<div class="span8" style="margin-left: 25%;margin-top: 10%">
         <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vAcervo')){ ?>
