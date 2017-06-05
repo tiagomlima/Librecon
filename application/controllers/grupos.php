@@ -80,6 +80,9 @@ class Grupos extends CI_Controller {
         if ($this->form_validation->run('grupos') == false) {
             $this->data['custom_error'] = (validation_errors() ? '<div class="form_error">' . validation_errors() . '</div>' : false);
         } else {
+        	$multa = $this->input->post('multa');
+			$multa = str_replace(",",".",$multa);
+			
             $data = array(
                 'nomeGrupo' => set_value('nomeGrupo'),
                 'duracao_dias' => set_value('duracao_dias'),
@@ -87,7 +90,7 @@ class Grupos extends CI_Controller {
                 'qtde_max_renovacao' => set_value('qtde_max_renovacao'),
                 'qtde_max_reserva' => set_value('qtde_max_reserva'),
                 'validade_reserva' => set_value('validade_reserva'),
-                'multa' => set_value('multa'),
+                'multa' => $multa,
                 'observacoes' => $this->input->post('observacoes'),  
                 'dataCadastro' => date('Y-m-d')
             );
@@ -123,6 +126,9 @@ class Grupos extends CI_Controller {
         if ($this->form_validation->run('grupos') == false) {
             $this->data['custom_error'] = (validation_errors() ? '<div class="form_error">' . validation_errors() . '</div>' : false);
         } else {
+        	$multa = $this->input->post('multa');
+			$multa = str_replace(",", ".", $multa);
+			
             $data = array(
                 'nomeGrupo' => $this->input->post('nomeGrupo'),
                 'duracao_dias' => $this->input->post('duracao_dias'), 
@@ -130,7 +136,7 @@ class Grupos extends CI_Controller {
                 'qtde_max_renovacao' => $this->input->post('qtde_max_renovacao'), 
                 'qtde_max_reserva' => $this->input->post('qtde_max_reserva'), 
                 'validade_reserva' => $this->input->post('validade_reserva'),
-                'multa' => $this->input->post('multa'), 
+                'multa' => $multa, 
                 'observacoes' => $this->input->post('observacoes')   
             );
 

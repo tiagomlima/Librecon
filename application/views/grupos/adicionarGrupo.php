@@ -67,7 +67,7 @@
                     <div class="control-group">
                         <label for="multa" class="control-label">Valor da Multa R$<span class="required">*</span></label>
                         <div class="controls">
-                            <input id="multa" type="text" name="multa" value="<?php echo set_value('multa'); ?>"  />
+                            <input id="multa" type="text" name="multa" value=""  />
                         </div>
                     </div>
                     

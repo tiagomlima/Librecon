@@ -35,11 +35,6 @@ $config = array(
                                     'field'=>'validade_reserva',
                                     'label'=>'Validade da Reserva',
                                     'rules'=>'required|trim|xss_clean'
-                                ),
-                                array(
-                                    'field'=>'multa',
-                                    'label'=>'Valor da Multa',
-                                    'rules'=>'required|trim|xss_clean|numeric'
                                 ))								
                 ,
                 'tipoItem' => array(array(

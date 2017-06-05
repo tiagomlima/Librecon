@@ -88,7 +88,7 @@ if(!$results){?>
 			echo '<td>'.$r->qtde_max_renovacao.'</td>';
 			echo '<td>'.$r->qtde_max_reserva.'</td>';
 			echo '<td>'.$r->validade_reserva.'</td>';
-			echo '<td>'. 'R$ '.$r->multa.'</td>';
+			echo '<td>'. 'R$ '.str_replace(".",",",$r->multa).'</td>';
 			echo '<td>'.$r->observacoes.'</td>';
             echo '<td>';
                       if($this->permission->checkPermission($this->session->userdata('permissao'),'eGrupo')){
