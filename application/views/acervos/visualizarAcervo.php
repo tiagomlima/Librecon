@@ -87,8 +87,12 @@
                             <?php 
                             	$preco = $result->preco;
 								$preco = str_replace(".",",",$preco);
-                            ?>
-                            <td><?php echo 'R$: '.$preco ?></td>
+								
+								if($preco == 0){ ?>
+									<td>Desconhecido</td>
+				    	 <?php }else{ ?>
+									<td><?php echo 'R$: '.$preco ?></td>
+								<?php } ?>                                                  
                         </tr> 
                         <tr>
                             <td style="text-align: right"><strong>Artigo</strong></td>

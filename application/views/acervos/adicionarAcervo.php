@@ -20,7 +20,7 @@
             </div>
             <div class="widget-content nopadding">
                 <?php echo $custom_error; ?>
-                <form action="<?php echo current_url(); ?>" id="formAcervo" method="post" enctype="multipart/form-data" class="form-horizontal" >
+                <form action="<?php echo current_url() ?>" id="formAcervo" method="post" enctype="multipart/form-data" class="form-horizontal" >
                      <div class="control-group">
                         <label for="titulo" class="control-label">Titulo<span class="required">*</span></label>
                         <div class="controls">
@@ -115,12 +115,12 @@
                         </div>
                     </div>
                     
-                   <!-- <div class="control-group">
-                        <label for="preco" class="control-label">Preço R$</label>
+                   <div class="control-group">
+                        <label for="observacaoAquisicao" class="control-label">Preço R$</label>
                         <div class="controls">
                             <input id="preco" type="text" name="preco" value=""  />
                         </div>
-                   </div>-->
+                    </div>
                     
                     <div class="control-group">
                         <label for="tabelaCutter" class="control-label">Tabela Cutter<span class="required">*</span></label>

@@ -329,20 +329,30 @@ class Emprestimos extends CI_Controller {
         }
         
         $id =  $this->input->post('id');
-		$status = $this->input->post('status');
         if ($id == null){
             $this->session->set_flashdata('error','Erro ao tentar excluir empréstimo.');            
             redirect(base_url().'index.php/emprestimos/gerenciar/');
         }
+		$this->db->where('idEmprestimos',$id);
+		$emprestimo = $this->db->get('emprestimos')->row();
+		$status = $emprestimo->status;
 		
+				
 		$this->db->where('emprestimos_id',$id);
-		$itens = $this->db->get('itens_de_emprestimos')->row();
+		$itens = $this->db->get('itens_de_emprestimos')->result();
 		
-		print_r($itens->acervos_id);
-		/*
+		if($status == 'Devolvido'){
+			$this->db->where('emprestimos_id', $id);
+		    $this->db->delete('itens_de_emprestimos');
+		    $this->db->where('idEmprestimos', $id);
+		    $this->db->delete('emprestimos');
+			$this->session->set_flashdata('success','Empréstimo excluído com sucesso!');            
+		    redirect(base_url().'index.php/emprestimos/gerenciar/');
+		}
+		
 		if(count($itens) > 0){
 			foreach ($itens as $i){
-				$this->db->query("UPDATE acervos set estoque = estoque + 1 WHERE idAcervos = ".$itens->acervos_id);
+				$this->db->query("UPDATE acervos set estoque = estoque + 1 WHERE idAcervos = ".$i->acervos_id);
 			}
 			
 			$this->db->where('emprestimos_id', $id);
@@ -358,61 +368,7 @@ class Emprestimos extends CI_Controller {
 		    $this->db->delete('emprestimos');
 			$this->session->set_flashdata('success','Empréstimo excluído com sucesso!');            
 		    redirect(base_url().'index.php/emprestimos/gerenciar/');
-		}
-		
-		
-		
-		if($status == 'Não emprestado'){
-			$this->db->where('emprestimos_id', $id);
-		    $this->db->delete('itens_de_emprestimos');
-		    $this->db->where('idEmprestimos', $id);
-		    $this->db->delete('emprestimos');   		
-				        
-		    $this->session->set_flashdata('success','Empréstimo excluído com sucesso!');            
-		    redirect(base_url().'index.php/emprestimos/gerenciar/');
-		}
-		
-		if($status == 'Devolvido'){
-			$this->db->where('emprestimos_id', $id);
-		    $this->db->delete('itens_de_emprestimos');
-		    $this->db->where('idEmprestimos', $id);
-		    $this->db->delete('emprestimos'); 
-			
-			$this->session->set_flashdata('success','Empréstimo excluído com sucesso!');            
-		    redirect(base_url().'index.php/emprestimos/gerenciar/');
-		}
-				
-		if($status != 'Devolvido'){ // se o status não for devolvido, acrescenta o(s) item(s) de volta ao estoque e exclui o Emprestimo
-				// pega todos os ids dos acervos inclusos no itens de emprestimo		
-			$sql = "SELECT group_concat(acervos_id separator ',') as id FROM `itens_de_emprestimos` WHERE emprestimos_id = ".$id;
-			$query = $this->db->query($sql,array($id));
-			$array1 = $query->row_array();
-			$arr = explode(',',$array1['id']);
-			
-			$i = count($arr);
-			
-			//pega os ids dos acervos contidos no itens de emprestimos e acrescenta no estoque
-			for($i = 0; $i < count($arr);){
-				$acervos_id = $arr[$i];
-				
-				$consulta = "UPDATE acervos set estoque = estoque + 1 WHERE idAcervos =".$acervos_id;
-	            $this->db->query($consulta, array($acervos_id));
-									
-				$i++;
-			}
-			
-		} 
-			
-		$this->db->where('emprestimos_id', $id);
-	    $this->db->delete('itens_de_emprestimos');
-	    $this->db->where('idEmprestimos', $id);
-	    $this->db->delete('emprestimos');   		
-			        
-	    $this->session->set_flashdata('success','Empréstimo excluído com sucesso!');            
-	    redirect(base_url().'index.php/emprestimos/gerenciar/');
-					 
-		*/
-        
+		}       
     }
     public function autoCompleteAcervo(){
         
