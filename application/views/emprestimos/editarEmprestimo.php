@@ -107,8 +107,8 @@
                                                                                      
                                         </div>
                                         <div class="span5">
-                                            <label for="usuario">Usuário<span class="required">*</span></label>
-                                            <input id="usuario" class="span12" type="text" name="usuario" value="<?php echo $result->nome ?>" <?php echo $disabled ?> />
+                                            <label for="usuario">Usuário</label>
+                                            <input id="usuario" class="span12" type="text" name="usuario" value="<?php echo $result->nome ?>" <?php echo $disabled ?> readonly />
                                             <input id="usuarios_id" class="span12" type="hidden" name="usuarios_id" value="<?php echo $result->usuarios_id ?>"  />
                                         </div>
                                         

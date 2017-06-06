@@ -125,8 +125,8 @@ $config = array(
                                     'rules'=>'required|trim|xss_clean'
                                 ),
                                 array(
-                                    'field'=>'artigo',
-                                    'label'=>'Artigo',
+                                    'field'=>'edicao',
+                                    'label'=>'Edição',
                                     'rules'=>'required|trim|xss_clean'
                                 ),
                                 array(
@@ -135,8 +135,8 @@ $config = array(
                                     'rules'=>'required|trim|xss_clean'
                                 ),
                                 array(
-                                    'field'=>'formato',
-                                    'label'=>'Formato',
+                                    'field'=>'classificacao',
+                                    'label'=>'Classificação',
                                     'rules'=>'required|trim|xss_clean'
                                 ),
                                 array(

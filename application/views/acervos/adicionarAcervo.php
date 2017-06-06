@@ -74,8 +74,9 @@
                     
                     <div class="control-group">
                         <label  class="control-label">Seção</label>
-                        <div class="controls">
+                        <div class="controls">                        	
                             <select name="secao_id" id="secao_id">
+                            	<option value="">----------</option>
                                   <?php foreach ($secao as $s) {
                                       echo '<option value="'.$s->idSecao.'">'.$s->secao.'</option>';
                                   } ?>
@@ -87,6 +88,7 @@
                         <label  class="control-label">Coleção</label>
                         <div class="controls">
                             <select name="colecao_id" id="colecao_id">
+                            	<option value="">----------</option>
                                   <?php foreach ($colecao as $c) {
                                       echo '<option value="'.$c->idColecao.'">'.$c->colecao.'</option>';
                                   } ?>
@@ -137,26 +139,19 @@
                     </div>
                     
                     <div class="control-group">
+                        <label for="isbn" class="control-label">Edição<span class="required">*</span></label>
+                        <div class="controls">
+                            <input id="edicao" type="text" name="edicao" value="<?php echo set_value('edicao'); ?>"  />
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
                         <label for="anoEdicao" class="control-label">Ano Edição<span class="required">*</span></label>
                         <div class="controls">
                             <input id="anoEdicao" type="text" name="anoEdicao" value="<?php echo set_value('anoEdicao'); ?>"  />
                         </div>
-                    </div>
-                    
-                    <div class="control-group">
-                        <label for="artigo" class="control-label">Artigo<span class="required">*</span></label>
-                        <div class="controls">
-                            <input id="artigo" type="text" name="artigo" value="<?php echo set_value('artigo'); ?>"  />
-                        </div>
-                    </div>
-                    
-                    <div class="control-group">
-                        <label for="notas" class="control-label">Notas</label>
-                        <div class="controls">
-                            <input id="notas" type="text" name="notas" value=""  />
-                        </div>
-                    </div>
-                    
+                    </div>                                        
+                                                            
                     <div class="control-group">
                         <label for="numero_paginas" class="control-label">Nº Páginas<span class="required">*</span></label>
                         <div class="controls">
@@ -165,12 +160,12 @@
                     </div>
                     
                     <div class="control-group">
-                        <label for="formato" class="control-label">Formato<span class="required">*</span></label>
+                        <label for="tombo" class="control-label">Classificação<span class="required">*</span></label>
                         <div class="controls">
-                            <input id="formato" type="text" name="formato" value="<?php echo set_value('formato'); ?>"  />
+                            <input id="classificacao" type="text" name="classificacao" value="<?php echo set_value('classificaco'); ?>"  />
                         </div>
-                    </div>                                        
-                                    
+                    </div>
+                                                                                                                
                     <div class="control-group">
                         <label for="tombo" class="control-label">Tombo<span class="required">*</span></label>
                         <div class="controls">
@@ -234,7 +229,6 @@
 <script src="<?php echo base_url();?>js/maskmoney.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
-        $(".money").maskMoney();
 
         $('#formAcervo').validate({
             rules :{
@@ -247,9 +241,10 @@
                   tabelaCutter: { required: true},
                   isbn: { required: true},
                   anoEdicao: { required: true},
-                  artigo: { required: true},
-                  numero_paginas: { required: true},
-                  formato: { required: true}
+                  categoria: { required: true},
+                  edicao: { required: true},
+                  classificacao: { required: true},
+                  numero_paginas: { required: true}
                   
             },
             messages:{
@@ -262,9 +257,10 @@
                   tabelaCutter: { required: 'Campo Requerido.'},
                   isbn: { required: 'Campo Requerido.'},
                   anoEdicao: { required: 'Campo Requerido.'},
-                  artigo: { required: 'Campo Requerido.'},
-                  numero_paginas:{ required: 'Campo Requerido.'},
-                  formato: { required: 'Campo Requerido.'}
+                  edicao: { required: 'Campo Requerido.'},
+                  classificacao: { required: 'Campo Requerido.'},
+                  categoria: { required: 'Campo Requerido.'},
+                  numero_paginas:{ required: 'Campo Requerido.'}
                   
             },
 

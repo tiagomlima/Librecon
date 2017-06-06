@@ -218,9 +218,7 @@ class Reservas extends CI_Controller {
 			//verifica se há itens na lista de reserva
 			if($itens != null){
 				//se sim, acrescenta o item de volta ao estoque 
-				foreach ($itens as $i){
-					$this->db->query("UPDATE acervos set estoque = estoque + 1 WHERE idAcervos = ".$i->acervos_id);					
-				}				
+							
 				$this->reservas_model->delete('itens_de_reserva','reserva_id',$reserva->idReserva);
 			}
 									
@@ -241,24 +239,7 @@ class Reservas extends CI_Controller {
               $this->session->set_flashdata('error','Você não tem permissão para fazer isso');
               redirect(base_url());
             }
-						
-			$sql = "SELECT group_concat(acervos_id separator ',') as id FROM `itens_de_reserva` WHERE reserva_id = ".$idReserva;
-			$query = $this->db->query($sql,array($id));
-			$array1 = $query->row_array();
-			$arr = explode(',',$array1['id']);
-			
-			$i = count($arr);
-			
-			//pega os ids dos acervos contidos no itens de emprestimos e acrescenta no estoque
-			for($i = 0; $i < count($arr);){
-				$acervos_id = $arr[$i];
-				
-				$consulta = "UPDATE acervos set estoque = estoque + 1 WHERE idAcervos =".$acervos_id;
-	            $this->db->query($consulta, array($acervos_id));
-									
-				$i++;
-			}
-			
+											
 		$this->reservas_model->delete('reserva','idReserva',$idReserva);
 		$this->reservas_model->delete('itens_de_reserva','reserva_id',$idReserva);
 		

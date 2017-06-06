@@ -93,18 +93,14 @@
 				    	 <?php }else{ ?>
 									<td><?php echo 'R$: '.$preco ?></td>
 								<?php } ?>                                                  
-                        </tr> 
+                        </tr>                         
                         <tr>
-                            <td style="text-align: right"><strong>Artigo</strong></td>
-                            <td><?php echo $result->artigo ?></td>
-                        </tr>  
-                        <tr>
-                            <td style="text-align: right"><strong>Formato</strong></td>
-                            <td><?php echo $result->formato ?></td>
+                            <td style="text-align: right"><strong>Edição</strong></td>
+                            <td><?php echo $result->edicao ?></td>
                         </tr>                             
                         <tr>
-                            <td style="text-align: right"><strong>Notas</strong></td>
-                            <td><?php echo $result->notas ?></td>
+                            <td style="text-align: right"><strong>Classificação</strong></td>
+                            <td><?php echo $result->classificacao ?></td>
                         </tr> 
 						<?php } ?>       
                         <tr>
@@ -142,7 +138,7 @@
                
                 <?php
                  
-               	 if($this->session->userdata('tipo_usuario') == 1 && $result->estoque > 1){
+               	 if($this->session->userdata('tipo_usuario') == 1){
                	 ?>	
                	 <form action="<?php echo base_url() ?>index.php/acervos/reservar" method="post">
                	 	<input type="hidden" id="usuario_id" name="usuario_id" value="<?php echo $this->session->userdata('id') ?>"/>

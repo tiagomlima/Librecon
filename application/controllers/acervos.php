@@ -36,6 +36,8 @@ class Acervos extends CI_Controller {
         $this->data['tipoItem'] = $this->tipoItem_model->getActive('tipo_de_item','tipo_de_item.idTipoItem,tipo_de_item.nomeTipo');
         $this->data['secao'] = $this->secao_model->getActive('secao','secao.idSecao,secao.secao');
         $this->data['colecao'] = $this->colecao_model->getActive('colecao','colecao.idColecao,colecao.colecao');
+		
+		date_default_timezone_set('Brazil/East');
     }
 
     function index(){
@@ -151,15 +153,27 @@ class Acervos extends CI_Controller {
 				$preco = str_replace(",", ".", $preco);
 			}
 			$preco = 0;
+			
+			$secao_id = $this->input->post('secao_id');
+			if($secao_id == null){
+				$secao_id = NULL;
+			}
+			
+			$colecao_id = $this->input->post('colecao_id');
+			if($colecao_id == null){
+				$colecao_id = NULL;
+			}
 							           
             $data = array(
                 'titulo' => set_value('titulo'),
                 'autor_id' => $this->input->post('autor_id'),
                 'editora_id' => $this->input->post('editora_id'),
                 'tipoItem_id' => $this->input->post('tipoItem_id'),
-                'secao_id' => $this->input->post('secao_id'),
-                'colecao_id' => $this->input->post('colecao_id'),
+                'secao_id' => $secao_id,
+                'colecao_id' => $colecao_id,
                 'categoria_id' => $this->input->post('categoria_id'),
+                'edicao' => set_value('edicao'),
+                'classificacao' => set_value('classificacao'),
                 'tombo' => set_value('tombo'),
                 'palavra_chave' => $this->input->post('palavra_chave'),
                 'estoque' => set_value('estoque'),
@@ -172,10 +186,7 @@ class Acervos extends CI_Controller {
                 'tabelaCutter' => set_value('tabelaCutter'),
                 'isbn' => set_value('isbn'),
                 'anoEdicao' => set_value('anoEdicao'),
-                'artigo' => set_value('artigo'),
-                'notas' => $this->input->post('notas'),
-                'numero_paginas' => set_value('numero_paginas'),
-                'formato' => set_value('formato'),                
+                'numero_paginas' => set_value('numero_paginas'),               
                 'img_acervo' => $img                
             );
 
@@ -230,6 +241,8 @@ class Acervos extends CI_Controller {
                 'categoria_id' => $this->input->post('categoria_id'),
                 'palavra_chave' => $this->input->post('palavra_chave'),
                 'tombo' => $this->input->post('tombo'),
+                'edicao' => $this->input->post('edicao'),
+                'classificacao' => $this->input->post('classificacao'),
                 'estoque' => $this->input->post('estoque'),
                 'descricao' => $this->input->post('descricao'),
                 'dataAquisicao' => $this->input->post('dataAquisicao'),
@@ -239,10 +252,7 @@ class Acervos extends CI_Controller {
                 'tabelaCutter' => $this->input->post('tabelaCutter'),
                 'isbn' => $this->input->post('isbn'),
                 'anoEdicao' => $this->input->post('anoEdicao'),
-                'artigo' => $this->input->post('artigo'),
-                'notas' => $this->input->post('notas'),
-                'numero_paginas' => $this->input->post('numero_paginas'),
-                'formato' => $this->input->post('formato'),    
+                'numero_paginas' => $this->input->post('numero_paginas'),   
                 'idioma' => $this->input->post('idioma')               
             );
 
@@ -366,14 +376,14 @@ class Acervos extends CI_Controller {
 		$this->db->where('usuario_id',$usuario_id);
 		$verificaReserva = $this->db->get('reserva')->row();
 		
-		//verifica o estoque
+		/*verifica o estoque
 		$this->db->where('idAcervos',$acervos_id);				
 		$acervoEstoque = $this->db->get('acervos')->row();
 				
 		if($acervoEstoque->estoque <= 1){
 			$this->session->set_flashdata('error','Não há exemplares disponiveis.');            
         	redirect(base_url().'index.php/acervos/visualizar/'.$acervos_id);
-		}		
+		}		*/
 		
 		//verifica se ja existe uma reserva aberta pelo leitor
 		if($verificaReserva != null){
@@ -399,8 +409,12 @@ class Acervos extends CI_Controller {
 				);
 				
 				if($this->reservas_model->add('itens_de_reserva',$data)){
-					//retira o item do estoque
-					$this->db->query("UPDATE acervos set estoque = estoque - 1 WHERE idAcervos = ".$acervos_id);
+					$this->db->where('idAcervos',$acervos_id);
+					$getAcervo = $this->db->get('acervos')->row();
+					$estoque = $getAcervo->estoque;
+					//verifica se o acervo ta disponivel
+					
+					//marca o acervo como reservado									
 					$this->db->query("UPDATE reserva set qtde_item = qtde_item + 1 WHERE idReserva = ".$verificaReserva->idReserva);
 					
 					$this->session->set_flashdata('success','Acervo adicionado na lista');            
@@ -413,20 +427,18 @@ class Acervos extends CI_Controller {
 		} else {
 			//se nao, inicia uma nova reserva
 			$validade_reserva = $this->input->post('validade_reserva');
-			$dataPrazo = date('Y-m-d', strtotime("+".$validade_reserva." days"));
+			$dataPrazo = date('Y-m-d h:i:s', strtotime("+".$validade_reserva." days"));
 			
 			$data = array(
 				'usuario_id' => $usuario_id,
-				'dataReserva' => date('Y-m-d'),
+				'dataReserva' => date('Y-m-d h:i:s'),
 				'dataPrazo' => $dataPrazo,
 				'status' => 'Em andamento',
 				'qtde_item' => 1
 			);
 			
 			if(is_numeric($id = $this->acervos_model->add('reserva',$data,true))){
-				//retira o item do estoque
-				$this->db->query("UPDATE acervos set estoque = estoque - 1 WHERE idAcervos = ".$acervos_id);
-				//adiciona na lista de itens de reserva
+				//adiciona o acervo na lista de itens de reserva
 				
 				$data = array(
 					'acervos_id' => $acervos_id,

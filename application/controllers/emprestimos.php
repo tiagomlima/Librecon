@@ -100,6 +100,7 @@ class Emprestimos extends CI_Controller {
                 'leitor_id' => $this->input->post('leitor_id'),
                 'grupo_id' => $this->input->post('grupo_id'),
                 'status' => $this->input->post('status'),
+                'qtde_renovacao' => 0,
                 'qtde_item' => 0
                
             );
@@ -117,131 +118,78 @@ class Emprestimos extends CI_Controller {
 
 	function emprestarReserva(){
 		
-		$leitor_id = $this->input->post('leitor_id');
+		//verifica se tem o item no estoque
 		$idReserva = $this->input->post('idReserva');
-		$usuario_id = $this->session->userdata('id');
+		$this->db->where('reserva_id',$idReserva);
+		$lista = $this->db->get('itens_de_reserva')->result();
+		$semEstoque = false;
 		
-		//pega o id do grupo que o leitor faz parte
-		$this->db->where('idUsuarios',$leitor_id);
-		$grupo = $this->db->get('usuarios')->row();
-		$grupo_id = $grupo->grupo_id;
-		
-		//pega a quantidade de itens na lista de reserva e acrescenta no emprestimo
-		$this->db->where('idReserva',$idReserva);
-		$qtde = $this->db->get('reserva')->row();
-		
-		$dataEmprestimo = date('Y-m-d');
-		$dataVencimento = date('Y-m-d');
-				
-		$data = array(
-			'dataEmprestimo' => $dataEmprestimo,
-			'dataVencimento' => $dataVencimento,
-			'leitor_id' => $leitor_id,
-			'usuarios_id' => $usuario_id,
-			'status' => 'Não emprestado',
-			'grupo_id' => $grupo_id,
-			'qtde_item' => $qtde->qtde_item			
-		);
-		
-		if(is_numeric($id = $this->emprestimos_model->add('emprestimos',$data,true))){
+		foreach ($lista as $l){
+			$this->db->where('idAcervos',$lista->acervos_id);
+			$acervo = $this->db->get('acervos')->row();
+			$estoque = $acervo->estoque;
 			
-			$this->db->query("UPDATE reserva set status = 'Aprovado' WHERE idReserva = ".$idReserva);
-			
-			$this->db->where('reserva_id',$idReserva);
-			$lista = $this->db->get('itens_de_reserva')->result();
-			
-			foreach ($lista as $l){
-				$data = array(
-					'emprestimos_id' => $id,
-					'acervos_id' => $l->acervos_id
-				);
-				
-				$this->emprestimos_model->add('itens_de_emprestimos',$data);
-				
-				
-			}						
-			$this->session->set_flashdata('success','Emprestimo iniciado com sucesso!');
-            redirect('emprestimos/editar/'.$id);	
-		}else{
-			$this->session->set_flashdata('error','Erro ao aprovar essa reserva,tente novamente');
-            redirect('reservas');
+			if($estoque == 1){
+				$semEstoque = true;			
+			}else{
+				$semEstoque = false;
+			}
 		}
-		
-		
-		/* if(!$this->permission->checkPermission($this->session->userdata('permissao'),'aEmprestimo')){
-          $this->session->set_flashdata('error','Você não tem permissão para adicionar emprestimos.');
-          redirect(base_url());
-        }
-
-		$dataEmprestimo = date('d/m/Y');
-		$dataVencimento = date('d/m/Y');
-		
-		try {              
-                $dataEmprestimo = explode('/', $dataEmprestimo);
-                $dataEmprestimo = $dataEmprestimo[2].'-'.$dataEmprestimo[1].'-'.$dataEmprestimo[0];
-				
-				$dataVencimento = explode('/', $dataVencimento);
-                $dataVencimento = $dataVencimento[2].'-'.$dataVencimento[1].'-'.$dataVencimento[0];
-            } catch (Exception $e) {
-               $dataEmprestimo = date('Y-m-d'); 
-			   $dataVencimento = date('Y-m-d');
-            }
+		//se nao tiver no estoque, apresenta erro
+		if($semEstoque == true){
+			$this->session->set_flashdata('error','Não há estoque disponível do acervo reservado, aguarde a devolução.');
+           	redirect('reservas/gerenciar');	
 			
+		}else{ //se nao, avanã pra tela de emprestimo
+		
+		
 			$leitor_id = $this->input->post('leitor_id');
+			$usuario_id = $this->session->userdata('id');
+			
+			//pega o id do grupo que o leitor faz parte
 			$this->db->where('idUsuarios',$leitor_id);
 			$grupo = $this->db->get('usuarios')->row();
-			$status = 'Não emprestado';
-			$idReserva = $this->input->post('idReserva');
+			$grupo_id = $grupo->grupo_id;
 			
+			//pega a quantidade de itens na lista de reserva e acrescenta no emprestimo
+			$this->db->where('idReserva',$idReserva);
+			$qtde = $this->db->get('reserva')->row();
+			
+			$dataEmprestimo = date('Y-m-d');
+			$dataVencimento = date('Y-m-d');
+					
 			$data = array(
-                'dataEmprestimo' => $dataEmprestimo,
-                'dataVencimento' => $dataVencimento,
-                'usuarios_id' => $this->session->userdata('id'),
-                'leitor_id' => $leitor_id,
-                'grupo_id' => $grupo->grupo_id,
-                'status' => $status              
-            );
-			if (is_numeric($id = $this->emprestimos_model->add('emprestimos', $data, true)) ) {
-				$sql = "UPDATE reserva set status = 'Aprovado' WHERE idReserva = ".$idReserva;
-				$this->db->query($sql,array($idReserva));
-							
-			   $itemReserva = $this->reservas_model->getAcervosById($idReserva);
-			   
-			    $sql = "SELECT group_concat(acervos_id separator ',') as id FROM `itens_de_reserva` WHERE reserva_id = ".$idReserva;
-				$query = $this->db->query($sql,array($idReserva));
-				$array1 = $query->row_array();
-				$arr = explode(',',$array1['id']);
-				
-				$i = count($arr);
-				
-				//pega os acervos contidos no itens de reserva e joga no itens de emprestimos
-				for($i = 0; $i < count($arr);){
-					$acervos_id = $arr[$i];
-					
-					$data2 = array(
-						'emprestimos_id' => $id,
-						'acervos_id' => $acervos_id
-					);
-					
-					$data3 = array(
-						'qtde_item' => $i += $i
-					);
-						$this->emprestimos_model->add('itens_de_emprestimos',$data2);
-						$this->emprestimos_model->edit('emprestimos',$data3,'idEmprestimos',$id);			
-					$i++;
-				}
-				
-			   	$dataRetirada = date('Y-m-d');
-			   	$retirada = "UPDATE reserva set dataRetirada = ".$dataRetirada." WHERE idReserva = ".$idReserva;
-			   				
-                $this->session->set_flashdata('success','Emprestimo iniciado com sucesso!.');
-                redirect('emprestimos/editar/'.$id);
-            } else {
-                
-                $this->data['custom_error'] = '<div class="form_error"><p>Ocorreu um erro.</p></div>';
-            }
+				'dataEmprestimo' => $dataEmprestimo,
+				'dataVencimento' => $dataVencimento,
+				'leitor_id' => $leitor_id,
+				'usuarios_id' => $usuario_id,
+				'status' => 'Não emprestado',
+				'grupo_id' => $grupo_id,
+				'qtde_renovacao' => 0,
+				'qtde_item' => $qtde->qtde_item			
+			);
 			
-			    */
+			if(is_numeric($id = $this->emprestimos_model->add('emprestimos',$data,true))){
+				
+				$this->db->query("UPDATE reserva set status = 'Aprovado' WHERE idReserva = ".$idReserva);
+										
+				foreach ($lista as $l){
+					$data = array(
+						'emprestimos_id' => $id,
+						'acervos_id' => $l->acervos_id
+					);
+					
+					$this->emprestimos_model->add('itens_de_emprestimos',$data);
+					$this->db->query("UPDATE acervos set estoque = estoque - 1 WHERE idAcervos = ".$l->acervos_id);
+					
+				}						
+				$this->session->set_flashdata('success','Emprestimo iniciado com sucesso!');
+	            redirect('emprestimos/editar/'.$id);	
+			}else{
+				$this->session->set_flashdata('error','Erro ao aprovar essa reserva,tente novamente');
+	            redirect('reservas');
+			}			
+		}
  	}
 
     
@@ -541,12 +489,14 @@ class Emprestimos extends CI_Controller {
             $this->db->query($sql, array($status, $idEmprestimos));
             
             $acervos_id = $this->emprestimos_model->getAcervosById($idEmprestimos);				
-			$leitor_id = $this->input->post('leitor_id');	
-			$reserva = $this->reservas_model->getReservaById($leitor_id);
+			$leitor_id = $this->input->post('leitor_id');
+			$this->db->where('usuario_id',$leitor_id);	
+			$reserva = $this->db->get('reserva')->row();
 			
+			//verifica se existe reserva
 			if(count($reserva) > 0){
-				$sql = "UPDATE reserva set status = 'Retirado' WHERE usuario_id = ".$leitor_id;
-				$this->db->query($sql,array($leitor_id));
+				//se existir, exclui os itens da lista de reserva							
+				$this->reservas_model->delete('itens_de_reserva','reserva_id',$reserva->idReserva);
 			}
 			
 			$verificaReserva = $this->reservas_model->getReservaById($leitor_id);
@@ -583,19 +533,68 @@ class Emprestimos extends CI_Controller {
 		if($qtde_renovacao > $qtde_max_renovacao){
 			$this->session->set_flashdata('error','Número máximo de renovação excedido.');
 			redirect('emprestimos/editar/'.$idEmprestimos);
+		}
+		
+		$this->db->where('emprestimos_id',$idEmprestimos);
+		$getItens = $this->db->get('itens_de_emprestimos')->row();
+		$acervos_id = $getItens->acervos_id;
+		
+		$this->db->where('idAcervos',$acervos_id);
+		$getAcervo = $this->db->get('acervos')->row();		
+		
+		//verifica se os acervos estao reservados
+		if(count($this->reservas_model->verificaReserva($acervos_id)) > 0){
+			$qtdeReservas = count($this->reservas_model->verificaReserva($acervos_id));
+			$estoqueAtual = $getAcervo->estoque;			
+		
+			//verifica se o estoque atual esta no minimo
+			if($estoqueAtual == 1){
+				$this->session->set_flashdata('error','Não é possível renovar, o acervo  se encontra reservado.');
+				redirect('emprestimos/editar/'.$idEmprestimos);
+			}else{
+				//verifica se o numero de reservas é maior do que a disponibilidade
+				if(count($qtdeReservas) > ($estoqueAtual - 1)){
+				$this->session->set_flashdata('error','Não é possível renovar, o acervo se encontra reservado.');
+				redirect('emprestimos/editar/'.$idEmprestimos);
+				}
+			}		
+			$qtde_renovacao = $this->input->post('qtde_renovacao') + 1;			
+			$data = array(
+				'status' => $status,
+				'dataVencimento' => $dataVencimento,
+				'qtde_renovacao' => $qtde_renovacao
+			);
+			
+						
+			if($this->emprestimos_model->edit('emprestimos',$data,'idEmprestimos',$idEmprestimos)){			
+				
+				$this->session->set_flashdata('success','Empréstimo renovado com sucesso!.');
+				redirect('emprestimos/editar/'.$idEmprestimos);
+			}else{
+				$this->session->set_flashdata('error','Erro ao renovar.');
+				redirect('emprestimos/editar/'.$idEmprestimos);
+			}
+						
+									
 		}else{
-			$setStatus = "UPDATE emprestimos set status = '".$status."' WHERE idEmprestimos = ".$idEmprestimos;
-			$this->db->query($setStatus,array($status,$idEmprestimos));
+			$qtde_renovacao = $this->input->post('qtde_renovacao') + 1;
 			
-			$setRenovacao = "UPDATE emprestimos set qtde_renovacao = qtde_renovacao + 1 WHERE idEmprestimos = ".$idEmprestimos;
-			$this->db->query($setRenovacao,array($idEmprestimos));
+			$data = array(
+				'status' => $status,
+				'dataVencimento' => $dataVencimento,
+				'qtde_renovacao' => $qtde_renovacao
+			);
 			
-			$setDataVencimento = "UPDATE emprestimos set dataVencimento = '".$dataVencimento."' WHERE idEmprestimos = ".$idEmprestimos;
-			$this->db->query($setDataVencimento,array($dataVencimento,$idEmprestimos));
-			
-			$this->session->set_flashdata('success','Empréstimo renovado com sucesso!.');
-			redirect('emprestimos/editar/'.$idEmprestimos);
-		}		
+						
+			if($this->emprestimos_model->edit('emprestimos',$data,'idEmprestimos',$idEmprestimos)){
+				
+				$this->session->set_flashdata('success','Empréstimo renovado com sucesso!.');
+				redirect('emprestimos/editar/'.$idEmprestimos);
+			}else{
+				$this->session->set_flashdata('error','Erro ao renovar.');
+				redirect('emprestimos/editar/'.$idEmprestimos);
+			}
+		}	
 	}	
 
 	function pesquisar(){

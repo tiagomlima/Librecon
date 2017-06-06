@@ -147,23 +147,23 @@
                     </div>
                     
                     <div class="control-group">
+                        <label for="anoEdicao" class="control-label">Edição<span class="required">*</span></label>
+                        <div class="controls">
+                            <input id="edicao" type="text" name="edicao" value="<?php echo $result->edicao; ?>"  />
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
                         <label for="anoEdicao" class="control-label">Ano Edição<span class="required">*</span></label>
                         <div class="controls">
                             <input id="anoEdicao" type="text" name="anoEdicao" value="<?php echo $result->anoEdicao; ?>"  />
                         </div>
-                    </div>
+                    </div>                                     
                     
                     <div class="control-group">
-                        <label for="artigo" class="control-label">Artigo<span class="required">*</span></label>
+                        <label for="notas" class="control-label">Classificação<span class="required">*</span></label>
                         <div class="controls">
-                            <input id="artigo" type="text" name="artigo" value="<?php echo $result->artigo; ?>"  />
-                        </div>
-                    </div>
-                    
-                    <div class="control-group">
-                        <label for="notas" class="control-label">Notas</label>
-                        <div class="controls">
-                            <input id="notas" type="text" name="notas" value="<?php echo $result->notas; ?>"  />
+                            <input id="classificacao" type="text" name="classificacao" value="<?php echo $result->classificacao; ?>"  />
                         </div>
                     </div>
                     
@@ -173,14 +173,7 @@
                             <input id="numero_paginas" type="text" name="numero_paginas" value="<?php echo $result->numero_paginas; ?>"  />
                         </div>
                     </div>
-                    
-                    <div class="control-group">
-                        <label for="formato" class="control-label">Formato<span class="required">*</span></label>
-                        <div class="controls">
-                            <input id="formato" type="text" name="formato" value="<?php echo $result->formato; ?>"  />
-                        </div>
-                    </div>                     
-					
+                                                        					
                     <div class="control-group">
                         <label for="tombo" class="control-label">Tombo<span class="required">*</span></label>
                         <div class="controls">
@@ -274,9 +267,9 @@
                   tabelaCutter: { required: true},
                   isbn: { required: true},
                   anoEdicao: { required: true},
-                  artigo: { required: true},
-                  numero_paginas: { required: true},
-                  formato: { required: true}
+                  edicao: { required: true},
+                  classificacao: { required: true},
+                  numero_paginas: { required: true}
                   
             },
             messages:{
@@ -289,9 +282,9 @@
                   tabelaCutter: { required: 'Campo Requerido.'},
                   isbn: { required: 'Campo Requerido.'},
                   anoEdicao: { required: 'Campo Requerido.'},
-                  artigo: { required: 'Campo Requerido.'},
-                  numero_paginas: { required: 'Campo Requerido.'},
-                  formato: { required: 'Campo Requerido.'}
+                  edicao: { required: 'Campo Requerido.'},
+                  classificacao: { required: 'Campo Requerido.'},
+                  numero_paginas: { required: 'Campo Requerido.'}
                   
             },
 

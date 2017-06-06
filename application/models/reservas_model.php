@@ -65,6 +65,11 @@ class Reservas_model extends CI_Model {
 		$this->db->limit(1);
 		return $this->db->get()->row();
 	}
+	
+	function verificaReserva($acervos_id){
+		$this->db->where('acervos_id',$acervos_id);
+		return $this->db->get('itens_de_reserva')->result();
+	}
 			
 	
 	function getLeitorById($id){

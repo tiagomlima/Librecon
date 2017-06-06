@@ -50,9 +50,14 @@
                                             <input id="grupo_id" class="span12" type="hidden" name="grupo_id" value=""  />                       
                                         </div>
                                         <div class="span4">
-                                            <label for="usuario">Usuário<span class="required">*</span></label>
-                                            <input id="usuario" class="span12" type="text" name="usuario" value=""  />
-                                            <input id="usuarios_id" class="span12" type="hidden" name="usuarios_id" value=""  />
+                                        	<?php 
+                                        		$this->db->where('idUsuarios',$this->session->userdata('id'));
+												$this->db->where('tipo_usuario',0);
+												$usuario = $this->db->get('usuarios')->row();
+                                        	?>
+                                            <label for="usuario">Usuário</label>
+                                            <input id="usuario" class="span12" type="text" name="usuario" value="<?php echo $usuario->nome ?>"  readonly/>
+                                            <input id="usuarios_id" class="span12" type="hidden" name="usuarios_id" value="<?php echo $usuario->idUsuarios ?>"  />
                                             <input id="status" type="hidden" name="status" value="Não emprestado"  />
                                         </div>
                                         
@@ -93,16 +98,8 @@ $(document).ready(function(){
                  $("#leitor_id").val(ui.item.id);
                  $("#grupo_id").val(ui.item.grupo);                                 
             }
-      });
-      $("#usuario").autocomplete({
-            source: "<?php echo base_url(); ?>index.php/emprestimos/autoCompleteUsuario",
-            minLength: 1,
-            select: function( event, ui ) {
-                 $("#usuarios_id").val(ui.item.id);
-            }
-      });
-      
-      
+      });      
+            
       $("#formEmprestimo").validate({
           rules:{
              leitor_id: {required:true},
