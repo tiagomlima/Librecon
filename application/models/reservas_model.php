@@ -21,7 +21,7 @@ class Reservas_model extends CI_Model {
         
         $this->db->select($fields);
         $this->db->from($table);
-        $this->db->order_by('idReserva','desc');
+        $this->db->order_by('idReserva','asc');
         $this->db->limit($perpage,$start);
         if($where){
             $this->db->where($where);
@@ -154,10 +154,13 @@ class Reservas_model extends CI_Model {
         return $result;
     }
     
-    function add($table,$data){
+    function add($table,$data,$returnId = false){
         $this->db->insert($table, $data);         
         if ($this->db->affected_rows() == '1')
 		{
+                        if($returnId == true){
+                            return $this->db->insert_id($table);
+                        }
 			return TRUE;
 		}
 		

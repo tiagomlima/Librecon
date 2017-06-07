@@ -24,10 +24,10 @@ if(!$emprestimos){?>
         <form style="margin-left:15%" action="<?php current_url() ?>" method="post">       		
 	            <select name="status" id="status" style="width:15%">                                 
 	            	<option value="">Status</option>
-	            	<option value="Devolvido">Devolvido</option>	
-					<option value="Emprestado">Emprestado</option>   
-					<option value="Não emprestado">Não emprestado</option>
-					<option value="ATRASADO">Atrasado</option>        	                               
+	            	<option value="'Devolvido'">Devolvido</option>	
+					<option value="'Emprestado'">Emprestado</option>   
+					<option value="'Não emprestado'">Não emprestado</option>
+					<option value="'Atrasado'">Atrasado</option>        	                               
 	            </select>                                        	                       
                 De: <input type="date" name="dataInicial" id="dataInicial" value="" style="width: 15%">
                 Ate: <input type="date" name="dataFinal" id="dataFinal" value="" style="width: 15%">

@@ -116,6 +116,26 @@ class Acervos_model extends CI_Model {
 		return $this->db->get('acervos')->row();
 	}
 
+	public function getEmprestimosByAcervo($id){
+			$this->db->where('acervos_id',$id);
+			$itens = $this->db->get('itens_de_emprestimos')->row();
+		
+	        $this->db->where('idEmprestimos',$itens->emprestimos_id);
+	        $this->db->order_by('idEmprestimos','desc');
+	        $this->db->limit(10);
+	        return $this->db->get('emprestimos')->result();
+	    }
+	
+	public function getReservaByAcervo($id){
+			$this->db->where('acervos_id',$id);
+			$itens = $this->db->get('itens_de_reserva')->row();
+		
+	        $this->db->where('idReserva',$itens->reserva_id);
+	        $this->db->order_by('idReserva','desc');
+	        $this->db->limit(10);
+	        return $this->db->get('reserva')->result();
+	  }
+
     function getById($id){
         $this->db->where('idAcervos',$id);
         $this->db->limit(1);

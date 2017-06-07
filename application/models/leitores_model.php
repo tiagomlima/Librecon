@@ -163,10 +163,17 @@ class Leitores_model extends CI_Model {
     }
     
     public function getEmprestimosByLeitor($id){
-        $this->db->where('usuarios_id',$id);
+        $this->db->where('leitor_id',$id);
         $this->db->order_by('idEmprestimos','desc');
         $this->db->limit(10);
         return $this->db->get('emprestimos')->result();
+    }
+	
+	public function getReservasByLeitor($id){
+        $this->db->where('usuario_id',$id);
+        $this->db->order_by('idReserva','desc');
+        $this->db->limit(1);
+        return $this->db->get('reserva')->result();
     }
 	
 	public function editImg($id, $img){

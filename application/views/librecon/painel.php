@@ -183,9 +183,7 @@
 
 
 
-<?php if(isset($estatisticas_financeiro) && $estatisticas_financeiro != null) { 
-         if($estatisticas_financeiro->total_receita != null || $estatisticas_financeiro->total_despesa != null || $estatisticas_financeiro->total_receita_pendente != null || $estatisticas_financeiro->total_despesa_pendente != null){
-?>
+
 <script type="text/javascript">
     
     $(document).ready(function(){
@@ -256,4 +254,4 @@
  
 </script>
 
-<?php } } ?>
+<?php   ?>

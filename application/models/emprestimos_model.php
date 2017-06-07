@@ -167,7 +167,7 @@ class Emprestimos_model extends CI_Model {
         $query = $this->db->get('usuarios');
         if($query->num_rows > 0){
             foreach ($query->result_array() as $row){
-                $row_set[] = array('label'=>$row['nome'].' | Telefone: '.$row['telefone'],'id'=>$row['idUsuarios'],'grupo'=>$row['grupo_id']);
+                $row_set[] = array('label'=>$row['nome'].' | R.A: '.$row['matricula'],'id'=>$row['idUsuarios'],'grupo'=>$row['grupo_id']);
             }
             echo json_encode($row_set);
         }
@@ -212,7 +212,8 @@ class Emprestimos_model extends CI_Model {
         if($nome != null){
             $likeLeitor = "AND usuarios.nome LIKE '%".$nome."%'";
         }
-        if($status != null){
+		
+		if($status != null){
             $whereStatus = "AND status = ".$this->db->escape($status);
         }
        

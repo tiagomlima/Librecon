@@ -325,8 +325,10 @@ class Acervos extends CI_Controller {
             redirect(base_url() . 'index.php/acervos/editar/'.$this->input->post('idAcervos'));
         }
 		
+		$this->data['emprestimos'] = $this->acervos_model->getEmprestimosByAcervo($this->uri->segment(3));
 		$this->data['secao'] = $this->acervos_model->getSecaoById($this->uri->segment(3));
 		$this->data['tipo'] = $this->acervos_model->getTipoById($this->uri->segment(3));
+		$this->data['reservas'] = $this->acervos_model->getReservaByAcervo($this->uri->segment(3));
 		$this->data['categoria'] = $this->acervos_model->getCategoriaById($this->uri->segment(3));
 		$this->data['autor'] = $this->acervos_model->getAutorById($this->uri->segment(3));
 		$this->data['editora'] = $this->acervos_model->getEditoraById($this->uri->segment(3));
@@ -376,14 +378,15 @@ class Acervos extends CI_Controller {
 		$this->db->where('usuario_id',$usuario_id);
 		$verificaReserva = $this->db->get('reserva')->row();
 		
-		/*verifica o estoque
-		$this->db->where('idAcervos',$acervos_id);				
-		$acervoEstoque = $this->db->get('acervos')->row();
-				
-		if($acervoEstoque->estoque <= 1){
-			$this->session->set_flashdata('error','Não há exemplares disponiveis.');            
-        	redirect(base_url().'index.php/acervos/visualizar/'.$acervos_id);
-		}		*/
+		$this->db->where('leitor_id',$usuario_id);
+		$this->db->where('status != ','Devolvido');
+		$emprestimo = $this->db->get('emprestimos')->row();
+		
+		//verifica se o leitor tem algum emprestimo pendente
+		if(count($emprestimo) > 0){			
+				$this->session->set_flashdata('error','Você não pode reservar acervos');            
+        		redirect(base_url().'index.php/acervos/visualizar/'.$acervos_id);
+		}
 		
 		//verifica se ja existe uma reserva aberta pelo leitor
 		if($verificaReserva != null){
@@ -431,7 +434,7 @@ class Acervos extends CI_Controller {
 			
 			$data = array(
 				'usuario_id' => $usuario_id,
-				'dataReserva' => date('Y-m-d h:i:s'),
+				'dataReserva' => date('Y-m-d H:i:s'),
 				'dataPrazo' => $dataPrazo,
 				'status' => 'Em andamento',
 				'qtde_item' => 1

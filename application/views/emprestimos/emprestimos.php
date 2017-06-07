@@ -139,10 +139,10 @@ if(!$results){?>
 			$dataAtual = date(('d/m/Y'),strtotime(date('d/m/Y')));
                      
             echo '<tr>';
-            echo '<td>'.$dataEmprestimo.'</td>';
-			echo '<td>'.$dataVencimento.'</td>';
-            echo '<td><a href="'.base_url().'index.php/leitores/visualizar/'.$r->leitor_id.'">'.$r->nome.'</a></td>';
-			echo '<td>'.$r->status.'</td>';
+            echo '<td style="text-align:center">'.$dataEmprestimo.'</td>';
+			echo '<td style="text-align:center">'.$dataVencimento.'</td>';
+            echo '<td style="text-align:center" ><a href="'.base_url().'index.php/leitores/visualizar/'.$r->leitor_id.'">'.$r->nome.'</a></td>';
+			echo '<td style="text-align:center">'.$r->status.'</td>';
             
             
             echo '<td style="text-align:center">';
@@ -167,9 +167,9 @@ if(!$results){?>
 			$dataAtual = date(('d/m/Y'),strtotime(date('d/m/Y')));
 									
             echo '<tr>';
-            echo '<td>'.$dataEmprestimo.'</td>';
-			echo '<td>'.$dataVencimento.'</td>';
-			echo '<td>'.$r->status.'</td>';
+            echo '<td style="text-align:center">'.$dataEmprestimo.'</td>';
+			echo '<td style="text-align:center">'.$dataVencimento.'</td>';
+			echo '<td style="text-align:center">'.$r->status.'</td>';
                         
             echo '<td style="text-align:center">';
             if($this->permission->checkPermission($this->session->userdata('permissao'),'vEmprestimo') && $r->status != 'Não emprestado'){

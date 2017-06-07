@@ -91,6 +91,7 @@ class Leitores extends CI_Controller {
         $this->data['custom_error'] = '';
         $this->data['result'] = $this->leitores_model->getById($this->uri->segment(3));
         $this->data['results'] = $this->leitores_model->getEmprestimosByLeitor($this->uri->segment(3));
+		$this->data['reservas'] = $this->leitores_model->getReservasByLeitor($this->uri->segment(3));
 		$this->data['curso'] = $this->leitores_model->getCursoById($this->uri->segment(3));
 		$this->data['grupo'] = $this->leitores_model->getGrupoById($this->uri->segment(3));
         $this->data['view'] = 'leitores/visualizar';

@@ -8,8 +8,8 @@
 */
 
 ?>
-<?php if($this->permission->checkPermission($this->session->userdata('permissao'),'aReserva') && $this->session->userdata('tipo_usuario') == 1){ ?>
-    <a href="<?php echo base_url()?>index.php/acervos/gerenciar" class="btn btn-success"><i class="icon-plus icon-white"></i> Fazer uma reserva</a>
+<?php if($this->permission->checkPermission($this->session->userdata('permissao'),'aReserva') && $this->session->userdata('tipo_usuario') == 0){ ?>
+    <a href="<?php echo base_url()?>index.php/reservas/adicionar" class="btn btn-success"><i class="icon-plus icon-white"></i> Fazer uma reserva</a>
 <?php } ?>
 
 <?php
@@ -84,8 +84,8 @@ else{ ?>
             <?php if($this->session->userdata('tipo_usuario') != 1){ ?>
             <th>Leitor</th>
             <?php } ?>                   
-            <th>Data Reserva</th>
-            <th>Data Prazo</th>
+            <th>Data Reserva - Hora</th>
+            <th>Data Prazo - Hora</th>
             <th>Status</th>
             <?php if($this->session->userdata('tipo_usuario') != 1){ ?>
             <th>Aprovar/Recusar</th>
@@ -104,8 +104,8 @@ else{ ?>
 				
 				foreach($leitor as $l){
 					echo '<td style="text-align:center"><a href="'.base_url().'index.php/leitores/visualizar/'.$l->idUsuarios.'">'.$l->nome.'</a></td>';											
-					echo '<td style="text-align:center">'.date('d/m/Y', strtotime($r->dataReserva)).'</td>';
-					echo '<td style="text-align:center">'.date('d/m/Y', strtotime($r->dataPrazo)).'</td>';
+					echo '<td style="text-align:center">'.date('d/m/Y', strtotime($r->dataReserva)).' - '.date('H:i:s',strtotime($r->dataReserva)).'</td>';
+					echo '<td style="text-align:center">'.date('d/m/Y', strtotime($r->dataPrazo)).' - '.date('H:i:s' ,strtotime($r->dataPrazo)).'</td>';
 					echo '<td style="text-align:center">'.$r->status.'</td>';								
 					echo '<td style="text-align:center">';
 					
@@ -156,24 +156,6 @@ else{ ?>
 <?php echo $this->pagination->create_links();}?>
 
 
-<!-- Modal recusar
-<div id="modal-recusar" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <form action="<?php echo base_url() ?>index.php/reservas/recusar" method="post" >
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h5 id="myModalLabel">Recusar Reserva</h5>
-  </div>
-  <div class="modal-body">
-    <input type="hidden" id="reserva" name="idReserva" value="" />
-    <h5 style="text-align: center">Deseja realmente recusar o pedido de reserva?</h5>
-  </div>
-  <div class="modal-footer">
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
-    <button class="btn btn-danger">Recusar</button>
-  </div>
-  </form>
-</div>-->
-
 <!-- Modal aprovar-->
 <div id="modal-aprovar" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <form action="<?php echo base_url() ?>index.php/emprestimos/emprestarReserva" method="post" >
@@ -211,7 +193,5 @@ $(document).ready(function(){
     });
         
 });
-
-
 
 </script>

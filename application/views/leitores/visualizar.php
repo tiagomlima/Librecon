@@ -13,6 +13,7 @@
         <ul class="nav nav-tabs">
             <li class="active"><a data-toggle="tab" href="#tab1">Dados do Leitor</a></li>
             <li><a data-toggle="tab" href="#tab2">Empréstimos</a></li>
+            <li><a data-toggle="tab" href="#tab3">Reservas</a></li>
             <div class="buttons">
                     <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'eLeitor')){
                         echo '<a title="Icon Title" class="btn btn-mini btn-info" href="'.base_url().'index.php/leitores/editar/'.$result->idUsuarios.'"><i class="icon-pencil icon-white"></i> Editar</a>'; 
@@ -20,7 +21,7 @@
                     
             </div>
         </ul>
-    </div>
+    </div>    
     <div class="widget-content tab-content">
         <div id="tab1" class="tab-pane active" style="min-height: 300px">
 
@@ -33,6 +34,7 @@
                                         </a>
                                     </div>
                                 </div>
+                                <img src="<?php echo $result->img_leitor ?>" alt="foto do leitor" width="15%" height="15%" style="margin-left: 1%;margin-top:1%"/>
                                 <div class="collapse in accordion-body" id="collapseGOne">
                                     <div class="widget-content">
                                         <table class="table table-bordered">
@@ -152,12 +154,8 @@
                                 </div>
                             </div>
                         </div>
-
-
-
           
         </div>
-
 
         <!--Tab 2-->
         <div id="tab2" class="tab-pane" style="min-height: 300px">
@@ -170,7 +168,7 @@
                                     <th>Data Emprestimo</th>
                                     <th>Data Vencimento</th>
                                     <th>Status</th>
-                                    <th></th>
+                                    <th>Visualizar/Editar</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -182,10 +180,7 @@
                         </table>
                 
                 <?php } else { ?>
-
-
-              
-
+           
                         <table class="table table-bordered ">
                             <thead>
                                 <tr style="backgroud-color: #2D335B">
@@ -193,21 +188,20 @@
                                     <th>Data Emprestimo</th>
                                     <th>Data Vencimento</th>
                                     <th>Status</th>
-                                    <th></th>
+                                    <th>Visualizar/Editar</th>
                                 </tr>
                             </thead>
                             <tbody>
 <?php
                 foreach ($results as $r) {
-                    $dataEmprestimo = date(('d/m/Y'), strtotime($r->$dataEmprestimo));
-                    $dataVencimento = date(('d/m/Y'), strtotime($r->$dataVencimento));
+                    
                     echo '<tr>';
                     echo '<td>' . $r->idEmprestimos . '</td>';
-                    echo '<td>' . $dataEmprestimo . '</td>';
-                    echo '<td>' . $dataVencimento . '</td>';
-                    echo '<td>' . $r->status . '</td>';
+                    echo '<td style="text-align:center">' . date('d/m/Y', strtotime($r->dataEmprestimo)) . '</td>';
+                    echo '<td style="text-align:center">' . date('d/m/Y', strtotime($r->dataVencimento)) . '</td>';
+                    echo '<td style="text-align:center">' . $r->status . '</td>';
 
-                    echo '<td>';
+                    echo '<td style="text-align:center">';
                     if($this->permission->checkPermission($this->session->userdata('permissao'),'vEmprestimo')){
                         echo '<a href="' . base_url() . 'index.php/emprestimos/visualizar/' . $r->idEmprestimos . '" style="margin-right: 1%" class="btn tip-top" title="Ver mais detalhes"><i class="icon-eye-open"></i></a>'; 
                     }
@@ -227,6 +221,72 @@
 
             <?php  } ?>
 
+        </div>
+        
+        
+               <!--Tab 3-->
+        <div id="tab3" class="tab-pane" style="min-height: 300px">
+        	
+            <?php if (!$reservas) { ?>
+                
+                        <table class="table table-bordered ">
+                            <thead>
+                                <tr style="backgroud-color: #2D335B">
+                                    <th>#</th>
+                                    <th>Data Reserva</th>
+                                    <th>Data Prazo</th>
+                                    <th>Status</th>
+                                    <th>Visualizar/Editar/Adicionar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr>
+                                    <td colspan="6">Nenhuma reserva cadastrada</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                
+                <?php } else { ?>
+           
+                        <table class="table table-bordered ">
+                            <thead>
+                                <tr style="backgroud-color: #2D335B">
+                                    <th>#</th>
+                                    <th>Data Reserva</th>
+                                    <th>Data Prazo</th>
+                                    <th>Status</th>
+                                    <th>Visualizar/Editar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+<?php
+                foreach ($reservas as $r) {
+                    
+                    echo '<tr>';
+                    echo '<td>' . $r->idReserva . '</td>';
+                    echo '<td style="text-align:center">' . date('d/m/Y', strtotime($r->dataReserva)) . '</td>';
+                    echo '<td style="text-align:center">' . date('d/m/Y', strtotime($r->dataPrazo)) . '</td>';
+                    echo '<td style="text-align:center">' . $r->status . '</td>';
+
+                    echo '<td style="text-align:center">';
+                    if($this->permission->checkPermission($this->session->userdata('permissao'),'vReserva')){
+                        echo '<a href="' . base_url() . 'index.php/reservas/visualizar/' . $r->idReserva . '" style="margin-right: 1%" class="btn tip-top" title="Ver mais detalhes"><i class="icon-eye-open"></i></a>'; 
+                    }
+                    if($this->permission->checkPermission($this->session->userdata('permissao'),'eReserva')){
+                        echo '<a href="' . base_url() . 'index.php/reservas/editar/' . $r->idReserva . '" class="btn btn-info tip-top" title="Editar Reserva"><i class="icon-pencil icon-white"></i></a>'; 
+                    }
+					                    
+                    echo  '</td>';
+                    echo '</tr>';
+                } ?>
+                            <tr>
+
+                            </tr>
+                        </tbody>
+                    </table>           
+		
+            <?php  } ?>			
         </div>
     </div>
 </div>

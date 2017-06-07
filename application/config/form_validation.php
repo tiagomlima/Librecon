@@ -72,18 +72,7 @@ $config = array(
                                     'label'=>'Autor',
                                     'rules'=>'required|trim|xss_clean'
                                 ))
-                ,
-                'servicos' => array(array(
-                                    'field'=>'nome',
-                                    'label'=>'Nome',
-                                    'rules'=>'required|trim|xss_clean'
-                                ),
-                                array(
-                                    'field'=>'descricao',
-                                    'label'=>'',
-                                    'rules'=>'trim|xss_clean'
-                                ))
-                                          ,
+                ,                
                 'acervos' => array(array(
                                     'field'=>'titulo',
                                     'label'=>'titulo',
@@ -212,60 +201,13 @@ $config = array(
                                     'label'=>'Nome',
                                     'rules'=>'required|trim|xss_clean'
                                 ))                                   
-                  ,				
-                'receita' => array(array(
-                                    'field'=>'descricao',
-                                    'label'=>'Descrição',
+                  ,	
+                'reserva' => array(array(
+                                    'field'=>'dataReserva',
+                                    'label'=>'data Reserva',
                                     'rules'=>'required|trim|xss_clean'
-                                ),
-                                array(
-                                    'field'=>'valor',
-                                    'label'=>'Valor',
-                                    'rules'=>'required|trim|xss_clean'
-                                ),
-                                array(
-                                    'field'=>'vencimento',
-                                    'label'=>'Data Vencimento',
-                                    'rules'=>'required|trim|xss_clean'
-                                ),
-                        
-                                array(
-                                    'field'=>'leitor',
-                                    'label'=>'Leitor',
-                                    'rules'=>'required|trim|xss_clean'
-                                ),
-                                array(
-                                    'field'=>'tipo',
-                                    'label'=>'Tipo',
-                                    'rules'=>'required|trim|xss_clean'
-                                ))
-                ,
-                'despesa' => array(array(
-                                    'field'=>'descricao',
-                                    'label'=>'Descrição',
-                                    'rules'=>'required|trim|xss_clean'
-                                ),
-                                array(
-                                    'field'=>'valor',
-                                    'label'=>'Valor',
-                                    'rules'=>'required|trim|xss_clean'
-                                ),
-                                array(
-                                    'field'=>'vencimento',
-                                    'label'=>'Data Vencimento',
-                                    'rules'=>'required|trim|xss_clean'
-                                ),
-                                array(
-                                    'field'=>'fornecedor',
-                                    'label'=>'Fornecedor',
-                                    'rules'=>'required|trim|xss_clean'
-                                ),
-                                array(
-                                    'field'=>'tipo',
-                                    'label'=>'Tipo',
-                                    'rules'=>'required|trim|xss_clean'
-                                ))
-                ,
+                                ))                                   
+                  ,			  			                
                 'emprestimos' => array(array(
 
                                     'field' => 'dataEmprestimo',
@@ -282,6 +224,6 @@ $config = array(
                                     'field'=>'usuarios_id',
                                     'label'=>'usuarios_id',
                                     'rules'=>'trim|xss_clean|required'
-                                ))
+                                ))				
 		);
 			   

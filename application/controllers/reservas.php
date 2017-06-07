@@ -24,7 +24,10 @@ class Reservas extends CI_Controller {
 		$this->load->model('autor_model', '', TRUE);
 		$this->load->model('editora_model', '', TRUE);
 		$this->load->model('acervos_model', '', TRUE);
+		$this->load->model('leitores_model', '', TRUE);
         $this->data['menuReservas'] = 'Reservas';
+		
+		date_default_timezone_set('America/Sao_Paulo');
     }
 	
 	function index(){
@@ -83,13 +86,108 @@ class Reservas extends CI_Controller {
        
 		
     }
+	
+	function adicionar(){
+		
+        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'aReserva')){
+          $this->session->set_flashdata('error','Você não tem permissão para adicionar reservas.');
+          redirect(base_url());
+        }
+        $this->load->library('form_validation');
+        $this->data['custom_error'] = '';
+        
+        if ($this->form_validation->run('reserva') == false) {
+           $this->data['custom_error'] = (validation_errors() ? true : false);
+        } else {
+            
+			$usuario_id = $this->input->post('usuario_id');
+			
+			$this->db->where('usuario_id',$usuario_id);
+			$reserva = $this->db->get('reserva')->row();
+			
+			if(count($reserva) > 0){
+				$this->session->set_flashdata('error','Esse leitor já possui uma reserva aberta.');
+                redirect('reservas/adicionar');
+			}
+			
+			$grupo_id = $this->input->post('grupo_id');
+			
+			$this->db->where('idGrupo',$grupo_id);
+			$grupo = $this->db->get('grupos')->row();
+			$validade_reserva = $grupo->validade_reserva;
+			
+			$dataPrazo = date('Y-m-d H:i:s', strtotime("+".$validade_reserva." days"));
+			
+            $data = array(
+                'dataReserva' => $this->input->post('dataReserva'),
+                'dataPrazo' => $dataPrazo,
+                'usuario_id' => $usuario_id,
+                'status' => $this->input->post('status'),
+                'qtde_item' => 0
+               
+            );
+            if (is_numeric($id = $this->reservas_model->add('reserva', $data, true)) ) {
+                $this->session->set_flashdata('success','Reserva iniciada com sucesso, adicione os acervos.');
+                redirect('reservas/editar/'.$id);
+            } else {
+                
+                $this->data['custom_error'] = '<div class="form_error"><p>Ocorreu um erro.</p></div>';
+            }
+        }
+        $this->data['view'] = 'reservas/adicionarReserva';
+        $this->load->view('tema/topo', $this->data);
+    }
+
+	public function adicionarAcervo(){
+        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'eReserva')){
+          $this->session->set_flashdata('error','Você não tem permissão para editar reservas.');
+          redirect(base_url());
+        }		               				
+			
+            $idReserva = $this->input->post('idReservaAcervo');
+            $qtde_max_reserva = $this->input->post('qtde_max_reserva');
+			$qtde_atual = $this->input->post('qtde_atual');
+            $acervo = $this->input->post('acervos_id');
+			
+			if($qtde_atual > $qtde_max_reserva){
+				$this->session->set_flashdata('error','O limite de itens por reserva foi excedido.');
+				 redirect('reservas/editar/'.$idReserva);
+			}
+						
+			if($acervo == null){
+				$this->session->set_flashdata('error','Digite o nome do item.');
+				 redirect('reservas/editar/'.$idReserva);
+			}
+						
+			
+			
+            $data = array(
+              
+                'acervos_id'=> $acervo,
+                'reserva_id'=> $idReserva
+            );
+            if($this->reservas_model->add('itens_de_reserva', $data) == true){              				
+				$this->db->query("UPDATE reserva set qtde_item = qtde_item  + 1 WHERE idReserva = ".$idReserva);
+				
+				$this->session->set_flashdata('success','Item adicionado com sucesso'); 
+                redirect('reservas/editar/'.$idReserva);
+               
+            }else{
+            	$this->session->set_flashdata('error','Não foi possível adicionar o item.');
+                 redirect('reservas/editar/'.$idReserva);
+            }
+        
+       
+      
+    }
 
 	function editar() {
         if(!$this->permission->checkPermission($this->session->userdata('permissao'),'eReserva')){
            $this->session->set_flashdata('error','Você não tem permissão para editar reservas.');
            redirect(base_url());
         }
-      /*  $this->load->library('form_validation');
+		/*
+        $this->load->library('form_validation');
         $this->data['custom_error'] = '';
         if ($this->form_validation->run('servicos') == false) {
             $this->data['custom_error'] = (validation_errors() ? '<div class="form_error">' . validation_errors() . '</div>' : false);
@@ -169,11 +267,7 @@ class Reservas extends CI_Controller {
               $this->session->set_flashdata('error','Você não tem permissão para reservar');
               redirect(base_url());
             }
-		
-		if($this->session->userdata('tipo_usuario') != 1){
-			redirect('librecon');
-		}
-				
+								
 		$idReserva = $this->input->post('idReserva');	
 		$itens = $this->reservas_model->getAcervos($idReserva);
 		
