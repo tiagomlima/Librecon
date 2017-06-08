@@ -383,10 +383,10 @@ class Acervos extends CI_Controller {
 		$emprestimo = $this->db->get('emprestimos')->row();
 		
 		//verifica se o leitor tem algum emprestimo pendente
-		if(count($emprestimo) > 0){			
+		/*if(count($emprestimo) > 0){			
 				$this->session->set_flashdata('error','Você não pode reservar acervos');            
         		redirect(base_url().'index.php/acervos/visualizar/'.$acervos_id);
-		}
+		}*/
 		
 		//verifica se ja existe uma reserva aberta pelo leitor
 		if($verificaReserva != null){

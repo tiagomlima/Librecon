@@ -27,7 +27,7 @@ if(!$emprestimos){?>
 	            	<option value="'Devolvido'">Devolvido</option>	
 					<option value="'Emprestado'">Emprestado</option>   
 					<option value="'Não emprestado'">Não emprestado</option>
-					<option value="'Atrasado'">Atrasado</option>        	                               
+					<option value="Atrasado">Atrasado</option>        	                               
 	            </select>                                        	                       
                 De: <input type="date" name="dataInicial" id="dataInicial" value="" style="width: 15%">
                 Ate: <input type="date" name="dataFinal" id="dataFinal" value="" style="width: 15%">
@@ -78,7 +78,7 @@ if(!$emprestimos){?>
 	            	<option value="Devolvido">Devolvido</option>	
 					<option value="Emprestado">Emprestado</option>   
 					<option value="Não emprestado">Não emprestado</option>
-					<option value="ATRASADO">Atrasado</option>        	                               
+					<option value="Atrasado">Atrasado</option>        	                               
 	            </select>                                        	                       
                 De: <input type="date" name="dataInicial" id="dataInicial" value="" style="width: 15%">
                 Ate: <input type="date" name="dataFinal" id="dataFinal" value="" style="width: 15%">
@@ -111,19 +111,13 @@ if(!$emprestimos){?>
             $dataEmprestimo = date(('d/m/Y'),strtotime($e->dataEmprestimo));
 			$dataVencimento = date(('d/m/Y'),strtotime($e->dataVencimento));
 			$dataAtual = date(('d/m/Y'),strtotime(date('d/m/Y')));
-						
-			if($dataAtual > $dataVencimento){
-				$status = 'ATRASADO';
-			}else{
-				$status = $e->status;
-			}
                      
             echo '<tr>';
             echo '<td><a href="'.base_url().'index.php/emprestimos/visualizar/'.$e->idEmprestimos.'">'.$e->idEmprestimos.'</a></td>';
             echo '<td>'.$dataEmprestimo.'</td>';
 			echo '<td>'.$dataVencimento.'</td>';
             echo '<td><a href="'.base_url().'index.php/leitores/visualizar/'.$e->leitor_id.'">'.$e->nome.'</a></td>';
-			echo '<td>'.$status.'</td>';
+			echo '<td>'.$e->status.'</td>';
             
             
             echo '<td>';

@@ -28,7 +28,7 @@ if(!$results){?>
 	            	<option value="Devolvido">Devolvido</option>	
 					<option value="Emprestado">Emprestado</option>   
 					<option value="Não emprestado">Não emprestado</option>
-					<option value="ATRASADO">Atrasado</option>        	                               
+					<option value="Atrasado">Atrasado</option>        	                               
 	            </select>                                        	                       
                 De: <input type="date" name="dataInicial" id="dataInicial" value="" style="width: 15%">
                 Ate: <input type="date" name="dataFinal" id="dataFinal" value="" style="width: 15%">
@@ -92,7 +92,7 @@ if(!$results){?>
 	            	<option value="Devolvido">Devolvido</option>	
 					<option value="Emprestado">Emprestado</option>   
 					<option value="Não emprestado">Não emprestado</option>
-					<option value="ATRASADO">Atrasado</option>        	                               
+					<option value="Atrasado">Atrasado</option>        	                               
 	            </select>                                        	                       
                 De: <input type="date" name="dataInicial" id="dataInicial" value="" style="width: 15%">
                 Ate: <input type="date" name="dataFinal" id="dataFinal" value="" style="width: 15%">

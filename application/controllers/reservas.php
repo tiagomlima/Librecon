@@ -292,12 +292,8 @@ class Reservas extends CI_Controller {
 	}
 		
 	function cancelar(){
-		//verifica se o usuario é leitor, caso contrario impede de cancelar a reserva
-		if($this->session->userdata('tipo_usuario') != 1){			
-            redirect(base_url());
-		}		
 		
-		$usuario_id = $this->session->userdata('id');
+		$usuario_id = $this->uri->segment(3);
 
 		$this->db->select('idReserva');
 		$this->db->where('usuario_id',$usuario_id);
@@ -318,7 +314,7 @@ class Reservas extends CI_Controller {
 									
 			if($this->reservas_model->delete('reserva','usuario_id',$usuario_id)){
 				$this->session->set_flashdata('success','Reserva cancelada com sucesso');											
-				redirect('acervos');
+				redirect('reservas/gerenciar');
 			} else{
 				$this->session->set_flashdata('error','Erro ao cancelar reserva');
 				redirect(current_url());

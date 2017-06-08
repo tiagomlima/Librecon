@@ -117,23 +117,30 @@ class Acervos_model extends CI_Model {
 	}
 
 	public function getEmprestimosByAcervo($id){
-			$this->db->where('acervos_id',$id);
-			$itens = $this->db->get('itens_de_emprestimos')->row();
+		$this->db->where('acervos_id',$id);
+		$itens = $this->db->get('itens_de_emprestimos')->row();
 		
-	        $this->db->where('idEmprestimos',$itens->emprestimos_id);
-	        $this->db->order_by('idEmprestimos','desc');
-	        $this->db->limit(10);
-	        return $this->db->get('emprestimos')->result();
+			if(count($itens) > 0){		
+		        $this->db->where('idEmprestimos',$itens->emprestimos_id);
+		        $this->db->order_by('idEmprestimos','desc');
+		        $this->db->limit(10);
+		        return $this->db->get('emprestimos')->result();
+			}else{
+				return null;
+			}						
 	    }
 	
 	public function getReservaByAcervo($id){
-			$this->db->where('acervos_id',$id);
-			$itens = $this->db->get('itens_de_reserva')->row();
-		
-	        $this->db->where('idReserva',$itens->reserva_id);
+		$this->db->where('acervos_id',$id);
+		$itens = $this->db->get('itens_de_reserva')->row();
+		if(count($itens) > 0){
+			$this->db->where('idReserva',$itens->reserva_id);
 	        $this->db->order_by('idReserva','desc');
 	        $this->db->limit(10);
 	        return $this->db->get('reserva')->result();
+		}else{
+			return null;
+		}				        
 	  }
 
     function getById($id){

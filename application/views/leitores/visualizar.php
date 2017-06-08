@@ -34,7 +34,7 @@
                                         </a>
                                     </div>
                                 </div>
-                                <img src="<?php echo $result->img_leitor ?>" alt="foto do leitor" width="15%" height="15%" style="margin-left: 1%;margin-top:1%"/>
+                                <img src="<?php echo $result->img_leitor ?>" alt="foto do leitor" width="15%" height="15%" style="margin-left: 1.5%;margin-top:1%"/>
                                 <div class="collapse in accordion-body" id="collapseGOne">
                                     <div class="widget-content">
                                         <table class="table table-bordered">

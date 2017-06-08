@@ -628,8 +628,8 @@ class Emprestimos extends CI_Controller {
         $this->pagination->initialize($config); 	
 		
 		$nome = $this->input->post('nome');
-		$dataInicial = date('Y-m-d', strtotime($this->input->post('dataInicial')));
-		$dataFinal = date('Y-m-d', strtotime($this->input->post('dataFinal')));
+		$dataInicial = $this->input->post('dataInicial');
+		$dataFinal = $this->input->post('dataFinal');
 		$status = $this->input->post('status');
 							
 		$data['results'] = $this->emprestimos_model->pesquisar($nome,$dataInicial,$dataFinal,$status);

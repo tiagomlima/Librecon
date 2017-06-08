@@ -85,7 +85,7 @@
                                                 
                                                 <label for="">&nbsp</label>
                                                 <?php if($result->status != 'Reservado'){ ?>
-                                                <button class="btn btn-success span2" id="btnAdicionarAcervo" style="margin-left: 70%;margin-top: -19%"><i class="icon-white icon-plus"></i></button>
+                                                <button class="btn btn-success span2" id="btnAdicionarAcervo" style="margin-left: 70%;margin-top: -20.5%"><i class="icon-white icon-plus"></i></button>
                                                 <?php } ?>
                                             </div>
                                                                                                                                                                           
@@ -147,7 +147,7 @@
   <button class="btn btn-primary">Reservar</button>
   <?php } ?>
   
-  <a href="<?php echo base_url(); ?>index.php/reservas/cancelar"><span class="btn btn-danger">Cancelar</span></a>   
+  <a href="<?php echo base_url(); ?>index.php/reservas/cancelar/<?php echo $result->usuario_id?>"><span class="btn btn-danger">Cancelar</span></a>   
   </form>
   
 </div>

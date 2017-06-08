@@ -203,24 +203,32 @@ class Emprestimos_model extends CI_Model {
     }
 
 	public function pesquisar($nome = null, $dataInicial = null,$dataFinal = null,$status = null){
-        $whereData = "";
-        $likeLeitor = "";
-        $whereStatus = "";
-        if($dataInicial != null){
-            $whereData = "AND dataEmprestimo BETWEEN '".$dataInicial."' AND '".$dataFinal."'";
-        }
-        if($nome != null){
-            $likeLeitor = "AND usuarios.nome LIKE '%".$nome."%'";
-        }
+		$data = array();
+		$likeNome = "";
+		$whereData = "";
+		$whereStatus = "";
+		
+		if($dataInicial != null){
+			$whereData = "AND dataEmprestimo BETWEEN '".$dataInicial."' AND '".$dataFinal."'";
+		}	
+		
+		if($nome != null){
+			$likeNome = " AND usuarios.nome LIKE '%".$nome."%'";
+		}
 		
 		if($status != null){
-            $whereStatus = "AND status = ".$this->db->escape($status);
-        }
-       
-        $query = "SELECT emprestimos.*,usuarios.nome FROM emprestimos LEFT JOIN usuarios ON emprestimos.leitor_id = usuarios.idUsuarios  WHERE idEmprestimos != 0 $whereData $likeLeitor $whereStatus";
+			if($status != 'Atrasado'){
+				
+				$whereStatus = "AND emprestimos.status = ".$this->db->escape($status);
+			}else{
+				$dataAtual = date('Y-m-d');
+				$whereStatus = "AND emprestimos.dataVencimento < ".$this->db->escape($dataAtual)." AND status != 'Devolvido'";
+			}		
+		}
+		
+		$query = "SELECT emprestimos.*, usuarios.* from emprestimos inner join usuarios on emprestimos.leitor_id = usuarios.idUsuarios WHERE idEmprestimos != 0 ".$likeNome." ".$whereData." ".$whereStatus." " ;
 		$data['emprestimos'] = $this->db->query($query)->result();
-       
-         return $data;
+		return $data;
     }
 
 }
