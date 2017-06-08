@@ -192,6 +192,7 @@ class Leitores extends CI_Controller {
 	                'grupo_id' => $this->input->post('grupo_id'),
 	                'permissoes_id' => $this->input->post('permissoes_id'),
 	                'dataCadastro' => date('Y-m-d'),
+	                'statusMulta' => 0,
 	                'img_leitor' => $img
 					
             );
@@ -429,6 +430,24 @@ class Leitores extends CI_Controller {
         $this->data['leitores'] = $data['results']['usuarios'];
 		$this->data['view'] = 'leitores/pesquisar';
         $this->load->view('tema/topo',  $this->data);
+	}
+
+	function retirarMulta(){
+		if(!$this->permission->checkPermission($this->session->userdata('permissao'),'eLeitor')){
+			$this->session->set_flashdata('error','Você não tem permissão para editar leitores.');
+            redirect(base_url());
+		}
+		
+		$leitor = $this->uri->segment(3);
+		
+		if($this->leitores_model->retirarMulta($leitor) == true){
+			
+			$this->session->set_flashdata('succes','Multa retirada com sucesso!');
+            redirect(base_url().'index.php/leitores');
+		}else{
+			$this->session->set_flashdata('error','Erro ao retirar multa');
+            redirect(base_url().'index.php/leitores/visualizar/'.$leitor);
+		}
 	}
 }
 

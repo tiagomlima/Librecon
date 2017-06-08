@@ -27,7 +27,6 @@ class Reservas extends CI_Controller {
 		$this->load->model('leitores_model', '', TRUE);
         $this->data['menuReservas'] = 'Reservas';
 		
-		date_default_timezone_set('America/Sao_Paulo');
     }
 	
 	function index(){

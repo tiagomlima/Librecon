@@ -102,9 +102,12 @@
               
                         <table class="table table-bordered table-condensed" id="tblAcervos">
                                     <thead>
-                                        <tr>
-                                            <th style="font-size: 15px">Tombo</th>
-                                            <th style="font-size: 15px">Item</th>                                            
+                                        <tr>                                            
+                                            <th style="font-size: 15px">Item</th>  
+                                            <th style="font-size: 15px">Autor</th> 
+                                            <th style="font-size: 15px">Editora</th>  
+                                            <th style="font-size: 15px">ISBN</th>      
+                                            <th style="font-size: 15px">Tombo</th>                                  
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -113,22 +116,27 @@
                                         foreach ($acervos as $a) {
                                             
                                             echo '<tr>';
-                                            echo '<td>'.$a->tombo.'</td>';
-                                            echo '<td>'.$a->titulo.'</td>';                                                                                       
+                                            echo '<td style="text-align:center">'.$a->titulo.'</td>'; 
+											$this->db->where('idAutor',$a->autor_id);
+											$autor = $this->db->get('autor')->result();
+											foreach($autor as $at){
+												echo '<td style="text-align:center">'.$at->autor.'</td>';
+												
+												$this->db->where('idEditora',$a->editora_id);
+												$editora = $this->db->get('editora')->result();
+												
+												foreach($editora as $e){
+													echo '<td style="text-align:center">'.$e->editora.'</td>';
+													echo '<td style="text-align:center">'.$a->isbn.'</td>';
+													echo '<td style="text-align:center">'.$a->tombo.'</td>';
+												}
+											}                                                                                     
                                             echo '</tr>';
                                         }?>
                                          <tr>
-                                            <td colspan="2" style="text-align: right"><strong>Quantidade total:</strong></td>
+                                            <td colspan="4" style="text-align: right"><strong>Quantidade total:</strong></td>
                                             <td><strong><?php echo $result->qtde_item ?></strong></td>
-                                        </tr>
-                                        <?php 
-                                        	if($dataAtual > $dataVencimento){
-                                        		echo '<tr>';
-													echo '<td colspan="2" style="text-align: right"><strong>Multa:</strong></td>';
-													echo '<td><strong>R$ '.$grupos->multa.'</strong></td>';
-                                        	}
-                                        
-                                        ?>
+                                        </tr>                                        
                                     </tbody>
                                 </table>
                                <?php } ?>                                     

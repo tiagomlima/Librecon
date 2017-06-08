@@ -33,7 +33,7 @@ if(!$results){?>
             <th>Quantidade Máxima de Renovação</th>
             <th>Quantidade Máxima de Reserva</th>
             <th>Validade da Reserva</th>
-            <th>Valor da Multa</th>
+            <th>Multa</th>
             <th>Observações</th>
             <th></th>
         </tr>
@@ -72,7 +72,7 @@ if(!$results){?>
             <th>Quantidade Máxima de Renovação</th>
             <th>Quantidade Máxima de Reserva</th>
             <th>Validade da Reserva</th>
-            <th>Valor da Multa</th>
+            <th>Multa</th>
             <th>Observações</th>
             <th></th>
         </tr>
@@ -81,16 +81,16 @@ if(!$results){?>
         <?php foreach ($results as $r) {
            
             echo '<tr>';
-            echo '<td>'.$r->idGrupo.'</td>';
-            echo '<td>'.$r->nomeGrupo.'</td>';
-			echo '<td>'.$r->duracao_dias.'</td>';
-			echo '<td>'.$r->qtde_max_item.'</td>';
-			echo '<td>'.$r->qtde_max_renovacao.'</td>';
-			echo '<td>'.$r->qtde_max_reserva.'</td>';
-			echo '<td>'.$r->validade_reserva.'</td>';
-			echo '<td>'. 'R$ '.str_replace(".",",",$r->multa).'</td>';
-			echo '<td>'.$r->observacoes.'</td>';
-            echo '<td>';
+            echo '<td style="text-align:center">'.$r->idGrupo.'</td>';
+            echo '<td style="text-align:center">'.$r->nomeGrupo.'</td>';
+			echo '<td style="text-align:center">'.$r->duracao_dias.'</td>';
+			echo '<td style="text-align:center">'.$r->qtde_max_item.'</td>';
+			echo '<td style="text-align:center">'.$r->qtde_max_renovacao.'</td>';
+			echo '<td style="text-align:center">'.$r->qtde_max_reserva.'</td>';
+			echo '<td style="text-align:center">'.$r->validade_reserva.'</td>';
+			echo '<td style="text-align:center">'.$r->multa.' dias </td>';
+			echo '<td style="text-align:center">'.$r->observacoes.'</td>';
+            echo '<td style="text-align:center">';
                       if($this->permission->checkPermission($this->session->userdata('permissao'),'eGrupo')){
                 		echo '<a href="'.base_url().'index.php/grupos/editar/'.$r->idGrupo.'" style="margin-right: 1%" class="btn btn-info tip-top" title="Editar Grupo"><i class="icon-pencil icon-white"></i></a>'; 
            		 	  }

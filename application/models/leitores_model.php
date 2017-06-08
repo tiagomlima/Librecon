@@ -198,5 +198,84 @@ class Leitores_model extends CI_Model {
          return $data;
 
     }
+	
+	function verificaMulta($leitor){
+		$this->db->where('idUsuarios',$leitor);
+		$this->db->where('statusMulta',1);
+		$multa = $this->db->get('usuarios')->row();
+		
+		if(count($multa) > 0){
+			return true;
+		}else{
+			return false;
+		}
+		
+	}
+	
+	function verificaAtraso($leitor){
+		$this->db->where('leitor_id',$leitor);
+		$this->db->where('status != ','Devolvido');
+		$this->db->where('dataVencimento <',date('Y-m-d'));
+		$atraso = $this->db->get('emprestimos')->row();
+		
+		if(count($atraso) > 0){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	function aplicarMulta($leitor,$data){
+		$this->db->query("UPDATE usuarios set statusMulta = 1, dataMulta = '".$data."' WHERE idUsuarios = ".$leitor);
+	}
+	
+	/*function multar($leitor,$data){
+		$this->db->query("UPDATE usuarios set dataMulta = '".$data."', statusMulta = 1 WHERE idUsuarios = ".$leitor);
+		
+		if ($this->db->affected_rows() > 0)
+		{
+			return TRUE;
+		}
+		
+		return FALSE;   
+	}
+	
+	function retirarMulta($leitor){
+		$this->db->query("UPDATE usuarios set dataMulta = NULL, statusMulta = 0 WHERE idUsuarios = ".$leitor);
+		
+		if ($this->db->affected_rows() > 0)
+		{
+			return TRUE;
+		}
+		
+		return FALSE; 
+	}
+	
+	function verificaMulta($leitor){
+		$this->db->where('idUsuarios',$leitor);
+		$this->db->where('statusMulta', 1);
+		
+		if ($this->db->get('usuarios')->row() > 0)
+		{
+			return TRUE;
+		}
+		
+		return FALSE; 	
+	}
+				
+	function verificaAtraso($leitor){
+		$this->db->where('leitor_id',$leitor);
+		$this->db->where('status !=','Devolvido');
+		$emprestimo = $this->db->get('emprestimos')->row();
+		
+		if(count($emprestimo) > 0){
+			$dataAtual = date('Y-m-d');
+			if($emprestimo->dataVencimento < $dataAtual){
+				return true;
+			}else{
+				return false;
+			}
+		}
+	}*/
 
 }

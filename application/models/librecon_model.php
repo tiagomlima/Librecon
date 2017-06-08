@@ -168,7 +168,7 @@ class Librecon_model extends CI_Model {
     }
 
 
-    public function editEmitente($id, $nome, $cnpj, $ie, $logradouro, $numero, $bairro, $cidade, $uf,$telefone,$email){
+    public function editEmitente($id, $nome, $cnpj, $ie, $logradouro, $numero, $bairro, $cidade, $uf,$telefone,$site){
         
        $this->db->set('nome', $nome);
        $this->db->set('cnpj', $cnpj);
@@ -179,7 +179,7 @@ class Librecon_model extends CI_Model {
        $this->db->set('cidade', $cidade);
        $this->db->set('uf', $uf);
        $this->db->set('telefone', $telefone);
-       $this->db->set('email', $email);
+       $this->db->set('site', $site);
        $this->db->where('id', $id);
        return $this->db->update('emitente');
     }

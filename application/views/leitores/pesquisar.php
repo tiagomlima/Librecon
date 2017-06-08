@@ -46,6 +46,7 @@ if(!$leitores){?>
             <table class="table table-bordered">
                 <thead>
                     <tr>
+                    	<th></th>
                         <th>Nome</th>
 			            <th>R.A</th>
 			            <th>Curso</th>
@@ -113,6 +114,7 @@ if(!$leitores){?>
         <?php 
         	foreach ($leitores as $r){
         		echo '<tr>';
+				echo '<td style="text-align:center"><a href="'.base_url().'index.php/leitores/visualizar/'.$r->idUsuarios.'"><img src="'.$r->img_leitor.'" alt="foto do leitor" style="width:108px;height:118px"/></td></a>';
 				echo '<td style="text-align:center"><a href="'.base_url().'index.php/leitores/visualizar/'.$r->idUsuarios.'">'.$r->nome.'</a></td>';
 				echo '<td style="text-align:center">'.$r->matricula.'</td>';
 				

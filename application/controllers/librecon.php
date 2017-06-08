@@ -20,6 +20,9 @@ class Librecon extends CI_Controller {
         $this->load->model('librecon_model','',TRUE);
 		$this->load->model('reservas_model','',TRUE);
 		$this->load->model('emprestimos_model','',TRUE);
+		$this->load->model('leitores_model','',TRUE);
+		
+		date_default_timezone_set('America/Sao_Paulo');
         
     }
 
@@ -29,7 +32,17 @@ class Librecon extends CI_Controller {
         }
 		
 		if($this->session->userdata('tipo_usuario') == 1){
-			redirect('librecon/leitor');
+			if($this->leitores_model->verificaMulta($this->session->userdata('id')) == false){
+				if($this->leitores_model->verificaAtraso($this->session->userdata('id'))){
+					$data = date('Y-m-d H:i:s', strtotime("+ 5 days"));
+					$this->leitores_model->aplicarMulta($this->session->userdata('id'),$data);
+					$this->session->set_flashdata('error','Devido ao atraso de devolução, sua conta foi bloqueada por 5 dias.');
+					redirect('librecon/leitor');
+				}
+				
+				
+			}				
+			
 		}
 		
 

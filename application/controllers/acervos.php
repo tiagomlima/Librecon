@@ -27,6 +27,7 @@ class Acervos extends CI_Controller {
 		$this->load->model('reservas_model', '', TRUE);
 		$this->load->model('autor_model', '', TRUE);
 		$this->load->model('categoria_model', '', TRUE);
+		$this->load->model('leitores_model', '', TRUE);
         $this->data['menuAcervos'] = 'Acervos';
 		
 		$this->data['categoria'] = $this->categoria_model->getActive('categoria','categoria.idCategoria,categoria.nomeCategoria');
@@ -371,9 +372,15 @@ class Acervos extends CI_Controller {
 		if($this->session->userdata('tipo_usuario') != 1){
 			redirect('librecon');
 		}
+				
 					
 		$acervos_id = $this->input->post('acervos_id');
 		$usuario_id = $this->input->post('usuario_id');
+		
+		/*if($this->leitores_model->verificaMulta($usuario_id)){
+			$this->session->set_flashdata('error','Impossível reserva, sua conta está bloqueada.');            
+        	redirect(base_url().'index.php/acervos');
+		}*/
 		
 		$this->db->where('usuario_id',$usuario_id);
 		$verificaReserva = $this->db->get('reserva')->row();
