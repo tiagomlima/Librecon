@@ -48,10 +48,7 @@ if(!$results){?>
         <tr>
             <th>#</th>
             <th>Imagem</th>
-            <th>Título</th>           
-            <?php if($this->session->userdata('tipo_usuario') == 0){ ?>
-            <th>Tombo</th>
-            <?php } ?>
+            <th>Título</th>                     
             <?php if($this->session->userdata('tipo_usuario') == 0){ ?>
             <th>Estoque</th>
             <?php } ?>
@@ -108,10 +105,7 @@ if(!$results){?>
     <thead>
         <tr style="backgroud-color: #2D335B">
             <th>Imagem</th>
-            <th>Título</th>            
-            <?php if($this->session->userdata('tipo_usuario') == 0){ ?>
-            <th>Tombo</th>
-            <?php } ?>
+            <th>Título</th>                       
             <?php if($this->session->userdata('tipo_usuario') == 0){ ?>
             <th>Estoque</th>
             <?php } ?>
@@ -129,9 +123,7 @@ if(!$results){?>
 			            echo '<tr>';
 						echo '<td style="text-align:center"><a href="'.base_url().'index.php/acervos/visualizar/'.$r->idAcervos.'"><img src="'.$r->img_acervo.'" alt="imagem do acervo" style="width:108px;height:118px"/></td></a>';
 						echo '<td style="text-align:center;font-size:13px"><a href="'.base_url().'index.php/acervos/visualizar/'.$r->idAcervos.'">'.$r->titulo.'</a></td>';						
-			            if($this->session->userdata('tipo_usuario') == 0){
-						echo '<td style="text-align:center;font-size:13px">'.$r->tombo.'</td>';
-						}
+			            
 						if($this->session->userdata('tipo_usuario') == 0){
 						echo '<td style="text-align:center;font-size:13px">'.$r->estoque.'</td>';
 						}

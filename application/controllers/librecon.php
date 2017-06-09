@@ -32,7 +32,8 @@ class Librecon extends CI_Controller {
         }
 		
 		if($this->session->userdata('tipo_usuario') == 1){
-			if($this->leitores_model->verificaMulta($this->session->userdata('id')) == false){
+			
+			/*if($this->leitores_model->verificaMulta($this->session->userdata('id')) == false){
 				if($this->leitores_model->verificaAtraso($this->session->userdata('id'))){
 					$data = date('Y-m-d H:i:s', strtotime("+ 5 days"));
 					$this->leitores_model->aplicarMulta($this->session->userdata('id'),$data);
@@ -41,8 +42,8 @@ class Librecon extends CI_Controller {
 				}
 				
 				
-			}				
-			
+			}		*/		
+			redirect('librecon/leitor');
 		}
 		
 

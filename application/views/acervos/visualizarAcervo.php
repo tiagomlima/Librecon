@@ -71,10 +71,7 @@
 						                               
 						                        </tr>
 						                         <?php } ?>  
-						                        <tr>
-						                            <td style="text-align: right"><strong>Tombo</strong></td>
-						                            <td><?php echo $result->tombo ?></td>
-						                        </tr> 
+						                       
 						                        <tr>
 						                            <td style="text-align: right"><strong>Categoria</strong></td>
 						                            <td><?php echo $categoria->categoria ?></td>
@@ -148,7 +145,18 @@
 						                        	}
 						                        ?>
 						                            <td style="text-align: right"><strong><?php echo $titulo ?></strong></td>
-						                            <td> <?php echo $status ?></td>
+						                            <?php 
+						                            	$this->db->where('acervos_id',$result->idAcervos);
+														$tombo = $this->db->get('exemplares')->result();
+														
+														if(count($tombo) > 0){
+															$link = base_url().'index.php/acervos/editarTombo/'.$result->idAcervos;
+														}else{
+															$link = base_url().'index.php/acervos/adicionarTombo/'.$result->idAcervos;
+														}
+						                            
+						                            ?>
+						                            <td> <?php echo $status ?> <a href="<?php echo $link ?>"><button class="btn btn-mini" style="margin-left: 1%">Exemplares</button></a></td>
 						                        </tr>                 
 						                    </tbody>					                    
 						                </table>  

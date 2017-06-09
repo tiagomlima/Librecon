@@ -28,6 +28,7 @@ class Acervos extends CI_Controller {
 		$this->load->model('autor_model', '', TRUE);
 		$this->load->model('categoria_model', '', TRUE);
 		$this->load->model('leitores_model', '', TRUE);
+		$this->load->model('tombo_model', '', TRUE);
         $this->data['menuAcervos'] = 'Acervos';
 		
 		$this->data['categoria'] = $this->categoria_model->getActive('categoria','categoria.idCategoria,categoria.nomeCategoria');
@@ -81,7 +82,7 @@ class Acervos extends CI_Controller {
         $this->pagination->initialize($config); 	
 		
 		$this->data['autor'] = $this->autor_model->getActive('autor','autor.idAutor,autor.autor');
-	    $this->data['results'] = $this->acervos_model->get('acervos','idAcervos,titulo,tombo,estoque,idioma,img_acervo,categoria_id,autor_id,tipoItem_id,secao_id,colecao_id,palavra_chave','',$config['per_page'],$this->uri->segment(3));       
+	    $this->data['results'] = $this->acervos_model->get('acervos','idAcervos,titulo,estoque,idioma,img_acervo,categoria_id,autor_id,tipoItem_id,secao_id,colecao_id,palavra_chave','',$config['per_page'],$this->uri->segment(3));       
 	    $this->data['view'] = 'acervos/acervos';
        	$this->load->view('tema/topo',$this->data);
        
@@ -175,7 +176,6 @@ class Acervos extends CI_Controller {
                 'categoria_id' => $this->input->post('categoria_id'),
                 'edicao' => set_value('edicao'),
                 'classificacao' => set_value('classificacao'),
-                'tombo' => set_value('tombo'),
                 'palavra_chave' => $this->input->post('palavra_chave'),
                 'estoque' => set_value('estoque'),
                 'idioma' => set_value('idioma'),
@@ -191,10 +191,10 @@ class Acervos extends CI_Controller {
                 'img_acervo' => $img                
             );
 
-            if ($this->acervos_model->add('acervos', $data,true) == TRUE) {         	
+            if (is_numeric($id = $this->acervos_model->add('acervos', $data,true))) {         	
 				
-                $this->session->set_flashdata('success','Acervo adicionado com sucesso!');
-                redirect(base_url() . 'index.php/acervos/adicionar/');
+                $this->session->set_flashdata('success','Acervo adicionado com sucesso! Atribua o tombo aos exemplares.');
+                redirect(base_url() . 'index.php/acervos/adicionarTombo/'.$id);
             } else {
                 $this->data['custom_error'] = '<div class="form_error"><p>An Error Occured.</p></div>';
             }
@@ -206,6 +206,167 @@ class Acervos extends CI_Controller {
         $this->load->view('tema/topo', $this->data);
      
     }
+
+	function adicionarTombo(){
+		if(!$this->permission->checkPermission($this->session->userdata('permissao'),'aAcervo')){
+           $this->session->set_flashdata('error','Você não tem permissão para adicionar tombos.');
+           redirect(base_url());
+        }
+
+		$this->load->library('form_validation');
+        $this->data['custom_error'] = '';
+		
+		if ($this->form_validation->run('tombo') == false) {
+            $this->data['custom_error'] = (validation_errors() ? '<div class="form_error">' . validation_errors() . '</div>' : false);
+        }else{
+        	
+        	$acervos_id = $this->uri->segment(3);
+			
+			$i = 1;
+			$acervo = $this->acervos_model->getById($acervos_id);
+			$x = $acervo->estoque;
+			
+			for($i; $i <= $x; $i++){
+				$tombo[i] = $this->input->post('tombo'.$i);
+				
+				$data = array(
+					'tombo' => $tombo[i],
+					'acervos_id' => $acervos_id
+				);
+				
+				$atribuir = $this->tombo_model->add('exemplares',$data);
+			}			
+			
+			if($atribuir == TRUE){
+				$this->session->set_flashdata('success','Tombo atribuido aos exemplares com sucesso!');
+				redirect('acervos/visualizar/'.$acervos_id);
+			}else{
+				$this->session->set_flashdata('error','Erro ao atribuir tombo aos exemplares.');
+				redirect(current_url());
+			}
+        }
+				
+			
+		$this->data['acervo'] = $this->acervos_model->getById($this->uri->segment(3));		
+		$this->data['view'] = 'acervos/adicionarTombo';
+		$this->load->view('tema/topo', $this->data);
+	}
+	
+	function editarTombo(){
+		if(!$this->permission->checkPermission($this->session->userdata('permissao'),'aAcervo')){
+           $this->session->set_flashdata('error','Você não tem permissão para editar tombos.');
+           redirect(base_url());
+        }
+
+		$this->load->library('form_validation');
+        $this->data['custom_error'] = '';
+		
+		if ($this->form_validation->run('tombo') == false) {
+            $this->data['custom_error'] = (validation_errors() ? '<div class="form_error">' . validation_errors() . '</div>' : false);
+        }else{
+        	
+        	$acervos_id = $this->uri->segment(3);
+			
+			$i = 1;			
+			$acervo = $this->acervos_model->getById($acervos_id);	
+			$x = $acervo->estoque;		
+			$exemplar = $this->tombo_model->getByAcervoId($acervos_id);
+			
+			foreach($exemplar as $e){
+				$idExemplar = $e->idExemplar;
+				
+				$data = array(
+					'tombo' => $this->input->post('tombo'.$i)
+				);
+				$editar = $this->tombo_model->edit('exemplares',$data,'idExemplar',$idExemplar);
+				
+				$i++;
+			}
+			
+			if($editar == TRUE){
+				$this->session->set_flashdata('success','Tombo editado com sucesso!');
+				redirect('acervos/editarTombo/'.$acervos_id);
+			}else{
+				$this->session->set_flashdata('error','Erro ao editar.');
+				redirect(current_url());
+			}
+        }
+				
+		$this->data['tombo'] = $this->tombo_model->getByAcervoId($this->uri->segment(3));	
+		$this->data['acervo'] = $this->acervos_model->getById($this->uri->segment(3));		
+		$this->data['view'] = 'acervos/editarTombo';
+		$this->load->view('tema/topo', $this->data);
+	}
+
+	function editarExemplar(){
+		if(!$this->permission->checkPermission($this->session->userdata('permissao'),'aAcervo')){
+           $this->session->set_flashdata('error','Você não tem permissão para editar tombos.');
+           redirect(base_url());
+        }
+		
+		$idExemplar = $this->input->post('idExemplar');
+		$idAcervo = $this->input->post('idAcervo');
+		
+		$data = array(
+			'tombo' => $this->input->post('tombo')
+		);
+		
+		if($this->tombo_model->edit('exemplares',$data,'idExemplar',$idExemplar) == true){
+			$this->session->set_flashdata('success','Tombo editado com sucesso!');
+			redirect(base_url().'index.php/acervos/editarTombo/'.$idAcervo);
+		}else{
+			$this->session->set_flashdata('error','Erro ao editar');
+			redirect(current_url());
+		}
+	}
+	
+	function addQTombo(){
+		if(!$this->permission->checkPermission($this->session->userdata('permissao'),'aAcervo')){
+           $this->session->set_flashdata('error','Você não tem permissão para adicionar tombos.');
+           redirect(base_url());
+        }
+		
+		$id = $this->uri->segment(3);
+		
+		$this->db->query('UPDATE acervos set estoque = estoque + 1 WHERE idAcervos = '.$id);
+		
+		redirect(base_url().'index.php/acervos/adicionarTombo/'.$id);
+		
+	}
+	
+	function removeQTombo(){
+		if(!$this->permission->checkPermission($this->session->userdata('permissao'),'aAcervo')){
+           $this->session->set_flashdata('error','Você não tem permissão para remover tombos.');
+           redirect(base_url());
+        }
+		
+		$id = $this->uri->segment(3);
+		
+		$this->db->query('UPDATE acervos set estoque = estoque - 1 WHERE idAcervos = '.$id);
+		
+		redirect(base_url().'index.php/acervos/adicionarTombo/'.$id);
+		
+	}
+
+	function excluirExemplar(){
+		if(!$this->permission->checkPermission($this->session->userdata('permissao'),'eAcervo')){
+           $this->session->set_flashdata('error','Você não tem permissão para remover exemplares.');
+           redirect(base_url());
+        }
+
+		$idExemplar = $this->input->post('idExemplar');
+		$idAcervo = $this->input->post('idAcervo');
+		
+		if($this->tombo_model->delete('exemplares','idExemplar',$idExemplar) == true){
+		   $this->db->query("UPDATE acervos set estoque = estoque - 1 WHERE idAcervos = ".$idAcervo);
+			
+		   $this->session->set_flashdata('success','Exemplar removido');
+           redirect(current_url());
+		}else{
+			$this->session->set_flashdata('error','Erro ao remover exemplar');
+            redirect(current_url());
+		}
+	}
 
     function editar() {
 
@@ -241,10 +402,8 @@ class Acervos extends CI_Controller {
                 'colecao_id' => $this->input->post('colecao_id'),
                 'categoria_id' => $this->input->post('categoria_id'),
                 'palavra_chave' => $this->input->post('palavra_chave'),
-                'tombo' => $this->input->post('tombo'),
                 'edicao' => $this->input->post('edicao'),
                 'classificacao' => $this->input->post('classificacao'),
-                'estoque' => $this->input->post('estoque'),
                 'descricao' => $this->input->post('descricao'),
                 'dataAquisicao' => $this->input->post('dataAquisicao'),
                 'origemAquisicao' => $this->input->post('origemAquisicao'),
@@ -359,6 +518,9 @@ class Acervos extends CI_Controller {
 		
 		$this->db->where('acervos_id', $id);
         $this->db->delete('itens_de_reserva');
+		
+		$this->db->where('acervos_id',$id);
+		$this->db->delete('exemplares');
         
         $this->acervos_model->delete('acervos','idAcervos',$id);             
         

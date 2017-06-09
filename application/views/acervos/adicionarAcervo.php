@@ -165,14 +165,7 @@
                             <input id="classificacao" type="text" name="classificacao" value="<?php echo set_value('classificaco'); ?>"  />
                         </div>
                     </div>
-                                                                                                                
-                    <div class="control-group">
-                        <label for="tombo" class="control-label">Tombo<span class="required">*</span></label>
-                        <div class="controls">
-                            <input id="tombo" type="text" name="tombo" value="<?php echo set_value('tombo'); ?>"  />
-                        </div>
-                    </div>
-                    
+                                                                                                                                                      
                     <div class="control-group">
                         <label for="estoque" class="control-label">Quantidade<span class="required">*</span></label>
                         <div class="controls">
@@ -213,7 +206,7 @@
                     <div class="form-actions">
                         <div class="span12">
                             <div class="span6 offset3">
-                                <button type="submit" class="btn btn-success"><i class="icon-plus icon-white"></i> Adicionar</button>
+                                <button type="submit" class="btn btn-success"><i class="icon-arrow-right icon-white"></i> Continuar</button>
                                 <a href="<?php echo base_url() ?>index.php/acervos" id="" class="btn"><i class="icon-arrow-left"></i> Voltar</a>
                             </div>
                         </div>
@@ -233,7 +226,6 @@
         $('#formAcervo').validate({
             rules :{
                   titulo: { required: true},
-                  tombo: { required: true},
                   estoque: { required: true},
                   idioma: { required: true},
                   dataAquisicao: { required: true},
@@ -249,7 +241,6 @@
             },
             messages:{
                   titulo: { required: 'Campo Requerido.'},
-                  tombo: {required: 'Campo Requerido.'},
                   estoque: { required: 'Campo Requerido.'},
                   idioma: { required: 'Campo Requerido.'},
                   dataAquisicao: { required: 'Campo Requerido.'},

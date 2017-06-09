@@ -173,21 +173,7 @@
                             <input id="numero_paginas" type="text" name="numero_paginas" value="<?php echo $result->numero_paginas; ?>"  />
                         </div>
                     </div>
-                                                        					
-                    <div class="control-group">
-                        <label for="tombo" class="control-label">Tombo<span class="required">*</span></label>
-                        <div class="controls">
-                            <input id="tombo" type="text" name="tombo" value="<?php echo $result->tombo; ?>"  />
-                        </div>
-                    </div>
-                    
-                    <div class="control-group">
-                        <label for="estoque" class="control-label">Quantidade<span class="required">*</span></label>
-                        <div class="controls">
-                            <input id="estoque" type="text" name="estoque" value="<?php echo $result->estoque; ?>"  />
-                        </div>
-                    </div>
-                    
+                                                        				                                                                               
                     <div class="control-group">
                         <label for="idioma" class="control-label">Idioma<span class="required">*</span></label>
                         <div class="controls">
@@ -259,7 +245,6 @@
         $('#formAcervo').validate({
             rules :{
                   titulo: { required: true},
-                  tombo: { required: true},
                   estoque: { required: true},
                   idioma: { required: true},
                   dataAquisicao: { required: true},
@@ -274,7 +259,6 @@
             },
             messages:{
                   titulo: { required: 'Campo Requerido.'},
-                  tombo: {required: 'Campo Requerido.'},
                   estoque: { required: 'Campo Requerido.'},
                   idioma: { required: 'Campo Requerido.'},
                   dataAquisicao: { required: 'Campo Requerido.'},

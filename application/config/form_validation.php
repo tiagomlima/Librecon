@@ -77,12 +77,7 @@ $config = array(
                                     'field'=>'titulo',
                                     'label'=>'titulo',
                                     'rules'=>'required|trim|xss_clean'
-                                ),
-                                array(
-                                    'field'=>'tombo',
-                                    'label'=>'tombo',
-                                    'rules'=>'required|trim|xss_clean'
-                                ),
+                                ),                               
                                 array(
                                     'field'=>'estoque',
                                     'label'=>'Estoque',
@@ -207,7 +202,14 @@ $config = array(
                                     'label'=>'data Reserva',
                                     'rules'=>'required|trim|xss_clean'
                                 ))                                   
-                  ,			  			                
+                  ,	
+				  
+                  'tombo' => array(array(
+                                    'field'=>'teste',
+                                    'label'=>'teste',
+                                    'rules'=>'trim|xss_clean'
+                                ))                                   
+                  ,			  				  			                
                 'emprestimos' => array(array(
 
                                     'field' => 'dataEmprestimo',
