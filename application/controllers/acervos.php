@@ -119,9 +119,7 @@ class Acervos extends CI_Controller {
         $this->upload->initialize($this->upload_config);
 
         if (!$this->upload->do_upload()) {
-            $upload_error = $this->upload->display_errors();
-            print_r($upload_error);
-            exit();
+            return false;
         } else {
             $file_info = array($this->upload->data());
             return $file_info[0]['file_name'];
@@ -143,7 +141,7 @@ class Acervos extends CI_Controller {
             $this->data['custom_error'] = (validation_errors() ? '<div class="form_error">' . validation_errors() . '</div>' : false);
         } else {
         	
-			if($this->input->post('userfile') == null){
+			if($this->do_upload('userfile') == false){
 				$img = base_url().'assets/uploads/img_default.jpg';
 			} else {
 				$image = $this->do_upload();
@@ -380,14 +378,24 @@ class Acervos extends CI_Controller {
 				$preco = str_replace(",", ".", $preco);
 			}
 			
+			$secao_id = $this->input->post('secao_id');
+			if($secao_id == null){
+				$secao_id = NULL;
+			}
+			
+			$colecao_id = $this->input->post('colecao_id');
+			if($colecao_id == null){
+				$colecao_id = NULL;
+			}
+									
 			      		
             $data = array(
                 'titulo' => $this->input->post('titulo'),
                 'autor_id' => $this->input->post('autor_id'),
                 'editora_id' => $this->input->post('editora_id'),
                 'tipoItem_id' => $this->input->post('tipoItem_id'),
-                'secao_id' => $this->input->post('secao_id'),
-                'colecao_id' => $this->input->post('colecao_id'),
+                'secao_id' => $colecao_id,
+                'colecao_id' => $colecao_id,
                 'categoria_id' => $this->input->post('categoria_id'),
                 'palavra_chave' => $this->input->post('palavra_chave'),
                 'edicao' => $this->input->post('edicao'),
@@ -437,8 +445,12 @@ class Acervos extends CI_Controller {
         $this->load->helper('file');
         //delete_files(FCPATH .'assets/uploads/');
 
-        $image = $this->do_upload();
-        $img = base_url().'assets/uploads/'.$image;
+        if($this->do_upload('userfile') == false){
+				$img = base_url().'assets/uploads/img_default.jpg';
+			} else {
+				$image = $this->do_upload();
+            	$img = base_url().'assets/uploads/'.$image;
+			}
 
         $retorno = $this->acervos_model->editImg($id, $img);
         if($retorno){

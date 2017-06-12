@@ -130,9 +130,7 @@ class Leitores extends CI_Controller {
         $this->upload->initialize($this->upload_config);
 
         if (!$this->upload->do_upload()) {
-            $upload_error = $this->upload->display_errors();
-            print_r($upload_error);
-            exit();
+           return false;
         } else {
             $file_info = array($this->upload->data());
             return $file_info[0]['file_name'];
@@ -161,7 +159,7 @@ class Leitores extends CI_Controller {
 
         } else
         {
-        	if($this->input->post('userfile') == null){
+        	if($this->do_upload('userfile') == false){
 				$img = base_url().'assets/img/leitor/img_default.jpg';
 			} else {
 				$image = $this->do_upload();
@@ -192,7 +190,7 @@ class Leitores extends CI_Controller {
 	                'grupo_id' => $this->input->post('grupo_id'),
 	                'permissoes_id' => $this->input->post('permissoes_id'),
 	                'dataCadastro' => date('Y-m-d'),
-	                'statusMulta' => 0,
+	                'multa' => 0,
 	                'img_leitor' => $img
 					
             );
@@ -345,8 +343,12 @@ class Leitores extends CI_Controller {
         $this->load->helper('file');
         //delete_files(FCPATH .'assets/uploads/');
 
-        $image = $this->do_upload();
-        $img = base_url().'assets/img/leitor/'.$image;
+        if($this->do_upload('userfile') == false){
+				$img = base_url().'assets/img/leitor/img_default.jpg';
+			} else {
+				$image = $this->do_upload();
+            	$img = base_url().'assets/img/leitor/'.$image;
+			}  
 
         $retorno = $this->leitores_model->editImg($id, $img);
         if($retorno){

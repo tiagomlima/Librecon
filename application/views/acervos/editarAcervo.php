@@ -80,6 +80,7 @@
                         <label  class="control-label">Seção<span class="required">*</span></label>
                         <div class="controls">
                             <select name="secao_id" id="secao_id">
+                            	<option value="">----------</option>
                                   <?php foreach ($secao as $s) {
                                      if($s->idSecao == $result->secao_id){ $selected = 'selected';}else{$selected = '';}
                                       echo '<option value="'.$s->idSecao.'"'.$selected.'>'.$s->secao.'</option>';
@@ -92,6 +93,7 @@
                         <label  class="control-label">Coleção<span class="required">*</span></label>
                         <div class="controls">
                             <select name="colecao_id" id="colecao_id">
+                            	<option value="">----------</option>
                                   <?php foreach ($colecao as $c) {
                                      if($c->idColecao == $result->colecao_id){ $selected = 'selected';}else{$selected = '';}
                                       echo '<option value="'.$c->idColecao.'"'.$selected.'>'.$c->colecao.'</option>';

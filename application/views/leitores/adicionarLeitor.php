@@ -160,6 +160,13 @@
                         </div>
                     </div>
 					
+					<div class="control-group" class="control-label">
+                        <label for="cep" class="control-label">CEP<span class="required">*</span></label>
+                        <div class="controls">
+                            <input id="cep" type="text" name="cep" value="<?php echo set_value('cep'); ?>"  />
+                        </div>
+                    </div>
+					
                     <div class="control-group" class="control-label">
                         <label for="rua" class="control-label">Rua<span class="required">*</span></label>
                         <div class="controls">
@@ -193,14 +200,7 @@
                         <div class="controls">
                             <input id="estado" type="text" name="estado" value="<?php echo set_value('estado'); ?>"  />
                         </div>
-                    </div>
-               
-                    <div class="control-group" class="control-label">
-                        <label for="cep" class="control-label">CEP<span class="required">*</span></label>
-                        <div class="controls">
-                            <input id="cep" type="text" name="cep" value="<?php echo set_value('cep'); ?>"  />
-                        </div>
-                    </div>
+                    </div>                                
                     
                     <div class="control-group">
                         <label  class="control-label">Curso<span class="required">*</span></label>
