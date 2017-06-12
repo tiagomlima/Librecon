@@ -147,6 +147,7 @@ class Reservas extends CI_Controller {
             $qtde_max_reserva = $this->input->post('qtde_max_reserva');
 			$qtde_atual = $this->input->post('qtde_atual');
             $acervo = $this->input->post('acervos_id');
+			$exemplar = $this->input->post('idExemplar');
 			
 			if($qtde_atual > $qtde_max_reserva){
 				$this->session->set_flashdata('error','O limite de itens por reserva foi excedido.');
@@ -157,16 +158,15 @@ class Reservas extends CI_Controller {
 				$this->session->set_flashdata('error','Digite o nome do item.');
 				 redirect('reservas/editar/'.$idReserva);
 			}
-						
-			
-			
-            $data = array(
-              
+												
+            $data = array(              
                 'acervos_id'=> $acervo,
-                'reserva_id'=> $idReserva
+                'reserva_id'=> $idReserva,
+                'exemplar_id' => $exemplar
             );
             if($this->reservas_model->add('itens_de_reserva', $data) == true){              				
 				$this->db->query("UPDATE reserva set qtde_item = qtde_item  + 1 WHERE idReserva = ".$idReserva);
+				$this->db->query("UPDATE exemplares set status = 1 WHERE idExemplar = ".$exemplar);
 				
 				$this->session->set_flashdata('success','Item adicionado com sucesso'); 
                 redirect('reservas/editar/'.$idReserva);
@@ -174,9 +174,7 @@ class Reservas extends CI_Controller {
             }else{
             	$this->session->set_flashdata('error','Não foi possível adicionar o item.');
                  redirect('reservas/editar/'.$idReserva);
-            }
-        
-       
+            }               
       
     }
 

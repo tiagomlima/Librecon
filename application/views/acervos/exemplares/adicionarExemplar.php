@@ -20,8 +20,8 @@
                 	<span style="margin-left: 60%">                            	                	
                 		 <b style="margin-right: 0.2%">Quantidade</b>
                 		
-                		<a href="<?php echo base_url();?>index.php/acervos/addQTombo/<?php echo $acervo->idAcervos ?>"><button class="btn btn-success" style="margin-bottom: 0.6%"><i class="icon-plus icon-white"></i></button></a>   
-                		<a href="<?php echo base_url();?>index.php/acervos/removeQTombo/<?php echo $acervo->idAcervos ?>"><button class="btn btn-danger" style="margin-bottom: 0.6%"><i class="icon-minus icon-white"></i></button></a>                           	
+                		<a href="<?php echo base_url();?>index.php/acervos/addQExemplar/<?php echo $acervo->idAcervos ?>"><button class="btn btn-success" style="margin-bottom: 0.6%"><i class="icon-plus icon-white"></i></button></a>   
+                		<a href="<?php echo base_url();?>index.php/acervos/removeQExemplar/<?php echo $acervo->idAcervos ?>"><button class="btn btn-danger" style="margin-bottom: 0.6%"><i class="icon-minus icon-white"></i></button></a>                           	
                	    </span>
             </div>
             <div class="widget-content nopadding">

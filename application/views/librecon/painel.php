@@ -45,10 +45,7 @@
   </div>  
 <!--End-Action boxes-->  
 
-
-
-
-
+<!-- Empréstimos -->
     <div class="span12" style="margin-left: 0">
         
         <div class="widget-box">
@@ -99,6 +96,77 @@
 
 </div>
 
+<!-- Reservas em aberto -->
+
+    <div class="span12" style="margin-left: 0">
+        
+        <div class="widget-box">
+            <div class="widget-title"><span class="icon"><i class="icon-signal"></i></span><h5>Reservas Em Aberto</h5></div>
+            <div class="widget-content">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Reserva</th>
+                            <th>Data Reserva</th>
+                            <th>Data Prazo</th>
+                            <th>Leitor</th>
+                            <th>Status</th>
+                            <th>Aprovar/Recusar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php 
+                        if($reservas != null){
+                            foreach ($reservas as $r) {
+                            	$dataReserva = date(('d/m/Y'),strtotime($r->dataReserva));
+								$dataPrazo = date(('d/m/Y'),strtotime($r->dataPrazo));
+								
+                                echo '<tr>';
+                                echo '<td style="text-align:center"><a href="'.base_url().'index.php/reservas/editar/'.$r->idReserva.'">Ver Reserva</a></td>';
+                                echo '<td style="text-align:center">'.$dataReserva.'</td>';
+                                echo '<td style="text-align:center">'.$dataPrazo.'</td>';
+                                echo '<td style="text-align:center"><a href="'.base_url().'index.php/leitores/visualizar/'.$r->usuario_id.'">'.$r->nome.'</a></td>';																						
+								echo '<td style="text-align:center">'.$r->status.'</td>';								
+                                echo '<td style="text-align:center">';
+                                if($this->permission->checkPermission($this->session->userdata('permissao'),'vReserva')){
+									echo '<a href="#modal-aprovar" role="button" data-toggle="modal" data-target="#modal-aprovar" leitor_id="'.$r->usuario_id.'" idReserva="'.$r->idReserva.'" class="btn btn-success tip-top" title="Aprovar Reserva"><i class="icon-ok icon-white"></i></a>';						
+								}
+								if($this->permission->checkPermission($this->session->userdata('permissao'),'dReserva')){
+								  	echo '<a href="'.base_url().'index.php/reservas/recusar/'.$r->idReserva.'" role="button" class="btn btn-danger tip-top"><i class="icon-remove icon-white"></i></a>  '; 
+							    }    
+                                echo '</td>';
+                                echo '</tr>';
+                            }
+                        }
+                        else{
+                            echo '<tr><td colspan="3">Nenhuma reserva em aberto.</td></tr>';
+                        }    
+
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    
+    $(document).ready(function(){
+    
+	    $(document).on('click', 'a', function(event) {
+	        
+	        var reserva = $(this).attr('idReserva');
+	        $('#idReserva').val(reserva);
+	        
+	        var leitor = $(this).attr('leitor_id');
+	        $('#leitor_id').val(leitor);
+	
+	    });
+
+    });
+ 
+</script>
 
 <?php if($emp != null){ ?>
 <div class="row-fluid" style="margin-top: 0">
@@ -119,6 +187,7 @@
     </div>
 </div>
 <?php } ?>
+
 
 
 <div class="row-fluid" style="margin-top: 0">
@@ -181,77 +250,25 @@
 
 <?php } ?>
 
+<!-- Modal aprovar-->
+<div id="modal-aprovar" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <form action="<?php echo base_url() ?>index.php/emprestimos/emprestarReserva" method="post" >
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h5 id="myModalLabel">Aprovar Reserva</h5>
+  </div>
+  <div class="modal-body">
+    <input type="hidden" id="leitor_id" name="leitor_id" value="" />
+    <input type="hidden" id="idReserva" name="idReserva" value="" />
+    <h5 style="text-align: center">Deseja aprovar essa reserva?</h5>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+    <button class="btn btn-success">Aprovar</button>
+  </div>
+  </form>
+</div>
 
 
-
-<script type="text/javascript">
-    
-    $(document).ready(function(){
-
-      var data2 = [['Total Receitas',<?php echo ($estatisticas_financeiro->total_receita != null ) ?  $estatisticas_financeiro->total_receita : '0.00'; ?>],['Total Despesas', <?php echo ($estatisticas_financeiro->total_despesa != null ) ?  $estatisticas_financeiro->total_despesa : '0.00'; ?>]];
-      var plot2 = jQuery.jqplot ('chart-financeiro', [data2], 
-        {  
-
-          seriesColors: [ "#9ACD32", "#FF8C00", "#EAA228", "#579575", "#839557", "#958c12","#953579", "#4b5de4", "#d8b83f", "#ff5800", "#0085cc"],   
-          seriesDefaults: {
-            // Make this a pie chart.
-            renderer: jQuery.jqplot.PieRenderer, 
-            rendererOptions: {
-              // Put data labels on the pie slices.
-              // By default, labels show the percentage of the slice.
-              dataLabels: 'value',
-              showDataLabels: true
-            }
-          }, 
-          legend: { show:true, location: 'e' }
-        }
-      );
-
-
-      var data3 = [['Total Receitas',<?php echo ($estatisticas_financeiro->total_receita_pendente != null ) ?  $estatisticas_financeiro->total_receita_pendente : '0.00'; ?>],['Total Despesas', <?php echo ($estatisticas_financeiro->total_despesa_pendente != null ) ?  $estatisticas_financeiro->total_despesa_pendente : '0.00'; ?>]];
-      var plot3 = jQuery.jqplot ('chart-financeiro2', [data3], 
-        {  
-
-          seriesColors: [ "#90EE90", "#FF0000", "#EAA228", "#579575", "#839557", "#958c12","#953579", "#4b5de4", "#d8b83f", "#ff5800", "#0085cc"],   
-          seriesDefaults: {
-            // Make this a pie chart.
-            renderer: jQuery.jqplot.PieRenderer, 
-            rendererOptions: {
-              // Put data labels on the pie slices.
-              // By default, labels show the percentage of the slice.
-              dataLabels: 'value',
-              showDataLabels: true
-            }
-          }, 
-          legend: { show:true, location: 'e' }
-        }
-
-      );
-
-
-      var data4 = [['Total em Caixa',<?php echo ($estatisticas_financeiro->total_receita - $estatisticas_financeiro->total_despesa); ?>],['Total a Entrar', <?php echo ($estatisticas_financeiro->total_receita_pendente - $estatisticas_financeiro->total_despesa_pendente); ?>]];
-      var plot4 = jQuery.jqplot ('chart-financeiro-caixa', [data4], 
-        {  
-
-          seriesColors: ["#839557","#d8b83f", "#d8b83f", "#ff5800", "#0085cc"],   
-          seriesDefaults: {
-            // Make this a pie chart.
-            renderer: jQuery.jqplot.PieRenderer, 
-            rendererOptions: {
-              // Put data labels on the pie slices.
-              // By default, labels show the percentage of the slice.
-              dataLabels: 'value',
-              showDataLabels: true
-            }
-          }, 
-          legend: { show:true, location: 'e' }
-        }
-
-      );
-
-
-    });
- 
-</script>
 
 <?php   ?>

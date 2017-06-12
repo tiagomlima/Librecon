@@ -143,6 +143,7 @@
                                                 <label for="">Acervo</label>
                                                 <input type="text"  name="acervos" id="acervos" placeholder="Digite o nome do acervo" value=""/>
                                                 <input type="hidden"  name="acervos_id" id="acervos_id" value=""/>
+                                                <input type="hidden"  name="idExemplar" id="idExemplar" value=""/>
                                                 <?php } ?>
                                                 <input type="hidden"  name="estoque" id="estoque" value=""/>
                                                 <input type="hidden" id="qtde_max_item"  name="qtde_max_item" value="<?php echo $grupos->qtde_max_item ?>" />
@@ -162,7 +163,8 @@
                                         <table class="table table-bordered" id="tblAcervos">
                                             <thead>
                                                 <tr>                                              
-                                                   <th>Acervo</th>
+                                                   <th>Título</th>
+                                                   <th>Tombo</th>
                                                    <?php if($result->status != 'Devolvido'){ ?>
                                                    <th>Remover</th>  
                                                    <?php } ?>                                                  
@@ -174,15 +176,25 @@
                                                 	                                                                                                   
                                                     echo '<tr>';
                                                     echo '<td style="text-align:center"><a href="'.base_url().'index.php/acervos/visualizar/'.$p->idAcervos.'">'.$p->titulo.'</a></td>';
-													if($result->status != 'Devolvido'){
-                                                    echo '<td style="text-align:center"><a href="" idAcao="'.$p->idItens.'" prodAcao="'.$p->idAcervos.'" idEmprestimo="'.$p->emprestimos_id.'" title="Excluir Acervo" class="btn btn-danger"><i class="icon-remove icon-white"></i></a></td>';
-													}                                                   
-                                                    echo '</tr>';
+													
+													$this->db->where('emprestimos_id',$result->idEmprestimos);
+													$this->db->where('acervos_id',$p->idAcervos);
+													$itens = $this->db->get('itens_de_emprestimos')->result();
+													
+													foreach ($itens as $i){
+														$this->db->where('idExemplar',$i->exemplar_id);
+														$this->db->where('acervos_id',$p->idAcervos);
+														$exemplar = $this->db->get('exemplares')->row();
+														
+														echo '<td style="text-align:center">'.$exemplar->tombo.'</td>';
+														if($result->status != 'Devolvido'){
+	                                                    echo '<td style="text-align:center"><a href="" idAcao="'.$p->idItens.'" prodAcao="'.$p->idAcervos.'" idEmprestimo="'.$p->emprestimos_id.'" title="Excluir Acervo" class="btn btn-danger"><i class="icon-remove icon-white"></i></a></td>';
+														}                                                   
+	                                                    echo '</tr>';
+													}																										
                                                 }  
 												?>
-                                                
-                                                
-                                                                        
+                                                                                                                                                                        
                                             </tbody>
                                         </table> 
                                         
@@ -253,53 +265,14 @@
 <script src="<?php echo base_url();?>js/maskmoney.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-			$("#formFaturar").validate({
-          rules:{
-             descricao: {required:true},
-             cliente: {required:true},
-             valor: {required:true},
-             vencimento: {required:true}
-      
-          },
-          messages:{
-             descricao: {required: 'Campo Requerido.'},
-             cliente: {required: 'Campo Requerido.'},
-             valor: {required: 'Campo Requerido.'},
-             vencimento: {required: 'Campo Requerido.'}
-          },
-    
-          submitHandler: function( form ){       
-            var dados = $( form ).serialize();
-            $('#btn-cancelar-faturar').trigger('click');
-            $.ajax({
-              type: "POST",
-              url: "<?php echo base_url();?>index.php/emprestimos/faturar",
-              data: dados,
-              dataType: 'json',
-              success: function(data)
-              {
-                if(data.result == true){
-                    
-                    window.location.reload(true);
-                }
-                else{
-                    alert('Ocorreu um erro ao tentar realizar emprestimo.');
-                    $('#progress-fatura').hide();
-                }
-              }
-              });
-              return false;
-          }
-     });
+			
      $("#acervos").autocomplete({
             source: "<?php echo base_url(); ?>index.php/emprestimos/autoCompleteAcervo",
             minLength: 2,
             select: function( event, ui ) {
                  $("#acervos_id").val(ui.item.id);
-                 $("#estoque").val(ui.item.estoque);
-                
-                 
-                 
+                 $("#idExemplar").val(ui.item.exemplar);
+                 $("#estoque").val(ui.item.estoque);                                 
             }
       });
       $("#leitor").autocomplete({

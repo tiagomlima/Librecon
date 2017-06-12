@@ -66,10 +66,11 @@
                                         
                                         <form id="formAcervos" action="<?php echo base_url(); ?>index.php/reservas/adicionarAcervo" method="post">
                                             <div class="span8" style="width: 30%">
-                                                <input type="hidden" name="idAcervo" id="idAcervo" value=""/>
+                                                <input type="hidden" name="idAcervo" id="idAcervo" value=""/>                                                
                                                 <input type="hidden" name="idReservaAcervo" id="idReservaAcervo" value="<?php echo $result->idReserva ?>" />
                                                 <?php if($result->status != 'Reservado'){ ?>
                                                 <label for="">Acervo</label>
+                                                <input type="hidden" name="idExemplar" id="idExemplar" value=""/>
                                                 <input type="text"  name="acervos" id="acervos" placeholder="Digite o nome do acervo" value=""/>
                                                 <input type="hidden"  name="acervos_id" id="acervos_id" value=""/>
                                                 <?php } ?>
@@ -170,9 +171,7 @@ $(document).ready(function(){
             select: function( event, ui ) {
                  $("#acervos_id").val(ui.item.id);
                  $("#estoque").val(ui.item.estoque);
-                
-                 
-                 
+                 $("#idExemplar").val(ui.item.exemplar);                                
             }
       });
  

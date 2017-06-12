@@ -103,7 +103,7 @@
                         <table class="table table-bordered table-condensed" id="tblAcervos">
                                     <thead>
                                         <tr>                                            
-                                            <th style="font-size: 15px">Item</th>  
+                                            <th style="font-size: 15px">Título</th>  
                                             <th style="font-size: 15px">Autor</th> 
                                             <th style="font-size: 15px">Editora</th>  
                                             <th style="font-size: 15px">ISBN</th>      
@@ -117,8 +117,10 @@
                                             
                                             echo '<tr>';
                                             echo '<td style="text-align:center">'.$a->titulo.'</td>'; 
+											
 											$this->db->where('idAutor',$a->autor_id);
 											$autor = $this->db->get('autor')->result();
+											
 											foreach($autor as $at){
 												echo '<td style="text-align:center">'.$at->autor.'</td>';
 												
@@ -128,7 +130,19 @@
 												foreach($editora as $e){
 													echo '<td style="text-align:center">'.$e->editora.'</td>';
 													echo '<td style="text-align:center">'.$a->isbn.'</td>';
-													echo '<td style="text-align:center">'.$a->tombo.'</td>';
+													
+													$this->db->where('emprestimos_id',$result->idEmprestimos);
+													$this->db->where('acervos_id',$a->idAcervos);
+													$itens = $this->db->get('itens_de_emprestimos')->result();
+													
+													foreach ($itens as $i) {
+														$this->db->where('idExemplar',$i->exemplar_id);
+														$this->db->where('acervos_id',$a->idAcervos);
+														$exemplar = $this->db->get('exemplares')->row();
+														
+														echo '<td style="text-align:center">'.$exemplar->tombo.'</td>';
+													}
+													
 												}
 											}                                                                                     
                                             echo '</tr>';

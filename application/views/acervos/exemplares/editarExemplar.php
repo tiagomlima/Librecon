@@ -17,12 +17,15 @@
                     <i class="icon-align-justify"></i>
                 </span>
                 <h5>Exemplares </h5>
-                	
+                	<span style="margin-left: 84%">                            	                	                		
+                		<a href="<?php echo base_url();?>index.php/acervos/addExemplar/<?php echo $acervo->idAcervos ?>"><button class="btn btn-success" style="margin-top: 0.2%"><i class="icon-plus icon-white"></i></button></a>   
+                		                           	
+               	    </span>
             </div>
             <div class="widget-content nopadding">
-            	<?php echo $custom_error; 
+            	<?php  
             	$i = 1 ?>           	                    	 
-	           <form action="<?php echo current_url() ?>" id="formTombo" method="post" class="form-horizontal" >    
+	           <form  method="post" class="form-horizontal" >    
 	           	   <?php foreach($tombo as $t){ ?>
 	           	   		    	
 			         <div class="control-group">		                     	
@@ -30,7 +33,7 @@
 				         <div class="controls">			                        	
 				         <input id="tombo<?php echo $i ?>" type="text" name="tombo<?php echo $i ?>" placeholder="Tombo" value="<?php echo $t->tombo; ?>" class="span2" readonly />
 				         <a href="#modal-editar" role="button" data-toggle="modal" exemplar="<?php echo $t->idExemplar ?>" acervo="<?php echo $t->acervos_id ?>"><button class="btn btn-primary"><i class="icon-edit icon-white"></i></button></a>
-				         <a href="#modal-excluir" role="button"  data-toggle="modal" exemplar="<?php echo $t->idExemplar ?>" acervo="<?php echo $t->acervos_id ?>"><button class="btn btn-danger"><i class="icon-remove icon-white"></i></button></a>				         			                            
+				         <a href="<?php echo base_url(); ?>index.php/acervos/excluirExemplar/<?php echo $t->idExemplar ?>/<?php echo $t->acervos_id ?>"><button type="button" class="btn btn-danger"><i class="icon-remove icon-white"></i></button></a>				         			                            
 				         <input type="hidden" name="teste" id="teste" value="<?php set_value('teste'); ?>"/>
 			          </div>
 			        <?php $i++ ?>
@@ -40,8 +43,7 @@
                     <div class="form-actions">
                         <div class="span12">
                             <div class="span6 offset3">
-                                <button type="submit" class="btn btn-primary"><i class="icon-edit icon-white"></i> Editar</button>
-                                <a href="<?php echo base_url() ?>index.php/acervos" id="" class="btn"><i class="icon-arrow-left"></i> Voltar</a>
+                                <a href="<?php echo base_url() ?>index.php/acervos/visualizar/<?php echo $acervo->idAcervos ?>" id="" class="btn"><i class="icon-arrow-left"></i> Voltar</a>
                             </div>
                         </div>
                     </div>													                    
@@ -73,7 +75,7 @@
 
 <!-- Modal editar -->
 <div id="modal-editar" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <form action="<?php echo base_url() ?>index.php/acervos/editarExemplar" method="post" >
+  <form action="<?php echo base_url() ?>index.php/acervos/editExemplar" method="post" >
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h5 id="myModalLabel">Editar Exemplar</h5>
@@ -96,27 +98,6 @@
 <script src="<?php echo base_url();?>js/maskmoney.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
-
-        $('#formTombo').validate({
-            rules :{                 
-                  tombo: { required: true}
-                  
-            },
-            messages:{               
-                  tombo:{ required: 'Campo Requerido.'}
-                  
-            },
-
-            errorClass: "help-inline",
-            errorElement: "span",
-            highlight:function(element, errorClass, validClass) {
-                $(element).parents('.control-group').addClass('error');
-            },
-            unhighlight: function(element, errorClass, validClass) {
-                $(element).parents('.control-group').removeClass('error');
-                $(element).parents('.control-group').addClass('success');
-            }
-           });
            
            $(document).on('click', 'a', function(event) {
         

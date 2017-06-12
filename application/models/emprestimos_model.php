@@ -146,12 +146,14 @@ class Emprestimos_model extends CI_Model {
     public function autoCompleteAcervo($q){
 
         $this->db->select('*');
-        $this->db->limit(5);
+
         $this->db->like('titulo', $q);
+		$this->db->join('exemplares','acervos.idAcervos = exemplares.acervos_id');
+		$this->db->where('exemplares.status',0);
         $query = $this->db->get('acervos');
         if($query->num_rows > 0){
             foreach ($query->result_array() as $row){
-                $row_set[] = array('label'=>$row['titulo'].' | Tombo: '.$row['tombo'].' | Estoque: '.$row['estoque'], 'id'=>$row['idAcervos'], 'estoque'=>$row['estoque']);
+                $row_set[] = array('label'=>$row['titulo'].' | Tombo: '.$row['tombo'], 'id'=>$row['idAcervos'], 'exemplar'=>$row['idExemplar'], 'estoque'=>$row['estoque']);
             }
             echo json_encode($row_set);
         }

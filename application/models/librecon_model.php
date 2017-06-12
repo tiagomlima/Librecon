@@ -133,6 +133,15 @@ class Librecon_model extends CI_Model {
         $this->db->limit(10);
         return $this->db->get()->result();
     }
+	
+	function getReservasAbertas(){
+        $this->db->select('reserva.*, usuarios.nome');
+        $this->db->from('reserva');
+        $this->db->join('usuarios', 'usuarios.idUsuarios = reserva.usuario_id');
+        $this->db->where('reserva.status','Reservado');
+        $this->db->limit(10);
+        return $this->db->get()->result();
+    }
 
    function getAcervosMinimo(){  
 

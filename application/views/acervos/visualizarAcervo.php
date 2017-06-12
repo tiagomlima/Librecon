@@ -150,13 +150,15 @@
 														$tombo = $this->db->get('exemplares')->result();
 														
 														if(count($tombo) > 0){
-															$link = base_url().'index.php/acervos/editarTombo/'.$result->idAcervos;
+															$link = base_url().'index.php/acervos/editarExemplar/'.$result->idAcervos;
 														}else{
-															$link = base_url().'index.php/acervos/adicionarTombo/'.$result->idAcervos;
+															$link = base_url().'index.php/acervos/adicionarExemplar/'.$result->idAcervos;
 														}
 						                            
 						                            ?>
-						                            <td> <?php echo $status ?> <a href="<?php echo $link ?>"><button class="btn btn-mini" style="margin-left: 1%">Exemplares</button></a></td>
+						                            
+						                            <td> <?php echo $status ?> <a href="<?php echo $link ?>"><?php if($this->session->userdata('tipo_usuario') == 0){ ?><button class="btn btn-mini" style="margin-left: 1%">Exemplares</button></a></td> <?php } ?>
+						                           
 						                        </tr>                 
 						                    </tbody>					                    
 						                </table>  

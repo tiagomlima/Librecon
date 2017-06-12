@@ -174,14 +174,35 @@ class Emprestimos extends CI_Controller {
 				$this->db->query("UPDATE reserva set status = 'Aprovado' WHERE idReserva = ".$idReserva);
 										
 				foreach ($lista as $l){
-					$data = array(
-						'emprestimos_id' => $id,
-						'acervos_id' => $l->acervos_id
-					);
-					
-					$this->emprestimos_model->add('itens_de_emprestimos',$data);
-					$this->db->query("UPDATE acervos set estoque = estoque - 1 WHERE idAcervos = ".$l->acervos_id);
-					
+					//verifica se o exemplar foi escolhido 
+					if($l->exemplar_id == null){
+						//se nao foi, acrescenta um disponivel
+						//pega o exemplar disponivel do livro
+						$this->db->where('status',0);
+						$this->db->where('acervos_id',$l->acervos_id);
+						$exemplar = $this->db->get('exemplares')->row();
+						
+						$data = array(
+							'emprestimos_id' => $id,
+							'acervos_id' => $l->acervos_id,
+							'exemplar_id' => $exemplar->idExemplar
+						);
+						
+						$this->emprestimos_model->add('itens_de_emprestimos',$data);
+						$this->db->query("UPDATE acervos set estoque = estoque - 1 WHERE idAcervos = ".$l->acervos_id);
+						$this->db->query("UPDATE exemplares set status = 1 WHERE idExemplar = ".$exemplar->idExemplar);
+					} else {
+						//se sim, apenas pega
+						$data = array(
+							'emprestimos_id' => $id,
+							'acervos_id' => $l->acervos_id,
+							'exemplar_id' => $l->exemplar_id
+						);
+						
+						$this->emprestimos_model->add('itens_de_emprestimos',$data);
+						$this->db->query("UPDATE acervos set estoque = estoque - 1 WHERE idAcervos = ".$l->acervos_id);
+					}
+														
 				}						
 				$this->session->set_flashdata('success','Emprestimo iniciado com sucesso!');
 	            redirect('emprestimos/editar/'.$id);	
@@ -191,7 +212,6 @@ class Emprestimos extends CI_Controller {
 			}			
 		}
  	}
-
     
     function editar() {
         if(!$this->uri->segment(3) || !is_numeric($this->uri->segment(3))){
@@ -331,6 +351,9 @@ class Emprestimos extends CI_Controller {
 		$status = $this->input->post('status');
 		$dataDevolucao = date('Y-m-d');
 		
+		$this->db->where('emprestimos_id',$idEmprestimos);
+		$itens = $this->db->get('itens_de_emprestimos')->result();
+		
 		if($status == 'Emprestado' or $status == 'Renovado'){
 			
 	    // pega todos os ids dos acervos inclusos no itens de emprestimo		
@@ -351,6 +374,11 @@ class Emprestimos extends CI_Controller {
 			$i++;
 		}
 		
+		foreach ($itens as $i){
+			//Atualiza o status do exemplar
+			$this->db->query("UPDATE exemplares set status = 0 WHERE idExemplar = ".$i->exemplar_id);
+		}
+			
 		//Atualiza o status para devolvido
 		$atualizarStatus = "UPDATE emprestimos set status = 'Devolvido' WHERE idEmprestimos = ".$idEmprestimos;
 		$this->db->query($atualizarStatus,array($idEmprestimos));
@@ -389,16 +417,15 @@ class Emprestimos extends CI_Controller {
           redirect(base_url());
         }
 		
-        $this->load->library('form_validation');
-        $this->form_validation->set_rules('idAcervo', 'Acervo', 'trim|required|xss_clean');
-        $this->form_validation->set_rules('idEmprestimosAcervo', 'Emprestimos', 'trim|required|xss_clean');
-        	
-			
-			
+	        $this->load->library('form_validation');
+	        $this->form_validation->set_rules('idAcervo', 'Acervo', 'trim|required|xss_clean');
+	        $this->form_validation->set_rules('idEmprestimosAcervo', 'Emprestimos', 'trim|required|xss_clean');
+        			
             $idEmprestimos = $this->input->post('idEmprestimosAcervo');
             $qtde_max_item = $this->input->post('qtde_max_item');
 			$qtde_atual = $this->input->post('qtde_atual');
             $acervo = $this->input->post('acervos_id');
+			$idExemplar = $this->input->post('idExemplar');
 			$estoque = $this->input->post('estoque');
 			
 			if($qtde_atual > $qtde_max_item){
@@ -421,6 +448,7 @@ class Emprestimos extends CI_Controller {
               
                 'acervos_id'=> $acervo,
                 'emprestimos_id'=> $idEmprestimos,
+                'exemplar_id' => $idExemplar
             );
             if($this->emprestimos_model->add('itens_de_emprestimos', $data) == true){
                 $sql = "UPDATE acervos set estoque = estoque - 1 WHERE idAcervos =".$acervo;
@@ -428,6 +456,8 @@ class Emprestimos extends CI_Controller {
 				
 				$addQtde = "UPDATE emprestimos set qtde_item = qtde_item  + 1 WHERE idEmprestimos = ".$idEmprestimos;
 				$this->db->query($addQtde, array($acervo));
+				
+				$this->db->query("UPDATE exemplares set status = 1 WHERE idExemplar = ".$idExemplar);
 				
 				$this->session->set_flashdata('success','Item adicionado com sucesso'); 
                 redirect('emprestimos/editar/'.$idEmprestimos);
