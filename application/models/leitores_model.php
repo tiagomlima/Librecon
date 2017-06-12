@@ -275,4 +275,22 @@ class Leitores_model extends CI_Model {
 			return false;
 		}
 	}
+	
+	function verificaAtrasoGeral(){
+		$dataAtual = date('Y-m-d');
+		$this->db->where('status != ','Devolvido');
+		$this->db->where('dataVencimento < ',$dataAtual);
+		$emprestimos = $this->db->get('emprestimos')->result();
+		
+		if($contagem = count($emprestimos) > 0){
+			foreach ($emprestimos as $e){
+				$multa = $this->getDuracaoMulta($e->leitor_id);
+				$data = date('Y-m-d H:i:s', strtotime("+ ".$multa." days"));
+				$this->aplicarMulta($e->leitor_id, $data);
+				return true;
+			}
+		}else{
+			return false;
+		}		
+	}
 }

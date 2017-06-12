@@ -68,13 +68,20 @@
                             foreach ($emprestimos as $e) {
                             	$dataEmprestimo = date(('d/m/Y'),strtotime($e->dataEmprestimo));
 								$dataVencimento = date(('d/m/Y'),strtotime($e->dataVencimento));
+								$dataAtual = date('d/m/Y');
+								
+								if($dataAtual > $e->dataVencimento){
+									$status = 'ATRASADO';
+								}else {
+									$status = $e->status;
+								}
 								
                                 echo '<tr>';
                                 echo '<td>'.$e->idEmprestimos.'</td>';
                                 echo '<td>'.$dataEmprestimo.'</td>';
                                 echo '<td>'.$dataVencimento.'</td>';
                                 echo '<td><a href="'.base_url().'index.php/leitores/visualizar/'.$e->leitor_id.'">'.$e->nome.'</a></td>';																						
-								echo '<td>'.$e->status.'</td>';								
+								echo '<td>'.$tatus.'</td>';								
                                 echo '<td>';
                                 if($this->permission->checkPermission($this->session->userdata('permissao'),'vEmprestimo')){
                                     echo '<a href="'.base_url().'index.php/emprestimos/visualizar/'.$e->idEmprestimos.'" class="btn"> <i class="icon-eye-open" ></i> </a> '; 

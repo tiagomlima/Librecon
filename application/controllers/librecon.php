@@ -54,6 +54,10 @@ class Librecon extends CI_Controller {
 				}
 			}				
 			redirect('librecon/leitor');
+		}else{
+			if($this->leitores_model->verificaAtrasoGeral() == true){
+				$this->session->set_flashdata('success','Multas aplicadas a leitores com atraso');
+			}		
 		}
 		
 
