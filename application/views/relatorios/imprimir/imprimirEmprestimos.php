@@ -38,10 +38,10 @@
                   <table class="table table-bordered">
                       <thead>
                           <tr>
-                              <th style="font-size: 1.2em; padding: 5px;">Leitor</th>
-                              <th style="font-size: 1.2em; padding: 5px;">Data Empréstimo</th>
-                              <th style="font-size: 1.2em; padding: 5px;">Quantidade</th>
-                              <th style="font-size: 1.2em; padding: 5px;">Status</th>
+                              <th style="font-size: 1em; padding: 5px; text-align:center">Leitor</th>
+                              <th style="font-size: 1em; padding: 5px; text-align:center">Data Empréstimo</th>
+                              <th style="font-size: 1em; padding: 5px; text-align:center">Quantidade</th>
+                              <th style="font-size: 1em; padding: 5px; text-align:center">Status</th>
                           </tr>
                       </thead>
                       <tbody>
@@ -49,13 +49,20 @@
                           foreach ($emprestimos as $e) {
 
                               echo '<tr>';
-                              echo '<td>' . $e->nome . '</td>';
-                              echo '<td>' . date('d/m/Y',  strtotime($e->dataEmprestimo)). '</td>';                                              
-                              echo '<td>' . $e->qtde_item. '</td>';
-                              echo '<td>' . $e->status. '</td>';
+                              echo '<td style="text-align:center; font-size: 1em">' . $e->nome . '</td>';
+                              echo '<td style="text-align:center; font-size: 1em">' . date('d/m/Y',  strtotime($e->dataEmprestimo)). '</td>';                                              
+                              echo '<td style="text-align:center; font-size: 1em">' . $e->qtde_item. '</td>';
+                              echo '<td style="text-align:center; font-size: 1em">' . $e->status. '</td>';
                               echo '</tr>';
                           }
                           ?>
+                          <tr>
+                          <?php 
+							$totalEmprestimos = $this->db->get('emprestimos')->result();							
+                          ?>
+	                          <td colspan="4" style="text-align: right; font-size: 1em"><strong>Total de registros:</strong></td>	                          
+	                          <td><strong><?php echo count($totalEmprestimos) ?></strong></td>
+                          </tr>
                       </tbody>
                   </table>
 

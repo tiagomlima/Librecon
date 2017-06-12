@@ -34,7 +34,15 @@
                                         </a>
                                     </div>
                                 </div>
-                                <img src="<?php echo $result->img_leitor ?>" alt="foto do leitor" width="15%" height="15%" style="margin-left: 1.5%;margin-top:1%"/>
+                                <!-- foto do leitor -->
+                                <img src="<?php echo $result->img_leitor ?>" alt="foto do leitor" width="15%" height="15%" style="margin-left: 1.5%;margin-top:1%; padding: 0"/>
+                                <?php if($result->multa != 1){?>
+                                <!-- botão multar -->
+                                <a href="<?php echo base_url(); ?>index.php/leitores/multar/<?php echo $result->idUsuarios; ?>"><button class="btn btn-danger" style="float:right; margin-top: 1%; margin-right: 1%"><i class="icon-white icon-ban-circle"> Multar</i></button></a>
+                                <?php } else {?>
+                                <!-- botão retirar multa -->
+                                <a href="<?php echo base_url(); ?>index.php/leitores/removerMulta/<?php echo $result->idUsuarios; ?>"><button class="btn btn-warning" style="float:right; margin-top: 1%; margin-right: 1%"><i class="icon-white icon-remove"> Remover Multa</i></button></a>	
+                                <?php } ?>
                                 <div class="collapse in accordion-body" id="collapseGOne">
                                     <div class="widget-content">
                                         <table class="table table-bordered">

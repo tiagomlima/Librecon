@@ -184,24 +184,38 @@ class Leitores_model extends CI_Model {
          
     }
 	
-	function pesquisarLeitor($nome,$curso,$grupo,$matricula){
+	function pesquisarLeitor($nome,$curso,$grupo,$matricula,$status){
          $data = array();
-         
-         // buscando leitores
-         $this->db->like('nome',$nome);
-		 $this->db->like('curso_id',$curso);
-		 $this->db->like('grupo_id',$grupo);
-		 $this->db->like('matricula',$matricula);
-         $this->db->limit(5);
-         $data['usuarios'] = $this->db->get('usuarios')->result();
-       
-         return $data;
-
+		 
+		 if($status != null){
+		 	if($status == 'Multado'){
+		 		$this->db->where('multa',1);
+				$data['usuarios'] = $this->db->get('usuarios')->result();
+				return $data;
+		 	}
+			if($status == 'Inativo'){
+				$this->db->where('situacao',0);
+				$data['usuarios'] = $this->db->get('usuarios')->result();
+				return $data;
+			}
+		 }else{
+		 	// buscando leitores
+	         $this->db->like('nome',$nome);
+			 $this->db->like('curso_id',$curso);
+			 $this->db->like('grupo_id',$grupo);
+			 $this->db->like('matricula',$matricula);
+	         $this->db->limit(5);
+	         $data['usuarios'] = $this->db->get('usuarios')->result();
+	       
+	         return $data;
+			
+		 }
+               
     }
 	
 	function verificaMulta($leitor){
 		$this->db->where('idUsuarios',$leitor);
-		$this->db->where('statusMulta',1);
+		$this->db->where('multa',1);
 		$multa = $this->db->get('usuarios')->row();
 		
 		if(count($multa) > 0){
@@ -211,6 +225,18 @@ class Leitores_model extends CI_Model {
 		}
 		
 	}
+
+	function getDuracaoMulta($leitor){
+		$this->db->where('idUsuarios',$leitor);
+		$usuario = $this->db->get('usuarios')->row();
+		$idGrupo = $usuario->grupo_id;
+		
+		$this->db->where('idGrupo',$idGrupo);
+		$grupo = $this->db->get('grupos')->row();
+		$multa = $grupo->multa;
+		
+		return $multa;
+	}	
 	
 	function verificaAtraso($leitor){
 		$this->db->where('leitor_id',$leitor);
@@ -226,56 +252,27 @@ class Leitores_model extends CI_Model {
 	}
 	
 	function aplicarMulta($leitor,$data){
-		$this->db->query("UPDATE usuarios set statusMulta = 1, dataMulta = '".$data."' WHERE idUsuarios = ".$leitor);
+		$this->db->query("UPDATE usuarios set multa = 1, dataMulta = '".$data."' WHERE idUsuarios = ".$leitor);
+		return true;
 	}
 	
-	/*function multar($leitor,$data){
-		$this->db->query("UPDATE usuarios set dataMulta = '".$data."', statusMulta = 1 WHERE idUsuarios = ".$leitor);
-		
-		if ($this->db->affected_rows() > 0)
-		{
-			return TRUE;
-		}
-		
-		return FALSE;   
+	function finalizarMulta($leitor){
+		$this->db->query("UPDATE usuarios set multa = 0, dataMulta = NULL WHERE idUsuarios = ".$leitor);
+		return true;
 	}
 	
-	function retirarMulta($leitor){
-		$this->db->query("UPDATE usuarios set dataMulta = NULL, statusMulta = 0 WHERE idUsuarios = ".$leitor);
-		
-		if ($this->db->affected_rows() > 0)
-		{
-			return TRUE;
-		}
-		
-		return FALSE; 
-	}
-	
-	function verificaMulta($leitor){
+	function verificaVencimentoMulta($leitor){
 		$this->db->where('idUsuarios',$leitor);
-		$this->db->where('statusMulta', 1);
+		$this->db->where('multa',1);
+		$leitor = $this->db->get('usuarios')->row();
 		
-		if ($this->db->get('usuarios')->row() > 0)
-		{
-			return TRUE;
+		$dataAtual = date('Y-m-d H:i:s');
+		
+		if($dataAtual > $leitor->dataMulta){
+			$this->finalizarMulta($leitor);
+			return true;
+		}else{
+			return false;
 		}
-		
-		return FALSE; 	
 	}
-				
-	function verificaAtraso($leitor){
-		$this->db->where('leitor_id',$leitor);
-		$this->db->where('status !=','Devolvido');
-		$emprestimo = $this->db->get('emprestimos')->row();
-		
-		if(count($emprestimo) > 0){
-			$dataAtual = date('Y-m-d');
-			if($emprestimo->dataVencimento < $dataAtual){
-				return true;
-			}else{
-				return false;
-			}
-		}
-	}*/
-
 }

@@ -22,8 +22,6 @@
 
   <body style="background-color: transparent">
 
-
-
       <div class="container-fluid">
 
           <div class="row-fluid">
@@ -38,18 +36,21 @@
                   <table class="table table-bordered">
                       <thead>
                           <tr>
-                              <th style="font-size: 1.2em; padding: 5px;">Título</th>
-                              <th style="font-size: 1.2em; padding: 5px;">Autor</th>
-                              <th style="font-size: 1.2em; padding: 5px;">Editora</th>
-                              <th style="font-size: 1.2em; padding: 5px;">ISBN</th>
-                              <th style="font-size: 1.2em; padding: 5px;">Tombo</th>
+                              <th style="font-size: 1em; padding: 5px; text-align:center">Título</th>
+                              <th style="font-size: 1em; padding: 5px; text-align:center">Autor</th>
+                              <th style="font-size: 1em; padding: 5px; text-align:center">Editora</th>
+                              <th style="font-size: 1em; padding: 5px; text-align:center">ISBN</th>
+                              <th style="font-size: 1em; padding: 5px; text-align:center">Tabela Cutter</th>
+                              <th style="font-size: 1em; padding: 5px; text-align:center">Edição</th>
+                              <th style="font-size: 1em; padding: 5px; text-align:center">Ano Edição</th>
+                              <th style="font-size: 1em; padding: 5px; text-align:center">Nº Páginas</th>
                               <?php if($tipo == 2){?>
-                              <th style="font-size: 1.2em; padding: 5px;">Data Aquisição</th>
+                              <th style="font-size: 1em; padding: 5px; text-align:center">Data Aquisição</th>
                               <?php } ?>
                               <?php if($tipo == 4){ ?>                              
-                              <th style="font-size: 1.2em; padding: 5px;">Emprestimos</th>
+                              <th style="font-size: 1em; padding: 5px; text-align:center">Emprestimos</th>
                               <?php }else { ?>
-                              <th style="font-size: 1.2em; padding: 5px;">Estoque</th>
+                              <th style="font-size: 1em; padding: 5px; text-align:center">Exemplares</th>
                               <?php } ?>
                           </tr>
                       </thead>
@@ -57,56 +58,53 @@
                           <?php
                           foreach ($acervos as $a) {
                               echo '<tr>';
-                              echo '<td>' . $a->titulo. '</td>';
+                              echo '<td style="text-align:center; font-size: 1em">' . $a->titulo. '</td>';
 							  
 							  $this->db->where('idAutor',$a->autor_id);
 							  $autor = $this->db->get('autor')->result();
 							  
 							  foreach ($autor as $at){
-	                              echo '<td>' . $at->autor . '</td>';
+	                              echo '<td style="text-align:center; font-size: 1em">' . $at->autor . '</td>';
 	                              
 								  $this->db->where('idEditora',$a->editora_id);								  
 								  $editora = $this->db->get('editora')->result();	
-							  foreach ($editora as $e){
-							  	  echo '<td>' . $e->editora . '</td>';
-	                              echo '<td>' . $a->isbn . '</td>';
-	                              echo '<td>' . $a->tombo. '</td>';
-								  if($tipo == 2){
-								  	echo '<td>' .date('d/m/Y', strtotime($a->dataAquisicao)). '</td>';
-								  }
-								  if($tipo == 4){
-								  	echo '<td>' . $a->total. '</td>';
-								  } else {
-								  	echo '<td>' . $a->estoque. '</td>';
-								  }	                              
-	                              echo '</tr>';
-							 	}
-						 	 }
-                          }
+								  
+								  foreach ($editora as $e){
+								  	  echo '<td style="text-align:center; font-size: 1em">' . $e->editora . '</td>';
+		                              echo '<td style="text-align:center; font-size: 1em">' . $a->isbn . '</td>';
+									  echo '<td style="text-align:center; font-size: 1em">' . $a->tabelaCutter . '</td>';
+									  echo '<td style="text-align:center; font-size: 1em">' . $a->edicao . '</td>';
+									  echo '<td style="text-align:center; font-size: 1em">' . $a->anoEdicao . '</td>';
+									  echo '<td style="text-align:center; font-size: 1em">' . $a->numero_paginas . '</td>';
+									  if($tipo == 2){
+									  	echo '<td style="text-align:center; font-size: 1em">' .date('d/m/Y', strtotime($a->dataAquisicao)). '</td>';
+									  }
+									  if($tipo == 4){
+									  	echo '<td style="text-align:center; font-size: 1em">' . $a->total. '</td>';
+									  } else {
+									  	echo '<td style="text-align:center; font-size: 1em">' . $a->estoque. '</td>';
+									  }	                              
+		                              echo '</tr>';
+								 	}																			
+						 		 }
+                         	 }
+
 						  $totalAcervos = $this->db->get('acervos')->result();
 						  
 						  if($tipo == 1){						  							  
                           ?>                         
                           <tr>
-                          	<td><h6>Total de Acervos: <?php echo count($totalAcervos) ?> </h6></td>
+                          	<td colspan="9" style="text-align: right"><h6>Total: <?php echo count($totalAcervos) ?> </h6></td>
                           </tr>
                           <?php } ?>
                       </tbody>
                   </table>
-
                   </div>
-
               </div>
                   <h5 style="text-align: right">Data do Relatório: <?php echo date('d/m/Y');?></h5>
-
           </div>
-
-
-
       </div>
 </div>
-
-
 
 
             <!-- Arquivos js-->

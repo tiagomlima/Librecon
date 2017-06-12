@@ -35,6 +35,11 @@ if(!$leitores){?>
                            echo '<option value="'.$g->idGrupo.'">'.$g->nomeGrupo.'</option>';
                     } ?>                                  
                 </select>
+                <select name="status" id="status" style="width:15%">                                 
+                	<option value="">Status</option>
+                	<option value="Multado">Multado</option> 
+                	<option value="Inativo">Inativo</option>               	                              
+                </select>
                 <input type="text" id="nome" name="nome" value="" placeholder="Procurar por nome" style="width:15%">
                 <input type="text" id="matricula" name="matricula" value="" placeholder="Procurar por R.A" style="width:18%">
                 <button style="margin-bottom:1%"><i class="icon-search icon-white"></i></button>     
@@ -88,6 +93,11 @@ if(!$leitores){?>
                            echo '<option value="'.$g->idGrupo.'">'.$g->nomeGrupo.'</option>';
                     } ?>                                  
                 </select>
+                <select name="status" id="status" style="width:15%">                                 
+                	<option value="">Status</option>
+                	<option value="Multado">Multado</option> 
+                	<option value="Inativo">Inativo</option>               	                              
+                </select>
                 <input type="text" id="nome" name="nome" value="" placeholder="Procurar por nome" style="width:15%">
                 <input type="text" id="matricula" name="matricula" value="" placeholder="Procurar por R.A" style="width:18%">
                 <button style="margin-bottom:1%"><i class="icon-search icon-white"></i></button>     
@@ -101,6 +111,7 @@ if(!$leitores){?>
 <table class="table table-bordered ">
     <thead>
         <tr>
+        	<th></th>
             <th>Nome</th>
             <th>R.A</th>
             <th>Curso</th>

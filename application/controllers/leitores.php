@@ -20,11 +20,12 @@ class Leitores extends CI_Controller {
             $this->load->helper(array('codegen_helper'));
             $this->load->model('leitores_model','',TRUE);
 			$this->load->model('cursos_model','',TRUE);
-			$this->load->model('grupos_model','',TRUE);
+			$this->load->model('grupos_model','',TRUE);		
             $this->data['menuLeitores'] = 'leitores';
 			
 			$this->data['cursos'] = $this->cursos_model->getActive('cursos','cursos.idCursos,cursos.nomeCurso');
 			$this->data['grupos'] = $this->grupos_model->getActive('grupos','grupos.idGrupo,grupos.nomeGrupo');
+					
 	}	
 	
 	function index(){
@@ -38,8 +39,7 @@ class Leitores extends CI_Controller {
            redirect(base_url());
         }
         $this->load->library('table');
-        $this->load->library('pagination');
-        
+        $this->load->library('pagination');       
    
         $config['base_url'] = base_url().'index.php/leitores/gerenciar/';
         $config['total_rows'] = $this->leitores_model->count('usuarios');
@@ -65,7 +65,7 @@ class Leitores extends CI_Controller {
         
         $this->pagination->initialize($config); 	
         
-	    $this->data['results'] = $this->leitores_model->get('usuarios','idUsuarios,nome,cpf,datanasc,sexo,situacao,matricula,telefone,celular,email,rua,numero,bairro,cidade,estado,cep,curso_id,grupo_id,img_leitor','',$config['per_page'],$this->uri->segment(3));       	
+	    $this->data['results'] = $this->leitores_model->get('usuarios','idUsuarios,nome,cpf,datanasc,sexo,situacao,matricula,telefone,celular,email,rua,numero,bairro,cidade,estado,cep,curso_id,grupo_id,img_leitor,multa','',$config['per_page'],$this->uri->segment(3));       	
 		$this->data['curso'] = $this->leitores_model->getCurso($config['per_page'],$this->uri->segment(3));
 		$this->data['grupo'] = $this->leitores_model->getGrupo($config['per_page'],$this->uri->segment(3));
 		$this->data['permissoes'] = $this->leitores_model->getPermissao($config['per_page'],$this->uri->segment(3));
@@ -425,28 +425,47 @@ class Leitores extends CI_Controller {
 		$curso = $this->input->post('curso_id');
 		$grupo = $this->input->post('grupo_id');
 		$matricula = $this->input->post('matricula');
+		$status = $grupo = $this->input->post('status');
 							
-		$data['results'] = $this->leitores_model->pesquisarLeitor($nome,$curso,$grupo,$matricula);
+		$data['results'] = $this->leitores_model->pesquisarLeitor($nome,$curso,$grupo,$matricula,$status);
         $this->data['leitores'] = $data['results']['usuarios'];
 		$this->data['view'] = 'leitores/pesquisar';
         $this->load->view('tema/topo',  $this->data);
 	}
 
-	function retirarMulta(){
+	function multar(){
 		if(!$this->permission->checkPermission($this->session->userdata('permissao'),'eLeitor')){
-			$this->session->set_flashdata('error','Você não tem permissão para editar leitores.');
-            redirect(base_url());
+               $this->session->set_flashdata('error','Você não tem permissão para multar leitores.');
+               redirect(base_url());
+            }
+		
+		$leitor = $this->uri->segment(3);
+		$multa = $this->leitores_model->getDuracaoMulta($leitor);
+		$data = date('Y-m-d H:i:s', strtotime("+ ".$multa." days"));
+		
+		if($this->leitores_model->aplicarMulta($leitor,$data) == true){
+			$this->session->set_flashdata('success','Leitor multado');
+			redirect(base_url().'index.php/leitores/visualizar/'.$leitor);
+		}else{
+			$this->session->set_flashdata('error','Erro ao multar leitor');
+			redirect(base_url().'index.php/leitores/visualizar/'.$leitor);
 		}
+	}
+	
+	function removerMulta(){
+		if(!$this->permission->checkPermission($this->session->userdata('permissao'),'eLeitor')){
+               $this->session->set_flashdata('error','Você não tem permissão para remover multas.');
+               redirect(base_url());
+            }
 		
 		$leitor = $this->uri->segment(3);
 		
-		if($this->leitores_model->retirarMulta($leitor) == true){
-			
-			$this->session->set_flashdata('succes','Multa retirada com sucesso!');
-            redirect(base_url().'index.php/leitores');
+		if($this->leitores_model->finalizarMulta($leitor) == true){
+			$this->session->set_flashdata('success','Multa retirada');
+			redirect(base_url().'index.php/leitores/visualizar/'.$leitor);
 		}else{
 			$this->session->set_flashdata('error','Erro ao retirar multa');
-            redirect(base_url().'index.php/leitores/visualizar/'.$leitor);
+			redirect(base_url().'index.php/leitores/visualizar/'.$leitor);
 		}
 	}
 }

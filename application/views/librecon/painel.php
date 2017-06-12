@@ -24,14 +24,14 @@
             <li class="bg_lb"> <a href="<?php echo base_url()?>index.php/leitores"> <i class="icon-group"></i> Leitores</a> </li>
         <?php } ?>
         <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vAcervo')){ ?>
-            <li class="bg_lg"> <a href="<?php echo base_url()?>index.php/acervos"> <i class="icon-book"></i> Acervo</a> </li>
+            <li class="bg_lg"> <a href="<?php echo base_url()?>index.php/acervos"> <i class="icon-book"></i> Acervos</a> </li>
         <?php } ?>
         <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vReserva')){ ?>
-            <li class="bg_ly"> <a href="<?php echo base_url()?>index.php/reservas"> <i class="icon-book"></i> Reservas</a> </li>
+            <li class="bg_ly"> <a href="<?php echo base_url()?>index.php/reservas"> <i class="icon-calendar"></i> Reservas</a> </li>
         <?php } ?>
         
         <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vEmprestimo')){ ?>
-            <li class="bg_ls"> <a href="<?php echo base_url()?>index.php/emprestimos"><i class="icon-book"></i> Emprestimos</a></li>
+            <li class="bg_ls"> <a href="<?php echo base_url()?>index.php/emprestimos"><i class="icon-list"></i> Emprestimos</a></li>
         <?php } ?>
 
         
@@ -49,7 +49,7 @@
     <div class="span12" style="margin-left: 0">
         
         <div class="widget-box">
-            <div class="widget-title"><span class="icon"><i class="icon-signal"></i></span><h5>Empréstimos Em Aberto</h5></div>
+            <div class="widget-title"><span class="icon"><i class="icon-list"></i></span><h5>Empréstimos Em Aberto</h5></div>
             <div class="widget-content">
                 <table class="table table-bordered">
                     <thead>
@@ -101,7 +101,7 @@
     <div class="span12" style="margin-left: 0">
         
         <div class="widget-box">
-            <div class="widget-title"><span class="icon"><i class="icon-signal"></i></span><h5>Reservas Em Aberto</h5></div>
+            <div class="widget-title"><span class="icon"><i class="icon-calendar"></i></span><h5>Reservas Em Aberto</h5></div>
             <div class="widget-content">
                 <table class="table table-bordered">
                     <thead>

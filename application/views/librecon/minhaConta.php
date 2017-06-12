@@ -41,6 +41,15 @@
                             ?>
                             <li class="bg_ly span12" style="margin-left: 0"><strong>Curso: <?php echo $curso->nomeCurso?></strong></li>
                             <li class="bg_lo span12" style="margin-left: 0"><strong>Data de Cadastro: <?php echo date('d/m/Y', strtotime($usuario->dataCadastro)); ?></strong></li>
+                            <?php 
+                            	$this->db->where('idUsuarios',$usuario->idUsuarios);
+								$this->db->where('multa',1);
+								$multa = $this->db->get('usuarios')->row();
+								
+								if(count($multa) > 0){
+								?><li class="bg_lr span12" style="margin-left: 0"><strong>Conta multada</strong></li>
+								<li class="bg_lr span12" style="margin-left: 0"><strong>Vencimento da multa: <?php echo date('d/m/y H:i:s', strtotime($usuario->dataMulta));?></strong></li>
+								<?php } ?>                                                    
                         </ul>
                         <?php } ?>
                     </div>

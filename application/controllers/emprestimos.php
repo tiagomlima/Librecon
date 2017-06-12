@@ -22,6 +22,7 @@ class Emprestimos extends CI_Controller {
 		$this->load->model('emprestimos_model','',TRUE);
 		$this->load->model('usuarios_model','',TRUE);
 		$this->load->model('reservas_model','',TRUE);
+		$this->load->model('leitores_model','',TRUE);
 		$this->data['menuEmprestimos'] = 'Emprestimos';
 	}	
 	
@@ -68,12 +69,17 @@ class Emprestimos extends CI_Controller {
 		
     }
 	
-    function adicionar(){
-		
+    function adicionar(){		
         if(!$this->permission->checkPermission($this->session->userdata('permissao'),'aEmprestimo')){
           $this->session->set_flashdata('error','Você não tem permissão para adicionar emprestimos.');
           redirect(base_url());
         }
+		
+		if($this->leitores_model->verificaMulta($this->input->post('leitor_id'))){
+			$this->session->set_flashdata('error','O leitor está multado.');            
+        	redirect(base_url().'index.php/emprestimos/adicionar');
+		}
+		
         $this->load->library('form_validation');
         $this->data['custom_error'] = '';
         
@@ -499,7 +505,7 @@ class Emprestimos extends CI_Controller {
 
 	public function emprestar(){
 		if(!$this->permission->checkPermission($this->session->userdata('permissao'),'eEmprestimo')){
-              $this->session->set_flashdata('error','Você não tem permissão para emprestar');
+              $this->session->set_flashdata('error','Você não tem permissão para ai');
               redirect(base_url());
             }
 				

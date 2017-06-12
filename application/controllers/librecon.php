@@ -32,17 +32,27 @@ class Librecon extends CI_Controller {
         }
 		
 		if($this->session->userdata('tipo_usuario') == 1){
-			
-			/*if($this->leitores_model->verificaMulta($this->session->userdata('id')) == false){
-				if($this->leitores_model->verificaAtraso($this->session->userdata('id'))){
-					$data = date('Y-m-d H:i:s', strtotime("+ 5 days"));
-					$this->leitores_model->aplicarMulta($this->session->userdata('id'),$data);
-					$this->session->set_flashdata('error','Devido ao atraso de devolução, sua conta foi bloqueada por 5 dias.');
+			$leitor = $this->session->userdata('id');
+			//verifica se o usuario possui multa
+			if($this->leitores_model->verificaMulta($leitor) == false){
+				//se nao possui,verifica se possui algum emprestimo em atraso
+				if($this->leitores_model->verificaAtraso($leitor)){
+					//se possui,aplica a multa
+					$multa = $this->leitores_model->getDuracaoMulta($leitor);
+					$data = date('Y-m-d H:i:s', strtotime("+ ".$multa." days"));
+					$this->leitores_model->aplicarMulta($leitor,$data);
+					$this->session->set_flashdata('error','Devido ao atraso de devolução, sua conta foi bloqueada por '.$multa.' dias.');
 					redirect('librecon/leitor');
+				}								
+			}else{ //se possui multa, verifica se possui emprestimo em atraso
+				if($this->leitores_model->verificaAtraso($leitor) == false){
+					//se nao possuir atraso, verifica se a multa ja venceu 
+					if($this->leitores_model->verificaVencimentoMulta($leitor)){
+						$this->session->set_flashdata('success','Seu período de multa acabou, sua conta foi desbloqueada.');
+						redirect('librecon/leitor');
+					}
 				}
-				
-				
-			}		*/		
+			}				
 			redirect('librecon/leitor');
 		}
 		
@@ -105,7 +115,7 @@ class Librecon extends CI_Controller {
 
         $data['results'] = $this->librecon_model->pesquisar($termo);
         $this->data['acervos'] = $data['results']['acervos'];
-        $this->data['servicos'] = $data['results']['servicos'];
+        $this->data['reservas'] = $data['results']['reservas'];
         $this->data['emprestimos'] = $data['results']['emprestimos'];
         $this->data['usuarios'] = $data['results']['usuarios'];
         $this->data['view'] = 'librecon/pesquisa';

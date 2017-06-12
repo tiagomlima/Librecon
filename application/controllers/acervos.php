@@ -276,7 +276,7 @@ class Acervos extends CI_Controller {
 		
 		if($this->tombo_model->add('exemplares',$data) == true){
 			$this->db->query("UPDATE acervos set estoque = estoque + 1 WHERE idAcervos = ".$this->uri->segment(3));
-			$this->session->set_flashdata('success','Exemplar adicionado');
+			$this->session->set_flashdata('success','Exemplar adicionado! Atribua o tombo');
 			redirect(base_url().'index.php/acervos/editarExemplar/'.$this->uri->segment(3));
 		}else{
 			$this->session->set_flashdata('error','Erro ao adicionar exemplar');
@@ -527,10 +527,10 @@ class Acervos extends CI_Controller {
 		$acervos_id = $this->input->post('acervos_id');
 		$usuario_id = $this->input->post('usuario_id');
 		
-		/*if($this->leitores_model->verificaMulta($usuario_id)){
-			$this->session->set_flashdata('error','Impossível reserva, sua conta está bloqueada.');            
-        	redirect(base_url().'index.php/acervos');
-		}*/
+		if($this->leitores_model->verificaMulta($usuario_id)){
+			$this->session->set_flashdata('error','Não é possivel reservar, sua conta está bloqueada.');            
+        	redirect(base_url().'index.php/acervos/visualizar/'.$acervos_id);
+		}
 		
 		$this->db->where('usuario_id',$usuario_id);
 		$verificaReserva = $this->db->get('reserva')->row();

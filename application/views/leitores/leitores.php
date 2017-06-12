@@ -7,6 +7,7 @@
    |___________________________________________________________| 
 */
 
+
 ?>
 <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'aLeitor')){ ?>
     <a href="<?php echo base_url();?>index.php/leitores/adicionar" class="btn btn-success"><i class="icon-plus icon-white"></i> Adicionar Leitor</a>    
@@ -34,6 +35,11 @@ if(!$results){?>
                 	<?php foreach ($grupos as $g) {
                            echo '<option value="'.$g->idGrupo.'">'.$g->nomeGrupo.'</option>';
                     } ?>                                  
+                </select>
+                <select name="status" id="status" style="width:15%">                                 
+                	<option value="">Status</option>
+                	<option value="1">Multado</option> 
+                	<option value="0">Inativo</option>               	                              
                 </select>
                 <input type="text" id="nome" name="nome" value="" placeholder="Procurar por nome" style="width:15%">
                 <input type="text" id="matricula" name="matricula" value="" placeholder="Procurar por R.A" style="width:18%">
@@ -88,6 +94,11 @@ if(!$results){?>
                            echo '<option value="'.$g->idGrupo.'">'.$g->nomeGrupo.'</option>';
                     } ?>                                  
                 </select>
+                <select name="status" id="status" style="width:15%">                                 
+                	<option value="">Status</option>
+                	<option value="Multado">Multado</option> 
+                	<option value="Inativo">Inativo</option>               	                              
+                </select>
                 <input type="text" id="nome" name="nome" value="" placeholder="Procurar por nome" style="width:15%">
                 <input type="text" id="matricula" name="matricula" value="" placeholder="Procurar por R.A" style="width:18%">
                 <button style="margin-bottom:1%"><i class="icon-search icon-white"></i></button>     
@@ -113,7 +124,8 @@ if(!$results){?>
     </thead>
     <tbody>
         <?php 
-        	foreach ($results as $r){
+                    
+        	foreach ($results as $r){     										
         		echo '<tr>';
 				echo '<td style="text-align:center"><a href="'.base_url().'index.php/leitores/visualizar/'.$r->idUsuarios.'"><img src="'.$r->img_leitor.'" alt="foto do leitor" style="width:108px;height:118px"/></td></a>';
 				echo '<td style="text-align:center"><a href="'.base_url().'index.php/leitores/visualizar/'.$r->idUsuarios.'">'.$r->nome.'</a></td>';

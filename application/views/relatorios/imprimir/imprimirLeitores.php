@@ -38,12 +38,12 @@
                   <table class="table table-bordered">
                       <thead>
                           <tr>
-                              <th style="font-size: 1.2em; padding: 5px;">Nome</th>
-                              <th style="font-size: 1.2em; padding: 5px;">Matricula</th>
-                              <th style="font-size: 1.2em; padding: 5px;">Curso</th>
-                              <th style="font-size: 1.2em; padding: 5px;">Email</th>
-                              <th style="font-size: 1.2em; padding: 5px;">Telefone</th>
-                              <th style="font-size: 1.2em; padding: 5px;">Cadastro</th>
+                              <th style="font-size: 1em; padding: 5px;">Nome</th>
+                              <th style="font-size: 1em; padding: 5px;">Matricula</th>
+                              <th style="font-size: 1em; padding: 5px;">Curso</th>
+                              <th style="font-size: 1em; padding: 5px;">Email</th>
+                              <th style="font-size: 1em; padding: 5px;">Telefone</th>
+                              <th style="font-size: 1em; padding: 5px;">Cadastro</th>
                           </tr>
                       </thead>
                       <tbody>
@@ -51,15 +51,15 @@
                           foreach ($leitores as $l) {
                               $dataCadastro = date('d/m/Y', strtotime($l->dataCadastro));
                               echo '<tr>';
-                              echo '<td>' . $l->nome . '</td>';
-                              echo '<td>' . $l->matricula . '</td>';
+                              echo '<td style="text-align:center; font-size: 1em">' . $l->nome . '</td>';
+                              echo '<td style="text-align:center; font-size: 1em">' . $l->matricula . '</td>';
 							  $this->db->where('idCursos',$l->curso_id);
 							  $curso = $this->db->get('cursos')->result();
 							  foreach($curso as $c){
-                              echo '<td>' . $c->nomeCurso . '</td>';
-                              echo '<td>' . $l->email . '</td>';
-							  echo '<td>' . $l->telefone . '</td>';
-                              echo '<td>' . $dataCadastro . '</td>';
+                              echo '<td style="text-align:center; font-size: 1em">' . $c->nomeCurso . '</td>';
+                              echo '<td style="text-align:center; font-size: 1em">' . $l->email . '</td>';
+							  echo '<td style="text-align:center; font-size: 1em">' . $l->telefone . '</td>';
+                              echo '<td style="text-align:center; font-size: 1em">' . $dataCadastro . '</td>';
                               echo '</tr>';
                               
 							}							  
@@ -70,7 +70,7 @@
                           	$this->db->where('tipo_usuario',1);
 							$totalLeitores = $this->db->get('usuarios')->result();							
                           ?>
-	                          <td colspan="2" style="text-align: right"><strong>Total de cadastros:</strong></td>	                          
+	                          <td colspan="6" style="text-align: right"><strong>Total de cadastros:</strong></td>	                          
 	                          <td><strong><?php echo count($totalLeitores) ?></strong></td>
                           </tr>
                       </tbody>

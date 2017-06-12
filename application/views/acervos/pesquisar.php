@@ -49,7 +49,6 @@ if(!$acervos){?>
             <th>#</th>
             <th>Imagem</th>
             <th>Título</th>           
-            <th>Tombo</th>
             <?php if($this->session->userdata('tipo_usuario') == 0){ ?>
             <th>Estoque</th>
             <?php } ?>
@@ -106,10 +105,8 @@ if(!$acervos){?>
 <table class="table table-bordered ">
     <thead>
         <tr style="backgroud-color: #2D335B">
-            <th>#</th>
             <th>Imagem</th>
             <th>Título</th>            
-            <th>Tombo</th>
             <?php if($this->session->userdata('tipo_usuario') == 0){ ?>
             <th>Estoque</th>
             <?php } ?>
@@ -125,20 +122,18 @@ if(!$acervos){?>
         <?php 	   
         	foreach ($acervos as $r) {  	
 			            echo '<tr>';
-			            echo '<td>'.$r->idAcervos.'</td>';
-						echo '<td><a href="'.base_url().'index.php/acervos/visualizar/'.$r->idAcervos.'"><img src="'.$r->img_acervo.'" alt="imagem do acervo" style="width:108px;height:118px"/></td></a>';
-						echo '<td><a href="'.base_url().'index.php/acervos/visualizar/'.$r->idAcervos.'">'.$r->titulo.'</a></td>';						
-			            echo '<td>'.$r->tombo.'</td>';
+						echo '<td style="text-align:center"><a href="'.base_url().'index.php/acervos/visualizar/'.$r->idAcervos.'"><img src="'.$r->img_acervo.'" alt="imagem do acervo" style="width:108px;height:118px"/></td></a>';
+						echo '<td style="text-align:center"><a href="'.base_url().'index.php/acervos/visualizar/'.$r->idAcervos.'">'.$r->titulo.'</a></td>';						
 						if($this->session->userdata('tipo_usuario') == 0){
-						echo '<td>'.$r->estoque.'</td>';
+						echo '<td style="text-align:center">'.$r->estoque.'</td>';
 						}
-						echo '<td>'.$r->idioma.'</td>';
+						echo '<td style="text-align:center">'.$r->idioma.'</td>';
 						if($r->estoque <= 1){
 				        	$status = 'Não disponivel';
 				        }else{
 				        	$status = 'Disponivel';
 				        }
-			            echo '<td>'.$status.'</td>';
+			            echo '<td style="text-align:center">'.$status.'</td>';
 			            
 						if($this->session->userdata('tipo_usuario') == 0){
 			            echo '<td style="text-align:center">';

@@ -100,7 +100,7 @@
                                         <table class="table table-bordered" id="tblAcervos">
                                             <thead>
                                                 <tr>                                              
-                                                   <th>Acervo</th>                                                                                                  
+                                                   <th>Título</th>                                                                                                  
                                                    <th>Remover</th>                                                  
                                                 </tr>
                                             </thead>

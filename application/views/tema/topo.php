@@ -35,8 +35,7 @@
 
 <!--top-Header-menu-->
 <div id="user-nav" class="navbar navbar-inverse">
-  <ul class="nav">
-   
+  <ul class="nav">   
     <li class=""><a title="" href="<?php echo base_url();?>index.php/librecon/minhaConta"><i class="icon icon-star"></i> <span class="text">Minha Conta</span></a></li>
     <li class=""><a title="" href="<?php echo base_url();?>index.php/librecon/sair"><i class="icon icon-share-alt"></i> <span class="text">Sair do Sistema</span></a></li>
   </ul>
@@ -46,8 +45,7 @@
 <div id="search">
   <form action="<?php echo base_url()?>index.php/librecon/pesquisar">
     <input type="text" name="termo" placeholder="Pesquisar..."/>
-    <button type="submit"  class="tip-bottom" title="Pesquisar"><i class="icon-search icon-white"></i></button>
-    
+    <button type="submit"  class="tip-bottom" title="Pesquisar"><i class="icon-search icon-white"></i></button>   
   </form>
 </div>
 <!--close-top-serch--> 
@@ -138,12 +136,12 @@
 			$emprestimo = $this->db->get('emprestimos')->result();
 			
 			 ?>
-				<li class="<?php if(isset($menuEmprestimos)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/emprestimos"><i class="icon icon-book"></i> <span>Meus Emprestimos</span></a></li>
+				<li class="<?php if(isset($menuEmprestimos)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/emprestimos"><i class="icon icon-list"></i> <span>Meus Emprestimos</span></a></li>
 		<?php	
 		} ?>	
 	
     <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vEmprestimo') && $this->session->userdata('tipo_usuario') == 0){ ?>
-        <li class="<?php if(isset($menuEmprestimos)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/emprestimos"><i class="icon icon-book"></i> <span>Emprestimos</span></a></li>
+        <li class="<?php if(isset($menuEmprestimos)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/emprestimos"><i class="icon icon-list"></i> <span>Emprestimos</span></a></li>
     <?php } ?>
     
     <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vArquivo')){ ?>
@@ -242,10 +240,3 @@
 
 </body>
 </html>
-
-
-
-
-
-
-

@@ -80,7 +80,7 @@ class Librecon_model extends CI_Model {
          //buscando reservas
          $this->db->like('usuario_id',$termo);
          $this->db->limit(5);
-         $data['servicos'] = $this->db->get('reserva')->result();
+         $data['reservas'] = $this->db->get('reserva')->result();
 
          return $data;
 
