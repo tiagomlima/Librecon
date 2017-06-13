@@ -251,6 +251,7 @@ class Leitores_model extends CI_Model {
 		}
 	}
 	
+	
 	function aplicarMulta($leitor,$data){
 		$this->db->query("UPDATE usuarios set multa = 1, dataMulta = '".$data."' WHERE idUsuarios = ".$leitor);
 		return true;

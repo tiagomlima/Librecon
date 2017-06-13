@@ -565,6 +565,15 @@ class Emprestimos extends CI_Controller {
 		$dataVencimento = strtr($dataRenovacao, '/', '-'); 		
 		$dataVencimento = date('Y-m-d', strtotime($dataVencimento));
 		
+		if($this->emprestimos_model->verificaAtraso($idEmprestimos) == true){
+			$emprestimo = $this->emprestimos_model->getById($idEmprestimos);
+			$leitor = $emprestimo->leitor_id; 
+			
+			if($this->leitores_model->aplicarMulta($leitor) == true){
+				$this->session->set_flashdata('error','Não é possível renovar o empréstimo devido ao atraso (multa aplicada).');				
+				redirect('emprestimos/editar/'.$idEmprestimos);
+			}
+		}
 		
 		if($qtde_renovacao > $qtde_max_renovacao){
 			$this->session->set_flashdata('error','Número máximo de renovação excedido.');

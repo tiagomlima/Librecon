@@ -49,7 +49,7 @@ class Emprestimos_model extends CI_Model {
     }
 	
 	function getById($id){
-        $this->db->select('emprestimos.*, usuarios.telefone, usuarios.email,usuarios.nome');
+        $this->db->select('emprestimos.*, usuarios.*');
         $this->db->from('emprestimos');
         $this->db->join('usuarios','usuarios.idUsuarios = emprestimos.usuarios_id');
         $this->db->where('emprestimos.idEmprestimos',$id);
@@ -203,6 +203,20 @@ class Emprestimos_model extends CI_Model {
             echo json_encode($row_set);
         }
     }
+	
+	function verificaAtraso($idEmprestimos){
+		$dataAtual = date('Y-m-d');
+		$this->db->where('idEmprestimos',$idEmprestimos);
+		$this->db->where('dataVencimento <',$dataAtual);
+		$this->db->where('status !=','Devolvido');
+		$atraso = $this->db->get('emprestimos')->row();
+		
+		if(count($atraso) > 0){
+			return true;
+		}else{
+			return false;
+		}
+	}
 
 	public function pesquisar($nome = null, $dataInicial = null,$dataFinal = null,$status = null){
 		$data = array();

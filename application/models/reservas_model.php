@@ -41,7 +41,7 @@ class Reservas_model extends CI_Model {
     }*/
     
     function getById($id){
-        $this->db->select('reserva.*, usuarios.telefone, usuarios.email,usuarios.nome');
+        $this->db->select('reserva.*, usuarios.*');
         $this->db->from('reserva');
         $this->db->join('usuarios','usuarios.idUsuarios = reserva.usuario_id');
         $this->db->where('reserva.idReserva',$id);

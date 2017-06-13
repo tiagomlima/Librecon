@@ -82,8 +82,7 @@
 											} 
 											
 											$duracao = $grupos->duracao_dias;
-											
-											
+																						
 																						
 											?>
                                             <input id="dataVencimento" class="span12 datepicker" type="text" name="dataVencimento" value="<?php echo date('d/m/Y', strtotime("+".$duracao." days")); ?>" readonly="true" />

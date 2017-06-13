@@ -76,7 +76,7 @@ $config = array(
                 'acervos' => array(array(
                                     'field'=>'titulo',
                                     'label'=>'titulo',
-                                    'rules'=>'required|trim|xss_clean'
+                                    'rules'=>'required|trim|xss_clean|is_unique[acervos.titulo]'
                                 ),                               
                                 array(
                                     'field'=>'estoque',

@@ -588,7 +588,12 @@ class Acervos extends CI_Controller {
         		redirect(base_url().'index.php/acervos/visualizar/'.$acervos_id);
 			}
 			//verifica se o numero de itens por reserva passou de 3
-			if($verificaReserva->qtde_item > 3){
+			$leitor = $this->leitores_model->getById($this->session->userdata('id'));
+			$grupo_id = $leitor->grupo_id;
+			$grupo = $this->grupos_model->getById($grupo_id);
+			$qtde_max_reserva = $grupo->qtde_max_reserva;
+			
+			if($verificaReserva->qtde_item > $qtde_max_reserva){
 				$this->session->set_flashdata('error','Limite de itens por reserva excedido. (limite: 3)');            
         		redirect(base_url().'index.php/acervos/visualizar/'.$acervos_id);
 			}else{				
