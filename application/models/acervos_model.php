@@ -117,11 +117,12 @@ class Acervos_model extends CI_Model {
 	}
 
 	public function getEmprestimosByAcervo($id){
-		$this->db->where('acervos_id',$id);
+		$this->db->where('acervos_id',$id);		
 		$itens = $this->db->get('itens_de_emprestimos')->row();
 		
 			if(count($itens) > 0){		
 		        $this->db->where('idEmprestimos',$itens->emprestimos_id);
+				$this->db->where('status !=','Devolvido');
 		        $this->db->order_by('idEmprestimos','desc');
 		        $this->db->limit(10);
 		        return $this->db->get('emprestimos')->result();
