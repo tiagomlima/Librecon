@@ -209,7 +209,7 @@
                         <ul class="site-stats">
                             <li class="bg_lh"><i class="icon-group"></i> <strong><?php $this->db->from('usuarios'); $this->db->where('tipo_usuario',1); echo count($this->db->get()->result());?></strong> <small>Leitores</small></li>
                             <li class="bg_lh"><i class="icon-book"></i> <strong><?php echo $this->db->count_all('acervos');?></strong> <small>Acervos </small></li>
-                            <li class="bg_lh"><i class="icon-book"></i> <strong><?php echo $this->db->count_all('emprestimos');?></strong> <small>Emprestimos</small></li>
+                            <li class="bg_lh"><i class="icon-list"></i> <strong><?php echo $this->db->count_all('emprestimos');?></strong> <small>Empréstimos</small></li>
                             <li class="bg_lh"><i class="icon-calendar"></i> <strong><?php echo $this->db->count_all('reserva');?></strong> <small>Reservas</small></li>                            
                         </ul>
                  

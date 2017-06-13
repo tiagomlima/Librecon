@@ -41,7 +41,7 @@
                                         ?></h3>
                                         <div class="span2" style="margin-left: 0">
                                             <label for="dataPrazo">Data de Vencimento</label>                                        
-                                            <input id="dataPrazo" class="span12 datepicker" type="text" name="dataPrazo" value="<?php echo date('d/mY', strtotime($result->dataPrazo)); ?>" readonly="true" />
+                                            <input id="dataPrazo" class="span12 datepicker" type="text" name="dataPrazo" value="<?php echo date('d/m/Y', strtotime($result->dataPrazo)); ?>" readonly="true" style="text-align:center%" />
                                             <label  class="control-label">Status</span></label>
 						                        <div class="controls">
 						                            <select name="status" id="status">
@@ -65,7 +65,7 @@
                                     <div class="span12 well" style="padding: 1%; margin-left: 0">
                                         
                                         <form id="formAcervos" action="<?php echo base_url(); ?>index.php/reservas/adicionarAcervo" method="post">
-                                            <div class="span8" style="width: 30%">
+                                            <div class="span8" style="width: 23.4%">
                                                 <input type="hidden" name="idAcervo" id="idAcervo" value=""/>                                                
                                                 <input type="hidden" name="idReservaAcervo" id="idReservaAcervo" value="<?php echo $result->idReserva ?>" />
                                                 <?php if($result->status != 'Reservado'){ ?>
@@ -83,10 +83,9 @@
                                                 ?>
                                                 <input type="hidden" id="qtde_max_reserva"  name="qtde_max_reserva" value="<?php echo $qtde_max_reserva ?>" />
   												<input type="hidden" id="$qtde_atual" name="qtde_atual" value="<?php echo $result->qtde_item ?>" />
-                                                
-                                                <label for="">&nbsp</label>
+                                                                                               
                                                 <?php if($result->status != 'Reservado'){ ?>
-                                                <button class="btn btn-success span2" id="btnAdicionarAcervo" style="margin-left: 70%;margin-top: -20.5%"><i class="icon-white icon-plus"></i></button>
+                                                <button class="btn btn-success span2" id="btnAdicionarAcervo" style="float:right"><i class="icon-white icon-plus"></i></button>
                                                 <?php } ?>
                                             </div>
                                                                                                                                                                           

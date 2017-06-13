@@ -29,7 +29,7 @@
 	           	   <?php foreach($tombo as $t){ ?>
 	           	   		    	
 			         <div class="control-group">		                     	
-				         <label for="titulo" class="control-label">Exemplar <?php echo $i ?> <span class="required">*</span></label>
+				         <label for="titulo" class="control-label">Tombo - Exemplar <?php echo $i ?> <span class="required">*</span></label>
 				         <div class="controls">			                        	
 				         <input id="tombo<?php echo $i ?>" type="text" name="tombo<?php echo $i ?>" placeholder="Tombo" value="<?php echo $t->tombo; ?>" class="span2" readonly />
 				         <a href="#modal-editar" role="button" data-toggle="modal" exemplar="<?php echo $t->idExemplar ?>" acervo="<?php echo $t->acervos_id ?>"><button class="btn btn-primary"><i class="icon-edit icon-white"></i></button></a>

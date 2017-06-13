@@ -220,7 +220,7 @@ $config = array(
                                 ))                                   
                   ,	
 				  
-                  'tombo' => array(array(
+                  'exemplares' => array(array(
                                     'field'=>'teste',
                                     'label'=>'teste',
                                     'rules'=>'trim|xss_clean'

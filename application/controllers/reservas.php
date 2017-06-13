@@ -27,6 +27,7 @@ class Reservas extends CI_Controller {
 		$this->load->model('leitores_model', '', TRUE);
         $this->data['menuReservas'] = 'Reservas';
 		
+		date_default_timezone_set('America/Sao_Paulo');
     }
 	
 	function index(){
@@ -326,9 +327,18 @@ class Reservas extends CI_Controller {
               $this->session->set_flashdata('error','Você não tem permissão para fazer isso');
               redirect(base_url());
             }
+		
+		$this->db->where('reserva_id',$idReserva);
+		$reserva = $this->db->get('itens_de_reserva')->result();
+		
+		foreach($reserva as $r){
+			$exemplar = $r->exemplar_id;
+			
+			$this->db->query("UPDATE exemplares set status = 0 WHERE idExemplar = ".$exemplar);
+		}
 											
 		$this->reservas_model->delete('reserva','idReserva',$idReserva);
-		$this->reservas_model->delete('itens_de_reserva','reserva_id',$idReserva);
+		$this->reservas_model->delete('itens_de_reserva','reserva_id',$idReserva);	
 		
 		$this->session->set_flashdata('success','Reserva recusada com sucesso.');											
 		redirect(base_url().'index.php/reservas');

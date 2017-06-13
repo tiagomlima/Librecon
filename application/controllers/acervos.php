@@ -210,20 +210,28 @@ class Acervos extends CI_Controller {
            $this->session->set_flashdata('error','Você não tem permissão para adicionar tombos.');
            redirect(base_url());
         }
+		
+		$acervos_id = $this->uri->segment(3);
+			
+		$i = 1;
+		$acervo = $this->acervos_model->getById($acervos_id);
+		$x = $acervo->estoque;
 
 		$this->load->library('form_validation');
         $this->data['custom_error'] = '';
 		
-		if ($this->form_validation->run('tombo') == false) {
+		for($i; $i <= $x; $i++){
+			$this->form_validation->set_rules('tombo'.$i, 'Tombo '.$i, 'trim|required|xss_clean|is_unique[exemplares.tombo]');
+		}				
+		
+		if ($this->form_validation->run('exemplares') == false) {
             $this->data['custom_error'] = (validation_errors() ? '<div class="form_error">' . validation_errors() . '</div>' : false);
         }else{
         	
-        	$acervos_id = $this->uri->segment(3);
-			
 			$i = 1;
 			$acervo = $this->acervos_model->getById($acervos_id);
 			$x = $acervo->estoque;
-			
+        				
 			for($i; $i <= $x; $i++){
 				$tombo[i] = $this->input->post('tombo'.$i);
 				
@@ -288,20 +296,30 @@ class Acervos extends CI_Controller {
            redirect(base_url());
         }
 		
-		$idExemplar = $this->input->post('idExemplar');
+		$this->load->library('form_validation');
 		$idAcervo = $this->input->post('idAcervo');
 		
-		$data = array(
-			'tombo' => $this->input->post('tombo')
-		);
+		$this->form_validation->set_rules('tombo', 'Tombo', 'trim|required|xss_clean|is_unique[exemplares.tombo]');
 		
-		if($this->tombo_model->edit('exemplares',$data,'idExemplar',$idExemplar) == true){
-			$this->session->set_flashdata('success','Tombo editado com sucesso!');
+		if($this->form_validation->run('exemplares') == false){
+			$this->session->set_flashdata('error','Número de tombo já existe, digite outro');
 			redirect(base_url().'index.php/acervos/editarExemplar/'.$idAcervo);
 		}else{
-			$this->session->set_flashdata('error','Erro ao editar');
-			redirect(base_url().'index.php/acervos/editarExemplar/'.$idAcervo);
-		}
+			
+			$idExemplar = $this->input->post('idExemplar');
+			
+			$data = array(
+				'tombo' => $this->input->post('tombo')
+			);
+			
+			if($this->tombo_model->edit('exemplares',$data,'idExemplar',$idExemplar) == true){
+				$this->session->set_flashdata('success','Tombo editado com sucesso!');
+				redirect(base_url().'index.php/acervos/editarExemplar/'.$idAcervo);
+			}else{
+				$this->session->set_flashdata('error','Erro ao editar');
+				redirect(base_url().'index.php/acervos/editarExemplar/'.$idAcervo);
+			}
+		}				
 	}
 	
 	function addQExemplar(){
@@ -367,7 +385,7 @@ class Acervos extends CI_Controller {
         }
         $this->load->library('form_validation');
         $this->data['custom_error'] = '';
-		 $this->form_validation->set_rules('isbn', 'ISBN', 'trim|required|xss_clean');
+		$this->form_validation->set_rules('isbn', 'ISBN', 'trim|required|xss_clean');
 
         if ($this->form_validation->run('acervos') == false) {
             $this->data['custom_error'] = (validation_errors() ? '<div class="form_error">' . validation_errors() . '</div>' : false);
