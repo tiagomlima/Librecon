@@ -594,7 +594,7 @@ class Acervos extends CI_Controller {
 			$qtde_max_reserva = $grupo->qtde_max_reserva;
 			
 			if($verificaReserva->qtde_item > $qtde_max_reserva){
-				$this->session->set_flashdata('error','Limite de itens por reserva excedido. (limite: 3)');            
+				$this->session->set_flashdata('error','Limite de itens por reserva excedido. (limite: '.$qtde_max_reserva.')');            
         		redirect(base_url().'index.php/acervos/visualizar/'.$acervos_id);
 			}else{				
 				
