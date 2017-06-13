@@ -153,7 +153,7 @@ class Leitores extends CI_Controller {
         if($senha == $senhaConfirm){
         // se sim, prossegue com a inserção dos dados
 		
-        if ($this->form_validation->run('usuarios') == false)
+        if ($this->form_validation->run('leitores') == false)
         {
              $this->data['custom_error'] = (validation_errors() ? '<div class="alert alert-danger">'.validation_errors().'</div>' : false);
 

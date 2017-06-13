@@ -81,7 +81,7 @@
                                 echo '<td>'.$dataEmprestimo.'</td>';
                                 echo '<td>'.$dataVencimento.'</td>';
                                 echo '<td><a href="'.base_url().'index.php/leitores/visualizar/'.$e->leitor_id.'">'.$e->nome.'</a></td>';																						
-								echo '<td>'.$tatus.'</td>';								
+								echo '<td>'.$status.'</td>';								
                                 echo '<td>';
                                 if($this->permission->checkPermission($this->session->userdata('permissao'),'vEmprestimo')){
                                     echo '<a href="'.base_url().'index.php/emprestimos/visualizar/'.$e->idEmprestimos.'" class="btn"> <i class="icon-eye-open" ></i> </a> '; 

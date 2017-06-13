@@ -144,53 +144,69 @@ $config = array(
                                     'field'=>'email',
                                     'label'=>'Email',
                                     'rules'=>'required|trim|valid_email|xss_clean|is_unique[usuarios.email]'
-                                ),
-                                array(
-                                    'field'=>'senha',
-                                    'label'=>'Senha',
-                                    'rules'=>'required|trim|xss_clean|min_length[5]'
-                                ),
-                                array(
-                                    'field'=>'matricula',
-                                    'label'=>'Matricula',
-                                    'rules'=>'required|trim|xss_clean|is_unique[usuarios.matricula]'
-                                ),
-                                array(
-                                    'field'=>'rua',
-                                    'label'=>'Rua',
-                                    'rules'=>'required|trim|xss_clean'
-                                ),
-                                array(
-                                    'field'=>'numero',
-                                    'label'=>'Numero',
-                                    'rules'=>'required|trim|xss_clean'
-                                ),
-                                array(
-                                    'field'=>'bairro',
-                                    'label'=>'Bairro',
-                                    'rules'=>'required|trim|xss_clean'
-                                ),
-                                array(
-                                    'field'=>'cidade',
-                                    'label'=>'Cidade',
-                                    'rules'=>'required|trim|xss_clean'
-                                ),
-                                array(
-                                    'field'=>'estado',
-                                    'label'=>'Estado',
-                                    'rules'=>'required|trim|xss_clean'
-                                ),
-                                array(
-                                    'field'=>'cep',
-                                    'label'=>'CEP',
-                                    'rules'=>'required|trim|xss_clean'
-                                ),
+                                ),                                                                                                                                                         
                                 array(
                                     'field'=>'telefone',
                                     'label'=>'Telefone',
                                     'rules'=>'required|trim|xss_clean'
                                 ))
                 ,   
+                'leitores' => array(array(
+                				'field'=>'nome',
+                				'label'=>'Nome',
+                				'rules'=>'required|trim|xss_clean'
+							),
+							array(
+								'field'=>'email',
+								'label'=>'E-mail',
+								'rules'=>'required|trim|valid_email|xss_clean|is_unique[usuarios.email]'
+							),														
+							array(
+								'field'=>'matricula',
+								'label'=>'Matricula R.A',
+								'rules'=>'required|trim|xss_clean|is_unique[usuarios.matricula]'
+							),					
+							array(
+								'field'=>'telefone',
+								'label'=>'Telefone',
+								'rules'=>'required|trim|xss_clean'
+							),
+							array(
+								'field'=>'cpf',
+								'label'=>'CPF',
+								'rules'=>'required|trim|xss_clean|is_unique[usuarios.cpf]'
+							),
+							array(
+								'field'=>'cep',
+								'label'=>'CEP',
+								'rules'=>'required|trim|xss_clean'
+							),
+							array(
+								'field'=>'rua',
+								'label'=>'Rua',
+								'rules'=>'required|trim|xss_clean'
+							),
+							array(
+								'field'=>'numero',
+								'label'=>'Número',
+								'rules'=>'required|trim|xss_clean'
+							),
+							array(
+								'field'=>'bairro',
+								'label'=>'Bairro',
+								'rules'=>'required|trim|xss_clean'
+							),
+							array(
+								'field'=>'cidade',
+								'label'=>'Cidade',
+								'rules'=>'required|trim|xss_clean'
+							),
+							array(
+								'field'=>'estado',
+								'label'=>'Estado',
+								'rules'=>'required|trim|xss_clean'
+							))
+				,
                 'disciplinas' => array(array(
                                     'field'=>'nomeDisciplina',
                                     'label'=>'Nome',

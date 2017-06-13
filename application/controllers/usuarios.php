@@ -97,7 +97,7 @@ class Usuarios extends CI_Controller {
 					'email' => set_value('email'),
 					'senha' => $this->encrypt->sha1($this->input->post('senha')),
 					'telefone' => set_value('telefone'),
-					'celular' => set_value('celular'),
+					'celular' => $this->input->post('celular'),
 					'situacao' => $this->input->post('situacao'),
                     'permissoes_id' => $this->input->post('permissoes_id'),
 					'dataCadastro' => date('Y-m-d')
