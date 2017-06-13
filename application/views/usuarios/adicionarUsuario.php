@@ -8,6 +8,16 @@
 */
 
 ?>
+
+<script src="<?php echo base_url()?>js/jquery.mask.min.js"></script>
+<script type="text/javascript">
+	jQuery(function($){
+      		$("#telefone").mask("(99)9999-9999");
+      		$("#celular").mask("(99)99999-9999");
+      		$("#cpf").mask("999.999.999-99");
+      	});
+</script>
+
 <div class="row-fluid" style="margin-top:0">
     <div class="span12">
         <div class="widget-box">

@@ -8,6 +8,16 @@
 */
 
 ?>
+<script src="<?php echo base_url()?>js/jquery.mask.min.js"></script>
+<script type="text/javascript">
+	jQuery(function($){
+      		$("#telefone").mask("(99)9999-9999");
+      		$("#celular").mask("(99)99999-9999");
+      		$("#cep").mask("99999-999");
+      		$("#cpf").mask("999.999.999-99");
+      	});
+</script>
+
 <script type="text/javascript" >
 
         $(document).ready(function() {
@@ -269,6 +279,7 @@
 <script src="<?php echo base_url()?>js/jquery.validate.js"></script>
 <script type="text/javascript">
       $(document).ready(function(){
+       	    	      	
            $('#formLeitor').validate({
             rules :{
                   nome:{ required: true},
