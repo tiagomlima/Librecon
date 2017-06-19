@@ -33,7 +33,7 @@
                     <a id="imprimir" title="Imprimir" class="btn btn-mini btn-inverse" href=""><i class="icon-print icon-white"></i> Imprimir</a>
                 </div>
             </div>
-            <div class="widget-content" id="printOs">
+            <div class="widget-content" id="printEmprestimo">
                 <div class="invoice-content">
                     <div class="invoice-head">
                         <table class="table">
@@ -165,7 +165,7 @@
 						
 						if($result->status == 'Devolvido'){
 							echo '<b style="float: left">Status: '.$result->status.' </b><br><br>';
-							echo '<b style="float: left">Data da Devolução: '.date('d/m/Y').' </b>';
+							echo '<b style="float: left">Data da Devolução: '.date('d/m/Y', strtotime($result->dataDevolucao)).' </b>';
 							echo '<b style="float: right">Assinatura: ________________________________ </b>';
 						}
 						
@@ -187,7 +187,7 @@
 <script type="text/javascript">
     $(document).ready(function(){
         $("#imprimir").click(function(){         
-            PrintElem('#printOs');
+            PrintElem('#printEmprestimo');
         })
         function PrintElem(elem)
         {

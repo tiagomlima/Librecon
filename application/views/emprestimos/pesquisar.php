@@ -94,14 +94,13 @@ if(!$emprestimos){?>
 <table class="table table-bordered ">
     <thead>
         <tr style="backgroud-color: #2D335B">
-            <th>#</th>
             <th>Data do Empréstimo</th>
             <th>Data de Vencimento</th>
             <?php if($this->session->userdata('tipo_usuario') != 1){ ?>
             <th>Leitor</th>
             <?php } ?>
             <th>Situação</th>
-            <th></th>
+            <th>Visualizar/Editar/Excluir</th>
         </tr>
     </thead>
     <tbody>
@@ -113,14 +112,13 @@ if(!$emprestimos){?>
 			$dataAtual = date(('d/m/Y'),strtotime(date('d/m/Y')));
                      
             echo '<tr>';
-            echo '<td><a href="'.base_url().'index.php/emprestimos/visualizar/'.$e->idEmprestimos.'">'.$e->idEmprestimos.'</a></td>';
-            echo '<td>'.$dataEmprestimo.'</td>';
-			echo '<td>'.$dataVencimento.'</td>';
-            echo '<td><a href="'.base_url().'index.php/leitores/visualizar/'.$e->leitor_id.'">'.$e->nome.'</a></td>';
-			echo '<td>'.$e->status.'</td>';
+            echo '<td style="text-align:center">'.$dataEmprestimo.'</td>';
+			echo '<td style="text-align:center">'.$dataVencimento.'</td>';
+            echo '<td style="text-align:center"><a href="'.base_url().'index.php/leitores/visualizar/'.$e->leitor_id.'">'.$e->nome.'</a></td>';
+			echo '<td style="text-align:center">'.$e->status.'</td>';
             
             
-            echo '<td>';
+            echo '<td style="text-align:center">';
             if($this->permission->checkPermission($this->session->userdata('permissao'),'vEmprestimo') && $e->status != 'Não emprestado'){
                 echo '<a style="margin-right: 1%" href="'.base_url().'index.php/emprestimos/visualizar/'.$e->idEmprestimos.'" class="btn tip-top" title="Ver comprovante"><i class="icon-eye-open"></i></a>'; 
             }
