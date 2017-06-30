@@ -138,7 +138,7 @@ if(!$results){?>
 			$dataVencimento = date(('d/m/Y'),strtotime($r->dataVencimento));
 			$dataAtual = date('d/m/Y');
             
-			if($dataAtual > $dataVencimento){
+			if(strtotime($dataAtual) > strtotime($dataVencimento)){
 				$status = 'Atrasado';
 			}else{
 				$status = $r->status;

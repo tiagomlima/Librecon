@@ -70,7 +70,7 @@
 								$dataVencimento = date(('d/m/Y'),strtotime($e->dataVencimento));
 								$dataAtual = date('d/m/Y');
 								
-								if($dataAtual > $e->dataVencimento){
+								if(strtotime($dataAtual) > strtotime($e->dataVencimento)){
 									$status = 'ATRASADO';
 								}else {
 									$status = $e->status;
