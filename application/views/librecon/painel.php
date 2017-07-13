@@ -68,7 +68,7 @@
                             foreach ($emprestimos as $e) {
                             	$dataEmprestimo = date(('d/m/Y'),strtotime($e->dataEmprestimo));
 								$dataVencimento = date(('d/m/Y'),strtotime($e->dataVencimento));
-								$dataAtual = date('d/m/Y');
+								$dataAtual = date('Y-m-d');
 								
 								if(strtotime($dataAtual) > strtotime($e->dataVencimento)){
 									$status = 'ATRASADO';
