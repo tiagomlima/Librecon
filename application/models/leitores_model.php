@@ -277,6 +277,7 @@ class Leitores_model extends CI_Model {
 		}
 	}
 	
+	
 	function verificaAtrasoGeral(){
 		$dataAtual = date('Y-m-d');
 		$this->db->where('status != ','Devolvido');
@@ -285,10 +286,14 @@ class Leitores_model extends CI_Model {
 		
 		if($contagem = count($emprestimos) > 0){
 			foreach ($emprestimos as $e){
-				$multa = $this->getDuracaoMulta($e->leitor_id);
-				$data = date('Y-m-d H:i:s', strtotime("+ ".$multa." days"));
-				$this->aplicarMulta($e->leitor_id, $data);
-				return true;
+				if(! $this->verificaMulta($e->leitor_id)){
+					$multa = $this->getDuracaoMulta($e->leitor_id);
+					$data = date('Y-m-d H:i:s', strtotime("+ ".$multa." days"));
+					$this->aplicarMulta($e->leitor_id, $data);
+					return true;
+				}else{
+					return false;
+				}			
 			}
 		}else{
 			return false;
