@@ -9,6 +9,9 @@
 
 ?>
 
+<link rel="stylesheet" href="<?php echo base_url();?>js/jquery-ui/css/smoothness/jquery-ui-1.9.2.custom.css" />
+<script type="text/javascript" src="<?php echo base_url()?>js/jquery-ui/js/jquery-ui-1.9.2.custom.js"></script>
+
 <div class="row-fluid" style="margin-top:0">
     <div class="span12">
         <div class="widget-box">
@@ -31,12 +34,23 @@
                     <div class="control-group">
                         <label  class="control-label">Autor<span class="required">*</span></label>
                         <div class="controls">
-                            <select name="autor_id" id="autor_id">
-                                  <?php foreach ($autor as $a) {
-                                      echo '<option value="'.$a->idAutor.'">'.$a->autor.'</option>';
-                                  } ?>
+                            <select name="autor_id" id="autor_id">  
+                            	                     	                               
                             </select>
+                            <button type="button" id="btnRefresh" class="btn btn-primary"><i class="icon-refresh icon-white"></i></button>
+                            <button type="button" id="btnExpAutor" class="btn btn-success" onclick="document.getElementById('cadAutor').style.display='inline';document.getElementById('minus').style.display='inline'"><i class="icon-plus icon-white"></i></button>
+                            <button type="button"  class="btn btn-danger" id="minus" onclick="document.getElementById('cadAutor').style.display='none';document.getElementById('minus').style.display='none'" style="display:none"><i class="icon-minus icon-white"></i></button><br>
+                            
+                            
+                            <div class="control-group" style="display: none" id="cadAutor">
+                            	<label class="control-label" for="autor">Nome<span class="required">*</span></label>
+                            	<div class="controls">
+                            		<input type="text" id="autor" name="autor" value="<?php echo set_value('titulo'); ?>" /><button type="button" id="btnAddAutor" class="btn btn-success" style="margin-left: 0.5%"><i class="icon-plus icon-white"></i></button>
+                            	</div>                          	
+                            </div>
+ 
                         </div>
+                        
                     </div>
                     
                     <div class="control-group">
@@ -221,6 +235,81 @@
 <script src="<?php echo base_url()?>js/jquery.validate.js"></script>
 <script src="<?php echo base_url();?>js/maskmoney.js"></script>
 <script type="text/javascript">
+
+	$(document).on('click', '#btnAddAutor', function(event){
+		var autor = $("#autor").val();
+			if(autor != ""){
+				$.ajax({
+                  type: "POST",
+                  url: "<?php echo base_url();?>index.php/acervos/addAutor",
+                  data: "autor="+autor,
+                  success: function(data)
+                  {
+                  	alert('Autor cadastrado!');
+                  }
+                  });
+			}else{
+				alert('Campo autor vazio!');
+			}								 		
+	});
+	
+	//carrega os dados qdo a pagina da refresh
+	
+	$(document).ready(function(event){	
+		$.ajax({
+			url: "<?php echo base_url();?>index.php/acervos/getAutor",
+			type: "POST",
+			dataType: "json",
+			success: function(autores)
+			{									
+				var name, select, option;
+				
+				select = document.getElementById('autor_id');
+				select.options.length = 0;
+							
+								
+				$.each(autores, function(key, value) {
+					var o = new Option(value['autor'], value['idAutor']);
+					select.options[select.options.length] = o;
+					o.setAttribute("key","value");
+					
+				});
+			}
+			
+		});
+	});
+	
+	//botao de refresh
+	$(document).on('click', '#btnRefresh', function(event){	
+		$.ajax({
+			url: "<?php echo base_url();?>index.php/acervos/getAutor",
+			type: "POST",
+			dataType: "json",
+			success: function(autores)
+			{	
+				var name, select, option;
+				
+				select = document.getElementById('autor_id');
+				select.options.length = 0;
+				
+				/*for(name in autores){
+					if(autores.hasOwnProperty(name)){
+						select.options[select.options.length] = new Option(autores['autor'] , autores['idAutor']);
+					}
+				}*/
+				$.each(autores, function(key, value) {
+					//$('#autor_id').append("<option value='"+key['idAutor']+"'>"+value['autor']+"</option>");
+					var o = new Option(value['autor'], value['idAutor']);
+					select.options[select.options.length] = o;
+					o.setAttribute("key","value");
+					
+				});
+			}
+			
+		});
+	});
+	
+
     $(document).ready(function(){
 
         $('#formAcervo').validate({

@@ -204,6 +204,35 @@ class Acervos extends CI_Controller {
         $this->load->view('tema/topo', $this->data);
      
     }
+	
+	function addAutor(){
+		if(!$this->permission->checkPermission($this->session->userdata('permissao'),'aAcervo')){
+           $this->session->set_flashdata('error','Você não tem permissão para adicionar autores.');
+           redirect(base_url());
+        }
+		
+		$autor = $this->input->post('autor');
+		$data = array(
+			'autor' => $autor,
+			'dataCadastro' => date(Y-m-d)
+		);
+		
+		if($this->acervos_model->add('autor',$data) == TRUE){
+			 echo json_encode(array('result'=> true));
+		}else{
+			echo json_encode(array('result'=> false));
+		}
+	}
+
+	function getAutor(){
+	    $data['autores'] = $this->autor_model->getAll();
+		
+	   if($data['autores']){   // we got a result, output json
+         echo json_encode( $data['autores'] );
+	    } else {
+	         echo json_encode( array('error' => true) );
+	    }
+	}
 
 	function adicionarExemplar(){
 		if(!$this->permission->checkPermission($this->session->userdata('permissao'),'aAcervo')){

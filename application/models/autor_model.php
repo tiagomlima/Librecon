@@ -82,6 +82,11 @@ class Autor_model extends CI_Model {
         $query = $this->db->get();
         return $query->result();;
     }
+	
+	function getAll(){
+		$query= $this->db->query("SELECT * FROM autor");
+        return $query->result();
+	}
     
     public function getOsByAutor($id){
         $this->db->where('autor_id',$id);
