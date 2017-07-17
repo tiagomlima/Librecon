@@ -83,6 +83,11 @@ class Editora_model extends CI_Model {
         return $query->result();;
     }
     
+	function getAll(){
+		$query= $this->db->query("SELECT * FROM editora");
+        return $query->result();
+	}
+	
     public function getOsByEditora($id){
         $this->db->where('editora_id',$id);
         $this->db->order_by('idOs','desc');

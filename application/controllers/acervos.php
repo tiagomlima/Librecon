@@ -163,6 +163,16 @@ class Acervos extends CI_Controller {
 			if($colecao_id == null){
 				$colecao_id = NULL;
 			}
+			
+			if($this->input->post("autor_id") == "vazio"){
+				$this->session->set_flashdata("error","Campo autor vazio");
+				redirect(current_url());
+			}
+			
+			if($this->input->post("editora_id") == "vazio"){
+				$this->session->set_flashdata("error","Campo editora vazio");
+				redirect(current_url());
+			}
 							           
             $data = array(
                 'titulo' => set_value('titulo'),
@@ -214,7 +224,7 @@ class Acervos extends CI_Controller {
 		$autor = $this->input->post('autor');
 		$data = array(
 			'autor' => $autor,
-			'dataCadastro' => date(Y-m-d)
+			'dataCadastro' => date('Y-m-d')
 		);
 		
 		if($this->acervos_model->add('autor',$data) == TRUE){
@@ -228,9 +238,38 @@ class Acervos extends CI_Controller {
 	    $data['autores'] = $this->autor_model->getAll();
 		
 	   if($data['autores']){   // we got a result, output json
-         echo json_encode( $data['autores'] );
+        	echo json_encode( $data['autores'] );
 	    } else {
-	         echo json_encode( array('error' => true) );
+	    	echo json_encode( array('error' => true) );
+	    }
+	}
+	
+	function addEditora(){
+		if(!$this->permission->checkPermission($this->session->userdata('permissao'),'aAcervo')){
+           $this->session->set_flashdata('error','Você não tem permissão para adicionar editoras.');
+           redirect(base_url());
+        }
+		
+		$editora = $this->input->post('editora');
+		$data = array(
+			'editora' => $editora,
+			'dataCadastro' => date('Y-m-d')
+		);
+		
+		if($this->acervos_model->add('editora',$data) == TRUE){
+			 echo json_encode(array('result'=> true));
+		}else{
+			echo json_encode(array('result'=> false));
+		}
+	}
+	
+	function getEditora(){
+	    $data['editoras'] = $this->editora_model->getAll();
+		
+	   if($data['editoras']){   // we got a result, output json
+        	echo json_encode( $data['editoras'] );
+	    } else {
+	    	echo json_encode( array('error' => true) );
 	    }
 	}
 

@@ -124,6 +124,11 @@ $config = array(
                                     'rules'=>'required|trim|xss_clean'
                                 ),
                                 array(
+                                    'field'=>'autor_id',
+                                    'label'=>'Autor',
+                                    'rules'=>'required|trim|xss_clean'
+                                ),
+                                array(
                                     'field'=>'idioma',
                                     'label'=>'idioma',
                                     'rules'=>'required|trim|xss_clean'

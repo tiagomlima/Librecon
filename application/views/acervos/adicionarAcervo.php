@@ -35,15 +35,18 @@
                         <label  class="control-label">Autor<span class="required">*</span></label>
                         <div class="controls">
                             <select name="autor_id" id="autor_id">  
-                            	                     	                               
+                            	<option disabled selected>Selecione</option>
+                            	   <?php foreach($autor as $a){
+                            	   		echo '<option value="'.$a->idAutor.'">'.$a->autor.'</option>';
+                            	   } ?>                 	                               
                             </select>
-                            <button type="button" id="btnRefresh" class="btn btn-primary"><i class="icon-refresh icon-white"></i></button>
-                            <button type="button" id="btnExpAutor" class="btn btn-success" onclick="document.getElementById('cadAutor').style.display='inline';document.getElementById('minus').style.display='inline'"><i class="icon-plus icon-white"></i></button>
-                            <button type="button"  class="btn btn-danger" id="minus" onclick="document.getElementById('cadAutor').style.display='none';document.getElementById('minus').style.display='none'" style="display:none"><i class="icon-minus icon-white"></i></button><br>
+                            <button type="button" id="btnRefreshAutor" class="btn btn-primary"><i class="icon-refresh icon-white"></i></button>
+                            <button type="button" id="btnExpAutor" class="btn btn-success" onclick="document.getElementById('cadAutor').style.display='inline';document.getElementById('minusAutor').style.display='inline'"><i class="icon-plus icon-white"></i></button>
+                            <button type="button"  class="btn btn-danger" id="minusAutor" onclick="document.getElementById('cadAutor').style.display='none';document.getElementById('minusAutor').style.display='none'" style="display:none"><i class="icon-minus icon-white"></i></button><br>
                             
                             
                             <div class="control-group" style="display: none" id="cadAutor">
-                            	<label class="control-label" for="autor">Nome<span class="required">*</span></label>
+                            	<label class="control-label" for="autor">Autor<span class="required">*</span></label>
                             	<div class="controls">
                             		<input type="text" id="autor" name="autor" value="<?php echo set_value('titulo'); ?>" /><button type="button" id="btnAddAutor" class="btn btn-success" style="margin-left: 0.5%"><i class="icon-plus icon-white"></i></button>
                             	</div>                          	
@@ -57,10 +60,22 @@
                         <label  class="control-label">Editora<span class="required">*</span></label>
                         <div class="controls">
                             <select name="editora_id" id="editora_id">
+                            	<option disabled selected>Selecione</option>                           
                                   <?php foreach ($editora as $e) {
                                       echo '<option value="'.$e->idEditora.'">'.$e->editora.'</option>';
                                   } ?>
                             </select>
+                            <button type="button" id="btnRefreshEditora" class="btn btn-primary"><i class="icon-refresh icon-white"></i></button>
+                            <button type="button" id="btnExpEditora" class="btn btn-success" onclick="document.getElementById('cadEditora').style.display='inline';document.getElementById('minusEditora').style.display='inline'"><i class="icon-plus icon-white"></i></button>
+                            <button type="button"  class="btn btn-danger" id="minusEditora" onclick="document.getElementById('cadEditora').style.display='none';document.getElementById('minusEditora').style.display='none'" style="display:none"><i class="icon-minus icon-white"></i></button><br>
+                            
+                            
+                            <div class="control-group" style="display: none" id="cadEditora">
+                            	<label class="control-label" for="editora">Editora<span class="required">*</span></label>
+                            	<div class="controls">
+                            		<input type="text" id="editora" name="editora" value="<?php echo set_value('titulo'); ?>" /><button type="button" id="btnAddEditora" class="btn btn-success" style="margin-left: 0.5%"><i class="icon-plus icon-white"></i></button>
+                            	</div>                          	
+                            </div>
                         </div>
                     </div>
                     
@@ -90,7 +105,7 @@
                         <label  class="control-label">Seção</label>
                         <div class="controls">                        	
                             <select name="secao_id" id="secao_id">
-                            	<option value="">----------</option>
+                            	<option value="">Selecione</option>
                                   <?php foreach ($secao as $s) {
                                       echo '<option value="'.$s->idSecao.'">'.$s->secao.'</option>';
                                   } ?>
@@ -102,7 +117,7 @@
                         <label  class="control-label">Coleção</label>
                         <div class="controls">
                             <select name="colecao_id" id="colecao_id">
-                            	<option value="">----------</option>
+                            	<option value="">Selecione</option>
                                   <?php foreach ($colecao as $c) {
                                       echo '<option value="'.$c->idColecao.'">'.$c->colecao.'</option>';
                                   } ?>
@@ -235,7 +250,7 @@
 <script src="<?php echo base_url()?>js/jquery.validate.js"></script>
 <script src="<?php echo base_url();?>js/maskmoney.js"></script>
 <script type="text/javascript">
-
+	//cadastra autor
 	$(document).on('click', '#btnAddAutor', function(event){
 		var autor = $("#autor").val();
 			if(autor != ""){
@@ -253,9 +268,26 @@
 			}								 		
 	});
 	
+	//cadastra editora
+	$(document).on('click', '#btnAddEditora', function(event){
+		var editora = $("#editora").val();
+			if(autor != ""){
+				$.ajax({
+                  type: "POST",
+                  url: "<?php echo base_url();?>index.php/acervos/addEditora",
+                  data: "editora="+editora,
+                  success: function(data)
+                  {
+                  	alert('Editora cadastrada!');
+                  }
+                  });
+			}else{
+				alert('Campo editora vazio!');
+			}								 		
+	});
 	//carrega os dados qdo a pagina da refresh
 	
-	$(document).ready(function(event){	
+	/*$(document).ready(function(event){	
 		$.ajax({
 			url: "<?php echo base_url();?>index.php/acervos/getAutor",
 			type: "POST",
@@ -266,8 +298,7 @@
 				
 				select = document.getElementById('autor_id');
 				select.options.length = 0;
-							
-								
+															
 				$.each(autores, function(key, value) {
 					var o = new Option(value['autor'], value['idAutor']);
 					select.options[select.options.length] = o;
@@ -277,10 +308,10 @@
 			}
 			
 		});
-	});
+	});*/
 	
-	//botao de refresh
-	$(document).on('click', '#btnRefresh', function(event){	
+	//botao de refresh autor
+	$(document).on('click', '#btnRefreshAutor', function(event){	
 		$.ajax({
 			url: "<?php echo base_url();?>index.php/acervos/getAutor",
 			type: "POST",
@@ -292,29 +323,67 @@
 				select = document.getElementById('autor_id');
 				select.options.length = 0;
 				
-				/*for(name in autores){
-					if(autores.hasOwnProperty(name)){
-						select.options[select.options.length] = new Option(autores['autor'] , autores['idAutor']);
-					}
-				}*/
-				$.each(autores, function(key, value) {
+				var o1 = new Option("Selecione", "");
+				select.options[select.options.length] = o1;
+				o1.setAttribute('disabled', 'selected');						
+				
+				if(autores.error != true){
+					
+					$.each(autores, function(key, value) {
 					//$('#autor_id').append("<option value='"+key['idAutor']+"'>"+value['autor']+"</option>");
 					var o = new Option(value['autor'], value['idAutor']);
 					select.options[select.options.length] = o;
 					o.setAttribute("key","value");
 					
-				});
+					});
+				}
+							
 			}
 			
 		});
 	});
 	
+	//botao de refresh editora
+	$(document).on('click', '#btnRefreshEditora', function(event){	
+		$.ajax({
+			url: "<?php echo base_url();?>index.php/acervos/getEditora",
+			type: "POST",
+			dataType: "json",
+			success: function(editoras)
+			{	
+				var name, select, option;
+				
+				select = document.getElementById('editora_id');
+				select.options.length = 0;
+				
+				var o1 = new Option("Selecione", "");
+				select.options[select.options.length] = o1;
+				o1.setAttribute('disabled', 'selected');						
+				
+				if(editoras.error != true){
+					
+					$.each(editoras, function(key, value) {
+					//$('#autor_id').append("<option value='"+key['idAutor']+"'>"+value['autor']+"</option>");
+					var o = new Option(value['editora'], value['idEditora']);
+					select.options[select.options.length] = o;
+					o.setAttribute("key","value");
+					
+					});
+				}
+							
+			}
+			
+		});
+	});
 
     $(document).ready(function(){
-
+		var foo = document.getElementById('yourSelect');
+		
         $('#formAcervo').validate({
             rules :{
                   titulo: { required: true},
+                  autor_id: { required: true},
+                  editora_id: { required: true},
                   estoque: { required: true},
                   idioma: { required: true},
                   dataAquisicao: { required: true},
@@ -330,6 +399,8 @@
             },
             messages:{
                   titulo: { required: 'Campo Requerido.'},
+                  autor_id: { required: 'Campo Requerido.'},
+                  editora_id: { required: 'Campo Requerido.'},
                   estoque: { required: 'Campo Requerido.'},
                   idioma: { required: 'Campo Requerido.'},
                   dataAquisicao: { required: 'Campo Requerido.'},
