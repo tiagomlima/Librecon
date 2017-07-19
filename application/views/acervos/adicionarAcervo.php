@@ -501,6 +501,7 @@
                   categoria_id: { required: true},
                   edicao: { required: true},
                   classificacao: { required: true},
+                  tipoItem_id: { required: true},
                   numero_paginas: { required: true}
                   
             },
@@ -508,6 +509,7 @@
                   titulo: { required: 'Campo Requerido.'},
                   autor_id: { required: 'Campo Requerido.'},
                   editora_id: { required: 'Campo Requerido.'},
+                  tipoItem_id: { required: 'Campo Requerido.'},
                   estoque: { required: 'Campo Requerido.'},
                   idioma: { required: 'Campo Requerido.'},
                   dataAquisicao: { required: 'Campo Requerido.'},

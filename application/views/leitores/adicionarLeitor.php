@@ -122,6 +122,7 @@
                         <label  class="control-label">Sexo<span class="required">*</span></label>
                         <div class="controls">
                             <select name="sexo" id="sexo">
+                            	<option disabled selected>Selecione</option> 
                                 <option value="Masculino">Masculino</option>
                                 <option value="Feminino">Feminino</option>
                             </select>
@@ -216,10 +217,23 @@
                         <label  class="control-label">Curso<span class="required">*</span></label>
                         <div class="controls">
                             <select name="curso_id" id="curso_id">
+                            	<option disabled selected>Selecione</option> 
                                   <?php foreach ($cursos as $c) {
                                       echo '<option value="'.$c->idCursos.'">'.$c->nomeCurso.'</option>';
                                   } ?>
                             </select>
+                            <button type="button" id="btnRefreshCurso" class="btn btn-primary"><i class="icon-refresh icon-white"></i></button>
+                            <button type="button" id="btnExpCurso" class="btn btn-success" onclick="document.getElementById('cadCurso').style.display='inline';document.getElementById('minusCurso').style.display='inline'"><i class="icon-plus icon-white"></i></button>
+                            <button type="button"  class="btn btn-danger" id="minusCurso" onclick="document.getElementById('cadCurso').style.display='none';document.getElementById('minusCurso').style.display='none'" style="display:none"><i class="icon-minus icon-white"></i></button><br>
+                            
+                            
+                            <div class="control-group" style="display: none" id="cadCurso">
+                            	<label class="control-label" for="curso">Curso<span class="required">*</span></label>
+                            	<div class="controls">
+                            		<input type="text" id="curso" name="curso" value="" /><button type="button" id="btnAddCurso" class="btn btn-success" style="margin-left: 0.5%"><i class="icon-plus icon-white"></i></button>
+                            	</div>                          	
+                            </div>
+                            
                         </div>
                     </div>
                     
@@ -227,10 +241,13 @@
                         <label  class="control-label">Grupo<span class="required">*</span></label>
                         <div class="controls">
                             <select name="grupo_id" id="grupo_id">
+                            	<option disabled selected>Selecione</option> 
                                   <?php foreach ($grupos as $g) {
                                       echo '<option value="'.$g->idGrupo.'">'.$g->nomeGrupo.'</option>';
                                   } ?>
                             </select>
+                            <button type="button" id="btnRefreshGrupo" class="btn btn-primary"><i class="icon-refresh icon-white"></i></button>
+                           <a href="<?php echo base_url() ?>index.php/grupos/adicionar" target="_blank" id="" class="btn"><i class="icon-plus"></i></a>                           
                         </div>
                     </div>
 
@@ -278,6 +295,90 @@
 
 <script src="<?php echo base_url()?>js/jquery.validate.js"></script>
 <script type="text/javascript">
+	//cadastra curso
+	$(document).on('click', '#btnAddCurso', function(event){
+		var curso = $("#curso").val();
+			if(curso != ""){
+				$.ajax({
+                  type: "POST",
+                  url: "<?php echo base_url();?>index.php/leitores/addCurso",
+                  data: "curso="+curso,
+                  success: function(data)
+                  {
+                  	alert('Curso cadastrado!');
+                  }
+                  });
+			}else{
+				alert('Campo curso vazio!');
+			}								 		
+	});	
+	
+	//botao de refresh curso
+	$(document).on('click', '#btnRefreshCurso', function(event){	
+		$.ajax({
+			url: "<?php echo base_url();?>index.php/leitores/getCurso",
+			type: "POST",
+			dataType: "json",
+			success: function(cursos)
+			{	
+				var name, select, option;
+				
+				select = document.getElementById('curso_id');
+				select.options.length = 0;
+				
+				var o1 = new Option("Selecione", "");
+				select.options[select.options.length] = o1;
+				o1.setAttribute('disabled', 'selected');						
+				
+				if(cursos.error != true){
+					
+					$.each(cursos, function(key, value) {
+					//$('#autor_id').append("<option value='"+key['idAutor']+"'>"+value['autor']+"</option>");
+					var o = new Option(value['nomeCurso'], value['idCursos']);
+					select.options[select.options.length] = o;
+					o.setAttribute("key","value");
+					
+					});
+				}
+							
+			}
+			
+		});
+	});	
+	
+	//botao de refresh grupo
+	$(document).on('click', '#btnRefreshGrupo', function(event){	
+		$.ajax({
+			url: "<?php echo base_url();?>index.php/leitores/getGrupo",
+			type: "POST",
+			dataType: "json",
+			success: function(grupos)
+			{	
+				var name, select, option;
+				
+				select = document.getElementById('curso_id');
+				select.options.length = 0;
+				
+				var o1 = new Option("Selecione", "");
+				select.options[select.options.length] = o1;
+				o1.setAttribute('disabled', 'selected');						
+				
+				if(grupos.error != true){
+					
+					$.each(grupos, function(key, value) {
+					//$('#autor_id').append("<option value='"+key['idAutor']+"'>"+value['autor']+"</option>");
+					var o = new Option(value['nomeGrupo'], value['idGrupo']);
+					select.options[select.options.length] = o;
+					o.setAttribute("key","value");
+					
+					});
+				}
+							
+			}
+			
+		});
+	});	
+
       $(document).ready(function(){
        	    	      	
            $('#formLeitor').validate({
@@ -285,6 +386,7 @@
                   nome:{ required: true},
                   telefone:{ required: true},
                   email:{ required: true},
+                  sexo:{ required: true},
                   rua:{ required: true},
                   numero:{ required: true},
                   bairro:{ required: true},
@@ -295,6 +397,8 @@
                   cpf:{ required: true},
                   situacao:{ required: true},
                   senha:{ required: true},
+                  curso_id:{ required: true},
+                  grupo_id:{ required: true},
                   senhaConfirm:{ required: true}
             },
             messages:{
@@ -302,6 +406,7 @@
                   telefone:{ required: 'Campo Requerido.'},
                   email:{ required: 'Campo Requerido.'},
                   rua:{ required: 'Campo Requerido.'},
+                  sexo:{ required: 'Campo Requerido.'},
                   numero:{ required: 'Campo Requerido.'},
                   bairro:{ required: 'Campo Requerido.'},
                   cidade:{ required: 'Campo Requerido.'},
@@ -310,6 +415,8 @@
                   matricula:{ required: 'Campo Requerido.'},
                   cpf:{ required: 'Campo Requerido.'},
                   situacao:{ required: 'Campo Requerido.'},
+                  curso_id:{ required: 'Campo Requerido.'},
+                  grupo_id:{ required: 'Campo Requerido.'},
                   senha:{ required: 'Campo Requerido.'},
                   senhaConfirm:{ required: 'Campo Requerido.'}
 

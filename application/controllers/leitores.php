@@ -137,7 +137,7 @@ class Leitores extends CI_Controller {
         }
 
     }
-
+	
 	function adicionar(){  
         if(!$this->permission->checkPermission($this->session->userdata('permissao'),'aLeitor')){
            $this->session->set_flashdata('error','Você não tem permissão para adicionar leitores.');
@@ -323,6 +323,35 @@ class Leitores extends CI_Controller {
 			
       
     }	
+	
+	function addCurso(){
+		if(!$this->permission->checkPermission($this->session->userdata('permissao'),'aLeitor')){
+           $this->session->set_flashdata('error','Você não tem permissão para adicionar cursos.');
+           redirect(base_url());
+        }
+		
+		$curso = $this->input->post('curso');
+		$data = array(
+			'nomeCurso' => $curso,
+			'dataCadastro' => date('Y-m-d')
+		);
+		
+		if($this->leitores_model->add('cursos',$data) == TRUE){
+			 echo json_encode(array('result'=> true));
+		}else{
+			echo json_encode(array('result'=> false));
+		}
+	}
+	
+	function getCurso(){
+		$data['cursos'] = $this->cursos_model->getAll();
+		
+	   if($data['cursos']){   // we got a result, output json
+        	echo json_encode( $data['cursos'] );
+	    } else {
+	    	echo json_encode( array('error' => true) );
+	    }
+	}
 
 	public function editarImg(){
         

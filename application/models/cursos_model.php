@@ -31,7 +31,12 @@ class Cursos_model extends CI_Model {
         $result =  !$one  ? $query->result() : $query->row();
         return $result;
     }
-
+	
+	function getAll(){
+		$query= $this->db->query("SELECT * FROM cursos");
+        return $query->result();
+	}
+	
     function getById($id){
         $this->db->where('idCursos',$id);
         $this->db->limit(1);
