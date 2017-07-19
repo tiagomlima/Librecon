@@ -76,17 +76,32 @@
                             		<input type="text" id="editora" name="editora" value="" /><button type="button" id="btnAddEditora" class="btn btn-success" style="margin-left: 0.5%"><i class="icon-plus icon-white"></i></button>
                             	</div>                          	
                             </div>
+                            
                         </div>
+                        
                     </div>
                     
                     <div class="control-group">
                         <label  class="control-label">Tipo de Item<span class="required">*</span></label>
                         <div class="controls">
                             <select name="tipoItem_id" id="tipoItem_id">
+                            	<option disabled selected>Selecione</option> 
                                   <?php foreach ($tipoItem as $t) {
                                       echo '<option value="'.$t->idTipoItem.'">'.$t->nomeTipo.'</option>';
                                   } ?>
                             </select>
+                            <button type="button" id="btnRefreshTipo" class="btn btn-primary"><i class="icon-refresh icon-white"></i></button>
+                            <button type="button" id="btnExpTipo" class="btn btn-success" onclick="document.getElementById('cadTipo').style.display='inline';document.getElementById('minusTipo').style.display='inline'"><i class="icon-plus icon-white"></i></button>
+                            <button type="button"  class="btn btn-danger" id="minusTipo" onclick="document.getElementById('cadTipo').style.display='none';document.getElementById('minusTipo').style.display='none'" style="display:none"><i class="icon-minus icon-white"></i></button><br>
+                            
+                            
+                            <div class="control-group" style="display: none" id="cadTipo">
+                            	<label class="control-label" for="tipo">Tipo<span class="required">*</span></label>
+                            	<div class="controls">
+                            		<input type="text" id="tipo" name="tipo" value="" /><button type="button" id="btnAddTipo" class="btn btn-success" style="margin-left: 0.5%"><i class="icon-plus icon-white"></i></button>
+                            	</div>                          	
+                            </div>
+                            
                         </div>
                     </div>
                     
@@ -94,11 +109,25 @@
                         <label  class="control-label">Categoria<span class="required">*</span></label>
                         <div class="controls">
                             <select name="categoria_id" id="categoria_id">
+                            	<option disabled selected>Selecione</option> 
                                   <?php foreach ($categoria as $c) {
                                       echo '<option value="'.$c->idCategoria.'">'.$c->nomeCategoria.'</option>';
                                   } ?>
                             </select>
+                            <button type="button" id="btnRefreshCategoria" class="btn btn-primary"><i class="icon-refresh icon-white"></i></button>
+                            <button type="button" id="btnExpCategoria" class="btn btn-success" onclick="document.getElementById('cadCategoria').style.display='inline';document.getElementById('minusCategoria').style.display='inline'"><i class="icon-plus icon-white"></i></button>
+                            <button type="button"  class="btn btn-danger" id="minusCategoria" onclick="document.getElementById('cadCategoria').style.display='none';document.getElementById('minusCategoria').style.display='none'" style="display:none"><i class="icon-minus icon-white"></i></button><br>
+                            
+                            
+                            <div class="control-group" style="display: none" id="cadCategoria">
+                            	<label class="control-label" for="categoria">Categoria<span class="required">*</span></label>
+                            	<div class="controls">
+                            		<input type="text" id="categoria" name="categoria" value="" /><button type="button" id="btnAddCategoria" class="btn btn-success" style="margin-left: 0.5%"><i class="icon-plus icon-white"></i></button>
+                            	</div>                          	
+                            </div>
+                            
                         </div>
+                        
                     </div>
                     
                     <div class="control-group">
@@ -286,6 +315,42 @@
 			}								 		
 	});	
 	
+	//cadastra tipo
+	$(document).on('click', '#btnAddTipo', function(event){
+		var tipo = $("#tipo").val();
+			if(tipo != ""){
+				$.ajax({
+                  type: "POST",
+                  url: "<?php echo base_url();?>index.php/acervos/addTipo",
+                  data: "tipo="+tipo,
+                  success: function(data)
+                  {
+                  	alert('Tipo de item cadastrado!');
+                  }
+                  });
+			}else{
+				alert('Tipo de item vazio!');
+			}								 		
+	});	
+	
+	//cadastra categoria
+	$(document).on('click', '#btnAddCategoria', function(event){
+		var categoria = $("#categoria").val();
+			if(categoria != ""){
+				$.ajax({
+                  type: "POST",
+                  url: "<?php echo base_url();?>index.php/acervos/addCategoria",
+                  data: "categoria="+categoria,
+                  success: function(data)
+                  {
+                  	alert('Categoria cadastrada!');
+                  }
+                  });
+			}else{
+				alert('Campo cateogoria vazio!');
+			}								 		
+	});	
+	
 	//botao de refresh autor
 	$(document).on('click', '#btnRefreshAutor', function(event){	
 		$.ajax({
@@ -351,6 +416,72 @@
 			
 		});
 	});
+	
+	//botao de refresh tipoItem
+	$(document).on('click', '#btnRefreshTipo', function(event){	
+		$.ajax({
+			url: "<?php echo base_url();?>index.php/acervos/getTipo",
+			type: "POST",
+			dataType: "json",
+			success: function(tipos)
+			{	
+				var name, select, option;
+				
+				select = document.getElementById('tipoItem_id');
+				select.options.length = 0;
+				
+				var o1 = new Option("Selecione", "");
+				select.options[select.options.length] = o1;
+				o1.setAttribute('disabled', 'selected');						
+				
+				if(tipos.error != true){
+					
+					$.each(tipos, function(key, value) {
+					//$('#autor_id').append("<option value='"+key['idAutor']+"'>"+value['autor']+"</option>");
+					var o = new Option(value['nomeTipo'], value['idTipoItem']);
+					select.options[select.options.length] = o;
+					o.setAttribute("key","value");
+					
+					});
+				}
+							
+			}
+			
+		});
+	});
+	
+	//botao de refresh categoria
+	$(document).on('click', '#btnRefreshCategoria', function(event){	
+		$.ajax({
+			url: "<?php echo base_url();?>index.php/acervos/getCategoria",
+			type: "POST",
+			dataType: "json",
+			success: function(categorias)
+			{	
+				var name, select, option;
+				
+				select = document.getElementById('categoria_id');
+				select.options.length = 0;
+				
+				var o1 = new Option("Selecione", "");
+				select.options[select.options.length] = o1;
+				o1.setAttribute('disabled', 'selected');						
+				
+				if(categorias.error != true){
+					
+					$.each(categorias, function(key, value) {
+					//$('#autor_id').append("<option value='"+key['idAutor']+"'>"+value['autor']+"</option>");
+					var o = new Option(value['nomeCategoria'], value['idCategoria']);
+					select.options[select.options.length] = o;
+					o.setAttribute("key","value");
+					
+					});
+				}
+							
+			}
+			
+		});
+	});
 
     $(document).ready(function(){
 		var foo = document.getElementById('yourSelect');
@@ -367,7 +498,7 @@
                   tabelaCutter: { required: true},
                   isbn: { required: true},
                   anoEdicao: { required: true},
-                  categoria: { required: true},
+                  categoria_id: { required: true},
                   edicao: { required: true},
                   classificacao: { required: true},
                   numero_paginas: { required: true}
@@ -386,7 +517,7 @@
                   anoEdicao: { required: 'Campo Requerido.'},
                   edicao: { required: 'Campo Requerido.'},
                   classificacao: { required: 'Campo Requerido.'},
-                  categoria: { required: 'Campo Requerido.'},
+                  categoria_id: { required: 'Campo Requerido.'},
                   numero_paginas:{ required: 'Campo Requerido.'}
                   
             },

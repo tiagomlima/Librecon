@@ -39,6 +39,11 @@ class TipoItem_model extends CI_Model {
         $query = $this->db->get();
         return $query->result();;
     }
+	
+	function getAll(){
+		$query= $this->db->query("SELECT * FROM tipo_de_item");
+        return $query->result();
+	}
 
     function getById($id){
         $this->db->where('idTipoItem',$id);

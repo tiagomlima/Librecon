@@ -39,6 +39,11 @@ class Categoria_model extends CI_Model {
         $query = $this->db->get();
         return $query->result();;
     }
+	
+	function getAll(){
+		$query= $this->db->query("SELECT * FROM categoria");
+        return $query->result();
+	}
 
     function getById($id){
         $this->db->where('idCategoria',$id);

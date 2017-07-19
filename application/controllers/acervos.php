@@ -272,6 +272,63 @@ class Acervos extends CI_Controller {
 	    	echo json_encode( array('error' => true) );
 	    }
 	}
+	
+	function addTipo(){
+		if(!$this->permission->checkPermission($this->session->userdata('permissao'),'aAcervo')){
+           $this->session->set_flashdata('error','Você não tem permissão para adicionar tipos.');
+           redirect(base_url());
+        }
+		
+		$tipo = $this->input->post('tipo');
+		$data = array(
+			'nomeTipo' => $tipo,
+			'dataCadastro' => date('Y-m-d')
+		);
+		
+		if($this->acervos_model->add('tipo_de_item',$data) == TRUE){
+			 echo json_encode(array('result'=> true));
+		}else{
+			echo json_encode(array('result'=> false));
+		}
+	}
+	
+	function getTipo(){
+	    $data['tipos'] = $this->tipoItem_model->getAll();
+		
+	   if($data['tipos']){   // we got a result, output json
+        	echo json_encode( $data['tipos'] );
+	    } else {
+	    	echo json_encode( array('error' => true) );
+	    }
+	}
+	
+	function addCategoria(){
+		if(!$this->permission->checkPermission($this->session->userdata('permissao'),'aAcervo')){
+           $this->session->set_flashdata('error','Você não tem permissão para adicionar categorias.');
+           redirect(base_url());
+        }
+		
+		$categoria = $this->input->post('categoria');
+		$data = array(
+			'nomeCategoria' => $categoria
+		);
+		
+		if($this->acervos_model->add('categoria',$data) == TRUE){
+			 echo json_encode(array('result'=> true));
+		}else{
+			echo json_encode(array('result'=> false));
+		}
+	}
+	
+	function getCategoria(){
+	    $data['categorias'] = $this->categoria_model->getAll();
+		
+	   if($data['categorias']){   // we got a result, output json
+        	echo json_encode( $data['categorias'] );
+	    } else {
+	    	echo json_encode( array('error' => true) );
+	    }
+	}
 
 	function adicionarExemplar(){
 		if(!$this->permission->checkPermission($this->session->userdata('permissao'),'aAcervo')){
