@@ -48,7 +48,7 @@
                             <div class="control-group" style="display: none" id="cadAutor">
                             	<label class="control-label" for="autor">Autor<span class="required">*</span></label>
                             	<div class="controls">
-                            		<input type="text" id="autor" name="autor" value="<?php echo set_value('titulo'); ?>" /><button type="button" id="btnAddAutor" class="btn btn-success" style="margin-left: 0.5%"><i class="icon-plus icon-white"></i></button>
+                            		<input type="text" id="autor" name="autor" value="" /><button type="button" id="btnAddAutor" class="btn btn-success" style="margin-left: 0.5%"><i class="icon-plus icon-white"></i></button>
                             	</div>                          	
                             </div>
  
@@ -73,7 +73,7 @@
                             <div class="control-group" style="display: none" id="cadEditora">
                             	<label class="control-label" for="editora">Editora<span class="required">*</span></label>
                             	<div class="controls">
-                            		<input type="text" id="editora" name="editora" value="<?php echo set_value('titulo'); ?>" /><button type="button" id="btnAddEditora" class="btn btn-success" style="margin-left: 0.5%"><i class="icon-plus icon-white"></i></button>
+                            		<input type="text" id="editora" name="editora" value="" /><button type="button" id="btnAddEditora" class="btn btn-success" style="margin-left: 0.5%"><i class="icon-plus icon-white"></i></button>
                             	</div>                          	
                             </div>
                         </div>
@@ -271,7 +271,7 @@
 	//cadastra editora
 	$(document).on('click', '#btnAddEditora', function(event){
 		var editora = $("#editora").val();
-			if(autor != ""){
+			if(editora != ""){
 				$.ajax({
                   type: "POST",
                   url: "<?php echo base_url();?>index.php/acervos/addEditora",
@@ -284,31 +284,7 @@
 			}else{
 				alert('Campo editora vazio!');
 			}								 		
-	});
-	//carrega os dados qdo a pagina da refresh
-	
-	/*$(document).ready(function(event){	
-		$.ajax({
-			url: "<?php echo base_url();?>index.php/acervos/getAutor",
-			type: "POST",
-			dataType: "json",
-			success: function(autores)
-			{									
-				var name, select, option;
-				
-				select = document.getElementById('autor_id');
-				select.options.length = 0;
-															
-				$.each(autores, function(key, value) {
-					var o = new Option(value['autor'], value['idAutor']);
-					select.options[select.options.length] = o;
-					o.setAttribute("key","value");
-					
-				});
-			}
-			
-		});
-	});*/
+	});	
 	
 	//botao de refresh autor
 	$(document).on('click', '#btnRefreshAutor', function(event){	
