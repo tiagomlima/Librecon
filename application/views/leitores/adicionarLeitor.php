@@ -333,10 +333,10 @@
 				if(cursos.error != true){
 					
 					$.each(cursos, function(key, value) {
-					//$('#autor_id').append("<option value='"+key['idAutor']+"'>"+value['autor']+"</option>");
-					var o = new Option(value['nomeCurso'], value['idCursos']);
-					select.options[select.options.length] = o;
-					o.setAttribute("key","value");
+						
+						var o = new Option(value['nomeCurso'], value['idCursos']);
+						select.options[select.options.length] = o;
+						o.setAttribute("key","value");
 					
 					});
 				}
@@ -366,11 +366,11 @@
 				if(grupos.error != true){
 					
 					$.each(grupos, function(key, value) {
-					//$('#autor_id').append("<option value='"+key['idAutor']+"'>"+value['autor']+"</option>");
-					var o = new Option(value['nomeGrupo'], value['idGrupo']);
-					select.options[select.options.length] = o;
-					o.setAttribute("key","value");
-					
+						
+						var o = new Option(value['nomeGrupo'], value['idGrupo']);
+						select.options[select.options.length] = o;
+						o.setAttribute("key","value");	
+									
 					});
 				}
 							
@@ -434,7 +434,3 @@
            });
       });
 </script>
-
-
-
-

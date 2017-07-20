@@ -371,10 +371,10 @@
 				if(autores.error != true){
 					
 					$.each(autores, function(key, value) {
-					//$('#autor_id').append("<option value='"+key['idAutor']+"'>"+value['autor']+"</option>");
-					var o = new Option(value['autor'], value['idAutor']);
-					select.options[select.options.length] = o;
-					o.setAttribute("key","value");
+						
+						var o = new Option(value['autor'], value['idAutor']);
+						select.options[select.options.length] = o;
+						o.setAttribute("key","value");
 					
 					});
 				}
@@ -404,10 +404,10 @@
 				if(editoras.error != true){
 					
 					$.each(editoras, function(key, value) {
-					//$('#autor_id').append("<option value='"+key['idAutor']+"'>"+value['autor']+"</option>");
-					var o = new Option(value['editora'], value['idEditora']);
-					select.options[select.options.length] = o;
-					o.setAttribute("key","value");
+						
+						var o = new Option(value['editora'], value['idEditora']);
+						select.options[select.options.length] = o;
+						o.setAttribute("key","value");
 					
 					});
 				}
@@ -437,10 +437,10 @@
 				if(tipos.error != true){
 					
 					$.each(tipos, function(key, value) {
-					//$('#autor_id').append("<option value='"+key['idAutor']+"'>"+value['autor']+"</option>");
-					var o = new Option(value['nomeTipo'], value['idTipoItem']);
-					select.options[select.options.length] = o;
-					o.setAttribute("key","value");
+
+						var o = new Option(value['nomeTipo'], value['idTipoItem']);
+						select.options[select.options.length] = o;
+						o.setAttribute("key","value");
 					
 					});
 				}
@@ -470,10 +470,10 @@
 				if(categorias.error != true){
 					
 					$.each(categorias, function(key, value) {
-					//$('#autor_id').append("<option value='"+key['idAutor']+"'>"+value['autor']+"</option>");
-					var o = new Option(value['nomeCategoria'], value['idCategoria']);
-					select.options[select.options.length] = o;
-					o.setAttribute("key","value");
+
+						var o = new Option(value['nomeCategoria'], value['idCategoria']);
+						select.options[select.options.length] = o;
+						o.setAttribute("key","value");
 					
 					});
 				}
@@ -536,6 +536,3 @@
            });
     });
 </script>
-
-
-
