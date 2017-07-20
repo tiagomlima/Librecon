@@ -34,6 +34,7 @@
                         <label  class="control-label">Curso<span class="required">*</span></label>
                         <div class="controls">
                             <select name="curso_id" id="curso_id">
+                            	<option selected disabled>Selecione</option>
                                   <?php foreach ($cursos as $c) {
                                       echo '<option value="'.$c->idCursos.'">'.$c->nomeCurso.'</option>';
                                   } ?>

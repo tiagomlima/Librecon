@@ -159,7 +159,7 @@ class Disciplinas extends CI_Controller {
         $this->data['view'] = 'disciplinas/visualizar';
         $this->load->view('tema/topo', $this->data);
 
-        
+      
     }
 	
     public function excluir(){

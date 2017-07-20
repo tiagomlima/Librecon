@@ -42,7 +42,7 @@
                             </select>
                             <button type="button" id="btnRefreshAutor" class="btn btn-primary"><i class="icon-refresh icon-white"></i></button>
                             <button type="button" id="btnExpAutor" class="btn btn-success" onclick="document.getElementById('cadAutor').style.display='inline';document.getElementById('minusAutor').style.display='inline'"><i class="icon-plus icon-white"></i></button>
-                            <button type="button"  class="btn btn-danger" id="minusAutor" onclick="document.getElementById('cadAutor').style.display='none';document.getElementById('minusAutor').style.display='none'" style="display:none"><i class="icon-minus icon-white"></i></button><br>
+                            <button type="button" class="btn btn-danger" id="minusAutor" onclick="document.getElementById('cadAutor').style.display='none';document.getElementById('minusAutor').style.display='none'" style="display:none"><i class="icon-minus icon-white"></i></button><br>
                             
                             
                             <div class="control-group" style="display: none" id="cadAutor">
@@ -176,7 +176,7 @@
                     </div>
                     
                    <div class="control-group">
-                        <label for="observacaoAquisicao" class="control-label">Preço R$</label>
+                        <label for="preco" class="control-label">Preço R$</label>
                         <div class="controls">
                             <input id="preco" type="text" name="preco" value=""  />
                         </div>
@@ -197,7 +197,7 @@
                     </div>
                     
                     <div class="control-group">
-                        <label for="isbn" class="control-label">Edição<span class="required">*</span></label>
+                        <label for="edicao" class="control-label">Edição<span class="required">*</span></label>
                         <div class="controls">
                             <input id="edicao" type="text" name="edicao" value="<?php echo set_value('edicao'); ?>"  />
                         </div>
@@ -248,8 +248,7 @@
                     <div class="control-group">
                         <label for="descricao" class="control-label">Descrição</label>
                         <div class="controls">
-                            <textarea name="descricao" rows="8" cols="40" placeholder="Digite uma breve descrição ou resumo do livro" style="width: 30%">
-								
+                            <textarea name="descricao" id="descricao" rows="8" cols="40" placeholder="Digite uma breve descrição ou resumo do livro" style="width: 30%">								
 							</textarea>
                         </div>
                     </div>
