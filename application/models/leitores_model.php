@@ -270,7 +270,7 @@ class Leitores_model extends CI_Model {
 		$dataAtual = date('Y-m-d H:i:s');
 		
 		if($dataAtual > $leitor->dataMulta){
-			$this->finalizarMulta($leitor);
+			$this->finalizarMulta($leitor->idUsuarios);
 			return true;
 		}else{
 			return false;
