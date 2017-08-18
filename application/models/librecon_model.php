@@ -159,6 +159,11 @@ class Librecon_model extends CI_Model {
         return $this->db->get('emitente')->result();
     }
 
+	public function getAcervos()
+	{
+		return $this->db->get('acervos')->result();
+	}
+
     public function addEmitente($nome, $cnpj, $ie, $logradouro, $numero, $bairro, $cidade, $uf,$telefone,$site, $logo){
        
        $this->db->set('nome', $nome);

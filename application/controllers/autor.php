@@ -60,7 +60,7 @@ class Autor extends CI_Controller {
         
         $this->pagination->initialize($config); 	
         
-	    $this->data['results'] = $this->autor_model->get('autor','idAutor,autor,dataCadastro,descricao','',$config['per_page'],$this->uri->segment(3));
+	    $this->data['results'] = $this->autor_model->get('autor','idAutor,autor,dataCadastro,descricao,numero','',$config['per_page'],$this->uri->segment(3));
        	
        	$this->data['view'] = 'autor/autor';
        	$this->load->view('tema/topo',$this->data);
@@ -85,6 +85,7 @@ class Autor extends CI_Controller {
             
                 'autor' => set_value('autor'),
                 'descricao' =>  $this->input->post('descricao'),
+                'numero' => set_value('numero'),
                 'dataCadastro' => date('Y-m-d')
             );
 
@@ -115,13 +116,15 @@ class Autor extends CI_Controller {
 
         $this->load->library('form_validation');
         $this->data['custom_error'] = '';
+		$this->form_validation->set_rules('numero', 'Numero do autor', 'trim|required|xss_clean');
 
         if ($this->form_validation->run('autor') == false) {
             $this->data['custom_error'] = (validation_errors() ? '<div class="form_error">' . validation_errors() . '</div>' : false);
         } else {
             $data = array(
                 'autor' => $this->input->post('autor'),
-                'descricao' => $this->input->post('descricao'),
+                'numero' => $this->input->post('numero'),
+                'descricao' => $this->input->post('descricao')
                 
                 
             );

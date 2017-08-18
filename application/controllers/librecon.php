@@ -248,6 +248,62 @@ class Librecon extends CI_Controller {
         $this->load->view('tema/topo',$data);
         $this->load->view('tema/rodape');
     }
+	
+	public function etiquetas(){
+		
+		if((!$this->session->userdata('session_id')) || (!$this->session->userdata('logado'))){
+            redirect('librecon/login');
+        }
+		
+		if(!$this->permission->checkPermission($this->session->userdata('permissao'),'cEtiqueta')){
+           $this->session->set_flashdata('error','Você não tem permissão para gerar etiquetas.');
+           redirect(base_url());
+        }
+
+		$data['menuConfiguracoes'] = 'Configuracoes';
+		$data['view'] = 'librecon/etiquetas';
+		$data['acervos'] = $this->librecon_model->getAcervos();
+		$this->load->view('tema/topo',$data);
+        $this->load->view('tema/rodape');
+	}
+
+	function teste(){
+	
+		$nome_autor = "Ciclano Fulano Clicano";
+		$palavras = explode(" ", $nome_autor);
+		$ultimo_nome = $palavras[count($palavras) - 1];
+		
+		$letra_sobrenome = substr($ultimo_nome,0,1);
+		print_r($letra_sobrenome);
+	}
+
+	public function gerarEtiqueta(){
+		$tombo = $this->input->post('tombo');
+		
+		$data['tombo'] = $tombo;
+		$data['view'] = 'librecon/imprimir/etiquetas';
+		$this->load->view('tema/topo',$data);
+        $this->load->view('tema/rodape');
+		
+		/*$tombo = $this->db->get('exemplares')->result();
+		$i = 0;
+		$tombos = array();
+		foreach($tombo as $t){
+			$tombo = $this->input->post('tombo'.$t->tombo);
+			
+			$tombos[$i] = $tombo; 
+			
+			$data['tombos'] = $tombos;
+			
+			$i++;
+		}
+
+				
+		$data['view'] = 'librecon/imprimir/etiquetas';
+		$this->load->view('tema/topo',$data);
+        $this->load->view('tema/rodape');
+        */
+	}
 
     function do_upload(){
 

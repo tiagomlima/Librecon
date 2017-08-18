@@ -37,7 +37,12 @@
                         </div>
                     </div>
 
-                    
+                    <div class="control-group">
+                        <label for="numero" class="control-label">Número do Sobrenome<span class="required">*</span></label>
+                        <div class="controls">
+                            <input id="numero" type="text" name="numero" value="<?php echo $result->numero; ?>"  ></textarea>
+                        </div>
+                    </div>
 
                     <div class="form-actions">
                         <div class="span12">
@@ -65,14 +70,14 @@
            $('#formAutor').validate({
             rules : {
                   autor:{ required: true},
-                  
+                  numero:{ required: true},
                   
                   
                   
             },
             messages: {
                   autor :{ required: 'Campo Requerido.'},
-                  
+                  numero :{ required: 'Campo Requerido.'},
                   
                   
                   

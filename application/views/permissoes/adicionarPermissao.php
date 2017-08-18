@@ -591,13 +591,6 @@
 
                                     <td>
                                         <label>
-                                            <input name="rOs" class="marcar" type="checkbox" value="1" />
-                                            <span class="lbl"> Relatório OS</span>
-                                        </label>
-                                    </td>
-
-                                    <td>
-                                        <label>
                                             <input name="rAcervo" class="marcar" type="checkbox" value="1" />
                                             <span class="lbl"> Relatório Acervo</span>
                                         </label>
@@ -645,6 +638,13 @@
                                         <label>
                                             <input name="cPermissao" class="marcar" type="checkbox" value="1" />
                                             <span class="lbl"> Configurar Permissão</span>
+                                        </label>
+                                    </td>
+                                    
+                                    <td>
+                                        <label>
+                                            <input name="cEtiqueta" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Gerar Etiquetas</span>
                                         </label>
                                     </td>
 

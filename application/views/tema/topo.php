@@ -188,8 +188,8 @@
             <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'cBackup')){ ?>
                 <li><a href="<?php echo base_url()?>index.php/librecon/backup">Backup</a></li>
             <?php } ?>
-            <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'cCurso')){ ?>
-                <li><a href="<?php echo base_url()?>index.php/cursos">Cursos</a></li>
+            <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'cEtiqueta')){ ?>
+                <li><a href="<?php echo base_url()?>index.php/librecon/etiquetas">Etiquetas</a></li>
             <?php } ?>
             
              

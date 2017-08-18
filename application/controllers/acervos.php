@@ -222,8 +222,10 @@ class Acervos extends CI_Controller {
         }
 		
 		$autor = $this->input->post('autor');
+		$numero = $this->input->post('numero');
 		$data = array(
 			'autor' => $autor,
+			'numero' => $numero,
 			'dataCadastro' => date('Y-m-d')
 		);
 		

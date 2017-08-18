@@ -27,14 +27,21 @@
                         <div class="controls">
                             <input id="autor" type="text" name="autor" value="<?php echo set_value('autor'); ?>"  />
                         </div>
-                    </div>  
+                    </div>
+                      
                     <div class="control-group">
                         <label for="descricao" class="control-label">Descrição</label>
                         <div class="controls">
-                            <textarea id="descricao" type="text" name="descricao"   value="<?php echo set_value('descricao'); ?>" ></textarea>
+                            <textarea id="descricao" type="text" name="descricao"   value="" ></textarea>
                         </div>
                     </div>
 
+ 					<div class="control-group">
+                        <label for="numero" class="control-label">Número do Sobrenome<span class="required">*</span></label>
+                        <div class="controls">
+                            <input id="numero" type="text" name="numero" value="<?php echo set_value('numero'); ?>" ></textarea>
+                        </div>
+                    </div>
  
                     <div class="form-actions">
                         <div class="span12">
@@ -60,12 +67,13 @@
            $('#formAutor').validate({
             rules : {
                   autor:{ required: true},
+                  numero:{ required: true},
                   
                   
             },
             messages: {
                   autor :{ required: 'Campo Requerido.'},
-                  
+                  numero :{ required: 'Campo Requerido.'},
                   
                   
 

@@ -29,6 +29,8 @@ if(!$results){?>
         <tr style="backgroud-color: #2D335B">
             <th>#</th>
             <th>Nome da Autor</th>
+            <th>Número do Sobrenome</th>
+            <th>Descrição</th>
             <th></th>
         </tr>
     </thead>
@@ -61,6 +63,7 @@ if(!$results){?>
         <tr style="backgroud-color: #2D335B">
             <th>#</th>
             <th>Nome da Autor</th>
+            <th>Número do Sobrenome</th>
             <th>Descrição</th>
             <th></th>
         </tr>
@@ -69,10 +72,11 @@ if(!$results){?>
         <?php foreach ($results as $r) {
            
             echo '<tr>';
-            echo '<td>'.$r->idAutor.'</td>';
-            echo '<td>'.$r->autor.'</td>';
-			echo '<td>'.$r->descricao.'</td>';
-            echo '<td>';
+            echo '<td style="text-align:center">'.$r->idAutor.'</td>';
+            echo '<td style="text-align:center">'.$r->autor.'</td>';
+			echo '<td style="text-align:center">'.$r->numero.'</td>';
+			echo '<td style="text-align:center">'.$r->descricao.'</td>';
+            echo '<td style="text-align:center">';
                       if($this->permission->checkPermission($this->session->userdata('permissao'),'eAutor')){
                 		echo '<a href="'.base_url().'index.php/autor/editar/'.$r->idAutor.'" style="margin-right: 1%" class="btn btn-info tip-top" title="Editar Autor"><i class="icon-pencil icon-white"></i></a>'; 
            		 	  }

@@ -643,6 +643,13 @@
                                             <span class="lbl"> Configurar Permissão</span>
                                         </label>
                                     </td>
+                                    
+                                    <td>
+                                        <label>
+                                            <input <?php if(isset($permissoes['cEtiqueta'])){ if($permissoes['cEtiqueta'] == '1'){echo 'checked';}}?> name="cEtiqueta" class="marcar" type="checkbox" value="1" />
+                                            <span class="lbl"> Gerar Etiquetas</span>
+                                        </label>
+                                    </td>
 
                                     <td>
                                         <label>

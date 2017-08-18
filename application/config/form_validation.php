@@ -71,7 +71,12 @@ $config = array(
                                     'field'=>'autor',
                                     'label'=>'Autor',
                                     'rules'=>'required|trim|xss_clean'
-                                ))
+                                ),
+                                array(
+									'field'=>'numero',
+									'label'=>'Número do Sobrenome',
+									'rules'=>'required|trim|xss_clean|is_unique[autor.numero]'
+								))
                 ,                
                 'acervos' => array(array(
                                     'field'=>'titulo',

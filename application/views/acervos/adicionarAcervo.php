@@ -48,8 +48,16 @@
                             <div class="control-group" style="display: none" id="cadAutor">
                             	<label class="control-label" for="autor">Autor<span class="required">*</span></label>
                             	<div class="controls">
-                            		<input type="text" id="autor" name="autor" value="" /><button type="button" id="btnAddAutor" class="btn btn-success" style="margin-left: 0.5%"><i class="icon-plus icon-white"></i></button>
-                            	</div>                          	
+                            		<input type="text" id="autor" name="autor" value="" />
+                            	</div>
+                            	
+                            	<label class="control-label" for="numero">Número Sobrenome<span class="required">*</span></label>
+                            	<div class="controls">
+                            		<input type="text" id="numero" name="numero" value="" /><br/>
+                            		<br/>
+                            		<button type="button" id="btnAddAutor" class="btn btn-success" style="margin-left: 0.5%"><i class="icon-plus icon-white"> Cadastrar</i></button>
+                            	</div>  
+                            	                          	
                             </div>
  
                         </div>
@@ -281,11 +289,12 @@
 	//cadastra autor
 	$(document).on('click', '#btnAddAutor', function(event){
 		var autor = $("#autor").val();
-			if(autor != ""){
+		var numero = $("#numero").val();
+			if(autor != "" || numero != ""){
 				$.ajax({
                   type: "POST",
                   url: "<?php echo base_url();?>index.php/acervos/addAutor",
-                  data: "autor="+autor,
+                  data: "autor="+autor+"&numero="+numero,
                   success: function(data)
                   {
                   	alert('Autor cadastrado!');
