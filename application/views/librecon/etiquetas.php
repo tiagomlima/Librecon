@@ -36,7 +36,7 @@
                 			<?php foreach($acervos as $a){?>
                 				<tr>
                 					<td>
-                						<a href="#demo<?php echo $i; ?>" class="btn btn-info" data-toggle="collapse"><?php echo $a->titulo; ?></a>
+                						<b><?php echo $a->titulo; ?></b>  <a href="#demo<?php echo $i; ?>" class="btn-mini btn-warning" data-toggle="collapse"><i class="icon-plus icon-white"></i></a>
 										  <div id="demo<?php echo $i; ?>" class="collapse">
 										  	<br/>
 										    <?php 
