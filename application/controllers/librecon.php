@@ -267,16 +267,6 @@ class Librecon extends CI_Controller {
         $this->load->view('tema/rodape');
 	}
 
-	function teste(){
-	
-		$nome_autor = "Ciclano Fulano Clicano";
-		$palavras = explode(" ", $nome_autor);
-		$ultimo_nome = $palavras[count($palavras) - 1];
-		
-		$letra_sobrenome = substr($ultimo_nome,0,1);
-		print_r($letra_sobrenome);
-	}
-
 	public function gerarEtiqueta(){
 		$tombo = $this->input->post('tombo');
 		
@@ -285,24 +275,6 @@ class Librecon extends CI_Controller {
 		$this->load->view('tema/topo',$data);
         $this->load->view('tema/rodape');
 		
-		/*$tombo = $this->db->get('exemplares')->result();
-		$i = 0;
-		$tombos = array();
-		foreach($tombo as $t){
-			$tombo = $this->input->post('tombo'.$t->tombo);
-			
-			$tombos[$i] = $tombo; 
-			
-			$data['tombos'] = $tombos;
-			
-			$i++;
-		}
-
-				
-		$data['view'] = 'librecon/imprimir/etiquetas';
-		$this->load->view('tema/topo',$data);
-        $this->load->view('tema/rodape');
-        */
 	}
 
     function do_upload(){

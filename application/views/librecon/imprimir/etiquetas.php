@@ -16,6 +16,10 @@ if(empty($tombo)){
 	#etiqueta b {
 		margin: 0;
 	}
+	#botaoImprimir{
+		float: right;
+	}
+	
 </style>
 
 <?php 
@@ -23,7 +27,10 @@ $i = 0;
 $colunas = 3;
 $resto = $colunas-(count($tombo)%$colunas);
 ?>
-<span class="span12"><a id="imprimir" title="Imprimir" class="btn btn-mini btn-inverse" href=""><i class="icon-print icon-white"></i> Imprimir</a></span>
+<div id="botaoImprimir">
+<span class="span12"><a id="imprimir" title="Imprimir" class="btn btn-mini btn-inverse" href=""><i class="icon-print icon-white"></i> Imprimir</a></span>	
+</div>
+
 <div id="print">
 <table>
 	<tbody>
@@ -70,15 +77,13 @@ $resto = $colunas-(count($tombo)%$colunas);
 						
 					?>
 					<b><?php echo $letra_sobrenome . $numero_sobrenome . $primeira_letra; ?></b><br/>
-					<b><?php echo $acervo->edicao; ?>.ed.</b><br/>
-					<b>ex.<?php echo '$x + 1'; ?></b><br/>
+					<b><?php echo $acervo->edicao; ?>.ed.</b><br/>															
+					<b>ex.<?php echo $exemplar->numero_exemplar; ?></b><br/>
 					<b><?php echo $t; ?></b>
 				</div>
-				</td>			
-				<?php $i++; ?>
-			<?php endforeach; ?>
-			
-			
+			</td>			
+			<?php $i++; ?>
+			<?php endforeach; ?>						
 		</tr>
 	</tbody>
 </table>
@@ -124,29 +129,4 @@ $resto = $colunas-(count($tombo)%$colunas);
     });
 </script>
 
-
-<style>
-	#etiqueta{		
-		width: 63.4mm;
-		height: 25.4mm;
-		text-align: center;
-		border: 1px solid;
-		border-radius: 5px;
-	}
-	
-	#etiqueta b {
-		margin: 0;
-	}
-</style>
-
-
-<?php 
- /*foreach($tombos as $t){
-				$this->db->where('tombo',$t);
-				$exemplar = $this->db->get('exemplares')->row();
-				
-				$this->db->where('idAcervos',$exemplar->acervos_id);
-				$acervo = $this->db->get('acervos')->row();	
-				
-				
-		   } */}?>
+<?php }; ?>

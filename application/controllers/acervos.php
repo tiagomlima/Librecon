@@ -364,7 +364,8 @@ class Acervos extends CI_Controller {
 				
 				$data = array(
 					'tombo' => $tombo[i],
-					'acervos_id' => $acervos_id
+					'acervos_id' => $acervos_id,
+					'numero_exemplar' => $i
 				);
 				
 				$atribuir = $this->tombo_model->add('exemplares',$data);
